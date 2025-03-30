@@ -1,9 +1,13 @@
 import { assets, infoList, toolsData } from "@/assets/assets";
 import Image from "next/image";
-import React from "react";
+import React, { FC } from "react";
 import { motion } from "motion/react";
 
-const About = ({ isDarkMode }) => {
+interface AboutProps {
+  isDarkMode: boolean;
+}
+
+const About: FC<AboutProps> = ({ isDarkMode }) => {
   return (
     <motion.div
       id="about"
