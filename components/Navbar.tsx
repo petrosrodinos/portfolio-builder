@@ -84,7 +84,7 @@ const Navbar: FC<NavbarProps> = ({ isDarkMode, setIsDarkMode }) => {
         </ul>
 
         <div className="flex items-center gap-4">
-          <button onClick={() => setIsDarkMode((prev) => !prev)}>
+          <button onClick={() => setIsDarkMode(!isDarkMode)}>
             <Image src={isDarkMode ? assets.sun_icon : assets.moon_icon} alt="" className="w-6" />
           </button>
 

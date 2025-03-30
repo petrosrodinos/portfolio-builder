@@ -3,9 +3,7 @@ import Image from "next/image";
 import React, { FC } from "react";
 import { motion } from "motion/react";
 
-interface HeaderProps {
-  isDarkMode: boolean;
-}
+interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   return (
