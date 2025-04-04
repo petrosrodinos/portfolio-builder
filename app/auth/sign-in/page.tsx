@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { UserAuthForm } from "./components/user-auth-form";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 const Login: FC = () => {
   return (
@@ -13,6 +14,14 @@ const Login: FC = () => {
         </p>
       </div>
       <UserAuthForm />
+
+      <div className="text-center text-sm mt-3">
+        Don&apos;t have an account?{" "}
+        <Link href="/auth/sign-up" className="underline underline-offset-4">
+          Sign up
+        </Link>
+      </div>
+
       <p className="mt-4 px-8 text-center text-sm text-muted-foreground">
         By clicking login, you agree to our{" "}
         <a href="/terms" className="underline underline-offset-4 hover:text-primary">
