@@ -1,6 +1,7 @@
 import { Outfit, Ovo } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -21,9 +22,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${outfit.className} ${ovo.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
