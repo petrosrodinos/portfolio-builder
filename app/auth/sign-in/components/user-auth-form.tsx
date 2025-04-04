@@ -1,5 +1,5 @@
 "use client";
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,9 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "services/auth";
+import { SignInUser } from "interfaces/auth";
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
 
@@ -30,14 +33,12 @@ const formSchema = z.object({
     .min(1, {
       message: "Please enter your password",
     })
-    .min(7, {
-      message: "Password must be at least 7 characters long",
+    .min(6, {
+      message: "Password must be at least 6 characters long",
     }),
 });
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,14 +47,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: SignInUser) => signIn(data),
+    onSuccess: () => {},
+  });
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    mutate({ email: data.email, password: data.password });
   }
 
   return (
@@ -95,7 +95,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-            <Button className="mt-2" disabled={isLoading}>
+            <Button loading={isPending} className="mt-2" disabled={isPending}>
               Login
             </Button>
 
@@ -109,10 +109,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="w-full" type="button" disabled={isLoading}>
+              <Button variant="outline" className="w-full" type="button" disabled={isPending}>
                 <IconBrandGithub className="h-4 w-4" /> GitHub
               </Button>
-              <Button variant="outline" className="w-full" type="button" disabled={isLoading}>
+              <Button variant="outline" className="w-full" type="button" disabled={isPending}>
                 <IconBrandFacebook className="h-4 w-4" /> Facebook
               </Button>
             </div>
