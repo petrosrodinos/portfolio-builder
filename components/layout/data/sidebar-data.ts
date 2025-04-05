@@ -4,14 +4,19 @@ import {
   IconHelp,
   IconLayoutDashboard,
   IconLock,
-  IconLockAccess,
   IconNotification,
   IconPalette,
-  IconSettings,
+  IconUserCircle,
   IconTool,
   IconUserCog,
+  IconDatabase,
+  IconMail,
+  IconLockPassword,
+  IconCalendarDue,
+  IconAlignBoxLeftStretch,
+  IconFileInvoiceFilled,
 } from '@tabler/icons-react'
-import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
+import { AudioWaveform, Command, CreditCard, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -52,47 +57,83 @@ export const sidebarData: SidebarData = {
       title: 'Pages',
       items: [
         {
-          title: 'Settings',
-          icon: IconSettings,
+          title: 'Portfolio',
+          icon: IconDatabase,
           items: [
             {
               title: 'Profile',
-              url: '/console/settings/profile',
+              url: '/console/portfolio/profile',
               icon: IconUserCog,
             },
             {
               title: 'Account',
-              url: '/console/settings/account',
+              url: '/console/portfolio/account',
               icon: IconTool,
             },
             {
               title: 'Appearance',
-              url: '/console/settings/appearance',
+              url: '/console/portfolio/appearance',
               icon: IconPalette,
             },
             {
               title: 'Notifications',
-              url: '/console/settings/notifications',
+              url: '/console/portfolio/notifications',
               icon: IconNotification,
             },
             {
               title: 'Display',
-              url: '/console/settings/display',
+              url: '/console/portfolio/display',
               icon: IconBrowserCheck,
             },
           ],
         },
         {
-          title: 'Auth',
-          icon: IconLockAccess,
+          title: 'Account',
+          icon: IconUserCircle,
           items: [
             {
-              title: 'Sign In',
-              url: '/sign-in',
+              title: 'Profile',
+              url: '/console/account/profile',
+              icon: IconUserCog,
+            },
+            {
+              title: 'Email',
+              url: '/console/account/email',
+              icon: IconMail,
+            },
+            {
+              title: 'Password',
+              url: '/console/account/password',
+              icon: IconLockPassword,
+            },
+            {
+              title: 'Appearance',
+              url: '/console/account/appearance',
+              icon: IconPalette,
             },
           ],
         },
-
+        {
+          title: 'Billing',
+          icon: CreditCard,
+          items: [
+            {
+              title: 'Subscription',
+              url: '/console/billing/subscription',
+              icon: IconCalendarDue,
+            },
+            {
+              title: 'Plans',
+              url: '/console/billing/plans',
+              icon: IconAlignBoxLeftStretch,
+            },
+            {
+              title: 'invoices',
+              url: '/console/billing/invoices',
+              icon: IconFileInvoiceFilled,
+            },
+          ],
+        },
       ],
     },
     {

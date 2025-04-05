@@ -1,4 +1,10 @@
-import { IconPalette, IconUser, IconMail, IconLockPassword } from "@tabler/icons-react";
+import {
+  IconBrowserCheck,
+  IconNotification,
+  IconPalette,
+  IconTool,
+  IconUser,
+} from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
 import SidebarNav from "./components/sidebar-nav";
@@ -29,21 +35,26 @@ const sidebarNavItems = [
   {
     title: "Profile",
     icon: <IconUser size={18} />,
-    href: "/console/settings/profile",
+    href: "/console/portfolio/profile",
   },
   {
-    title: "Email",
-    icon: <IconMail size={18} />,
-    href: "/console/settings/email",
-  },
-  {
-    title: "Password",
-    icon: <IconLockPassword size={18} />,
-    href: "/console/settings/password",
+    title: "Account",
+    icon: <IconTool size={18} />,
+    href: "/console/portfolio/account",
   },
   {
     title: "Appearance",
     icon: <IconPalette size={18} />,
-    href: "/console/settings/appearance",
+    href: "/console/portfolio/appearance",
+  },
+  {
+    title: "Notifications",
+    icon: <IconNotification size={18} />,
+    href: "/console/portfolio/notifications",
+  },
+  {
+    title: "Display",
+    icon: <IconBrowserCheck size={18} />,
+    href: "/console/portfolio/display",
   },
 ];
