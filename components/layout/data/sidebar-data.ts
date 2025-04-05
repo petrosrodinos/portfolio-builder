@@ -42,8 +42,8 @@ export const sidebarData: SidebarData = {
       title: 'General',
       items: [
         {
-          title: 'Console',
-          url: '/console',
+          title: 'Dashboard',
+          url: '/console/dashboard',
           icon: IconLayoutDashboard,
         },
       ],
@@ -51,6 +51,37 @@ export const sidebarData: SidebarData = {
     {
       title: 'Pages',
       items: [
+        {
+          title: 'Settings',
+          icon: IconSettings,
+          items: [
+            {
+              title: 'Profile',
+              url: '/console/settings/profile',
+              icon: IconUserCog,
+            },
+            {
+              title: 'Account',
+              url: '/console/settings/account',
+              icon: IconTool,
+            },
+            {
+              title: 'Appearance',
+              url: '/console/settings/appearance',
+              icon: IconPalette,
+            },
+            {
+              title: 'Notifications',
+              url: '/console/settings/notifications',
+              icon: IconNotification,
+            },
+            {
+              title: 'Display',
+              url: '/console/settings/display',
+              icon: IconBrowserCheck,
+            },
+          ],
+        },
         {
           title: 'Auth',
           icon: IconLockAccess,
@@ -61,6 +92,12 @@ export const sidebarData: SidebarData = {
             },
           ],
         },
+
+      ],
+    },
+    {
+      title: 'Other',
+      items: [
         {
           title: 'Errors',
           icon: IconBug,
@@ -69,42 +106,6 @@ export const sidebarData: SidebarData = {
               title: 'Unauthorized',
               url: '/401',
               icon: IconLock,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Other',
-      items: [
-        {
-          title: 'Settings',
-          icon: IconSettings,
-          items: [
-            {
-              title: 'Profile',
-              url: '/settings',
-              icon: IconUserCog,
-            },
-            {
-              title: 'Account',
-              url: '/settings/account',
-              icon: IconTool,
-            },
-            {
-              title: 'Appearance',
-              url: '/settings/appearance',
-              icon: IconPalette,
-            },
-            {
-              title: 'Notifications',
-              url: '/settings/notifications',
-              icon: IconNotification,
-            },
-            {
-              title: 'Display',
-              url: '/settings/display',
-              icon: IconBrowserCheck,
             },
           ],
         },
