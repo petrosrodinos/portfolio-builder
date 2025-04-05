@@ -87,12 +87,6 @@ export function NavUser({
                   Billing
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/settings/notifications">
-                  <Bell />
-                  Notifications
-                </Link>
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

@@ -10,33 +10,6 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Search } from "@/components/search";
 import { Header } from "@/components/layout/header";
 
-const topNav = [
-  {
-    title: "Overview",
-    href: "dashboard/overview",
-    isActive: true,
-    disabled: false,
-  },
-  {
-    title: "Customers",
-    href: "dashboard/customers",
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: "Products",
-    href: "dashboard/products",
-    isActive: false,
-    disabled: true,
-  },
-  {
-    title: "Settings",
-    href: "dashboard/settings",
-    isActive: false,
-    disabled: true,
-  },
-];
-
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
   return (
@@ -57,7 +30,7 @@ export default function ConsoleLayout({ children }: { children: React.ReactNode 
             )}
           >
             <Header>
-              <TopNav links={topNav} />
+              <TopNav />
               <div className="ml-auto flex items-center space-x-4">
                 <Search />
                 <ThemeSwitch />

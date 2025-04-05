@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
-  links: {
+  links?: {
     title: string;
     href: string;
     isActive: boolean;
@@ -18,7 +18,34 @@ interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
   }[];
 }
 
-export function TopNav({ className, links, ...props }: TopNavProps) {
+const links = [
+  {
+    title: "Overview",
+    href: "dashboard/overview",
+    isActive: true,
+    disabled: false,
+  },
+  {
+    title: "Customers",
+    href: "dashboard/customers",
+    isActive: false,
+    disabled: true,
+  },
+  {
+    title: "Products",
+    href: "dashboard/products",
+    isActive: false,
+    disabled: true,
+  },
+  {
+    title: "Settings",
+    href: "dashboard/settings",
+    isActive: false,
+    disabled: true,
+  },
+];
+
+export function TopNav({ className, ...props }: TopNavProps) {
   return (
     <>
       <div className="md:hidden">
