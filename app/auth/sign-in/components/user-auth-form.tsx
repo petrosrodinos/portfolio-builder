@@ -19,7 +19,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "services/auth";
+import { toast } from "@/hooks/use-toast";
 import { SignInUser } from "interfaces/auth";
+import { useAuthStore } from "stores/auth";
+import { useRouter } from "next/navigation";
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
 
@@ -39,6 +42,8 @@ const formSchema = z.object({
 });
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const { login } = useAuthStore((state) => state);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +54,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      login(data);
+      toast({
+        title: "Login successful",
+        description: "You have successfully logged in",
+        duration: 1000,
+      });
+      router.push("/console");
+    },
+    onError: (error) => {
+      toast({
+        title: "Could not sign in",
+        description: error.message,
+        duration: 3000,
+      });
+    },
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {

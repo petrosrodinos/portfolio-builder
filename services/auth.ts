@@ -1,8 +1,8 @@
 import { supabase } from '@/lib/supabase';
-import axios from 'axios';
-import { SignInUser, SignUpUser } from 'interfaces/auth';
+import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
+import { formatAuthUser } from './utils';
 
-export const signIn = async ({ email, password }: SignInUser) => {
+export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser | any> => {
 
     try {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -11,7 +11,8 @@ export const signIn = async ({ email, password }: SignInUser) => {
         })
 
         if (data && data.user) {
-            return data;
+            console.log('data', data);
+            return formatAuthUser(data);
         }
 
         if (error) {
@@ -25,7 +26,7 @@ export const signIn = async ({ email, password }: SignInUser) => {
 
 }
 
-export const signUp = async ({ email, password }: SignUpUser) => {
+export const signUp = async ({ email, password }: SignUpUser): Promise<AuthUser | any> => {
     try {
         const { data, error } = await supabase.auth.signUp({
             email: email,
@@ -33,7 +34,7 @@ export const signUp = async ({ email, password }: SignUpUser) => {
         })
 
         if (data && data.user) {
-            return data;
+            return formatAuthUser(data);
         }
 
         if (error) {

@@ -1,7 +1,8 @@
 import { Outfit, Ovo } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
           </ThemeProvider>
+          <Toaster />
         </QueryProvider>
       </body>
     </html>

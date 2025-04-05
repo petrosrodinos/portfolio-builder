@@ -1,5 +1,5 @@
 "use client";
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,9 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "services/auth";
 import { SignUpUser } from "interfaces/auth";
+import { useAuthStore } from "stores/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 type SignUpFormProps = HTMLAttributes<HTMLDivElement>;
 
@@ -44,6 +47,8 @@ const formSchema = z
   });
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
+  const { login } = useAuthStore((state) => state);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +60,22 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignUpUser) => signUp(data),
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      login(data);
+      toast({
+        title: "Register successful",
+        description: "You have successfully registered in",
+        duration: 1000,
+      });
+      router.push("/console");
+    },
+    onError: (error) => {
+      toast({
+        title: "Could not sign up",
+        description: error.message,
+        duration: 3000,
+      });
+    },
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
