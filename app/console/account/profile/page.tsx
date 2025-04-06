@@ -4,7 +4,7 @@ import ProfileForm from "./components/profile-form";
 
 export default function SettingsProfile() {
   return (
-    <ContentSection title="Profile" desc="Add your basic informaion here.">
+    <ContentSection title="Profile" desc="Fill your profile informaion here.">
       <ProfileForm />
     </ContentSection>
   );

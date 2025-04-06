@@ -52,10 +52,10 @@ export default function ProfileForm() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => (isProfilePage ? updateUser(user_id, data) : createUser(data)),
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       toast({
-        title: "Data saved successfully",
-        description: "You have successfully saved your data",
+        title: "Profile saved successfully",
+        description: "You have successfully saved your profile",
         duration: 1000,
       });
     },
@@ -77,7 +77,10 @@ export default function ProfileForm() {
 
   useEffect(() => {
     if (isSuccess && data) {
-      form.reset(data);
+      form.reset({
+        ...data,
+        date_of_birth: data.date_of_birth ? new Date(data.date_of_birth) : null,
+      });
     }
   }, [data, isSuccess]);
 
