@@ -1,10 +1,7 @@
 import {
   IconBrowserCheck,
-  IconBug,
   IconHelp,
   IconLayoutDashboard,
-  IconLock,
-  IconNotification,
   IconPalette,
   IconUserCircle,
   IconTool,
@@ -16,13 +13,14 @@ import {
   IconAlignBoxLeftStretch,
   IconFileInvoiceFilled,
   IconLanguage,
-  IconLinkPlus,
   IconBriefcase,
   IconFolders,
   IconSchool,
   IconStars,
+  IconUser,
+  IconLink,
 } from '@tabler/icons-react'
-import { AudioWaveform, Command, CreditCard, GalleryVerticalEnd } from 'lucide-react'
+import { Command, CreditCard } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -54,7 +52,7 @@ export const sidebarData: SidebarData = {
             {
               title: 'Profile',
               url: '/console/portfolio/profile',
-              icon: IconUserCog,
+              icon: IconUser,
             },
             {
               title: "Bio",
@@ -89,7 +87,7 @@ export const sidebarData: SidebarData = {
             {
               title: 'Links',
               url: '/console/portfolio/links',
-              icon: IconLinkPlus,
+              icon: IconLink,
             },
             {
               title: 'Languages',

@@ -17,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { profileSchema } from "validation-schemas/portfolio";
-import { useState } from "react";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
@@ -96,17 +95,15 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Photo</FormLabel>
               <FormControl>
-                <>
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => onChange(e.target.files[0])}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    multiple={false}
-                  />
-                </>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => onChange(e.target.files[0])}
+                  onBlur={onBlur}
+                  name={name}
+                  ref={ref}
+                  multiple={false}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
