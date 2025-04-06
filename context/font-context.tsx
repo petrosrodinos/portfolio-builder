@@ -13,7 +13,8 @@ const FontContext = createContext<FontContextType | undefined>(undefined);
 
 export const FontProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [font, _setFont] = useState<Font>(() => {
-    const savedFont = localStorage.getItem("font");
+    if (!window) return;
+    const savedFont = localStorage?.getItem("font");
     return fonts.includes(savedFont as Font) ? (savedFont as Font) : fonts[0];
   });
 
@@ -30,7 +31,8 @@ export const FontProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [font]);
 
   const setFont = (font: Font) => {
-    localStorage.setItem("font", font);
+    if (!window) return;
+    localStorage?.setItem("font", font);
     _setFont(font);
   };
 

@@ -16,7 +16,8 @@ export default function Settings({ children }) {
         <div className="space-y-0.5">
           <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Settings</h1>
           <p className="text-muted-foreground">
-            Manage your account settings and set e-mail preferences.
+            Manage your portfolio settings here. Add your personal information, experience,
+            education and skills to showcase your expertise.
           </p>
         </div>
         <Separator className="my-4 lg:my-6" />

@@ -29,21 +29,21 @@ const sidebarNavItems = [
   {
     title: "Profile",
     icon: <IconUser size={18} />,
-    href: "/console/settings/profile",
+    href: "/console/account/profile",
   },
   {
     title: "Email",
     icon: <IconMail size={18} />,
-    href: "/console/settings/email",
+    href: "/console/account/email",
   },
   {
     title: "Password",
     icon: <IconLockPassword size={18} />,
-    href: "/console/settings/password",
+    href: "/console/account/password",
   },
   {
     title: "Appearance",
     icon: <IconPalette size={18} />,
-    href: "/console/settings/appearance",
+    href: "/console/account/appearance",
   },
 ];
