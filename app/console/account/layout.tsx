@@ -1,7 +1,7 @@
 import { IconPalette, IconUser, IconMail, IconLockPassword } from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
-import SidebarNav from "./components/sidebar-nav";
+import SidebarNav from "@/components/sidebar-nav";
 
 export default function Settings({ children }) {
   return (

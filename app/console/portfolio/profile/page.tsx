@@ -1,5 +1,5 @@
 "use client";
-import ContentSection from "../components/content-section";
+import ContentSection from "@/components/content-section";
 import ProfileForm from "./components/profile-form";
 
 export default function SettingsProfile() {

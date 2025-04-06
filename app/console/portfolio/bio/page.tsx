@@ -1,5 +1,5 @@
 "use client";
-import ContentSection from "../components/content-section";
+import ContentSection from "@/components/content-section";
 import BioForm from "./components/bio-form";
 
 export default function Bio() {
