@@ -4,16 +4,20 @@ import Cookies from 'js-cookie'
 import { AuthUser } from "interfaces/auth";
 
 
-interface UserStore {
+interface UserStore extends AuthUser {
     isLoggedIn: boolean;
-    user: AuthUser;
     login(user: any): void;
     logout(): void;
 }
 
 const initialValues: UserStore = {
     isLoggedIn: false,
-    user: null,
+    id: null,
+    email: null,
+    access_token: null,
+    expires_at: null,
+    avatar: null,
+    initials: null,
     login: () => { },
     logout: () => { },
 };
@@ -22,7 +26,6 @@ const initialValues: UserStore = {
 const STORE_KEY = "auth";
 
 const ACCESS_TOKEN = 'thisisjustarandomstring'
-
 
 export const useAuthStore = create<UserStore>()(
     devtools(

@@ -6,6 +6,8 @@ export const formatAuthUser = (data: any): AuthUser => {
         email: data.user.email,
         access_token: data.session.access_token,
         expires_at: data.session.expires_at,
-
+        avatar: data?.user?.avatar ?? null,
+        full_name: data?.user?.full_name ?? 'Anonymous',
+        initials: data?.user?.full_name ? data.user.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase() : 'AN',
     };
 }

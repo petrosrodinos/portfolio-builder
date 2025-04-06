@@ -1,6 +1,5 @@
 "use client";
 import { ReactNode } from "react";
-// import { Link, useLocation } from '@tanstack/react-router'
 import { ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
@@ -30,7 +29,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 export function NavGroup({ title, items }: NavGroup) {
   const { state } = useSidebar();
   const href = usePathname();
-  // const href = useLocation({ select: (location) => location.href })
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{title}</SidebarGroupLabel>

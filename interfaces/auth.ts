@@ -14,7 +14,6 @@ export interface AuthUser {
     access_token: string;
     expires_at: number;
     avatar?: string;
-    username?: string;
-    first_name?: string;
-    last_name?: string;
+    full_name?: string;
+    initials?: string;
 }

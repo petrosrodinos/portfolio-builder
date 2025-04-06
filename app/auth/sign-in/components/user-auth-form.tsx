@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "services/auth";
 import { toast } from "@/hooks/use-toast";
-import { SignInUser } from "interfaces/auth";
+import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 
@@ -54,7 +54,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
-    onSuccess: (data) => {
+    onSuccess: (data: AuthUser) => {
       login(data);
       toast({
         title: "Login successful",

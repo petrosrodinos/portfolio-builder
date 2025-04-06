@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import { UserAuthForm } from "./components/user-auth-form";
 import { Card } from "@/components/ui/card";
