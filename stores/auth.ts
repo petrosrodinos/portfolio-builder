@@ -8,6 +8,7 @@ interface UserStore extends AuthUser {
     isLoggedIn: boolean;
     login(user: any): void;
     logout(): void;
+    updateUser(user: any): void;
 }
 
 const initialValues: UserStore = {
@@ -17,9 +18,9 @@ const initialValues: UserStore = {
     access_token: null,
     expires_at: null,
     avatar: null,
-    initials: null,
     login: () => { },
     logout: () => { },
+    updateUser: () => { },
 };
 
 
@@ -40,6 +41,9 @@ export const useAuthStore = create<UserStore>()(
                 logout: () => {
                     set(initialValues);
                     Cookies.remove(ACCESS_TOKEN)
+                },
+                updateUser: async (user: Partial<AuthUser>) => {
+                    set((state) => ({ ...state, ...user }));
                 },
             }),
             {

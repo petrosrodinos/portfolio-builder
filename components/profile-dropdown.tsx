@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
+import { generateInitials } from "@/lib/utils";
 
 export function ProfileDropdown() {
-  const { full_name, avatar, email, initials, logout } = useAuthStore((state) => state);
+  const { full_name, avatar, email, logout } = useAuthStore((state) => state);
   const router = useRouter();
 
   const handleLogOut = async () => {
@@ -30,7 +31,7 @@ export function ProfileDropdown() {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             {avatar && <AvatarImage src={avatar} alt="@shadcn" />}
-            <AvatarFallback>{initials}</AvatarFallback>
+            <AvatarFallback>{generateInitials(full_name)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

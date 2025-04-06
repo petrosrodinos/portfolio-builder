@@ -5,7 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-
-export const createObjectUrl = (file: File): string => {
-  return URL.createObjectURL(file);
+export const generateInitials = (value: string) => {
+  if (!value) return "AN";
+  const names = value.split(" ");
+  const initials = names.map((name) => name[0]).join("").toUpperCase();
+  return initials;
 }

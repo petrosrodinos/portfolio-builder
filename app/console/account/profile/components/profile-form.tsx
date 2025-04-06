@@ -37,7 +37,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 export default function ProfileForm() {
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
-  const { user_id } = useAuthStore((state) => state);
+  const { user_id, updateUser: updateStoreUser } = useAuthStore((state) => state);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSchema),
     defaultValues,
@@ -52,7 +52,8 @@ export default function ProfileForm() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => (isProfilePage ? updateUser(user_id, data) : createUser(data)),
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      updateStoreUser(data);
       toast({
         title: "Profile saved successfully",
         description: "You have successfully saved your profile",

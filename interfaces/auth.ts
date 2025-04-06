@@ -15,5 +15,4 @@ export interface AuthUser {
     expires_at: number;
     avatar?: string;
     full_name?: string;
-    initials?: string;
 }

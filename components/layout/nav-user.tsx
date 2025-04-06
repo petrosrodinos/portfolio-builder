@@ -19,9 +19,11 @@ import {
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "stores/auth";
+import { useMemo } from "react";
+import { generateInitials } from "@/lib/utils";
 
 export function NavUser() {
-  const { full_name, avatar, email, initials, logout } = useAuthStore((state) => state);
+  const { full_name, avatar, email, logout } = useAuthStore((state) => state);
   const router = useRouter();
   const { isMobile } = useSidebar();
 
@@ -29,6 +31,10 @@ export function NavUser() {
     logout();
     router.push("/auth/sign-in");
   };
+
+  const initials = useMemo(() => {
+    return generateInitials(full_name);
+  }, [full_name]);
 
   return (
     <SidebarMenu>
