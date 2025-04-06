@@ -15,6 +15,12 @@ import {
   IconCalendarDue,
   IconAlignBoxLeftStretch,
   IconFileInvoiceFilled,
+  IconLanguage,
+  IconLinkPlus,
+  IconBriefcase,
+  IconFolders,
+  IconSchool,
+  IconStars,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, CreditCard, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -25,16 +31,6 @@ export const sidebarData: SidebarData = {
       name: 'Shadcn Admin',
       logo: Command,
       plan: 'Vite + ShadcnUI',
-    },
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
     },
   ],
   navGroups: [
@@ -61,19 +57,49 @@ export const sidebarData: SidebarData = {
               icon: IconUserCog,
             },
             {
-              title: 'Account',
-              url: '/console/portfolio/account',
+              title: "Bio",
+              url: "/console/portfolio/bio",
+              icon: IconUserCircle,
+            },
+            {
+              title: "Experience",
+              url: "/console/portfolio/experience",
+              icon: IconBriefcase,
+            },
+            {
+              title: "Projects",
+              url: "/console/portfolio/projects",
+              icon: IconFolders,
+            },
+            {
+              title: "Education",
+              url: "/console/portfolio/education",
+              icon: IconSchool,
+            },
+            {
+              title: "Services",
+              url: "/console/portfolio/services",
               icon: IconTool,
+            },
+            {
+              title: "Skills",
+              url: "/console/portfolio/skills",
+              icon: IconStars,
+            },
+            {
+              title: 'Links',
+              url: '/console/portfolio/links',
+              icon: IconLinkPlus,
+            },
+            {
+              title: 'Languages',
+              url: '/console/portfolio/languages',
+              icon: IconLanguage,
             },
             {
               title: 'Appearance',
               url: '/console/portfolio/appearance',
               icon: IconPalette,
-            },
-            {
-              title: 'Notifications',
-              url: '/console/portfolio/notifications',
-              icon: IconNotification,
             },
             {
               title: 'Display',

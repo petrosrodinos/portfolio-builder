@@ -1,9 +1,16 @@
 import {
+  IconBriefcase,
   IconBrowserCheck,
+  IconFolders,
+  IconLanguage,
+  IconLink,
   IconNotification,
   IconPalette,
+  IconSchool,
+  IconStars,
   IconTool,
   IconUser,
+  IconUserCircle,
 } from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
@@ -39,23 +46,43 @@ const sidebarNavItems = [
     href: "/console/portfolio/profile",
   },
   {
-    title: "Account",
+    title: "Bio",
+    icon: <IconUserCircle size={18} />,
+    href: "/console/portfolio/bio",
+  },
+  {
+    title: "Experience",
+    icon: <IconBriefcase size={18} />,
+    href: "/console/portfolio/experience",
+  },
+  {
+    title: "Projects",
+    icon: <IconFolders size={18} />,
+    href: "/console/portfolio/projects",
+  },
+  {
+    title: "Education",
+    icon: <IconSchool size={18} />,
+    href: "/console/portfolio/education",
+  },
+  {
+    title: "Services",
     icon: <IconTool size={18} />,
-    href: "/console/portfolio/account",
+    href: "/console/portfolio/services",
   },
   {
-    title: "Appearance",
-    icon: <IconPalette size={18} />,
-    href: "/console/portfolio/appearance",
+    title: "Skills",
+    icon: <IconStars size={18} />,
+    href: "/console/portfolio/skills",
   },
   {
-    title: "Notifications",
-    icon: <IconNotification size={18} />,
-    href: "/console/portfolio/notifications",
+    title: "Links",
+    icon: <IconLink size={18} />,
+    href: "/console/portfolio/links",
   },
   {
-    title: "Display",
-    icon: <IconBrowserCheck size={18} />,
-    href: "/console/portfolio/display",
+    title: "Languages",
+    icon: <IconLanguage size={18} />,
+    href: "/console/portfolio/languages",
   },
 ];
