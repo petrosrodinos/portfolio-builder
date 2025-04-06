@@ -1,7 +1,11 @@
-import React from "react";
+"use client";
+import ContentSection from "../components/content-section";
+import BioForm from "./components/bio-form";
 
-const Bio = () => {
-  return <div>Bio</div>;
-};
-
-export default Bio;
+export default function Bio() {
+  return (
+    <ContentSection title="Bio" desc="Add your bio details here.">
+      <BioForm />
+    </ContentSection>
+  );
+}

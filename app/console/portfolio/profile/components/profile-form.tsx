@@ -94,16 +94,17 @@ export default function ProfileForm() {
           name="avatar"
           render={({ field: { onChange, onBlur, name, ref } }) => (
             <FormItem>
-              <FormLabel>File</FormLabel>
+              <FormLabel>Photo</FormLabel>
               <FormControl>
                 <>
                   <Input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => onChange(e.target.files)}
+                    onChange={(e) => onChange(e.target.files[0])}
                     onBlur={onBlur}
                     name={name}
                     ref={ref}
+                    multiple={false}
                   />
                 </>
               </FormControl>
