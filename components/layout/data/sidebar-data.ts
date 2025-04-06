@@ -161,17 +161,6 @@ export const sidebarData: SidebarData = {
       title: 'Other',
       items: [
         {
-          title: 'Errors',
-          icon: IconBug,
-          items: [
-            {
-              title: 'Unauthorized',
-              url: '/401',
-              icon: IconLock,
-            },
-          ],
-        },
-        {
           title: 'Help Center',
           url: '/help-center',
           icon: IconHelp,

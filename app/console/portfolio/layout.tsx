@@ -4,7 +4,6 @@ import {
   IconFolders,
   IconLanguage,
   IconLink,
-  IconNotification,
   IconPalette,
   IconSchool,
   IconStars,
@@ -84,5 +83,15 @@ const sidebarNavItems = [
     title: "Languages",
     icon: <IconLanguage size={18} />,
     href: "/console/portfolio/languages",
+  },
+  {
+    title: "Appearance",
+    icon: <IconPalette size={18} />,
+    href: "/console/portfolio/appearance",
+  },
+  {
+    title: "Display",
+    icon: <IconBrowserCheck size={18} />,
+    href: "/console/portfolio/display",
   },
 ];
