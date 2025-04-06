@@ -15,51 +15,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
+import { profileSchema } from "validation-schemas/portfolio";
+import { useState } from "react";
 
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-});
+type ProfileFormValues = z.infer<typeof profileSchema>;
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
-
-// This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
+  fullname: "",
+  email: "",
+  avatar: null,
+  address: "",
+  welcomeMessage: "",
   urls: [{ value: "https://shadcn.com" }, { value: "http://twitter.com/shadcn" }],
 };
 
 export default function ProfileForm() {
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+    resolver: zodResolver(profileSchema),
     defaultValues,
     mode: "onChange",
   });
@@ -70,6 +43,7 @@ export default function ProfileForm() {
   });
 
   function onSubmit(data: ProfileFormValues) {
+    console.log("data", data);
     toast({
       title: "You submitted the following values:",
       description: (
@@ -85,16 +59,15 @@ export default function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="fullname"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="John Doe" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a pseudonym. You can
-                only change this once every 30 days.
+                This is the name that will be visible at your portfolio.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -106,21 +79,11 @@ export default function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <Input type="email" placeholder="john@gmail.com" {...field} />
+              </FormControl>
               <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/console/account">email settings</Link>.
+                This is the email that will be visible at your portfolio.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -128,20 +91,51 @@ export default function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name="bio"
+          name="avatar"
+          render={({ field: { onChange, onBlur, name, ref } }) => (
+            <FormItem>
+              <FormLabel>File</FormLabel>
+              <FormControl>
+                <>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => onChange(e.target.files)}
+                    onBlur={onBlur}
+                    name={name}
+                    ref={ref}
+                  />
+                </>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>Address</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
+                <Input placeholder="123 Main St, City, Country" {...field} />
               </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to link to them.
-              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="welcomeMessage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Welcome Message</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Hi there! Welcome to my profile." {...field} />
+              </FormControl>
+              <FormDescription>This will appear on your portfolio page.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
