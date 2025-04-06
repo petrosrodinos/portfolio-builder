@@ -20,9 +20,11 @@ import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { useMutation } from "@tanstack/react-query";
-import { createUser } from "services/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createUser, getUser, updateUser } from "services/user";
 import { useAuthStore } from "stores/auth";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 
@@ -33,6 +35,8 @@ const defaultValues: Partial<ProfileFormValues> = {
 };
 
 export default function ProfileForm() {
+  const pathname = usePathname();
+  const isProfilePage = pathname === "/console/account/profile";
   const { user_id } = useAuthStore((state) => state);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSchema),
@@ -40,8 +44,14 @@ export default function ProfileForm() {
     mode: "onChange",
   });
 
+  const { data, isSuccess } = useQuery({
+    queryKey: ["user", user_id],
+    queryFn: () => getUser(user_id),
+    enabled: !!user_id && isProfilePage,
+  });
+
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => createUser(data),
+    mutationFn: (data: any) => (isProfilePage ? updateUser(user_id, data) : createUser(data)),
     onSuccess: (data: any) => {
       toast({
         title: "Data saved successfully",
@@ -64,6 +74,12 @@ export default function ProfileForm() {
       user_id,
     });
   }
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      form.reset(data);
+    }
+  }, [data, isSuccess]);
 
   return (
     <Form {...form}>

@@ -5,6 +5,6 @@ export interface NewUser {
     date_of_birth: Date | null;
 }
 export interface User extends NewUser {
+    id: number;
     created_at: Date;
-    updated_at: Date;
 }
