@@ -1,6 +1,5 @@
 "use client";
 import { HTMLAttributes } from "react";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconBrandFacebook, IconBrandGithub } from "@tabler/icons-react";
@@ -23,29 +22,16 @@ import { toast } from "@/hooks/use-toast";
 import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
+import { signinSchema } from "validation-schemas/auth";
+import { z } from "zod";
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Please enter your email" })
-    .email({ message: "Invalid email address" }),
-  password: z
-    .string()
-    .min(1, {
-      message: "Please enter your password",
-    })
-    .min(6, {
-      message: "Password must be at least 6 characters long",
-    }),
-});
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signinSchema>>({
+    resolver: zodResolver(signinSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -61,7 +47,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         description: "You have successfully logged in",
         duration: 1000,
       });
-      router.push("/console");
+      router.push("/console/dashboard");
     },
     onError: (error) => {
       toast({
@@ -72,7 +58,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof signinSchema>) {
     mutate({ email: data.email, password: data.password });
   }
 

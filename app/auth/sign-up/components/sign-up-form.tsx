@@ -22,35 +22,15 @@ import { SignUpUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { signupSchema } from "validation-schemas/auth";
 
 type SignUpFormProps = HTMLAttributes<HTMLDivElement>;
-
-const formSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, { message: "Please enter your email" })
-      .email({ message: "Invalid email address" }),
-    password: z
-      .string()
-      .min(1, {
-        message: "Please enter your password",
-      })
-      .min(6, {
-        message: "Password must be at least 6 characters long",
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match.",
-    path: ["confirmPassword"],
-  });
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -67,7 +47,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         description: "You have successfully registered in",
         duration: 1000,
       });
-      router.push("/console");
+      router.push("/console/dashboard");
     },
     onError: (error) => {
       toast({
@@ -78,7 +58,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: z.infer<typeof signupSchema>) {
     mutate({ email: data.email, password: data.password });
   }
 
