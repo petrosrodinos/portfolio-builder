@@ -47,7 +47,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         description: "You have successfully registered in",
         duration: 1000,
       });
-      router.push("/console/dashboard");
+      router.push("/console/account/profile");
     },
     onError: (error) => {
       toast({

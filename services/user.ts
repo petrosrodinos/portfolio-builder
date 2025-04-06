@@ -1,18 +1,16 @@
 import { supabase } from '@/lib/supabase';
-import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
-import { formatAuthUser } from './utils';
+import { NewUser, User } from 'interfaces/user';
 
-export const createUser = async ({ email, password }: SignInUser): Promise<AuthUser | any> => {
-
+export const createUser = async (payload: NewUser): Promise<User> => {
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        })
+        const { error, data } = await supabase
+            .from('users')
+            .insert(payload).select().single();
 
-        if (data && data.user) {
-            console.log('data', data);
-            return formatAuthUser(data);
+        console.log('data', data);
+
+        if (data && data.length > 0) {
+            return data;
         }
 
         if (error) {
@@ -20,7 +18,7 @@ export const createUser = async ({ email, password }: SignInUser): Promise<AuthU
         }
 
     } catch (error) {
-        console.error('Error signing in:', error);
+        console.error('Error creating user', error);
         throw error;
     }
 

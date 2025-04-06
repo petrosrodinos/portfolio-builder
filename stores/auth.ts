@@ -12,7 +12,7 @@ interface UserStore extends AuthUser {
 
 const initialValues: UserStore = {
     isLoggedIn: false,
-    id: null,
+    user_id: null,
     email: null,
     access_token: null,
     expires_at: null,

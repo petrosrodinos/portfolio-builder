@@ -9,7 +9,6 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
     const [fileName, setFileName] = useState<string | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log("accept", props?.accept);
       if (type == "file") {
         const file = event.target.files?.[0];
         if (props?.accept == "image/*") {

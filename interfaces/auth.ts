@@ -9,7 +9,7 @@ export interface SignUpUser {
 }
 
 export interface AuthUser {
-    id: string;
+    user_id: string;
     email: string;
     access_token: string;
     expires_at: number;
