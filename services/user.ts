@@ -44,9 +44,34 @@ export const getUser = async (user_id: string): Promise<User> => {
 
 export const updateUser = async (user_id: string, payload: Partial<User>): Promise<User> => {
     try {
+        let avatarUrl = payload.avatar as string;
+
+        // Handle File upload if avatar is a File object
+        if (payload.avatar && typeof payload.avatar !== 'string') {
+            const { data: avatarData, error: avatarError } = await supabase
+                .storage
+                .from('avatars')
+                .upload(`${user_id}-${Date.now()}`, payload.avatar as File, {
+                    cacheControl: '3600',
+                    upsert: true
+                });
+
+            if (avatarError) {
+                throw avatarError;
+            }
+
+            // Get the public URL
+            const { data: { publicUrl } } = supabase
+                .storage
+                .from('avatars')
+                .getPublicUrl(avatarData.path);
+
+            avatarUrl = publicUrl;
+        }
+
         const { error, data } = await supabase
             .from('users')
-            .update(payload)
+            .update({ ...payload, avatar: avatarUrl })
             .eq('user_id', user_id)
             .select()
             .single();
@@ -56,8 +81,6 @@ export const updateUser = async (user_id: string, payload: Partial<User>): Promi
         if (error) {
             throw error;
         }
-
-
 
         return data;
     } catch (error) {

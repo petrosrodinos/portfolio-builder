@@ -17,14 +17,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { userSchema } from "validation-schemas/user";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Upload } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createUser, getUser, updateUser } from "services/user";
 import { useAuthStore } from "stores/auth";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AvatarPicker from "@/components/avatar-picker";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 
@@ -39,6 +41,7 @@ export default function ProfileForm() {
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
   const { user_id, updateUser: updateStoreUser } = useAuthStore((state) => state);
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSchema),
     defaultValues,
@@ -84,11 +87,16 @@ export default function ProfileForm() {
     });
   }
 
+  const handleAvatarChange = (file: File) => {
+    form.setValue("avatar", file);
+  };
+
   useEffect(() => {
     if (isSuccess && data) {
       form.reset({
         ...data,
         date_of_birth: data.date_of_birth ? new Date(data.date_of_birth) : null,
+        avatar: null,
       });
     }
   }, [data, isSuccess]);
@@ -96,6 +104,10 @@ export default function ProfileForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {isProfilePage && (
+          <AvatarPicker onFileChange={handleAvatarChange} previewUrl={data?.avatar} />
+        )}
+
         <FormField
           control={form.control}
           name="full_name"

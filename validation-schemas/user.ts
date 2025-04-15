@@ -6,4 +6,5 @@ export const userSchema = z.object({
     date_of_birth: z.date().refine((date) => date < new Date(), {
         message: "Date of birth must be in the past",
     }),
+    avatar: z.instanceof(File).optional(),
 });
