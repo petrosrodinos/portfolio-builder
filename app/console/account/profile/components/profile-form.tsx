@@ -60,6 +60,7 @@ export default function ProfileForm() {
       updateStoreUser({
         ...data,
         isLoggedIn: true,
+        isNewUser: false,
       });
       toast({
         title: "Profile saved successfully",

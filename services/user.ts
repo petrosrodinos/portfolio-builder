@@ -7,7 +7,7 @@ export const createUser = async (payload: NewUser): Promise<User> => {
             .from('users')
             .insert(payload).select().single();
 
-        console.log('data', data);
+        console.log('data-create', data);
 
         if (data && data.length > 0) {
             return data;
@@ -51,9 +51,13 @@ export const updateUser = async (user_id: string, payload: Partial<User>): Promi
             .select()
             .single();
 
+        console.log('data-update', data);
+
         if (error) {
             throw error;
         }
+
+
 
         return data;
     } catch (error) {

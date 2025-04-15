@@ -6,6 +6,7 @@ import { AuthUser } from "interfaces/auth";
 
 interface UserStore extends AuthUser {
     isLoggedIn: boolean;
+    isNewUser: boolean;
     login(user: any): void;
     logout(): void;
     updateUser(user: any): void;
@@ -13,6 +14,7 @@ interface UserStore extends AuthUser {
 
 const initialValues: UserStore = {
     isLoggedIn: false,
+    isNewUser: false,
     user_id: null,
     email: null,
     access_token: null,
