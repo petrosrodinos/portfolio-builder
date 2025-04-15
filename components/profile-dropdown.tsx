@@ -15,6 +15,7 @@ import {
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { generateInitials } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
 
 export function ProfileDropdown() {
   const { full_name, avatar, email, logout } = useAuthStore((state) => state);
@@ -22,6 +23,7 @@ export function ProfileDropdown() {
 
   const handleLogOut = async () => {
     logout();
+    await supabase.auth.signOut();
     router.push("/auth/sign-in");
   };
 

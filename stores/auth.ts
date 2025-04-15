@@ -34,13 +34,12 @@ export const useAuthStore = create<UserStore>()(
             (set) => ({
                 ...initialValues,
                 login: (user: AuthUser) => {
-                    Cookies.set(ACCESS_TOKEN, JSON.stringify(user), { expires: 1 })
-
+                    // Cookies.set(ACCESS_TOKEN, JSON.stringify(user), { expires: 1 })
                     set((state) => ({ ...state, ...user, isLoggedIn: true }));
                 },
                 logout: () => {
                     set(initialValues);
-                    Cookies.remove(ACCESS_TOKEN)
+                    // Cookies.remove(ACCESS_TOKEN)
                 },
                 updateUser: async (user: Partial<AuthUser>) => {
                     set((state) => ({ ...state, ...user }));
