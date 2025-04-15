@@ -41,13 +41,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
     onSuccess: (data: AuthUser) => {
-      login(data);
-      toast({
-        title: "Login successful",
-        description: "You have successfully logged in",
-        duration: 1000,
-      });
-      router.push("/console/dashboard");
+      if (data.isNewUser) {
+        login({
+          ...data,
+        });
+        router.push("/auth/create-user");
+      } else {
+        login({
+          ...data,
+          isLoggedIn: true,
+        });
+        toast({
+          title: "Login successful",
+          description: "You have successfully logged in",
+          duration: 1000,
+        });
+        router.push("/console/dashboard");
+      }
     },
     onError: (error) => {
       toast({

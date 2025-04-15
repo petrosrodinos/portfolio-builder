@@ -10,18 +10,38 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
             password: password,
         })
 
-        if (data && data.user) {
-            console.log('data', data);
-            return formatAuthUser(data);
-        }
-
         if (error) {
             throw error;
         }
 
+        if (data && data.user) {
+            const { data: userData, error: userError } = await supabase
+                .from('users')
+                .select('*')
+                .eq('user_id', data.user.id)
+                .single();
+
+            console.log('data', data, userData);
+
+            if (userError) {
+                return {
+                    ...formatAuthUser(data),
+                    isNewUser: true
+                }
+            }
+            if (userData) {
+                return {
+                    ...formatAuthUser(data),
+                    userData: userData,
+                    isNewUser: false
+                }
+            }
+
+        }
+
     } catch (error) {
         console.error('Error signing in:', error);
-        throw error;
+        throw new Error('User not found');
     }
 
 }

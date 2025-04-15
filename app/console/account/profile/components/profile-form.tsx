@@ -24,7 +24,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { createUser, getUser, updateUser } from "services/user";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 
@@ -35,6 +35,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 };
 
 export default function ProfileForm() {
+  const router = useRouter();
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
   const { user_id, updateUser: updateStoreUser } = useAuthStore((state) => state);
@@ -53,7 +54,13 @@ export default function ProfileForm() {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => (isProfilePage ? updateUser(user_id, data) : createUser(data)),
     onSuccess: (data: any) => {
-      updateStoreUser(data);
+      if (!isProfilePage) {
+        router.push("/console/portfolio/profile");
+      }
+      updateStoreUser({
+        ...data,
+        isLoggedIn: true,
+      });
       toast({
         title: "Profile saved successfully",
         description: "You have successfully saved your profile",
