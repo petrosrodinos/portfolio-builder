@@ -101,11 +101,19 @@ export default function ProfileForm() {
     }
   }, [data, isSuccess]);
 
+  const handleAvatarDelete = () => {
+    form.setValue("avatar", null);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {isProfilePage && (
-          <AvatarPicker onFileChange={handleAvatarChange} previewUrl={data?.avatar} />
+          <AvatarPicker
+            onFileChange={handleAvatarChange}
+            previewUrl={data?.avatar}
+            onDelete={handleAvatarDelete}
+          />
         )}
 
         <FormField
