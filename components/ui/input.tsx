@@ -3,8 +3,12 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { X } from "lucide-react";
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
+interface InputProps extends React.ComponentProps<"input"> {
+  onDelete?: () => void;
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, onDelete, ...props }, ref) => {
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
 
@@ -51,6 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
               onClick={() => {
                 setAvatarPreview(null);
                 setFileName(null);
+                onDelete?.();
                 props.onChange(undefined);
               }}
               className="absolute -top-2 -right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-gray-100"

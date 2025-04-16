@@ -20,6 +20,7 @@ import { useAuthStore } from "stores/auth";
 import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getProfile, updateProfile } from "services/profile";
+import { FileText, Trash2 } from "lucide-react";
 
 type bioFormValues = z.infer<typeof bioSchema>;
 
@@ -65,19 +66,17 @@ export default function BioForm() {
     });
   }
 
-  const handleFileChange = (file: File) => {
-    form.setValue("resume", file);
-  };
-
   const handleFileDelete = () => {
     form.setValue("resume", null);
+    delete data.resume;
   };
 
   useEffect(() => {
     if (isSuccess && data) {
-      console.log(data);
-      const { resume, ...rest } = data;
-      form.reset(rest);
+      form.reset({
+        ...data,
+        resume: undefined,
+      });
     }
   }, [data, isSuccess]);
 
@@ -122,16 +121,42 @@ export default function BioForm() {
             <FormItem>
               <FormLabel>Resume</FormLabel>
               <FormControl>
-                <div className="flex items-center gap-4">
-                  <Input
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    multiple={false}
-                    onChange={(e) => onChange(e.target.files[0])}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                  />
+                <div className="flex flex-col gap-4">
+                  {!data?.resume && (
+                    <Input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      multiple={false}
+                      onChange={(e) => onChange(e?.target?.files?.[0] || undefined)}
+                      onDelete={handleFileDelete}
+                      onBlur={onBlur}
+                      name={name}
+                      ref={ref}
+                    />
+                  )}
+                  {data?.resume && (
+                    <div className="flex items-center gap-4">
+                      <a
+                        href={data.resume}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+                      >
+                        <FileText className="h-4 w-4" />
+                        <span>View current resume</span>
+                      </a>
+                      <Button
+                        type="button"
+                        onClick={handleFileDelete}
+                        variant="destructive"
+                        size="sm"
+                        className="flex items-center gap-2"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        <span>Delete</span>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </FormControl>
               <FormMessage />
