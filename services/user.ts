@@ -9,7 +9,7 @@ export const createUser = async (payload: NewUser): Promise<User> => {
 
         console.log('data-create', data);
 
-        if (data && data.length > 0) {
+        if (data) {
             return data;
         }
 
@@ -31,6 +31,8 @@ export const getUser = async (user_id: string): Promise<User> => {
             .eq('user_id', user_id)
             .single();
 
+        console.log('getUser data', data);
+
         if (error) {
             throw error;
         }
@@ -51,7 +53,7 @@ export const updateUser = async (user_id: string, payload: Partial<User>): Promi
             const { data: avatarData, error: avatarError } = await supabase
                 .storage
                 .from('avatars')
-                .upload(`${user_id}-${Date.now()}`, payload.avatar as File, {
+                .upload(`avatar-${user_id}-${Date.now()}`, payload.avatar as File, {
                     cacheControl: '3600',
                     upsert: true
                 });

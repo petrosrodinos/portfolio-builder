@@ -21,8 +21,8 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
                 .eq('user_id', data.user.id)
                 .single();
 
-            console.log('data', data);
-            console.log('userData', userData, userError);
+            console.log('signIn data', data);
+            console.log('signIn userData', userData, userError);
 
 
             if (userError) {
@@ -38,7 +38,6 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
                         full_name: userData.full_name,
                         avatar: userData.avatar,
                     }),
-                    userData: userData,
                     isNewUser: false
                 }
             }

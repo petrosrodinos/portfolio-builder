@@ -106,7 +106,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 </FormItem>
               )}
             />
-            <Button className="mt-2" disabled={isPending}>
+            <Button className="mt-2" disabled={isPending} loading={isPending}>
               Create Account
             </Button>
 

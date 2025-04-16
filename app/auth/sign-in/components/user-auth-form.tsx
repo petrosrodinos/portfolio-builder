@@ -41,6 +41,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
     onSuccess: (data: AuthUser) => {
+      console.log("signIn onSuccess", data);
       if (data.isNewUser) {
         login({
           ...data,

@@ -14,7 +14,7 @@ interface UserStore extends AuthUser {
 
 const initialValues: UserStore = {
     isLoggedIn: false,
-    isNewUser: false,
+    isNewUser: true,
     user_id: null,
     email: null,
     access_token: null,
@@ -41,6 +41,7 @@ export const useAuthStore = create<UserStore>()(
                 },
                 logout: () => {
                     set(initialValues);
+                    localStorage.removeItem(STORE_KEY);
                     // Cookies.remove(ACCESS_TOKEN)
                 },
                 updateUser: async (user: Partial<AuthUser>) => {
