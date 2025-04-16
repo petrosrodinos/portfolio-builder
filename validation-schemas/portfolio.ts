@@ -3,11 +3,10 @@ import { z } from "zod";
 
 export const profileSchema = z.object({
     email: z.string().email(),
-    fullname: z.string().min(2, "Full name is required"),
-    avatar: z.instanceof(File).refine((file) => file, 'File is required.').optional(),
+    phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").optional(),
     address: z.string().min(5, "Address is required").optional(),
-    welcomeMessage: z.string().max(200, "Message too long").optional(),
-    urls: z.array(z.object({ value: z.string().url().optional() })),
+    welcome_message: z.string().max(200, "Message too long").optional(),
+    // urls: z.array(z.object({ value: z.string().url().optional() })),
 });
 
 export const bioSchema = z.object({

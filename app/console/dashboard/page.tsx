@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, FileText, Palette, Share2, Settings, Star, Check } from "lucide-react";
+import { Eye, FileText, Palette, Share2, Settings, Star, Check, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 const Dashboard = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [isProfileVisible, setIsProfileVisible] = useState(true);
 
   return (
     <div className="container mx-auto p-6">
@@ -108,6 +110,13 @@ const Dashboard = () => {
               <Settings className="h-4 w-4" />
               Edit Profile
             </Button>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <div className="flex items-center gap-2">
+                {isProfileVisible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                <span>Profile Visibility</span>
+              </div>
+              <Switch checked={isProfileVisible} onCheckedChange={setIsProfileVisible} />
+            </div>
           </div>
         </Card>
       </div>
