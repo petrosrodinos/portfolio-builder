@@ -27,7 +27,9 @@
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
       "@/utils/*": ["./utils/*"],
-      "@/config/*": ["config/*"]
+      "@/config/*": ["config/*"],
+      "@/constants/*": ["constants/*"],
+      "@/validation-schemas/*": ["validation-schemas/*"]
     }
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/portfolio/[id]"],

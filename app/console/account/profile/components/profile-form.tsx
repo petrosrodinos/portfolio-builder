@@ -17,22 +17,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { userSchema } from "validation-schemas/user";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
-import { CalendarIcon, Upload } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createUser, getUser, updateUser } from "services/user";
 import { useAuthStore } from "stores/auth";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AvatarPicker from "@/components/avatar-picker";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Countries } from "@/constants/countries";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 
 const defaultValues: Partial<ProfileFormValues> = {
   full_name: "",
-  address: "",
+  country: "GR",
   date_of_birth: null,
 };
 
@@ -96,10 +103,13 @@ export default function ProfileForm() {
       form.reset({
         ...data,
         date_of_birth: data.date_of_birth ? new Date(data.date_of_birth) : null,
-        avatar: null,
       });
     }
   }, [data, isSuccess]);
+
+  // useEffect(() => {
+  //   console.log(form.formState.errors);
+  // }, [form.formState.errors]);
 
   const handleAvatarDelete = () => {
     form.setValue("avatar", null);
@@ -132,14 +142,27 @@ export default function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name="address"
+          name="country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Input placeholder="123 Main St, City, Country" {...field} />
-              </FormControl>
-              <FormDescription>This will not be visible at your portfolio.</FormDescription>
+              <FormLabel>Country</FormLabel>
+              <Select
+                onValueChange={(value: string) => field.onChange(value)}
+                value={field.value || ""}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {Countries.map((country) => (
+                    <SelectItem key={country.value} value={country.value}>
+                      {country.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
