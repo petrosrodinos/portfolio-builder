@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { profileSchema } from "validation-schemas/portfolio";
-import { updateProfile, getProfile } from "services/portfolio";
+import { updateProfile, getProfile } from "services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";

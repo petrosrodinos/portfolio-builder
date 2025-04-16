@@ -1,10 +1,12 @@
 import { supabase } from '@/lib/supabase';
 import { NewUser, User } from 'interfaces/user';
+import { supabaseBuckets, supabaseTables } from '@/constants/supabase';
+import { uploadFile } from './storage';
 
 export const createUser = async (payload: NewUser): Promise<User> => {
     try {
         const { error, data } = await supabase
-            .from('users')
+            .from(supabaseTables.users)
             .insert(payload).select().single();
 
         console.log('data-create', data);
@@ -26,7 +28,7 @@ export const createUser = async (payload: NewUser): Promise<User> => {
 export const getUser = async (user_id: string): Promise<User> => {
     try {
         const { error, data } = await supabase
-            .from('users')
+            .from(supabaseTables.users)
             .select('*')
             .eq('user_id', user_id)
             .single();
@@ -48,31 +50,12 @@ export const updateUser = async (user_id: string, payload: Partial<User>): Promi
     try {
         let avatarUrl = payload.avatar as string;
 
-        // Handle File upload if avatar is a File object
         if (payload.avatar && typeof payload.avatar !== 'string') {
-            const { data: avatarData, error: avatarError } = await supabase
-                .storage
-                .from('avatars')
-                .upload(`avatar-${user_id}-${Date.now()}`, payload.avatar as File, {
-                    cacheControl: '3600',
-                    upsert: true
-                });
-
-            if (avatarError) {
-                throw avatarError;
-            }
-
-            // Get the public URL
-            const { data: { publicUrl } } = supabase
-                .storage
-                .from('avatars')
-                .getPublicUrl(avatarData.path);
-
-            avatarUrl = publicUrl;
+            avatarUrl = await uploadFile(supabaseBuckets.files, payload.avatar as File, user_id, 'avatar');
         }
 
         const { error, data } = await supabase
-            .from('users')
+            .from(supabaseTables.users)
             .update({ ...payload, avatar: avatarUrl })
             .eq('user_id', user_id)
             .select()

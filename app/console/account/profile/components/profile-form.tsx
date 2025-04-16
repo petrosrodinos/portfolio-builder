@@ -58,7 +58,7 @@ export default function ProfileForm() {
   const { data, isSuccess } = useQuery({
     queryKey: ["user", user_id],
     queryFn: () => getUser(user_id),
-    enabled: !!user_id && isProfilePage,
+    enabled: isProfilePage,
   });
 
   const { mutate, isPending } = useMutation({
@@ -98,6 +98,10 @@ export default function ProfileForm() {
     form.setValue("avatar", file);
   };
 
+  const handleAvatarDelete = () => {
+    form.setValue("avatar", null);
+  };
+
   useEffect(() => {
     if (isSuccess && data) {
       form.reset({
@@ -106,14 +110,6 @@ export default function ProfileForm() {
       });
     }
   }, [data, isSuccess]);
-
-  // useEffect(() => {
-  //   console.log(form.formState.errors);
-  // }, [form.formState.errors]);
-
-  const handleAvatarDelete = () => {
-    form.setValue("avatar", null);
-  };
 
   return (
     <Form {...form}>

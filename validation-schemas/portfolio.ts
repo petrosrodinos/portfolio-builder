@@ -11,10 +11,6 @@ export const profileSchema = z.object({
 
 export const bioSchema = z.object({
     role: z.string().min(2, "Role is required"),
-    shortBio: z.string().min(10, "Detailed bio is required"),
-    bio: z.string().min(50, "Detailed bio must be at least 50 characters"),
-    resume: z
-        .instanceof(File)
-        .refine((file) => file, "Resume is required")
-        .optional(),
+    bio: z.string().min(50, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long"),
+    resume: z.any().optional(),
 });

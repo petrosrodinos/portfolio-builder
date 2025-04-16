@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,26 +15,71 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import { bioSchema } from "validation-schemas/portfolio";
+import { useAuthStore } from "stores/auth";
+import { toast } from "@/hooks/use-toast";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getProfile, updateProfile } from "services/profile";
 
 type bioFormValues = z.infer<typeof bioSchema>;
 
 export default function BioForm() {
-  const [resumeName, setResumeName] = useState<string | null>(null);
+  const { user_id } = useAuthStore((state) => state);
 
   const form = useForm<bioFormValues>({
     resolver: zodResolver(bioSchema),
     defaultValues: {
       role: "",
-      shortBio: "",
       bio: "",
+      resume: undefined,
     },
   });
 
-  const onSubmit = (data: bioFormValues) => {
-    console.log(data);
+  const { data, isSuccess } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(user_id),
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => updateProfile(user_id, data),
+    onSuccess: () => {
+      toast({
+        title: "Profile saved successfully",
+        description: "You have successfully saved your profile",
+        duration: 1000,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Could not save data",
+        description: error.message,
+        duration: 3000,
+      });
+    },
+  });
+
+  function onSubmit(data: bioFormValues) {
+    mutate({
+      ...data,
+      user_id,
+    });
+  }
+
+  const handleFileChange = (file: File) => {
+    form.setValue("resume", file);
   };
+
+  const handleFileDelete = () => {
+    form.setValue("resume", null);
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      console.log(data);
+      const { resume, ...rest } = data;
+      form.reset(rest);
+    }
+  }, [data, isSuccess]);
 
   return (
     <Form {...form}>
@@ -52,21 +97,6 @@ export default function BioForm() {
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="shortBio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Short Bio</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g. Passionate about building UIs" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="bio"
@@ -109,7 +139,9 @@ export default function BioForm() {
           )}
         />
 
-        <Button type="submit">Save Details</Button>
+        <Button disabled={isPending} loading={isPending} type="submit">
+          Save Details
+        </Button>
       </form>
     </Form>
   );
