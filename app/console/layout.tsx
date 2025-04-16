@@ -4,7 +4,6 @@ import React from "react";
 import { AppSidebar } from "../../components/layout/app-sidebar";
 import Cookies from "js-cookie";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { TopNav } from "@/components/layout/top-nav";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Search } from "@/components/search";

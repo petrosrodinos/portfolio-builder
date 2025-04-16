@@ -160,7 +160,7 @@ export const sidebarData: SidebarData = {
       items: [
         {
           title: 'Help Center',
-          url: '/help-center',
+          url: '/console/help-center',
           icon: IconHelp,
         },
       ],
