@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import QueryProvider from "@/components/providers/QueryProvider";
@@ -16,28 +17,28 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata = {
-  title: "Portfolio",
-  description: "",
+export const metadata: Metadata = {
+  title: "Portfolio Builder - Create Your Professional Portfolio in Minutes",
+  description:
+    "Build a stunning portfolio website that showcases your work and skills. Choose from beautiful templates, customize your design, and get online in minutes.",
+  keywords:
+    "portfolio builder, professional portfolio, portfolio website, portfolio templates, online portfolio",
+  openGraph: {
+    title: "Portfolio Builder - Create Your Professional Portfolio in Minutes",
+    description:
+      "Build a stunning portfolio website that showcases your work and skills. Choose from beautiful templates, customize your design, and get online in minutes.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+      <head></head>
       <body className={`${inter.className} ${manrope.className}`}>
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {/* <FontProvider> */}
-            {children}
-            {/* </FontProvider> */}
+            <FontProvider>{children}</FontProvider>
           </ThemeProvider>
           <Toaster />
         </QueryProvider>
