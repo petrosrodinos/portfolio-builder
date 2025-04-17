@@ -39,7 +39,7 @@ const EducationCard = ({ education }: ProjectCardProps) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
-  const { mutate: deleteProjectMutation } = useMutation({
+  const { mutate: deleteEducationMutation } = useMutation({
     mutationFn: (id: string) => deleteExperience(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["educations"] });
@@ -67,7 +67,7 @@ const EducationCard = ({ education }: ProjectCardProps) => {
   };
 
   const handleConfirmDelete = () => {
-    deleteProjectMutation(education.id);
+    deleteEducationMutation(education.id);
   };
 
   const handleCancel = () => {
@@ -141,7 +141,7 @@ const EducationCard = ({ education }: ProjectCardProps) => {
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your education entry
-              {` at ${education.location}`}.
+              {` at ${education.institution}`}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

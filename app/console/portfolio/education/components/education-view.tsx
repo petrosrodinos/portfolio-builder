@@ -10,8 +10,8 @@ import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import ProjectCard from "./education-card";
 import { portfolioExperienceTypes } from "@/constants/supabase";
+import EducationCard from "./education-card";
 
 const EducationView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -66,18 +66,7 @@ const EducationView = () => {
           </AlertDescription>
         </Alert>
       ) : (
-        educations.map((education) => (
-          <div key={education.id} className="p-4 border rounded-lg space-y-2">
-            <h3 className="text-lg font-semibold">{education.title}</h3>
-            <p className="text-sm text-gray-600">{education.description}</p>
-            <div className="flex gap-4 text-sm text-gray-500">
-              <span>
-                {education.start} - {education.finish}
-              </span>
-              <span>{education.location}</span>
-            </div>
-          </div>
-        ))
+        educations.map((education) => <EducationCard key={education.id} education={education} />)
       )}
     </div>
   );

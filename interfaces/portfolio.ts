@@ -17,6 +17,7 @@ export interface PortfolioExperience {
     title: string;
     description: string;
     company: string;
+    institution: string;
     location: string;
     start: string;
     finish: string;
