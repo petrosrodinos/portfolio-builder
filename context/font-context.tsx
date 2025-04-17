@@ -12,13 +12,14 @@ interface FontContextType {
 const FontContext = createContext<FontContextType | undefined>(undefined);
 
 export const FontProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [font, _setFont] = useState<Font>(() => {
-    if (!window) return;
-    const savedFont = localStorage?.getItem("font");
-    return fonts.includes(savedFont as Font) ? (savedFont as Font) : fonts[0];
-  });
+  const [font, _setFont] = useState<Font>(fonts[0]); // Default font initially
 
   useEffect(() => {
+    const savedFont = localStorage?.getItem("font");
+    if (savedFont && fonts.includes(savedFont as Font)) {
+      _setFont(savedFont as Font);
+    }
+
     const applyFont = (font: string) => {
       const root = document.documentElement;
       root.classList.forEach((cls) => {
@@ -27,16 +28,15 @@ export const FontProvider: React.FC<{ children: React.ReactNode }> = ({ children
       root.classList.add(`font-${font}`);
     };
 
-    applyFont(font);
-  }, [font]);
+    applyFont(savedFont ?? fonts[0]);
+  }, []);
 
   const setFont = (font: Font) => {
-    if (!window) return;
     localStorage?.setItem("font", font);
     _setFont(font);
   };
 
-  return <FontContext value={{ font, setFont }}>{children}</FontContext>;
+  return <FontContext.Provider value={{ font, setFont }}>{children}</FontContext.Provider>;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
