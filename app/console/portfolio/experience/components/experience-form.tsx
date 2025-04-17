@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ExperienceFormValues, experienceFormSchema } from "@/validation-schemas/portfolio";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
@@ -24,6 +24,7 @@ interface ExperienceFormProps {
 
 const ExperienceForm = ({ onCancel }: ExperienceFormProps) => {
   const { user_id } = useAuthStore((state) => state);
+  const queryClient = useQueryClient();
 
   const form = useForm<ExperienceFormValues>({
     resolver: zodResolver(experienceFormSchema),
@@ -45,6 +46,7 @@ const ExperienceForm = ({ onCancel }: ExperienceFormProps) => {
         description: "You have successfully saved your experience",
         duration: 1000,
       });
+      queryClient.invalidateQueries({ queryKey: ["experiences"] });
       onCancel();
     },
     onError: (error) => {

@@ -39,3 +39,19 @@ export const getExperiences = async (user_id: string): Promise<PortfolioExperien
         throw error;
     }
 }
+
+export const deleteExperience = async (id: string): Promise<void> => {
+    try {
+        const { error } = await supabase
+            .from(supabaseTables.experiences)
+            .delete()
+            .eq('id', id)
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error deleting experience', error);
+        throw error;
+    }
+}
