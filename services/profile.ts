@@ -42,7 +42,7 @@ export const getProfile = async (user_id: string): Promise<any> => {
 
 
     } catch (error) {
-        console.error('Error getting profile', error);
+        // console.error('Error getting profile', error);
         throw error;
     }
 }

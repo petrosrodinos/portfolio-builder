@@ -5,7 +5,8 @@ import { useAuthStore } from "stores/auth";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-
+import { Info } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 interface ProfileViewProps {
   onEdit: () => void;
 }
@@ -13,9 +14,11 @@ interface ProfileViewProps {
 export default function ProfileView({ onEdit }: ProfileViewProps) {
   const { user_id } = useAuthStore((state) => state);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
+    enabled: !!user_id,
+    retry: false,
   });
 
   if (isLoading) {
@@ -26,30 +29,62 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
     );
   }
 
+  // useEffect(() => {
+  //   if (error) {
+  //     onEdit();
+  //   }
+  // }, [error]);
+
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="font-medium">Email</h3>
-        <p className="text-sm text-muted-foreground">{data.email}</p>
-      </div>
-      <div>
-        <h3 className="font-medium">Phone</h3>
-        <p className="text-sm text-muted-foreground">{data.phone}</p>
-      </div>
-      <div>
-        <h3 className="font-medium">Address</h3>
-        <p className="text-sm text-muted-foreground">{data.address}</p>
-      </div>
-      <div>
-        <h3 className="font-medium">Welcome Message</h3>
-        <p className="text-sm text-muted-foreground">{data.welcome_message}</p>
-      </div>
-      <div className="flex justify-start pt-4">
-        <Button variant="secondary" size="sm" onClick={onEdit} className="flex items-center gap-2">
-          <Pencil className="h-4 w-4" />
-          Edit Profile
-        </Button>
-      </div>
+      {data ? (
+        <>
+          <div>
+            <h3 className="font-medium">Email</h3>
+            <p className="text-sm text-muted-foreground">{data.email}</p>
+          </div>
+          <div>
+            <h3 className="font-medium">Phone</h3>
+            <p className="text-sm text-muted-foreground">{data.phone}</p>
+          </div>
+          <div>
+            <h3 className="font-medium">Address</h3>
+            <p className="text-sm text-muted-foreground">{data.address}</p>
+          </div>
+          <div>
+            <h3 className="font-medium">Welcome Message</h3>
+            <p className="text-sm text-muted-foreground">{data.welcome_message}</p>
+          </div>
+          <div className="flex justify-start pt-4">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onEdit}
+              className="flex items-center gap-2"
+            >
+              <Pencil className="h-4 w-4" />
+              Edit Profile
+            </Button>
+          </div>
+        </>
+      ) : (
+        <Alert>
+          <Info className="h-4 w-4" />
+          <AlertTitle>Profile Incomplete</AlertTitle>
+          <AlertDescription className="flex flex-col gap-4">
+            <p>Please complete your profile information to get started.</p>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={onEdit}
+              className="flex items-center gap-2 w-fit"
+            >
+              <Pencil className="h-4 w-4" />
+              Complete Your Profile
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
     </div>
   );
 }

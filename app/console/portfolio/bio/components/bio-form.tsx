@@ -36,7 +36,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
     defaultValues: {
       role: "",
       bio: "",
-      resume: undefined,
+      resume: "",
     },
   });
 

@@ -81,6 +81,11 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
     }
   }, [data, isSuccess]);
 
+  useEffect(() => {
+    if (form.formState.errors) {
+      console.log(form.formState.errors);
+    }
+  }, [form.formState.errors]);
   // const { fields, append } = useFieldArray({
   //   name: "urls",
   //   control: form.control,
@@ -180,16 +185,16 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
               Add URL
             </Button>
           </div> */}
+          <div className="flex gap-4">
+            <Button disabled={isPending} loading={isPending} type="submit">
+              Save
+            </Button>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </div>
         </form>
       </Form>
-      <div className="flex gap-4">
-        <Button disabled={isPending} loading={isPending} type="submit">
-          Save
-        </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
-        </Button>
-      </div>
     </div>
   );
 }
