@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { profileSchema } from "validation-schemas/portfolio";
-import { updateProfile, getProfile } from "services/profile";
+import { upsertProfile, getProfile } from "services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
@@ -48,7 +48,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => updateProfile(user_id, data),
+    mutationFn: (data: any) => upsertProfile(user_id, data),
     onSuccess: () => {
       toast({
         title: "Profile saved successfully",

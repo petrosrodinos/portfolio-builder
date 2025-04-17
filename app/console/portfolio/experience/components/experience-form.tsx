@@ -13,8 +13,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ExperienceFormValues, experienceFormSchema } from "@/validation-schemas/portfolio";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
+import { upsertExperience } from "services/experience";
+import { useAuthStore } from "stores/auth";
 
-const ExperienceForm = () => {
+interface ExperienceFormProps {
+  onCancel: () => void;
+}
+
+const ExperienceForm = ({ onCancel }: ExperienceFormProps) => {
+  const { user_id } = useAuthStore((state) => state);
+
   const form = useForm<ExperienceFormValues>({
     resolver: zodResolver(experienceFormSchema),
     defaultValues: {
@@ -27,9 +37,31 @@ const ExperienceForm = () => {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => upsertExperience(data),
+    onSuccess: () => {
+      toast({
+        title: "Experience saved successfully",
+        description: "You have successfully saved your experience",
+        duration: 1000,
+      });
+      onCancel();
+    },
+    onError: (error) => {
+      toast({
+        title: "Could not save data",
+        description: error.message,
+        duration: 3000,
+      });
+    },
+  });
+
   const onSubmit = (data: ExperienceFormValues) => {
-    console.log(data);
-    // Handle form submission here
+    mutate({
+      ...data,
+      user_id,
+      type: "experience",
+    });
   };
 
   return (
@@ -125,9 +157,14 @@ const ExperienceForm = () => {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Save Experience
-        </Button>
+        <div className="flex gap-4">
+          <Button loading={isPending} type="submit" className="flex-1">
+            Save Experience
+          </Button>
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -18,7 +18,7 @@ import { BioFormValues, bioSchema } from "validation-schemas/portfolio";
 import { useAuthStore } from "stores/auth";
 import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { getProfile, updateProfile } from "services/profile";
+import { getProfile, upsertProfile } from "services/profile";
 import { FileText, Trash2 } from "lucide-react";
 
 interface BioFormProps {
@@ -43,7 +43,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => updateProfile(user_id, data),
+    mutationFn: (data: any) => upsertProfile(user_id, data),
     onSuccess: () => {
       toast({
         title: "Profile saved successfully",
@@ -140,7 +140,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
                   {data?.resume && (
                     <div className="flex items-center gap-4">
                       <a
-                        href={data.resume}
+                        href={data.resume as string}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-800"

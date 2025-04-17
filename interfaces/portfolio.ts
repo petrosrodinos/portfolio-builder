@@ -9,10 +9,15 @@ export interface PortfolioProfileBio {
 }
 
 export interface PortfolioExperience {
+    id?: string;
+    user_id: string;
+    type: 'experience' | 'project' | 'education';
     title: string;
     description: string;
     company: string;
     location: string;
     start: string;
     finish: string;
+    image?: string | File;
+    link?: string;
 }

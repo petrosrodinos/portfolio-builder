@@ -1,10 +1,7 @@
 export const supabaseTables = {
     users: 'users',
     profiles: 'profiles',
-    files: 'files',
     experiences: 'experiences',
-    projects: 'projects',
-    education: 'education',
     services: 'services',
 } as const;
 

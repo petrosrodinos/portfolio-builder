@@ -3,7 +3,7 @@ import { supabaseTables, supabaseBuckets } from "@/constants/supabase";
 import { uploadFile } from "./storage";
 import { PortfolioProfileBio } from "interfaces/portfolio";
 
-export const updateProfile = async (user_id: string, payload: PortfolioProfileBio): Promise<PortfolioProfileBio> => {
+export const upsertProfile = async (user_id: string, payload: PortfolioProfileBio): Promise<PortfolioProfileBio> => {
     try {
         let fileUrl = payload.resume as string;
 
