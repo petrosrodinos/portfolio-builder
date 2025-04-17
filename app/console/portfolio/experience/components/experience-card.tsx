@@ -17,12 +17,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import ExperienceForm from "./experience-form";
 
 interface ExperienceCardProps {
   experience: PortfolioExperience;
 }
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
@@ -46,19 +49,20 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
   });
 
   const handleEdit = () => {
-    console.log("Edit experience:", experience);
+    setIsEditModalOpen(true);
   };
 
   const handleDelete = () => {
     setDeleteConfirmation(true);
   };
 
-  const handleCancelDelete = () => {
-    setDeleteConfirmation(false);
-  };
-
   const handleConfirmDelete = () => {
     deleteExperienceMutation(experience.id);
+  };
+
+  const handleCancel = () => {
+    setDeleteConfirmation(false);
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -107,7 +111,15 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           <p className="text-muted-foreground">{experience.description}</p>
         </CardContent>
       </Card>
-      <AlertDialog open={deleteConfirmation} onOpenChange={handleCancelDelete}>
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Experience</DialogTitle>
+          </DialogHeader>
+          <ExperienceForm onCancel={handleCancel} experience={experience} />
+        </DialogContent>
+      </Dialog>
+      <AlertDialog open={deleteConfirmation} onOpenChange={handleCancel}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>

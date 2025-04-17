@@ -19,6 +19,7 @@ const ExperienceView = () => {
   const { data: experiences, isLoading } = useQuery({
     queryKey: ["experiences"],
     queryFn: () => getExperiences(user_id),
+    enabled: !!user_id,
   });
 
   const handleAdd = () => {

@@ -17,18 +17,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
+import { PortfolioExperience } from "interfaces/portfolio";
 
 interface ExperienceFormProps {
   onCancel: () => void;
+  experience?: PortfolioExperience;
 }
 
-const ExperienceForm = ({ onCancel }: ExperienceFormProps) => {
+const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
   const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
 
   const form = useForm<ExperienceFormValues>({
     resolver: zodResolver(experienceFormSchema),
-    defaultValues: {
+    defaultValues: experience || {
       title: "",
       company: "",
       location: "",
@@ -63,6 +65,7 @@ const ExperienceForm = ({ onCancel }: ExperienceFormProps) => {
       ...data,
       user_id,
       type: "experience",
+      id: experience?.id,
     });
   };
 

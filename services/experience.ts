@@ -7,7 +7,9 @@ export const upsertExperience = async (payload: PortfolioExperience): Promise<Po
 
         const { error, data } = await supabase
             .from(supabaseTables.experiences)
-            .upsert(payload)
+            .upsert(payload, {
+                onConflict: 'id',
+            })
 
         if (error) {
             throw error;
