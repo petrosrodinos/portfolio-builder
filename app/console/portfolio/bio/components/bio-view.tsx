@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { getProfile } from "services/profile";
-import { FileText } from "lucide-react";
+import { FileText, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BioViewProps {
@@ -49,9 +49,17 @@ export default function BioView({ onEdit }: BioViewProps) {
         </div>
       )}
 
-      <Button onClick={onEdit} className="mt-4">
-        Edit Bio
-      </Button>
+      <div className="flex justify-start pt-4">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={onEdit}
+          className="flex items-center gap-2 hover:bg-gray-100"
+        >
+          <Pencil className="h-4 w-4" />
+          Edit Bio
+        </Button>
+      </div>
     </div>
   );
 }
