@@ -110,19 +110,19 @@ const EducationCard = ({ education }: ProjectCardProps) => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <MapPin className="h-4 w-4" />
-            <span>{education.location}</span>
+          <div className="space-y-2">
+            <h4 className="font-medium text-lg">{education.institution}</h4>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Calendar className="h-4 w-4" />
+              <span>
+                {education.start} - {education.finish || "Present"}
+              </span>
+            </div>
           </div>
-
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <span>
-              {education.start} - {education.finish || "Present"}
-            </span>
+          <div className="space-y-1">
+            <h5 className="font-medium">Description</h5>
+            <p className="text-muted-foreground whitespace-pre-line">{education.description}</p>
           </div>
-
-          <p className="text-muted-foreground whitespace-pre-line">{education.description}</p>
         </CardContent>
       </Card>
 
