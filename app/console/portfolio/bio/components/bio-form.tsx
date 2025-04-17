@@ -24,7 +24,11 @@ import { FileText, Trash2 } from "lucide-react";
 
 type bioFormValues = z.infer<typeof bioSchema>;
 
-export default function BioForm() {
+interface BioFormProps {
+  onCancel: () => void;
+}
+
+export default function BioForm({ onCancel }: BioFormProps) {
   const { user_id } = useAuthStore((state) => state);
 
   const form = useForm<bioFormValues>({
@@ -49,6 +53,7 @@ export default function BioForm() {
         description: "You have successfully saved your profile",
         duration: 1000,
       });
+      onCancel();
     },
     onError: (error) => {
       toast({
@@ -106,6 +111,7 @@ export default function BioForm() {
                 <Textarea
                   placeholder="Write a detailed bio..."
                   className="resize-none"
+                  rows={10}
                   {...field}
                 />
               </FormControl>
@@ -164,9 +170,14 @@ export default function BioForm() {
           )}
         />
 
-        <Button disabled={isPending} loading={isPending} type="submit">
-          Save Details
-        </Button>
+        <div className="flex gap-4">
+          <Button disabled={isPending} loading={isPending} type="submit">
+            Save Details
+          </Button>
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
       </form>
     </Form>
   );
