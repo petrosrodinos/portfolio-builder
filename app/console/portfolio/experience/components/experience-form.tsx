@@ -18,6 +18,7 @@ import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
+import { portfolioExperienceTypes } from "@/constants/supabase";
 
 interface ExperienceFormProps {
   onCancel: () => void;
@@ -64,7 +65,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
     mutate({
       ...data,
       user_id,
-      type: "experience",
+      type: portfolioExperienceTypes.experience,
       id: experience?.id,
     });
   };

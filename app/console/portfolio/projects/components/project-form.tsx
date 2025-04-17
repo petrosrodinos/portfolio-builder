@@ -12,28 +12,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ExperienceFormValues, experienceFormSchema } from "@/validation-schemas/portfolio";
+import {
+  ExperienceFormValues,
+  ProjectFormValues,
+  experienceFormSchema,
+  projectFormSchema,
+} from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
+import { portfolioExperienceTypes } from "@/constants/supabase";
 
-interface ExperienceFormProps {
+interface ProjectFormProps {
   onCancel: () => void;
-  experience?: PortfolioExperience;
+  project?: PortfolioExperience;
 }
 
-const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
+const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
   const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
 
-  const form = useForm<ExperienceFormValues>({
-    resolver: zodResolver(experienceFormSchema),
-    defaultValues: experience || {
+  const form = useForm<ProjectFormValues>({
+    resolver: zodResolver(projectFormSchema),
+    defaultValues: project || {
       title: "",
       company: "",
-      location: "",
+      link: "",
       start: "",
       finish: "",
       description: "",
@@ -44,11 +50,11 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
     mutationFn: (data: any) => upsertExperience(data),
     onSuccess: () => {
       toast({
-        title: "Experience saved successfully",
-        description: "You have successfully saved your experience",
+        title: "Project saved successfully",
+        description: "You have successfully saved your project",
         duration: 1000,
       });
-      queryClient.invalidateQueries({ queryKey: ["experiences"] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       onCancel();
     },
     onError: (error) => {
@@ -64,8 +70,8 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
     mutate({
       ...data,
       user_id,
-      type: "experience",
-      id: experience?.id,
+      type: portfolioExperienceTypes.project,
+      id: project?.id,
     });
   };
 
@@ -77,9 +83,9 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Job Title</FormLabel>
+              <FormLabel>Project Title</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. Software Engineer" {...field} />
+                <Input placeholder="e.g. E-commerce Website" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,12 +108,12 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
 
         <FormField
           control={form.control}
-          name="location"
+          name="link"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Location</FormLabel>
+              <FormLabel>Link</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. San Francisco, CA" {...field} />
+                <Input placeholder="e.g. https://www.google.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -152,7 +158,7 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Describe your role and responsibilities..."
+                  placeholder="Describe your project and your role..."
                   className="min-h-[100px]"
                   {...field}
                 />
@@ -164,7 +170,7 @@ const ProjectForm = ({ onCancel, experience }: ExperienceFormProps) => {
 
         <div className="flex gap-4">
           <Button loading={isPending} type="submit" className="flex-1">
-            Save Experience
+            Save Project
           </Button>
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel

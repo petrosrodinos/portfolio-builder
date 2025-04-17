@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Plus, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import ExperienceForm from "./project-form";
+import ProjectForm from "./project-form";
 import { useQuery } from "@tanstack/react-query";
 import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
@@ -17,7 +17,7 @@ const ProjectView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const { user_id } = useAuthStore((state) => state);
 
-  const { data: experiences, isLoading } = useQuery({
+  const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: () => getExperiences(user_id, portfolioExperienceTypes.project),
     enabled: !!user_id,
@@ -44,29 +44,29 @@ const ProjectView = () => {
       <div className="flex justify-end">
         <Button onClick={handleAdd} className="gap-2">
           <Plus className="h-4 w-4" />
-          Add Experience
+          Add Project
         </Button>
       </div>
 
       <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Experience</DialogTitle>
+            <DialogTitle>Add Project</DialogTitle>
           </DialogHeader>
-          <ExperienceForm onCancel={handleCancel} />
+          <ProjectForm onCancel={handleCancel} />
         </DialogContent>
       </Dialog>
 
-      {!experiences?.length ? (
+      {!projects?.length ? (
         <Alert>
           <Info className="h-4 w-4" />
-          <AlertTitle>No experiences yet</AlertTitle>
+          <AlertTitle>No projects yet</AlertTitle>
           <AlertDescription>
-            Add your work experience to showcase your professional journey.
+            Add your projects to showcase your professional journey.
           </AlertDescription>
         </Alert>
       ) : (
-        experiences.map((experience) => <ProjectCard key={experience.id} experience={experience} />)
+        projects.map((project) => <ProjectCard key={project.id} project={project} />)
       )}
     </div>
   );

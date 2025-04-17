@@ -35,7 +35,9 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} ${manrope.className}`}>
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <FontProvider>{children}</FontProvider>
+            {/* <FontProvider> */}
+            {children}
+            {/* </FontProvider> */}
           </ThemeProvider>
           <Toaster />
         </QueryProvider>

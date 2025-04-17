@@ -20,11 +20,21 @@ export const experienceFormSchema = z.object({
     company: z.string().min(3, "Company is required"),
     location: z.string().min(5, "Location is required"),
     start: z.string().min(1, "Start date is required").optional(),
-    finish: z.string().optional(),
+    finish: z.string().min(1, "Finish date is required").optional(),
     description: z.string().min(10, "Description is required"),
+});
+
+export const projectFormSchema = z.object({
+    title: z.string().min(5, "Title is required"),
+    company: z.string().min(3, "Company is required").optional(),
+    start: z.string().min(1, "Start date is required").optional(),
+    finish: z.string().min(1, "Finish date is required").optional(),
+    description: z.string().min(10, "Description is required"),
+    link: z.string().url("Invalid link").optional(),
+    image: z.any().optional(),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;
 export type BioFormValues = z.infer<typeof bioSchema>;
 export type ExperienceFormValues = z.infer<typeof experienceFormSchema>;
-
+export type ProjectFormValues = z.infer<typeof projectFormSchema>;
