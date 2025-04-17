@@ -5,6 +5,7 @@ import { useAuthStore } from "stores/auth";
 import { getProfile } from "services/profile";
 import { FileText, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 interface BioViewProps {
   onEdit: () => void;
@@ -19,7 +20,11 @@ export default function BioView({ onEdit }: BioViewProps) {
   });
 
   if (isLoading) {
-    return <div className="flex justify-center py-8">Loading...</div>;
+    return (
+      <div className="flex justify-center py-8">
+        <Spinner show={isLoading} />
+      </div>
+    );
   }
 
   return (

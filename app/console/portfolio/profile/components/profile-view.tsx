@@ -4,6 +4,7 @@ import { getProfile } from "services/profile";
 import { useAuthStore } from "stores/auth";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface ProfileViewProps {
   onEdit: () => void;
@@ -12,13 +13,17 @@ interface ProfileViewProps {
 export default function ProfileView({ onEdit }: ProfileViewProps) {
   const { user_id } = useAuthStore((state) => state);
 
-  const { data, isSuccess } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
   });
 
-  if (!isSuccess || !data) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-8">
+        <Spinner show={isLoading} />
+      </div>
+    );
   }
 
   return (
