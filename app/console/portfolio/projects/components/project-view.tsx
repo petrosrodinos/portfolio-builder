@@ -4,22 +4,22 @@ import React, { useState } from "react";
 import { Plus, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import ExperienceForm from "./experience-form";
+import ExperienceForm from "./project-form";
 import { useQuery } from "@tanstack/react-query";
 import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import ExperienceCard from "./experience-card";
+import ProjectCard from "./project-card";
 import { portfolioExperienceTypes } from "@/constants/supabase";
 
-const ExperienceView = () => {
+const ProjectView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const { user_id } = useAuthStore((state) => state);
 
   const { data: experiences, isLoading } = useQuery({
-    queryKey: ["experiences"],
-    queryFn: () => getExperiences(user_id, portfolioExperienceTypes.experience),
+    queryKey: ["projects"],
+    queryFn: () => getExperiences(user_id, portfolioExperienceTypes.project),
     enabled: !!user_id,
   });
 
@@ -66,12 +66,10 @@ const ExperienceView = () => {
           </AlertDescription>
         </Alert>
       ) : (
-        experiences.map((experience) => (
-          <ExperienceCard key={experience.id} experience={experience} />
-        ))
+        experiences.map((experience) => <ProjectCard key={experience.id} experience={experience} />)
       )}
     </div>
   );
 };
 
-export default ExperienceView;
+export default ProjectView;

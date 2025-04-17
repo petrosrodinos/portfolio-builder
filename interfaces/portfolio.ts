@@ -1,3 +1,5 @@
+import { PortfolioExperienceType } from "@/constants/supabase";
+
 export interface PortfolioProfileBio {
     email: string;
     phone?: string;
@@ -11,7 +13,7 @@ export interface PortfolioProfileBio {
 export interface PortfolioExperience {
     id?: string;
     user_id: string;
-    type: 'experience' | 'project' | 'education';
+    type: PortfolioExperienceType;
     title: string;
     description: string;
     company: string;
@@ -21,3 +23,4 @@ export interface PortfolioExperience {
     image?: string | File;
     link?: string;
 }
+
