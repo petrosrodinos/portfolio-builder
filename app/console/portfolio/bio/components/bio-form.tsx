@@ -172,7 +172,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
 
         <div className="flex gap-4">
           <Button disabled={isPending} loading={isPending} type="submit">
-            Save Details
+            Save
           </Button>
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
