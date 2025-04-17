@@ -12,3 +12,6 @@ export const userSchema = z.object({
     }),
     avatar: z.any().optional(),
 });
+
+
+export type ProfileFormValues = z.infer<typeof userSchema>;

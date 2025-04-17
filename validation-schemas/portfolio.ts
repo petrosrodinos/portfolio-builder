@@ -14,3 +14,17 @@ export const bioSchema = z.object({
     bio: z.string().min(50, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long"),
     resume: z.any().optional(),
 });
+
+export const experienceFormSchema = z.object({
+    title: z.string().min(5, "Title is required"),
+    company: z.string().min(3, "Company is required"),
+    location: z.string().min(5, "Location is required"),
+    start: z.string().min(1, "Start date is required").optional(),
+    finish: z.string().optional(),
+    description: z.string().min(10, "Description is required"),
+});
+
+export type ProfileFormValues = z.infer<typeof profileSchema>;
+export type BioFormValues = z.infer<typeof bioSchema>;
+export type ExperienceFormValues = z.infer<typeof experienceFormSchema>;
+

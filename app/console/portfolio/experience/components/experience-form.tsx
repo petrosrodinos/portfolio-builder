@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,17 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-const experienceFormSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  company: z.string().min(1, "Company is required"),
-  location: z.string().min(1, "Location is required"),
-  start: z.string().min(1, "Start date is required"),
-  finish: z.string().optional(),
-  description: z.string().min(1, "Description is required"),
-});
-
-type ExperienceFormValues = z.infer<typeof experienceFormSchema>;
+import { ExperienceFormValues, experienceFormSchema } from "@/validation-schemas/portfolio";
 
 const ExperienceForm = () => {
   const form = useForm<ExperienceFormValues>({

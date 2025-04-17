@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -15,14 +14,12 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { bioSchema } from "validation-schemas/portfolio";
+import { BioFormValues, bioSchema } from "validation-schemas/portfolio";
 import { useAuthStore } from "stores/auth";
 import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getProfile, updateProfile } from "services/profile";
 import { FileText, Trash2 } from "lucide-react";
-
-type bioFormValues = z.infer<typeof bioSchema>;
 
 interface BioFormProps {
   onCancel: () => void;
@@ -31,7 +28,7 @@ interface BioFormProps {
 export default function BioForm({ onCancel }: BioFormProps) {
   const { user_id } = useAuthStore((state) => state);
 
-  const form = useForm<bioFormValues>({
+  const form = useForm<BioFormValues>({
     resolver: zodResolver(bioSchema),
     defaultValues: {
       role: "",
@@ -64,7 +61,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
     },
   });
 
-  function onSubmit(data: bioFormValues) {
+  function onSubmit(data: BioFormValues) {
     mutate({
       ...data,
       user_id,

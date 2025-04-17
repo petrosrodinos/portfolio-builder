@@ -21,27 +21,24 @@ import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
-import { Pencil } from "lucide-react";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
-
-const defaultValues: Partial<ProfileFormValues> = {
-  email: "",
-  phone: "",
-  address: "",
-  welcome_message: "",
-};
 
 interface ProfileFormProps {
   onCancel: () => void;
 }
 
 export default function ProfileForm({ onCancel }: ProfileFormProps) {
-  const { user_id, updateUser: updateStoreUser } = useAuthStore((state) => state);
+  const { user_id } = useAuthStore((state) => state);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
-    defaultValues,
+    defaultValues: {
+      email: "",
+      phone: "",
+      address: "",
+      welcome_message: "",
+    },
     mode: "onChange",
   });
 

@@ -1,8 +1,9 @@
 import { supabase } from "@/lib/supabase";
 import { supabaseTables, supabaseBuckets } from "@/constants/supabase";
 import { uploadFile } from "./storage";
+import { PortfolioProfileBio } from "interfaces/portfolio";
 
-export const updateProfile = async (user_id: string, payload: Partial<any>): Promise<any> => {
+export const updateProfile = async (user_id: string, payload: PortfolioProfileBio): Promise<PortfolioProfileBio> => {
     try {
         let fileUrl = payload.resume as string;
 
@@ -26,7 +27,7 @@ export const updateProfile = async (user_id: string, payload: Partial<any>): Pro
     }
 }
 
-export const getProfile = async (user_id: string): Promise<any> => {
+export const getProfile = async (user_id: string): Promise<PortfolioProfileBio> => {
     try {
         const { data, error } = await supabase
             .from(supabaseTables.profiles)

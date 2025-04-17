@@ -43,7 +43,7 @@ const defaultValues: Partial<ProfileFormValues> = {
   date_of_birth: null,
 };
 
-export default function ProfileForm() {
+export default function UserProfileForm() {
   const router = useRouter();
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
