@@ -13,6 +13,7 @@ export const portfolioExperienceTypes = {
     experience: 'experience',
     project: 'project',
     education: 'education',
+    service: 'service',
 } as const;
 
 export type PortfolioExperienceType = typeof portfolioExperienceTypes[keyof typeof portfolioExperienceTypes];

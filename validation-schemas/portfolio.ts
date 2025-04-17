@@ -42,8 +42,15 @@ export const educationFormSchema = z.object({
     description: z.string().min(10, "Description is required").optional(),
 });
 
+export const serviceFormSchema = z.object({
+    title: z.string().min(5, "Title is required"),
+    description: z.string().min(10, "Description is required"),
+    price: z.string().min(0, "Price is required").optional(),
+});
+
 export type ProfileFormValues = z.infer<typeof profileSchema>;
 export type BioFormValues = z.infer<typeof bioSchema>;
 export type ExperienceFormValues = z.infer<typeof experienceFormSchema>;
 export type ProjectFormValues = z.infer<typeof projectFormSchema>;
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
+export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
