@@ -3,10 +3,11 @@ import { supabase } from "@/lib/supabase";
 
 export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: string, fileName: string) => {
     try {
+        const name = `${fileName}-${user_id}-${Date.now()}`;
         const { data, error } = await supabase
             .storage
             .from(bucket)
-            .upload(`${fileName}-${user_id}-${Date.now()}`, file, {
+            .upload(name, file, {
                 cacheControl: '3600',
                 upsert: true
             });
@@ -20,9 +21,28 @@ export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: st
             .from(SupabaseBuckets.files)
             .getPublicUrl(data.path);
 
-        return publicUrl;
+        return {
+            name,
+            url: publicUrl
+        }
     } catch (error) {
         console.error('Error uploading file', error);
+        throw error;
+    }
+}
+
+export const deleteFile = async (bucket: SupabaseBucket, name: string) => {
+    try {
+        const { error } = await supabase
+            .storage
+            .from(bucket)
+            .remove([name]);
+
+        if (error) {
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error deleting file', error);
         throw error;
     }
 }

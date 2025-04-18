@@ -45,6 +45,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
   const { data, isSuccess } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
+    enabled: !!user_id,
   });
 
   const { mutate, isPending } = useMutation({

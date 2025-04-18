@@ -17,6 +17,7 @@ export default function BioView({ onEdit }: BioViewProps) {
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
+    enabled: !!user_id,
   });
 
   if (isLoading) {
@@ -43,7 +44,7 @@ export default function BioView({ onEdit }: BioViewProps) {
         <div className="space-y-2">
           <h3 className="text-lg font-medium">Resume</h3>
           <a
-            href={data.resume}
+            href={data.resume.url as string}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-blue-600 hover:text-blue-800"

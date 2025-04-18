@@ -9,7 +9,7 @@ export const profileSchema = z.object({
 
 export const bioSchema = z.object({
     role: z.string().min(2, "Role is required"),
-    bio: z.string().min(50, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long"),
+    bio: z.string().min(5, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long"),
     resume: z.any().optional(),
 });
 

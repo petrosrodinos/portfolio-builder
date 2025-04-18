@@ -1,19 +1,28 @@
 import { supabase } from "@/lib/supabase";
 import { SupabaseTables, SupabaseBuckets } from "@/constants/supabase";
-import { uploadFile } from "./storage";
-import { PortfolioProfileBio } from "interfaces/portfolio";
+import { uploadFile, deleteFile } from "./storage";
+import { PortfolioProfileBio, UpdatePortfolioProfileBio, PortfolioResume } from "interfaces/portfolio";
 
-export const upsertProfile = async (user_id: string, payload: PortfolioProfileBio): Promise<PortfolioProfileBio> => {
+export const upsertProfile = async (user_id: string, payload: UpdatePortfolioProfileBio): Promise<PortfolioProfileBio> => {
     try {
-        let fileUrl = payload.resume as string;
+        let resume = payload.resume as PortfolioResume;
 
-        if (payload.resume && typeof payload.resume !== 'string') {
-            fileUrl = await uploadFile(SupabaseBuckets.files, payload.resume as File, user_id, 'resume');
+        console.log('payload', payload);
+
+        if (payload.resume_to_delete) {
+            await deleteFile(SupabaseBuckets.files, payload.resume_to_delete.name);
         }
 
+        if (payload.resume && !('url' in payload.resume)) {
+            resume = await uploadFile(SupabaseBuckets.files, payload.resume as File, user_id, 'resume');
+        }
+
+        delete payload.resume_to_delete;
         const { error, data } = await supabase
             .from(SupabaseTables.profiles)
-            .upsert({ ...payload, user_id, resume: fileUrl }, { onConflict: 'user_id' })
+            .upsert({
+                ...payload, user_id, resume
+            }, { onConflict: 'user_id' })
 
 
         if (error) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,17 @@ import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getProfile, upsertProfile } from "services/profile";
 import { FileText, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { PortfolioResume } from "interfaces/portfolio";
 
 interface BioFormProps {
   onCancel: () => void;
@@ -27,6 +38,8 @@ interface BioFormProps {
 
 export default function BioForm({ onCancel }: BioFormProps) {
   const { user_id } = useAuthStore((state) => state);
+  const [fileToDelete, setFileToDelete] = useState<PortfolioResume | null>(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const form = useForm<BioFormValues>({
     resolver: zodResolver(bioSchema),
@@ -40,6 +53,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
   const { data, isSuccess } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
+    enabled: !!user_id,
   });
 
   const { mutate, isPending } = useMutation({
@@ -65,19 +79,25 @@ export default function BioForm({ onCancel }: BioFormProps) {
     mutate({
       ...data,
       user_id,
+      resume_to_delete: fileToDelete,
     });
   }
 
+  const handleFilePermanentDelete = () => {
+    setFileToDelete(data?.resume);
+    // delete data?.resume;
+    form.setValue("resume", null);
+    setShowDeleteConfirmation(false);
+  };
+
   const handleFileDelete = () => {
     form.setValue("resume", null);
-    delete data.resume;
   };
 
   useEffect(() => {
     if (isSuccess && data) {
       form.reset({
         ...data,
-        resume: undefined,
       });
     }
   }, [data, isSuccess]);
@@ -125,7 +145,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
               <FormLabel>Resume</FormLabel>
               <FormControl>
                 <div className="flex flex-col gap-4">
-                  {!data?.resume && (
+                  {(fileToDelete || !data?.resume) && (
                     <Input
                       type="file"
                       accept=".pdf,.doc,.docx"
@@ -137,10 +157,10 @@ export default function BioForm({ onCancel }: BioFormProps) {
                       ref={ref}
                     />
                   )}
-                  {data?.resume && (
+                  {data?.resume && !fileToDelete && (
                     <div className="flex items-center gap-4">
                       <a
-                        href={data.resume as string}
+                        href={data.resume.url as string}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
@@ -150,7 +170,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
                       </a>
                       <Button
                         type="button"
-                        onClick={handleFileDelete}
+                        onClick={() => setShowDeleteConfirmation(true)}
                         variant="destructive"
                         size="sm"
                         className="flex items-center gap-2"
@@ -175,6 +195,26 @@ export default function BioForm({ onCancel }: BioFormProps) {
             Cancel
           </Button>
         </div>
+
+        <AlertDialog open={showDeleteConfirmation} onOpenChange={setShowDeleteConfirmation}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your resume.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleFilePermanentDelete}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </form>
     </Form>
   );

@@ -1,5 +1,16 @@
 import { PortfolioExperienceType, PortfolioSkillsType } from "@/constants/supabase";
 
+export interface UpdatePortfolioProfileBio {
+    email: string;
+    phone?: string;
+    address: string;
+    welcome_message?: string;
+    role: string;
+    bio: string;
+    resume?: PortfolioResume | File;
+    resume_to_delete?: PortfolioResume
+}
+
 export interface PortfolioProfileBio {
     email: string;
     phone?: string;
@@ -7,7 +18,12 @@ export interface PortfolioProfileBio {
     welcome_message?: string;
     role: string;
     bio: string;
-    resume?: string | File;
+    resume?: PortfolioResume;
+}
+
+export interface PortfolioResume {
+    name: string;
+    url: string;
 }
 
 export interface PortfolioExperience {
