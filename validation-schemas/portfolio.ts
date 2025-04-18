@@ -56,6 +56,11 @@ export const skillFormSchema = z.object({
     level: z.string().min(1, "Level is required"),
 });
 
+export const languageFormSchema = z.object({
+    title: z.string().min(1, "Language is required"),
+    level: z.string().min(1, "Level is required"),
+});
+
 
 
 
@@ -67,3 +72,4 @@ export type EducationFormValues = z.infer<typeof educationFormSchema>;
 export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 export type LinkFormValues = z.infer<typeof linkFormSchema>;
 export type SkillFormValues = z.infer<typeof skillFormSchema>;
+export type LanguageFormValues = z.infer<typeof languageFormSchema>;

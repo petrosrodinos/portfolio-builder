@@ -33,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Countries } from "@/constants/dropdowns/countries";
+import { CountriesOptions } from "@/constants/dropdowns/countries";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 
@@ -152,7 +152,7 @@ export default function UserProfileForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Countries.map((country) => (
+                  {CountriesOptions.map((country) => (
                     <SelectItem key={country.value} value={country.value}>
                       {country.label}
                     </SelectItem>
