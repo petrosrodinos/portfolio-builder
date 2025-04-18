@@ -24,7 +24,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
 import { portfolioSkillsTypes } from "@/constants/supabase";
-import { socialMediaOptions } from "@/constants/social_media";
+import { skillOptions, skillLevelOptions } from "@/constants/skills";
 import { upsertSkill } from "services/skills";
 
 interface SkillFormProps {
@@ -79,7 +79,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Skill Type</FormLabel>
+              <FormLabel>Skill</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -87,17 +87,36 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {socialMediaOptions.map((option) => {
-                    const Icon = option.icon;
-                    return (
-                      <SelectItem key={option.value} value={option.value}>
-                        <div className="flex items-center gap-2">
-                          <Icon className="h-4 w-4" />
-                          <span>{option.label}</span>
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
+                  {skillOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="level"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Skill Level</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select skill level" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {skillLevelOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
