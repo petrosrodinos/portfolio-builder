@@ -78,15 +78,11 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
     }
   }, [data, isSuccess]);
 
-  useEffect(() => {
-    if (form.formState.errors) {
-      console.log(form.formState.errors);
-    }
-  }, [form.formState.errors]);
-  // const { fields, append } = useFieldArray({
-  //   name: "urls",
-  //   control: form.control,
-  // });
+  // useEffect(() => {
+  //   if (form.formState.errors) {
+  //     console.log(form.formState.errors);
+  //   }
+  // }, [form.formState.errors]);
 
   return (
     <div className="space-y-6">
