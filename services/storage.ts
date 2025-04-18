@@ -1,4 +1,4 @@
-import { SupabaseBucket, supabaseBuckets } from "@/constants/supabase";
+import { SupabaseBucket, SupabaseBuckets } from "@/constants/supabase";
 import { supabase } from "@/lib/supabase";
 
 export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: string, fileName: string) => {
@@ -17,7 +17,7 @@ export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: st
 
         const { data: { publicUrl } } = supabase
             .storage
-            .from(supabaseBuckets.files)
+            .from(SupabaseBuckets.files)
             .getPublicUrl(data.path);
 
         return publicUrl;

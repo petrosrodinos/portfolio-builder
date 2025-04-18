@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
-import { portfolioSkillsTypes } from "@/constants/supabase";
+import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { getSkills } from "services/skills";
 import { Spinner } from "@/components/ui/spinner";
 import LinkCard from "./link-card";
@@ -21,7 +21,7 @@ const LinkView = () => {
 
   const { data: links = [], isLoading } = useQuery({
     queryKey: ["links", user_id],
-    queryFn: () => getSkills(user_id, portfolioSkillsTypes.link),
+    queryFn: () => getSkills(user_id, PortfolioSkillsTypes.link),
     enabled: !!user_id,
   });
 

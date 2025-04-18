@@ -1,12 +1,12 @@
 import { supabase } from '@/lib/supabase';
 import { NewUser, User } from 'interfaces/user';
-import { supabaseBuckets, supabaseTables } from '@/constants/supabase';
+import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { uploadFile } from './storage';
 
 export const createUser = async (payload: NewUser): Promise<User> => {
     try {
         const { error, data } = await supabase
-            .from(supabaseTables.users)
+            .from(SupabaseTables.users)
             .insert(payload).select().single();
 
         console.log('data-create', data);
@@ -28,7 +28,7 @@ export const createUser = async (payload: NewUser): Promise<User> => {
 export const getUser = async (user_id: string): Promise<User> => {
     try {
         const { error, data } = await supabase
-            .from(supabaseTables.users)
+            .from(SupabaseTables.users)
             .select('*')
             .eq('user_id', user_id)
             .single();
@@ -51,11 +51,11 @@ export const updateUser = async (user_id: string, payload: Partial<User>): Promi
         let avatarUrl = payload.avatar as string;
 
         if (payload.avatar && typeof payload.avatar !== 'string') {
-            avatarUrl = await uploadFile(supabaseBuckets.files, payload.avatar as File, user_id, 'avatar');
+            avatarUrl = await uploadFile(SupabaseBuckets.files, payload.avatar as File, user_id, 'avatar');
         }
 
         const { error, data } = await supabase
-            .from(supabaseTables.users)
+            .from(SupabaseTables.users)
             .update({ ...payload, avatar: avatarUrl })
             .eq('user_id', user_id)
             .select()

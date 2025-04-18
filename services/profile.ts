@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { supabaseTables, supabaseBuckets } from "@/constants/supabase";
+import { SupabaseTables, SupabaseBuckets } from "@/constants/supabase";
 import { uploadFile } from "./storage";
 import { PortfolioProfileBio } from "interfaces/portfolio";
 
@@ -8,11 +8,11 @@ export const upsertProfile = async (user_id: string, payload: PortfolioProfileBi
         let fileUrl = payload.resume as string;
 
         if (payload.resume && typeof payload.resume !== 'string') {
-            fileUrl = await uploadFile(supabaseBuckets.files, payload.resume as File, user_id, 'resume');
+            fileUrl = await uploadFile(SupabaseBuckets.files, payload.resume as File, user_id, 'resume');
         }
 
         const { error, data } = await supabase
-            .from(supabaseTables.profiles)
+            .from(SupabaseTables.profiles)
             .upsert({ ...payload, user_id, resume: fileUrl }, { onConflict: 'user_id' })
 
 
@@ -30,7 +30,7 @@ export const upsertProfile = async (user_id: string, payload: PortfolioProfileBi
 export const getProfile = async (user_id: string): Promise<PortfolioProfileBio> => {
     try {
         const { data, error } = await supabase
-            .from(supabaseTables.profiles)
+            .from(SupabaseTables.profiles)
             .select('*')
             .eq('user_id', user_id)
             .single();

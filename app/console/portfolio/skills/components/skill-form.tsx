@@ -23,7 +23,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
-import { portfolioSkillsTypes } from "@/constants/supabase";
+import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 import { upsertSkill } from "services/skills";
 
@@ -66,7 +66,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
   const onSubmit = (data: SkillFormValues) => {
     mutate({
       ...data,
-      type: portfolioSkillsTypes.skill,
+      type: PortfolioSkillsTypes.skill,
       id: skill?.id,
     });
   };

@@ -24,7 +24,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
-import { portfolioSkillsTypes } from "@/constants/supabase";
+import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { upsertSkill } from "services/skills";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 
@@ -67,7 +67,7 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
   const onSubmit = (data: LinkFormValues) => {
     mutate({
       ...data,
-      type: portfolioSkillsTypes.link,
+      type: PortfolioSkillsTypes.link,
       id: link?.id,
     });
   };

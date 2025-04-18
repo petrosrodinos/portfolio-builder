@@ -1,22 +1,22 @@
-export const supabaseTables = {
+export const SupabaseTables = {
     users: 'users',
     profiles: 'profiles',
     experiences: 'experiences',
     skills: 'skills',
 } as const;
 
-export const supabaseBuckets = {
+export const SupabaseBuckets = {
     files: 'files',
 } as const;
 
-export const portfolioExperienceTypes = {
+export const PortfolioExperienceTypes = {
     experience: 'experience',
     project: 'project',
     education: 'education',
     service: 'service',
 } as const;
 
-export const portfolioSkillsTypes = {
+export const PortfolioSkillsTypes = {
     skill: 'skill',
     link: 'link',
     language: 'language',
@@ -24,12 +24,12 @@ export const portfolioSkillsTypes = {
     award: 'award',
 } as const;
 
-export type PortfolioExperienceType = typeof portfolioExperienceTypes[keyof typeof portfolioExperienceTypes];
+export type PortfolioExperienceType = typeof PortfolioExperienceTypes[keyof typeof PortfolioExperienceTypes];
 
-export type SupabaseTable = keyof typeof supabaseTables;
+export type SupabaseTable = keyof typeof SupabaseTables;
 
-export type SupabaseBucket = keyof typeof supabaseBuckets;
+export type SupabaseBucket = keyof typeof SupabaseBuckets;
 
-export type PortfolioSkillsType = typeof portfolioSkillsTypes[keyof typeof portfolioSkillsTypes];
+export type PortfolioSkillsType = typeof PortfolioSkillsTypes[keyof typeof PortfolioSkillsTypes];
 
 

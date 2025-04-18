@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
 import { formatAuthUser } from './utils';
-import { supabaseTables } from '@/constants/supabase';
+import { SupabaseTables } from '@/constants/supabase';
 
 export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser | any> => {
 
@@ -17,7 +17,7 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
 
         if (data && data.user) {
             const { data: userData, error: userError } = await supabase
-                .from(supabaseTables.users)
+                .from(SupabaseTables.users)
                 .select('*')
                 .eq('user_id', data.user.id)
                 .single();

@@ -10,7 +10,7 @@ import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { portfolioExperienceTypes } from "@/constants/supabase";
+import { PortfolioExperienceTypes } from "@/constants/supabase";
 import ServiceCard from "./service-card";
 
 const ServiceView = () => {

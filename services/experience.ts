@@ -1,12 +1,12 @@
 import { supabase } from "@/lib/supabase";
-import { PortfolioExperienceType, supabaseTables } from "@/constants/supabase";
+import { PortfolioExperienceType, SupabaseTables } from "@/constants/supabase";
 import { PortfolioExperience } from "interfaces/portfolio";
 
 export const upsertExperience = async (payload: PortfolioExperience): Promise<PortfolioExperience> => {
     try {
 
         const { error, data } = await supabase
-            .from(supabaseTables.experiences)
+            .from(SupabaseTables.experiences)
             .upsert(payload, {
                 onConflict: 'id',
             })
@@ -25,7 +25,7 @@ export const upsertExperience = async (payload: PortfolioExperience): Promise<Po
 export const getExperiences = async (user_id: string, type: PortfolioExperienceType): Promise<PortfolioExperience[]> => {
     try {
         const { data, error } = await supabase
-            .from(supabaseTables.experiences)
+            .from(SupabaseTables.experiences)
             .select('*')
             .eq('user_id', user_id).eq('type', type)
 
@@ -45,7 +45,7 @@ export const getExperiences = async (user_id: string, type: PortfolioExperienceT
 export const deleteExperience = async (id: string): Promise<void> => {
     try {
         const { error } = await supabase
-            .from(supabaseTables.experiences)
+            .from(SupabaseTables.experiences)
             .delete()
             .eq('id', id)
 

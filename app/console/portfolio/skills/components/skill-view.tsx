@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
-import { portfolioSkillsTypes } from "@/constants/supabase";
+import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { getSkills } from "services/skills";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -21,7 +21,7 @@ const SkillView = () => {
 
   const { data: skills = [], isLoading } = useQuery({
     queryKey: ["skills", user_id],
-    queryFn: () => getSkills(user_id, portfolioSkillsTypes.skill),
+    queryFn: () => getSkills(user_id, PortfolioSkillsTypes.skill),
     enabled: !!user_id,
   });
 

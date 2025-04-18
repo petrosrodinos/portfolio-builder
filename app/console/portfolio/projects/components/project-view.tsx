@@ -11,7 +11,7 @@ import { useAuthStore } from "stores/auth";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProjectCard from "./project-card";
-import { portfolioExperienceTypes } from "@/constants/supabase";
+import { PortfolioExperienceTypes } from "@/constants/supabase";
 
 const ProjectView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

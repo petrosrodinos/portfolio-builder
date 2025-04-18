@@ -17,7 +17,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { PortfolioExperience } from "interfaces/portfolio";
-import { portfolioExperienceTypes } from "@/constants/supabase";
+import { PortfolioExperienceTypes } from "@/constants/supabase";
 
 interface ExperienceFormProps {
   onCancel: () => void;

@@ -18,7 +18,7 @@ import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
-import { portfolioExperienceTypes } from "@/constants/supabase";
+import { PortfolioExperienceTypes } from "@/constants/supabase";
 
 interface ServiceFormProps {
   onCancel: () => void;
