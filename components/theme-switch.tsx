@@ -14,11 +14,11 @@ import { useTheme } from "next-themes";
 export function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    const themeColor = theme === "dark" ? "#020817" : "#fff";
-    const metaThemeColor = document.querySelector("meta[name='theme-color']");
-    if (metaThemeColor) metaThemeColor.setAttribute("content", themeColor);
-  }, [theme]);
+  // useEffect(() => {
+  //   const themeColor = theme === "dark" ? "#020817" : "#fff";
+  //   const metaThemeColor = document.querySelector("meta[name='theme-color']");
+  //   if (metaThemeColor) metaThemeColor.setAttribute("content", themeColor);
+  // }, [theme]);
 
   return (
     <DropdownMenu modal={false}>

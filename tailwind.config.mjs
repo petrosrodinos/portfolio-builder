@@ -12,7 +12,7 @@ export default {
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
-	safelist: fonts.map((font) => `font-${font}`),
+	safelist: fonts.map((font) => `font-${font}`).concat(['stone-light', 'stone-dark', 'zinc-light', 'zinc-dark', 'light', 'dark']),
 	theme: {
 		container: {
 			center: 'true',

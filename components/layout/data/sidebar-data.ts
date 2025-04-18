@@ -99,11 +99,11 @@ export const sidebarData: SidebarData = {
               url: '/console/portfolio/appearance',
               icon: IconPalette,
             },
-            {
-              title: 'Display',
-              url: '/console/portfolio/display',
-              icon: IconBrowserCheck,
-            },
+            // {
+            //   title: 'Display',
+            //   url: '/console/portfolio/display',
+            //   icon: IconBrowserCheck,
+            // },
           ],
         },
         {

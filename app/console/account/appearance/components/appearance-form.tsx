@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,45 +18,48 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useFont } from "@/context/font-context";
 import { useTheme } from "next-themes";
-
-const appearanceFormSchema = z.object({
-  theme: z.enum(["light", "dark"], {
-    required_error: "Please select a theme.",
-  }),
-  font: z.enum(fonts, {
-    invalid_type_error: "Select a font",
-    required_error: "Please select a font.",
-  }),
-});
-
-type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
+import {
+  accountAppearanceFormSchema,
+  AccountAppearanceFormValues,
+} from "@/validation-schemas/appearance";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function AppearanceForm() {
   const { font, setFont } = useFont();
   const { theme, setTheme } = useTheme();
 
-  // This can come from your database or API.
-  const defaultValues: Partial<AppearanceFormValues> = {
-    theme: theme as "light" | "dark",
-    font,
-  };
-
-  const form = useForm<AppearanceFormValues>({
-    resolver: zodResolver(appearanceFormSchema),
-    defaultValues,
+  const form = useForm<AccountAppearanceFormValues>({
+    resolver: zodResolver(accountAppearanceFormSchema),
+    defaultValues: {
+      font,
+      theme: theme as "light" | "dark",
+      color_scheme: theme as
+        | "light"
+        | "dark"
+        | "zinc-light"
+        | "zinc-dark"
+        | "stone-light"
+        | "stone-dark"
+        | "system",
+    },
   });
 
-  function onSubmit(data: AppearanceFormValues) {
-    if (data.font != font) setFont(data.font);
-    if (data.theme != theme) setTheme(data.theme);
+  function onSubmit(data: AccountAppearanceFormValues) {
+    console.log(data);
+    if (data.font !== font) setFont(data.font);
+
+    // const newTheme = `${data.color_scheme}-${data.theme}`;
+    setTheme(data.color_scheme);
 
     toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: "Console appearance updated",
+      description: "Your console appearance has been updated.",
     });
   }
 
@@ -101,7 +103,7 @@ export function AppearanceForm() {
           render={({ field }) => (
             <FormItem className="space-y-1">
               <FormLabel>Theme</FormLabel>
-              <FormDescription>Select the theme for the dashboard.</FormDescription>
+              <FormDescription>Select the theme for your console.</FormDescription>
               <FormMessage />
               <RadioGroup
                 onValueChange={field.onChange}
@@ -157,6 +159,34 @@ export function AppearanceForm() {
                   </FormLabel>
                 </FormItem>
               </RadioGroup>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="color_scheme"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Color Scheme</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Select a color scheme" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="light">Default</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="zinc-light">Zinc Light</SelectItem>
+                  <SelectItem value="zinc-dark">Zinc Dark</SelectItem>
+                  <SelectItem value="stone-light">Stone Light</SelectItem>
+                  <SelectItem value="stone-dark">Stone Dark</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>Select the color scheme for your console.</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />

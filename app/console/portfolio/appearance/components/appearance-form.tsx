@@ -21,7 +21,7 @@ import { useFont } from "@/context/font-context";
 import { useTheme } from "next-themes";
 
 const appearanceFormSchema = z.object({
-  theme: z.enum(["light", "dark"], {
+  color_scheme: z.enum(["light", "dark"], {
     required_error: "Please select a theme.",
   }),
   font: z.enum(fonts, {
@@ -38,7 +38,7 @@ export function AppearanceForm() {
 
   // This can come from your database or API.
   const defaultValues: Partial<AppearanceFormValues> = {
-    theme: theme as "light" | "dark",
+    color_scheme: theme as "light" | "dark",
     font,
   };
 
@@ -49,15 +49,10 @@ export function AppearanceForm() {
 
   function onSubmit(data: AppearanceFormValues) {
     if (data.font != font) setFont(data.font);
-    if (data.theme != theme) setTheme(data.theme);
 
     toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: "Appearance updated",
+      description: "Your portfolio appearance has been updated.",
     });
   }
 
@@ -97,11 +92,11 @@ export function AppearanceForm() {
         />
         <FormField
           control={form.control}
-          name="theme"
+          name="color_scheme"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel>Theme</FormLabel>
-              <FormDescription>Select the theme for the dashboard.</FormDescription>
+              <FormLabel>Color Scheme</FormLabel>
+              <FormDescription>Select the color scheme for your portfolio.</FormDescription>
               <FormMessage />
               <RadioGroup
                 onValueChange={field.onChange}

@@ -29,7 +29,7 @@ export const FontProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     applyFont(savedFont ?? fonts[0]);
-  }, []);
+  }, [font]);
 
   const setFont = (font: Font) => {
     localStorage?.setItem("font", font);
