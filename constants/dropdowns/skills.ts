@@ -1,4 +1,6 @@
-export const SkillOptions = [
+import { DropdownOption } from "interfaces/dropdown";
+
+export const SkillOptions: DropdownOption[] = [
     { value: 'react', label: 'React' },
     { value: 'javascript', label: 'JavaScript' },
     { value: 'typescript', label: 'TypeScript' },
@@ -16,7 +18,7 @@ export const SkillOptions = [
     { value: 'git', label: 'Git' },
 ];
 
-export const SkillLevelOptions = [
+export const SkillLevelOptions: DropdownOption[] = [
     { value: 'beginner', label: 'Beginner' },
     { value: 'intermediate', label: 'Intermediate' },
     { value: 'expert', label: 'Expert' },

@@ -90,7 +90,7 @@ const LanguageForm = ({ onCancel, language }: LanguageFormProps) => {
                 </FormControl>
                 <SelectContent>
                   {LanguagesOptions.map((option) => {
-                    const Icon = icons[option.flagCode];
+                    const Icon = icons[option.iconCode];
                     return (
                       <SelectItem key={option.value} value={option.value}>
                         <div className="flex items-center gap-2">

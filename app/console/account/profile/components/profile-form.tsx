@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
@@ -15,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userSchema } from "validation-schemas/user";
+import { ProfileFormValues, userSchema } from "validation-schemas/user";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -34,14 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CountriesOptions } from "@/constants/dropdowns/countries";
-
-type ProfileFormValues = z.infer<typeof userSchema>;
-
-const defaultValues: Partial<ProfileFormValues> = {
-  full_name: "",
-  country: "GR",
-  date_of_birth: null,
-};
+import * as icons from "country-flag-icons/react/3x2";
 
 export default function UserProfileForm() {
   const router = useRouter();
@@ -51,7 +43,11 @@ export default function UserProfileForm() {
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSchema),
-    defaultValues,
+    defaultValues: {
+      full_name: "",
+      country: "GR",
+      date_of_birth: null,
+    },
     mode: "onChange",
   });
 
@@ -152,11 +148,17 @@ export default function UserProfileForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {CountriesOptions.map((country) => (
-                    <SelectItem key={country.value} value={country.value}>
-                      {country.label}
-                    </SelectItem>
-                  ))}
+                  {CountriesOptions.map((option) => {
+                    const Icon = icons[option.iconCode];
+                    return (
+                      <SelectItem key={option.value} value={option.value}>
+                        <div className="flex items-center gap-2">
+                          <Icon className="h-4 w-4" />
+                          <span>{option.label}</span>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
               <FormMessage />
