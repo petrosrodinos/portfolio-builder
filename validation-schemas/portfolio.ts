@@ -53,6 +53,11 @@ export const linkFormSchema = z.object({
     link: z.string().url("Invalid link"),
 });
 
+export const skillFormSchema = z.object({
+    title: z.string().min(5, "Title is required"),
+    level: z.string().min(1, "Level is required"),
+});
+
 
 
 
@@ -63,3 +68,4 @@ export type ProjectFormValues = z.infer<typeof projectFormSchema>;
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
 export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
 export type LinkFormValues = z.infer<typeof linkFormSchema>;
+export type SkillFormValues = z.infer<typeof skillFormSchema>;
