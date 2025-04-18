@@ -8,9 +8,7 @@ export const accountAppearanceFormSchema = z.object({
         required_error: "Please select a font.",
     }),
     theme: z.any().optional(),
-    color_scheme: z.enum(["light", "dark", "zinc-light", "zinc-dark", "stone-light", "stone-dark", "system"], {
-        required_error: "Please select a color scheme.",
-    }),
+    color_scheme: z.any().optional(),
 });
 
 export type AccountAppearanceFormValues = z.infer<typeof accountAppearanceFormSchema>;

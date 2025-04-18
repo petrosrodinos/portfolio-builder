@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth zinc_dark">
       <head></head>
       <body className={`${inter.className} ${manrope.className}`}>
         <QueryProvider>

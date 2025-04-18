@@ -57,6 +57,8 @@ export function AppearanceForm() {
     // const newTheme = `${data.color_scheme}-${data.theme}`;
     setTheme(data.color_scheme);
 
+    // document.documentElement.setAttribute("data-theme", data.color_scheme);
+
     toast({
       title: "Console appearance updated",
       description: "Your console appearance has been updated.",
@@ -179,8 +181,8 @@ export function AppearanceForm() {
                   <SelectItem value="light">Default</SelectItem>
                   <SelectItem value="system">System</SelectItem>
                   <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="zinc-light">Zinc Light</SelectItem>
-                  <SelectItem value="zinc-dark">Zinc Dark</SelectItem>
+                  <SelectItem value="zinc_light">Zinc Light</SelectItem>
+                  <SelectItem value="zinc_dark">Zinc Dark</SelectItem>
                   <SelectItem value="stone-light">Stone Light</SelectItem>
                   <SelectItem value="stone-dark">Stone Dark</SelectItem>
                 </SelectContent>
