@@ -3,7 +3,6 @@ import { PortfolioSkill } from "interfaces/portfolio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
-import { socialMediaOptions } from "@/constants/social_media";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
@@ -20,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import LinkForm from "./link-form";
-
+import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 interface LinkCardProps {
   link: PortfolioSkill;
 }
@@ -66,7 +65,7 @@ const LinkCard = ({ link }: LinkCardProps) => {
     setIsEditModalOpen(false);
   };
 
-  const socialMedia = socialMediaOptions.find((option) => option.value === link.title);
+  const socialMedia = SocialMediaOptions.find((option) => option.value === link.title);
   if (!socialMedia) return null;
 
   const Icon = socialMedia.icon;

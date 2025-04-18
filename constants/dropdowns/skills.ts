@@ -1,4 +1,4 @@
-export const skillOptions = [
+export const SkillOptions = [
     { value: 'react', label: 'React' },
     { value: 'javascript', label: 'JavaScript' },
     { value: 'typescript', label: 'TypeScript' },
@@ -16,8 +16,12 @@ export const skillOptions = [
     { value: 'git', label: 'Git' },
 ];
 
-export const skillLevelOptions = [
+export const SkillLevelOptions = [
     { value: 'beginner', label: 'Beginner' },
     { value: 'intermediate', label: 'Intermediate' },
     { value: 'expert', label: 'Expert' },
-]; 
+];
+
+// export const SkillTypeCodes = SkillOptions.map((skill) => skill.value) as [string, ...string[]];
+
+// export const SkillLevelCodes = SkillLevelOptions.map((skill) => skill.value) as [string, ...string[]];

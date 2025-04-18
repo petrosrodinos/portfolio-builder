@@ -19,7 +19,7 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 
-export const socialMediaOptions = [
+export const SocialMediaOptions = [
   { value: "linkedin", label: "LinkedIn", icon: LinkedinIcon },
   { value: "github", label: "GitHub", icon: Github },
   { value: "twitter", label: "Twitter", icon: Twitter },
@@ -38,3 +38,5 @@ export const socialMediaOptions = [
   // { value: "portfolio", label: "Portfolio", icon: Code2 },
   // { value: "language", label: "Language", icon: Languages },
 ];
+
+// export const SocialMediaCodes = SocialMediaOptions.map((socialMedia) => socialMedia.value) as [string, ...string[]];

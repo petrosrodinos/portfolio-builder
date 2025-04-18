@@ -33,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Countries } from "@/constants/countries";
+import { Countries } from "@/constants/dropdowns/countries";
 
 type ProfileFormValues = z.infer<typeof userSchema>;
 

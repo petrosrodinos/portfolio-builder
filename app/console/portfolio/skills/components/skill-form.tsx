@@ -24,7 +24,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
 import { portfolioSkillsTypes } from "@/constants/supabase";
-import { skillOptions, skillLevelOptions } from "@/constants/skills";
+import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 import { upsertSkill } from "services/skills";
 
 interface SkillFormProps {
@@ -87,7 +87,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {skillOptions.map((option) => (
+                  {SkillOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>
@@ -112,7 +112,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {skillLevelOptions.map((option) => (
+                  {SkillLevelOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>

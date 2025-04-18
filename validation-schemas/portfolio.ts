@@ -1,12 +1,10 @@
 import { z } from "zod";
 
-
 export const profileSchema = z.object({
     email: z.string().email(),
     phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").optional(),
     address: z.string().min(5, "Address is required").optional(),
     welcome_message: z.string().max(200, "Message too long").optional(),
-    // urls: z.array(z.object({ value: z.string().url().optional() })),
 });
 
 export const bioSchema = z.object({
@@ -49,12 +47,12 @@ export const serviceFormSchema = z.object({
 });
 
 export const linkFormSchema = z.object({
-    title: z.string().min(5, "Title is required"),
+    title: z.string().min(1, "Title is required"),
     link: z.string().url("Invalid link"),
 });
 
 export const skillFormSchema = z.object({
-    title: z.string().min(5, "Title is required"),
+    title: z.string().min(1, "Skill is required"),
     level: z.string().min(1, "Level is required"),
 });
 

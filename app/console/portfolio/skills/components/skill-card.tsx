@@ -3,7 +3,6 @@ import { PortfolioSkill } from "interfaces/portfolio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
-import { socialMediaOptions } from "@/constants/social_media";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
@@ -20,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import SkillForm from "./skill-form";
-import { skillOptions } from "@/constants/skills";
+import { SkillOptions } from "@/constants/dropdowns/skills";
 
 interface SkillCardProps {
   skill: PortfolioSkill;
@@ -67,7 +66,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
     setIsEditModalOpen(false);
   };
 
-  const skillOption = skillOptions.find((option) => option.value === skill.title);
+  const skillOption = SkillOptions.find((option) => option.value === skill.title);
   if (!skillOption) return null;
 
   // const Icon = skillOption.icon;

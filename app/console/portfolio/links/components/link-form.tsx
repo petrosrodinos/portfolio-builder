@@ -25,8 +25,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
 import { portfolioSkillsTypes } from "@/constants/supabase";
-import { socialMediaOptions } from "@/constants/social_media";
 import { upsertSkill } from "services/skills";
+import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 
 interface LinkFormProps {
   onCancel: () => void;
@@ -88,7 +88,7 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {socialMediaOptions.map((option) => {
+                  {SocialMediaOptions.map((option) => {
                     const Icon = option.icon;
                     return (
                       <SelectItem key={option.value} value={option.value}>
