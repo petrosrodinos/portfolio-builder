@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { useAuthStore } from "stores/auth";
 import { PortfolioSkill } from "interfaces/portfolio";
 import { portfolioSkillsTypes } from "@/constants/supabase";
 import { socialMediaOptions } from "@/constants/social_media";
@@ -35,7 +34,6 @@ interface LinkFormProps {
 }
 
 const LinkForm = ({ onCancel, link }: LinkFormProps) => {
-  const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
 
   const form = useForm<LinkFormValues>({
@@ -69,7 +67,6 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
   const onSubmit = (data: LinkFormValues) => {
     mutate({
       ...data,
-      user_id,
       type: portfolioSkillsTypes.link,
       id: link?.id,
     });

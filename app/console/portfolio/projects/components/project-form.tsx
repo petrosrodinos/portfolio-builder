@@ -15,13 +15,11 @@ import {
 import {
   ExperienceFormValues,
   ProjectFormValues,
-  experienceFormSchema,
   projectFormSchema,
 } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
-import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { portfolioExperienceTypes } from "@/constants/supabase";
 
@@ -31,7 +29,6 @@ interface ProjectFormProps {
 }
 
 const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
-  const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
 
   const form = useForm<ProjectFormValues>({
@@ -69,7 +66,6 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
   const onSubmit = (data: ExperienceFormValues) => {
     mutate({
       ...data,
-      user_id,
       type: portfolioExperienceTypes.project,
       id: project?.id,
     });

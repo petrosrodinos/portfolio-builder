@@ -16,7 +16,6 @@ import { EducationFormValues, educationFormSchema } from "@/validation-schemas/p
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
-import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { portfolioExperienceTypes } from "@/constants/supabase";
 
@@ -26,7 +25,6 @@ interface EducationFormProps {
 }
 
 const EducationForm = ({ onCancel, education }: EducationFormProps) => {
-  const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
 
   const form = useForm<EducationFormValues>({
@@ -63,7 +61,6 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
   const onSubmit = (data: EducationFormValues) => {
     mutate({
       ...data,
-      user_id,
       type: portfolioExperienceTypes.education,
       id: education?.id,
     });
