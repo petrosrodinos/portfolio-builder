@@ -1,7 +1,3 @@
-// "use client";
-
-import { getPortfolio } from "services/portfolio";
-import { useQuery } from "@tanstack/react-query";
 import { ProfileSection } from "./components/ProfileSection";
 import { BioSection } from "./components/BioSection";
 import { ExperienceSection } from "./components/ExperienceSection";
@@ -18,13 +14,6 @@ interface BasicTemplateProps {
 }
 
 const BasicTemplate = ({ initialData: data }: BasicTemplateProps) => {
-  // const { data } = useQuery({
-  //   queryKey: ["portfolio", id],
-  //   queryFn: () => getPortfolio(id as string),
-  //   initialData: initialData,
-  //   enabled: !!id,
-  // });
-
   const profile = {
     email: "example@email.com",
     phone: "+1 234 567 8900",

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { LinkIcon } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface BioSectionProps {
   bio: string;
@@ -16,9 +17,15 @@ export const BioSection = ({ bio, resume }: BioSectionProps) => {
         </CardHeader>
         <CardContent>
           <p className="text-gray-700">{bio}</p>
-          <Link className="mt-4" href={resume} target="_blank">
-            <LinkIcon className="mr-2 h-4 w-4" />
-            View Resume
+          <Link
+            href={resume}
+            target="_blank"
+            className={cn(
+              "inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mt-4"
+            )}
+          >
+            <LinkIcon className="h-4 w-4" />
+            <span>View Resume</span>
           </Link>
         </CardContent>
       </Card>
