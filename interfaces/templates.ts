@@ -46,6 +46,11 @@ export interface Skill {
     level: string;
 }
 
+export interface Link {
+    title: string;
+    url: string;
+}
+
 export interface Language {
     title: string;
     level: string;

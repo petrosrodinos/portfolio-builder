@@ -7,6 +7,7 @@ import { SkillsSection } from "./components/skills";
 import { LanguagesSection } from "./components/language";
 import { ServicesSection } from "./components/services";
 import { ContactSection } from "./components/contact";
+import { LinksSection } from "./components/links";
 import NavBar from "./components/nav-bar";
 interface BasicTemplateProps {
   initialData: any;
@@ -34,6 +35,7 @@ const BasicTemplate = ({ initialData: data }: BasicTemplateProps) => {
       <EducationSection education={data?.educations} />
       <SkillsSection skills={data?.skills} />
       <LanguagesSection languages={data?.languages} />
+      <LinksSection links={data?.links} />
       <ServicesSection services={data?.services} />
       <ContactSection />
     </div>
