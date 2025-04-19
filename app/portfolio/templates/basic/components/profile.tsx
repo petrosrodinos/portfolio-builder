@@ -21,32 +21,34 @@ export const ProfileSection = ({
     <div id="profile">
       <Card className="mb-8">
         <CardContent className="pt-6">
-          <div className="flex items-center gap-6">
-            <Avatar className="h-24 w-24">
+          <div className="flex items-start gap-4 sm:gap-6">
+            <Avatar className="h-16 w-16 sm:h-24 sm:w-24 flex-shrink-0">
               <AvatarImage src={avatar} alt="Profile" />
               <AvatarFallback>{full_name.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div>
-              {role && <h1 className="text-3xl font-bold">{role}</h1>}
-              <h2 className="text-xl font-bold">{full_name}</h2>
-              {welcome_message && <p className="text-gray-600 mt-2">{welcome_message}</p>}
-              <div className="flex gap-4 mt-4">
+            <div className="sm:text-left">
+              {role && <h1 className="text-2xl sm:text-3xl font-bold">{role}</h1>}
+              <h2 className="text-lg sm:text-xl font-bold">{full_name}</h2>
+              {welcome_message && (
+                <p className="text-sm sm:text-base text-gray-600 mt-2">{welcome_message}</p>
+              )}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4">
                 {email && (
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />
-                    <span>{email}</span>
+                    <span className="text-sm sm:text-base">{email}</span>
                   </div>
                 )}
                 {phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4" />
-                    <span>{phone}</span>
+                    <span className="text-sm sm:text-base">{phone}</span>
                   </div>
                 )}
                 {address && (
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4" />
-                    <span>{address}</span>
+                    <span className="text-sm sm:text-base">{address}</span>
                     <Icon className="h-4 w-4" />
                   </div>
                 )}
