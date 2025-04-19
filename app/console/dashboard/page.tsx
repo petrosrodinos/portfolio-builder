@@ -153,37 +153,39 @@ const Dashboard = () => {
             Select a template to customize your portfolio's layout and style
           </p>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {templates.map((template) => (
               <Card
                 key={template.id}
                 className={cn(
-                  "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
+                  "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] w-full",
                   selectedTemplate === template.id && "ring-2 ring-primary"
                 )}
               >
-                <div className="aspect-video bg-muted">
+                <div className="aspect-video bg-muted w-full">
                   <div className={`h-full w-full bg-gradient-to-br ${template.gradient}`} />
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold">{template.name}</h3>
                   <p className="mt-1 text-sm text-muted-foreground">{template.description}</p>
-                  <div className="mt-4 flex gap-2">
+                  <div className="mt-4 flex flex-col gap-2">
                     <Button
-                      className="flex-1"
+                      className="w-full text-sm sm:text-base"
                       variant={selectedTemplate === template.id ? "default" : "outline"}
                       onClick={() => setSelectedTemplate(template.id)}
                     >
-                      <Check className="mr-2 h-4 w-4" />
-                      {selectedTemplate === template.id ? "Selected" : "Select Template"}
+                      <Check className="mr-2 h-4 w-4 shrink-0" />
+                      <span className="truncate">
+                        {selectedTemplate === template.id ? "Selected" : "Select"}
+                      </span>
                     </Button>
                     <Button
                       variant="outline"
-                      className="flex-1"
+                      className="w-full text-sm sm:text-base"
                       onClick={() => window.open(template.preview, "_blank")}
                     >
-                      <Eye className="mr-2 h-4 w-4" />
-                      View Template
+                      <Eye className="mr-2 h-4 w-4 shrink-0" />
+                      <span className="truncate">Preview</span>
                     </Button>
                   </div>
                 </div>
