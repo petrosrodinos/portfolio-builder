@@ -10,11 +10,11 @@ import { ContactSection } from "./components/contact";
 import { LinksSection } from "./components/links";
 import NavBar from "./components/nav-bar";
 interface BasicTemplateProps {
-  initialData: any;
+  portfolio: any;
   id: string;
 }
 
-const BasicTemplate = ({ initialData: data }: BasicTemplateProps) => {
+const BasicTemplate = ({ portfolio: data }: BasicTemplateProps) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <NavBar full_name={data?.user?.full_name} />
