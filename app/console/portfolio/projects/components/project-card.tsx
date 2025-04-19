@@ -78,19 +78,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <>
       <Card className="group overflow-hidden">
-        <div className="relative w-full h-48 bg-muted">
-          {project?.image ? (
+        {project?.image && (
+          <div className="relative w-full h-48 bg-muted">
             <img
               src={project?.image as string}
               alt={project.title}
               className="w-full h-full object-cover"
             />
-          ) : (
-            <div className="flex items-center justify-center h-full">
-              <ImageIcon className="h-12 w-12 text-muted-foreground/50" />
-            </div>
-          )}
-        </div>
+          </div>
+        )}
         <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
           <div className="space-y-2">
             <h3 className="text-xl font-semibold leading-none tracking-tight">{project.title}</h3>
