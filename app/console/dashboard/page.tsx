@@ -5,10 +5,35 @@ import { Button } from "@/components/ui/button";
 import { Eye, FileText, Palette, Share2, Settings, Star, Check, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [isProfileVisible, setIsProfileVisible] = useState(true);
+  const router = useRouter();
+  const templates = [
+    {
+      id: "minimal",
+      name: "Minimal",
+      description: "Clean and simple design focusing on your content",
+      gradient: "from-primary/20 to-primary/5",
+      preview: "/portfolio/templates/basic",
+    },
+    {
+      id: "professional",
+      name: "Professional",
+      description: "Modern layout with emphasis on your achievements",
+      gradient: "from-secondary/20 to-secondary/5",
+      preview: "/portfolio/templates/premium",
+    },
+    {
+      id: "creative",
+      name: "Creative",
+      description: "Dynamic design with interactive elements",
+      preview: "/portfolio/templates/premium",
+      gradient: "from-accent/20 to-accent/5",
+    },
+  ];
 
   return (
     <div className="container mx-auto p-6">
@@ -129,80 +154,41 @@ const Dashboard = () => {
           </p>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <Card
-              className={cn(
-                "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer",
-                selectedTemplate === "minimal" && "ring-2 ring-primary"
-              )}
-              onClick={() => setSelectedTemplate("minimal")}
-            >
-              <div className="aspect-video bg-muted">
-                <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold">Minimal</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Clean and simple design focusing on your content
-                </p>
-                <Button
-                  className="mt-4 w-full"
-                  variant={selectedTemplate === "minimal" ? "default" : "outline"}
-                >
-                  <Check className="mr-2 h-4 w-4" />
-                  {selectedTemplate === "minimal" ? "Selected" : "Select Template"}
-                </Button>
-              </div>
-            </Card>
-
-            <Card
-              className={cn(
-                "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer",
-                selectedTemplate === "professional" && "ring-2 ring-primary"
-              )}
-              onClick={() => setSelectedTemplate("professional")}
-            >
-              <div className="aspect-video bg-muted">
-                <div className="h-full w-full bg-gradient-to-br from-secondary/20 to-secondary/5" />
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold">Professional</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Modern layout with emphasis on your achievements
-                </p>
-                <Button
-                  className="mt-4 w-full"
-                  variant={selectedTemplate === "professional" ? "default" : "outline"}
-                >
-                  <Check className="mr-2 h-4 w-4" />
-                  {selectedTemplate === "professional" ? "Selected" : "Select Template"}
-                </Button>
-              </div>
-            </Card>
-
-            <Card
-              className={cn(
-                "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] cursor-pointer",
-                selectedTemplate === "creative" && "ring-2 ring-primary"
-              )}
-              onClick={() => setSelectedTemplate("creative")}
-            >
-              <div className="aspect-video bg-muted">
-                <div className="h-full w-full bg-gradient-to-br from-accent/20 to-accent/5" />
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold">Creative</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Dynamic design with interactive elements
-                </p>
-                <Button
-                  className="mt-4 w-full"
-                  variant={selectedTemplate === "creative" ? "default" : "outline"}
-                >
-                  <Check className="mr-2 h-4 w-4" />
-                  {selectedTemplate === "creative" ? "Selected" : "Select Template"}
-                </Button>
-              </div>
-            </Card>
+            {templates.map((template) => (
+              <Card
+                key={template.id}
+                className={cn(
+                  "overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
+                  selectedTemplate === template.id && "ring-2 ring-primary"
+                )}
+              >
+                <div className="aspect-video bg-muted">
+                  <div className={`h-full w-full bg-gradient-to-br ${template.gradient}`} />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold">{template.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{template.description}</p>
+                  <div className="mt-4 flex gap-2">
+                    <Button
+                      className="flex-1"
+                      variant={selectedTemplate === template.id ? "default" : "outline"}
+                      onClick={() => setSelectedTemplate(template.id)}
+                    >
+                      <Check className="mr-2 h-4 w-4" />
+                      {selectedTemplate === template.id ? "Selected" : "Select Template"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => window.open(template.preview, "_blank")}
+                    >
+                      <Eye className="mr-2 h-4 w-4" />
+                      View Template
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </Card>
       </div>
