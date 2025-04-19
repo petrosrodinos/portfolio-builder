@@ -20,9 +20,9 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createUser, getUser, updateUser } from "services/user";
+import { createUser, getUser, upsertUser } from "services/user";
 import { useAuthStore } from "stores/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AvatarPicker from "@/components/avatar-picker";
 import {
@@ -34,19 +34,22 @@ import {
 } from "@/components/ui/select";
 import { CountriesOptions } from "@/constants/dropdowns/countries";
 import * as icons from "country-flag-icons/react/3x2";
+import { UserAvatar } from "interfaces/user";
 
 export default function UserProfileForm() {
   const router = useRouter();
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
-  const { user_id, updateUser: updateStoreUser } = useAuthStore((state) => state);
+  const { user_id, email, updateUser: updateStoreUser } = useAuthStore((state) => state);
+  const [fileToDelete, setFileToDelete] = useState<UserAvatar | null>(null);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSchema),
     defaultValues: {
       full_name: "",
       country: "GR",
-      date_of_birth: null,
+      date_of_birth: "",
+      avatar: null,
     },
     mode: "onChange",
   });
@@ -54,17 +57,18 @@ export default function UserProfileForm() {
   const { data, isSuccess } = useQuery({
     queryKey: ["user", user_id],
     queryFn: () => getUser(user_id),
-    enabled: isProfilePage,
+    enabled: isProfilePage && !!user_id,
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => (isProfilePage ? updateUser(user_id, data) : createUser(data)),
+    mutationFn: (data: any) => upsertUser(data),
     onSuccess: (data: any) => {
       if (!isProfilePage) {
         router.push("/console/portfolio/profile");
       }
       updateStoreUser({
         ...data,
+        avatar: data?.avatar?.url,
         isLoggedIn: true,
         isNewUser: false,
       });
@@ -87,6 +91,8 @@ export default function UserProfileForm() {
     mutate({
       ...data,
       user_id,
+      avatar_to_delete: fileToDelete,
+      email,
     });
   }
 
@@ -96,14 +102,12 @@ export default function UserProfileForm() {
 
   const handleAvatarDelete = () => {
     form.setValue("avatar", null);
+    setFileToDelete(data?.avatar);
   };
 
   useEffect(() => {
     if (isSuccess && data) {
-      form.reset({
-        ...data,
-        date_of_birth: data.date_of_birth ? new Date(data.date_of_birth) : null,
-      });
+      form.reset(data);
     }
   }, [data, isSuccess]);
 
@@ -113,7 +117,7 @@ export default function UserProfileForm() {
         {isProfilePage && (
           <AvatarPicker
             onFileChange={handleAvatarChange}
-            previewUrl={data?.avatar}
+            previewUrl={data?.avatar?.url}
             onDelete={handleAvatarDelete}
           />
         )}
@@ -169,6 +173,19 @@ export default function UserProfileForm() {
           control={form.control}
           name="date_of_birth"
           render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date of birth</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <FormField
+          control={form.control}
+          name="date_of_birth"
+          render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Date of birth</FormLabel>
               <Popover>
@@ -198,7 +215,7 @@ export default function UserProfileForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <Button disabled={isPending} loading={isPending} type="submit">
           Save
         </Button>

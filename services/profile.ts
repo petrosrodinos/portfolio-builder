@@ -7,7 +7,6 @@ export const upsertProfile = async (user_id: string, payload: UpdatePortfolioPro
     try {
         let resume = payload.resume as PortfolioResume;
 
-        console.log('payload', payload);
 
         if (payload.resume_to_delete) {
             await deleteFile(SupabaseBuckets.files, payload.resume_to_delete.name);

@@ -62,7 +62,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
   const onSubmit = (data: ExperienceFormValues) => {
     mutate({
       ...data,
-      type: portfolioExperienceTypes.experience,
+      type: PortfolioExperienceTypes.experience,
       id: experience?.id,
     });
   };

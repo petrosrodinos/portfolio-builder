@@ -85,7 +85,6 @@ export default function BioForm({ onCancel }: BioFormProps) {
 
   const handleFilePermanentDelete = () => {
     setFileToDelete(data?.resume);
-    // delete data?.resume;
     form.setValue("resume", null);
     setShowDeleteConfirmation(false);
   };
@@ -96,9 +95,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
 
   useEffect(() => {
     if (isSuccess && data) {
-      form.reset({
-        ...data,
-      });
+      form.reset(data);
     }
   }, [data, isSuccess]);
 

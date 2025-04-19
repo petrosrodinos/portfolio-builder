@@ -6,7 +6,7 @@ export const formatAuthUser = (data: any): AuthUser => {
         email: data.user.email,
         access_token: data.session.access_token,
         expires_at: data.session.expires_at,
-        avatar: data?.avatar ?? null,
+        avatar: data?.avatar?.url ?? null,
         full_name: data?.full_name ?? 'Anonymous',
     };
 }
