@@ -11,6 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { ExperienceFormValues, ExperienceFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -137,6 +138,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
                   <Input type="date" {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>Leave blank for present</FormDescription>
               </FormItem>
             )}
           />

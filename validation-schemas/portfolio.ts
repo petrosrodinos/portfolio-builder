@@ -19,7 +19,7 @@ export const ExperienceFormSchema = z.object({
     company: z.string().min(3, "Company is required"),
     location: z.string().min(5, "Location is required"),
     start: z.string().min(1, "Start date is required").optional(),
-    finish: z.string().min(1, "Finish date is required").optional(),
+    finish: z.string().optional(),
     description: z.string().min(10, "Description is required"),
 });
 
@@ -27,7 +27,7 @@ export const ProjectFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     company: z.string().min(3, "Company is required").optional(),
     start: z.string().min(1, "Start date is required").optional(),
-    finish: z.string().min(1, "Finish date is required").optional(),
+    finish: z.string().optional(),
     description: z.string().min(10, "Description is required"),
     link: z.string().url("Invalid link").optional(),
     image: z.any().optional(),
@@ -37,7 +37,7 @@ export const EducationFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     institution: z.string().min(3, "Institution is required").optional(),
     start: z.string().min(1, "Start date is required").optional(),
-    finish: z.string().min(1, "Finish date is required").optional(),
+    finish: z.string().optional(),
     description: z.string().min(10, "Description is required").optional(),
 });
 

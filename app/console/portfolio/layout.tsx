@@ -17,9 +17,10 @@ import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
 import SidebarNav from "@/components/sidebar-nav";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useAuthStore } from "stores/auth";
 
 export default function Settings({ children }) {
+  const { user_id } = useAuthStore();
   return (
     <>
       <Main fixed>
@@ -27,17 +28,16 @@ export default function Settings({ children }) {
           <div className="space-y-0.5">
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Portfolio</h1>
-              <Link href="/portfolio" target="_blank">
-                <Button
-                  asChild
-                  className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-md transition-all duration-300"
-                >
-                  <div className="flex items-center">
-                    <IconEye size={18} />
-                    <span>View</span>
-                  </div>
-                </Button>
-              </Link>
+
+              <Button
+                onClick={() => window.open(`/portfolio/${user_id}`, "_blank")}
+                className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-md transition-all duration-300"
+              >
+                <div className="flex items-center">
+                  <IconEye size={18} />
+                  <span>View</span>
+                </div>
+              </Button>
             </div>
             <p className="text-muted-foreground">
               Manage your portfolio settings here. Add your personal information, experience,

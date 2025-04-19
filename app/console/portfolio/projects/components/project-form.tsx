@@ -11,6 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import {
   ExperienceFormValues,
@@ -66,7 +67,7 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
   const onSubmit = (data: ExperienceFormValues) => {
     mutate({
       ...data,
-      type: portfolioExperienceTypes.project,
+      type: PortfolioExperienceTypes.project,
       id: project?.id,
     });
   };
@@ -141,6 +142,7 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
                   <Input type="date" {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>Leave blank for present</FormDescription>
               </FormItem>
             )}
           />

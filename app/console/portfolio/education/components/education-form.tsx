@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -61,7 +62,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
   const onSubmit = (data: EducationFormValues) => {
     mutate({
       ...data,
-      type: portfolioExperienceTypes.education,
+      type: PortfolioExperienceTypes.education,
       id: education?.id,
     });
   };
@@ -122,6 +123,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
                   <Input type="date" {...field} />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>Leave blank for present</FormDescription>
               </FormItem>
             )}
           />
