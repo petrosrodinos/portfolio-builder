@@ -8,7 +8,7 @@ interface ExperienceSectionProps {
 
 export const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
   return (
-    <div id="experience">
+    <section id="experience">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -31,6 +31,6 @@ export const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
           ))}
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

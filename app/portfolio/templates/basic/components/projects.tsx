@@ -10,7 +10,7 @@ interface ProjectsSectionProps {
 
 export const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
   return (
-    <div id="projects">
+    <section id="projects">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -47,6 +47,6 @@ export const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

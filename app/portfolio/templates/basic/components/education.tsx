@@ -8,7 +8,7 @@ interface EducationSectionProps {
 
 export const EducationSection = ({ education }: EducationSectionProps) => {
   return (
-    <div id="education">
+    <section id="education">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -29,6 +29,6 @@ export const EducationSection = ({ education }: EducationSectionProps) => {
           ))}
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

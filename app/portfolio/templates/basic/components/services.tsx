@@ -8,7 +8,7 @@ interface ServicesSectionProps {
 
 export const ServicesSection = ({ services }: ServicesSectionProps) => {
   return (
-    <div id="services">
+    <section id="services">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -32,6 +32,6 @@ export const ServicesSection = ({ services }: ServicesSectionProps) => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

@@ -10,7 +10,7 @@ interface SkillsSectionProps {
 
 export const SkillsSection = ({ skills }: SkillsSectionProps) => {
   return (
-    <div id="skills">
+    <section id="skills">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -31,6 +31,6 @@ export const SkillsSection = ({ skills }: SkillsSectionProps) => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

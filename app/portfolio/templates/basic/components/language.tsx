@@ -11,7 +11,7 @@ interface LanguagesSectionProps {
 
 export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
   return (
-    <div id="languages">
+    <section id="languages">
       <Card className="mb-8">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -36,6 +36,6 @@ export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

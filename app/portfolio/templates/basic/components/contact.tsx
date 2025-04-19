@@ -8,7 +8,7 @@ import { Mail, Send } from "lucide-react";
 
 export const ContactSection = () => {
   return (
-    <div id="contact">
+    <section id="contact">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -56,6 +56,6 @@ export const ContactSection = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };
