@@ -1,9 +1,7 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { ThemeSwitch } from "@/components/theme-switch";
+// "use client";
+
 import { getPortfolio } from "services/portfolio";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 import { ProfileSection } from "./components/ProfileSection";
 import { BioSection } from "./components/BioSection";
 import { ExperienceSection } from "./components/ExperienceSection";
@@ -13,19 +11,19 @@ import { SkillsSection } from "./components/SkillsSection";
 import { LanguagesSection } from "./components/LanguagesSection";
 import { ServicesSection } from "./components/ServicesSection";
 import { ContactSection } from "./components/ContactSection";
-
+import NavBar from "./components/nav-bar";
 interface BasicTemplateProps {
   initialData: any;
+  id: string;
 }
 
-const BasicTemplate = ({ initialData }: BasicTemplateProps) => {
-  const { id } = useParams();
-
-  const { data } = useQuery({
-    queryKey: ["portfolio", id],
-    queryFn: () => getPortfolio(id as string),
-    initialData: initialData,
-  });
+const BasicTemplate = ({ initialData: data }: BasicTemplateProps) => {
+  // const { data } = useQuery({
+  //   queryKey: ["portfolio", id],
+  //   queryFn: () => getPortfolio(id as string),
+  //   initialData: initialData,
+  //   enabled: !!id,
+  // });
 
   const profile = {
     email: "example@email.com",
@@ -92,48 +90,9 @@ const BasicTemplate = ({ initialData }: BasicTemplateProps) => {
     { title: "Spanish", level: "Intermediate" },
   ];
 
-  const sections = [
-    { id: "profile", label: "Profile" },
-    { id: "about", label: "About" },
-    { id: "experience", label: "Experience" },
-    { id: "projects", label: "Projects" },
-    { id: "education", label: "Education" },
-    { id: "skills", label: "Skills" },
-    { id: "languages", label: "Languages" },
-    { id: "services", label: "Services" },
-    { id: "contact", label: "Contact" },
-  ];
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b mb-8">
-        <div className="flex items-center justify-between py-4">
-          <h1 className="text-xl font-bold">{data.user.full_name}</h1>
-          <div className="flex items-center gap-4">
-            <div className="flex gap-4 overflow-x-auto no-scrollbar">
-              {sections.map((section) => (
-                <Button
-                  key={section.id}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => scrollToSection(section.id)}
-                  className="whitespace-nowrap"
-                >
-                  {section.label}
-                </Button>
-              ))}
-            </div>
-            <ThemeSwitch />
-          </div>
-        </div>
-      </nav>
+      <NavBar full_name={data?.user?.full_name} />
 
       <ProfileSection
         full_name={data?.user?.full_name}

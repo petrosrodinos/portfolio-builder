@@ -9,7 +9,7 @@ export default async function Portfolio({ params }) {
 
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">
-      <BasicTemplate initialData={initialData} />
+      <BasicTemplate initialData={initialData} id={id} />
     </div>
   );
 }

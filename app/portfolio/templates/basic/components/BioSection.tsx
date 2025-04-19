@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { LinkIcon } from "lucide-react";
+import Link from "next/link";
 
 interface BioSectionProps {
   bio: string;
@@ -16,10 +16,10 @@ export const BioSection = ({ bio, resume }: BioSectionProps) => {
         </CardHeader>
         <CardContent>
           <p className="text-gray-700">{bio}</p>
-          <Button className="mt-4" variant="outline" onClick={() => window.open(resume, "_blank")}>
+          <Link className="mt-4" href={resume} target="_blank">
             <LinkIcon className="mr-2 h-4 w-4" />
             View Resume
-          </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>
