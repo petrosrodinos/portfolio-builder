@@ -19,8 +19,23 @@ import {
   Send,
 } from "lucide-react";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { getPortfolio } from "services/portfolio";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
-const BasicTemplate = () => {
+interface BasicTemplateProps {
+  initialData: any;
+}
+
+const BasicTemplate = ({ initialData }: BasicTemplateProps) => {
+  const { id } = useParams();
+
+  const { data } = useQuery({
+    queryKey: ["portfolio", id],
+    queryFn: () => getPortfolio(id as string),
+    initialData: initialData,
+  });
+
   const profile = {
     email: "example@email.com",
     phone: "+1 234 567 8900",

@@ -51,3 +51,16 @@ export interface PortfolioSkill {
     level?: string;
 }
 
+export interface Portfolio {
+    id: string;
+    user_id: string;
+    profile: PortfolioProfileBio;
+    experiences: PortfolioExperience[];
+    services: PortfolioExperience[];
+    projects: PortfolioExperience[];
+    educations: PortfolioExperience[];
+    skills: PortfolioSkill[];
+    languages: PortfolioSkill[];
+    links: PortfolioSkill[];
+}
+

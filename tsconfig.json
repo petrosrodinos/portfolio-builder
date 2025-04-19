@@ -29,7 +29,8 @@
       "@/utils/*": ["./utils/*"],
       "@/config/*": ["config/*"],
       "@/constants/*": ["constants/*"],
-      "@/validation-schemas/*": ["validation-schemas/*"]
+      "@/validation-schemas/*": ["validation-schemas/*"],
+      "@/interfaces/*": ["interfaces/*"]
     }
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/portfolio/[id]"],
