@@ -1,5 +1,4 @@
 "use client";
-import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconBrandFacebook, IconBrandGithub } from "@tabler/icons-react";
@@ -25,9 +24,7 @@ import { useRouter } from "next/navigation";
 import { SigninSchema } from "validation-schemas/auth";
 import { z } from "zod";
 
-type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
-
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserAuthForm({ className, ...props }) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SigninSchema>({

@@ -14,7 +14,7 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { BioFormValues, bioSchema } from "validation-schemas/portfolio";
+import { BioFormValues, BioSchema } from "validation-schemas/portfolio";
 import { useAuthStore } from "stores/auth";
 import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -42,7 +42,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const form = useForm<BioFormValues>({
-    resolver: zodResolver(bioSchema),
+    resolver: zodResolver(BioSchema),
     defaultValues: {
       role: "",
       bio: "",

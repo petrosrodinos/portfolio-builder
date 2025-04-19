@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { getSkills } from "services/skills";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info, Plus } from "lucide-react";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";

@@ -19,7 +19,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useFont } from "@/context/font-context";
 import { useTheme } from "next-themes";
 import {
-  accountAppearanceFormSchema,
+  AccountAppearanceFormSchema,
   AccountAppearanceFormValues,
 } from "@/validation-schemas/appearance";
 import {
@@ -35,7 +35,7 @@ export function AppearanceForm() {
   const { theme, setTheme } = useTheme();
 
   const form = useForm<AccountAppearanceFormValues>({
-    resolver: zodResolver(accountAppearanceFormSchema),
+    resolver: zodResolver(AccountAppearanceFormSchema),
     defaultValues: {
       font,
       theme: theme as "light" | "dark",

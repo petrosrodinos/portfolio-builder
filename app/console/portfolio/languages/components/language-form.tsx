@@ -1,6 +1,6 @@
 "use client";
 
-import { LanguageFormValues, languageFormSchema } from "@/validation-schemas/portfolio";
+import { LanguageFormValues, LanguageFormSchema } from "@/validation-schemas/portfolio";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -38,7 +38,7 @@ const LanguageForm = ({ onCancel, language }: LanguageFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<LanguageFormValues>({
-    resolver: zodResolver(languageFormSchema),
+    resolver: zodResolver(LanguageFormSchema),
     defaultValues: language || {
       title: "",
       level: "",

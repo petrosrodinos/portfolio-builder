@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ServiceFormValues, serviceFormSchema } from "@/validation-schemas/portfolio";
+import { ServiceFormValues, ServiceFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
@@ -30,7 +30,7 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<ServiceFormValues>({
-    resolver: zodResolver(serviceFormSchema),
+    resolver: zodResolver(ServiceFormSchema),
     defaultValues: service || {
       title: "",
       description: "",

@@ -15,7 +15,7 @@ import {
 import {
   ExperienceFormValues,
   ProjectFormValues,
-  projectFormSchema,
+  ProjectFormSchema,
 } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
@@ -32,7 +32,7 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<ProjectFormValues>({
-    resolver: zodResolver(projectFormSchema),
+    resolver: zodResolver(ProjectFormSchema),
     defaultValues: project || {
       title: "",
       company: "",

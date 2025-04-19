@@ -1,5 +1,4 @@
 "use client";
-import { HTMLAttributes } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,9 +23,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { SignupSchema, signupSchema } from "validation-schemas/auth";
 
-type SignUpFormProps = HTMLAttributes<HTMLDivElement>;
-
-export function SignUpForm({ className, ...props }: SignUpFormProps) {
+export function SignUpForm({ className, ...props }) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SignupSchema>({

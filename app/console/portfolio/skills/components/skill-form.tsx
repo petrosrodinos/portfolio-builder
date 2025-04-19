@@ -1,6 +1,6 @@
 "use client";
 
-import { SkillFormValues, skillFormSchema } from "@/validation-schemas/portfolio";
+import { SkillFormValues, SkillFormSchema } from "@/validation-schemas/portfolio";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -36,7 +36,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<SkillFormValues>({
-    resolver: zodResolver(skillFormSchema),
+    resolver: zodResolver(SkillFormSchema),
     defaultValues: skill || {
       title: "",
       level: "",

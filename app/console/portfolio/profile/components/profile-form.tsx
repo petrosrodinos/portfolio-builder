@@ -15,14 +15,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { profileSchema } from "validation-schemas/portfolio";
+import { ProfileSchema } from "validation-schemas/portfolio";
 import { upsertProfile, getProfile } from "services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
 
-type ProfileFormValues = z.infer<typeof profileSchema>;
+type ProfileFormValues = z.infer<typeof ProfileSchema>;
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -32,7 +32,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
   const { user_id } = useAuthStore((state) => state);
 
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(ProfileSchema),
     defaultValues: {
       email: "",
       phone: "",

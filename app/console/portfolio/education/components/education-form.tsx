@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { EducationFormValues, educationFormSchema } from "@/validation-schemas/portfolio";
+import { EducationFormValues, EducationFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
@@ -28,7 +28,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<EducationFormValues>({
-    resolver: zodResolver(educationFormSchema),
+    resolver: zodResolver(EducationFormSchema),
     defaultValues: education || {
       title: "",
       institution: "",

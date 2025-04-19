@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkFormValues, linkFormSchema } from "@/validation-schemas/portfolio";
+import { LinkFormValues, LlinkFormSchema } from "@/validation-schemas/portfolio";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<LinkFormValues>({
-    resolver: zodResolver(linkFormSchema),
+    resolver: zodResolver(LlinkFormSchema),
     defaultValues: link || {
       title: "",
       link: "",

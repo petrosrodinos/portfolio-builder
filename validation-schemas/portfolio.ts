@@ -1,19 +1,19 @@
 import { z } from "zod";
 
-export const profileSchema = z.object({
+export const ProfileSchema = z.object({
     email: z.string().email(),
     phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").optional(),
     address: z.string().min(5, "Address is required").optional(),
     welcome_message: z.string().max(200, "Message too long").optional(),
 });
 
-export const bioSchema = z.object({
+export const BioSchema = z.object({
     role: z.string().min(2, "Role is required"),
     bio: z.string().min(5, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long"),
     resume: z.any().optional(),
 });
 
-export const experienceFormSchema = z.object({
+export const ExperienceFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     company: z.string().min(3, "Company is required"),
     location: z.string().min(5, "Location is required"),
@@ -22,7 +22,7 @@ export const experienceFormSchema = z.object({
     description: z.string().min(10, "Description is required"),
 });
 
-export const projectFormSchema = z.object({
+export const ProjectFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     company: z.string().min(3, "Company is required").optional(),
     start: z.string().min(1, "Start date is required").optional(),
@@ -32,7 +32,7 @@ export const projectFormSchema = z.object({
     image: z.any().optional(),
 });
 
-export const educationFormSchema = z.object({
+export const EducationFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     institution: z.string().min(3, "Institution is required").optional(),
     start: z.string().min(1, "Start date is required").optional(),
@@ -40,23 +40,23 @@ export const educationFormSchema = z.object({
     description: z.string().min(10, "Description is required").optional(),
 });
 
-export const serviceFormSchema = z.object({
+export const ServiceFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     description: z.string().min(10, "Description is required"),
     price: z.string().min(0, "Price is required").optional(),
 });
 
-export const linkFormSchema = z.object({
+export const LlinkFormSchema = z.object({
     title: z.string().min(1, "Title is required"),
     link: z.string().url("Invalid link"),
 });
 
-export const skillFormSchema = z.object({
+export const SkillFormSchema = z.object({
     title: z.string().min(1, "Skill is required"),
     level: z.string().min(1, "Level is required"),
 });
 
-export const languageFormSchema = z.object({
+export const LanguageFormSchema = z.object({
     title: z.string().min(1, "Language is required"),
     level: z.string().min(1, "Level is required"),
 });
@@ -64,12 +64,12 @@ export const languageFormSchema = z.object({
 
 
 
-export type ProfileFormValues = z.infer<typeof profileSchema>;
-export type BioFormValues = z.infer<typeof bioSchema>;
-export type ExperienceFormValues = z.infer<typeof experienceFormSchema>;
-export type ProjectFormValues = z.infer<typeof projectFormSchema>;
-export type EducationFormValues = z.infer<typeof educationFormSchema>;
-export type ServiceFormValues = z.infer<typeof serviceFormSchema>;
-export type LinkFormValues = z.infer<typeof linkFormSchema>;
-export type SkillFormValues = z.infer<typeof skillFormSchema>;
-export type LanguageFormValues = z.infer<typeof languageFormSchema>;
+export type ProfileFormValues = z.infer<typeof ProfileSchema>;
+export type BioFormValues = z.infer<typeof BioSchema>;
+export type ExperienceFormValues = z.infer<typeof ExperienceFormSchema>;
+export type ProjectFormValues = z.infer<typeof ProjectFormSchema>;
+export type EducationFormValues = z.infer<typeof EducationFormSchema>;
+export type ServiceFormValues = z.infer<typeof ServiceFormSchema>;
+export type LinkFormValues = z.infer<typeof LlinkFormSchema>;
+export type SkillFormValues = z.infer<typeof SkillFormSchema>;
+export type LanguageFormValues = z.infer<typeof LanguageFormSchema>;

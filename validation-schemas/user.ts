@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 
-export const userSchema = z.object({
+export const UserSchema = z.object({
     full_name: z.string().min(2, "Full name is required"),
     country: z.string().min(1, "Country is required"),
     date_of_birth: z.string().min(1, "Date of birth is required"),
@@ -9,4 +9,4 @@ export const userSchema = z.object({
 });
 
 
-export type ProfileFormValues = z.infer<typeof userSchema>;
+export type ProfileFormValues = z.infer<typeof UserSchema>;

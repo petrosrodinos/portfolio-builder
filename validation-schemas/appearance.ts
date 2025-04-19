@@ -2,7 +2,7 @@ import { fonts } from "@/config/fonts";
 import { z } from "zod";
 
 
-export const accountAppearanceFormSchema = z.object({
+export const AccountAppearanceFormSchema = z.object({
     font: z.enum(fonts, {
         invalid_type_error: "Select a font",
         required_error: "Please select a font.",
@@ -13,5 +13,5 @@ export const accountAppearanceFormSchema = z.object({
     }),
 });
 
-export type AccountAppearanceFormValues = z.infer<typeof accountAppearanceFormSchema>;
+export type AccountAppearanceFormValues = z.infer<typeof AccountAppearanceFormSchema>;
 

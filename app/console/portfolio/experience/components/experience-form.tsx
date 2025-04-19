@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ExperienceFormValues, experienceFormSchema } from "@/validation-schemas/portfolio";
+import { ExperienceFormValues, ExperienceFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
@@ -28,7 +28,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<ExperienceFormValues>({
-    resolver: zodResolver(experienceFormSchema),
+    resolver: zodResolver(ExperienceFormSchema),
     defaultValues: experience || {
       title: "",
       company: "",

@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ProfileFormValues, userSchema } from "validation-schemas/user";
+import { ProfileFormValues, UserSchema } from "validation-schemas/user";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -44,7 +44,7 @@ export default function UserProfileForm() {
   const [fileToDelete, setFileToDelete] = useState<UserAvatar | null>(null);
 
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(UserSchema),
     defaultValues: {
       full_name: "",
       country: "GR",
