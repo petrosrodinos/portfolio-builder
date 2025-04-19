@@ -35,8 +35,8 @@ const BasicTemplate = ({ initialData: data }: BasicTemplateProps) => {
       <EducationSection education={data?.educations} />
       <SkillsSection skills={data?.skills} />
       <LanguagesSection languages={data?.languages} />
-      <LinksSection links={data?.links} />
       <ServicesSection services={data?.services} />
+      <LinksSection links={data?.links} />
       <ContactSection />
     </div>
   );
