@@ -6,6 +6,8 @@ export default async function Portfolio({ params }) {
   const { id } = await params;
   const portfolio = await getPortfolio(id);
 
+  console.log(portfolio);
+
   if (!portfolio) {
     return <PortfolioNotFound />;
   }

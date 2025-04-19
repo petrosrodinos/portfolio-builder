@@ -1,3 +1,15 @@
+import { PortfolioResume } from "./portfolio";
+
+export interface User {
+    full_name: string;
+    country: string;
+    date_of_birth: string;
+    avatar: {
+        url: string;
+        name: string;
+    };
+}
+
 export interface ProfileSectionProps {
     avatar: string;
     email: string;
@@ -19,8 +31,9 @@ export interface Experience {
     company: string;
     location: string;
     start: string;
-    finish: string;
+    finish?: string;
     description: string;
+    link?: string;
 }
 
 export interface Project {
@@ -30,7 +43,6 @@ export interface Project {
     finish: string;
     description: string;
     link?: string;
-    image?: string;
 }
 
 export interface Education {
@@ -39,6 +51,7 @@ export interface Education {
     start: string;
     finish: string;
     description?: string;
+    link?: string;
 }
 
 export interface Skill {
@@ -60,4 +73,22 @@ export interface Service {
     title: string;
     description: string;
     price?: string;
+}
+
+export interface Portfolio {
+    user: User;
+    bio: string;
+    email: string;
+    phone: string;
+    address: string;
+    welcome_message: string;
+    role: string;
+    experiences: Experience[];
+    projects: Project[];
+    educations: Education[];
+    skills: Skill[];
+    languages: Language[];
+    links: Link[];
+    services: Service[];
+    resume: PortfolioResume;
 }

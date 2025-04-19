@@ -11,7 +11,7 @@ import { LinksSection } from "./components/links";
 import NavBar from "./components/nav-bar";
 interface BasicTemplateProps {
   portfolio: any;
-  id: string;
+  id?: string;
 }
 
 const BasicTemplate = ({ portfolio: data }: BasicTemplateProps) => {

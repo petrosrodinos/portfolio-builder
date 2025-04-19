@@ -1,8 +1,8 @@
 "use server";
 
 import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supabase";
+import { Portfolio } from "@/interfaces/templates";
 import { supabase } from "@/lib/supabase";
-import { Portfolio } from "@/interfaces/portfolio";
 
 export async function getPortfolio(id: string): Promise<Portfolio | null> {
     let { data, error } = await supabase
