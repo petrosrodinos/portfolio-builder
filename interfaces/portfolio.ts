@@ -39,6 +39,7 @@ export interface PortfolioExperience {
     finish: string;
     image?: string | File;
     link?: string;
+    price?: string;
 }
 
 export interface PortfolioSkill {

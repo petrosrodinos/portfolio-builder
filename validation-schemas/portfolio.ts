@@ -43,7 +43,7 @@ export const EducationFormSchema = z.object({
 export const ServiceFormSchema = z.object({
     title: z.string().min(5, "Title is required"),
     description: z.string().min(10, "Description is required"),
-    price: z.string().min(0, "Price is required").optional(),
+    price: z.string().optional(),
 });
 
 export const LlinkFormSchema = z.object({

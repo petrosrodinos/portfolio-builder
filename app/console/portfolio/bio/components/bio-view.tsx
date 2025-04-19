@@ -5,7 +5,6 @@ import { useAuthStore } from "stores/auth";
 import { getProfile } from "services/profile";
 import { FileText, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 
 interface BioViewProps {
@@ -44,9 +43,9 @@ export default function BioView({ onEdit }: BioViewProps) {
         <p className="text-gray-700 whitespace-pre-line">{data?.bio || "No bio provided"}</p>
       </div>
 
-      {data?.resume && (
-        <div className="space-y-2">
-          <h3 className="text-lg font-medium">Resume</h3>
+      <div className="space-y-2">
+        <h3 className="text-lg font-medium">Resume</h3>
+        {data?.resume ? (
           <a
             href={data.resume.url as string}
             target="_blank"
@@ -56,8 +55,10 @@ export default function BioView({ onEdit }: BioViewProps) {
             <FileText className="h-4 w-4" />
             <span>View resume</span>
           </a>
-        </div>
-      )}
+        ) : (
+          <p className="text-gray-700">No resume provided</p>
+        )}
+      </div>
     </div>
   );
 }

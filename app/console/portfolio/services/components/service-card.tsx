@@ -97,6 +97,12 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
             <h5 className="font-medium">Description</h5>
             <p className="text-muted-foreground whitespace-pre-line">{service.description}</p>
           </div>
+          {service.price && (
+            <div className="space-y-1">
+              <h5 className="font-medium">Price</h5>
+              <p className="text-muted-foreground">{service.price}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 

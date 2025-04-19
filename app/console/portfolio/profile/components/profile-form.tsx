@@ -53,6 +53,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
         description: "You have successfully saved your profile",
         duration: 1000,
       });
+      onCancel();
     },
     onError: (error) => {
       toast({
@@ -121,6 +122,9 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input placeholder="123 Main St, City, Country" {...field} />
                 </FormControl>
+                <FormDescription>
+                  This is the address that will be visible at your portfolio.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import SkillForm from "./skill-form";
-import { SkillOptions } from "@/constants/dropdowns/skills";
+import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 
 interface SkillCardProps {
   skill: PortfolioSkill;
@@ -67,9 +67,8 @@ const SkillCard = ({ skill }: SkillCardProps) => {
   };
 
   const skillOption = SkillOptions.find((option) => option.value === skill.title);
+  const levelOption = SkillLevelOptions.find((option) => option.value === skill.level);
   if (!skillOption) return null;
-
-  // const Icon = skillOption.icon;
 
   return (
     <>
@@ -78,7 +77,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
           <div className="flex flex-col gap-1 hover:text-primary transition-colors">
             {/* <Icon className="h-5 w-5" /> */}
             <span className="font-medium">{skillOption.label}</span>
-            {skill.level && <span className="text-sm text-muted-foreground">{skill.level}</span>}
+            <span className="text-sm text-muted-foreground">{levelOption.label}</span>
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">

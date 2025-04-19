@@ -62,7 +62,7 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
     mutate({
       ...data,
       user_id,
-      type: portfolioExperienceTypes.service,
+      type: PortfolioExperienceTypes.service,
       id: service?.id,
     });
   };

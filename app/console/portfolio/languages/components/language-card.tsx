@@ -78,9 +78,7 @@ const LanguageCard = ({ language }: LanguageCardProps) => {
           <div className="flex flex-col gap-1 hover:text-primary transition-colors">
             {/* <Icon className="h-5 w-5" /> */}
             <span className="font-medium">{languageOption.label}</span>
-            {levelOption && (
-              <span className="text-sm text-muted-foreground">{levelOption.label}</span>
-            )}
+            <span className="text-sm text-muted-foreground">{levelOption.label}</span>
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">
