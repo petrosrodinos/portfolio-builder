@@ -14,6 +14,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import SkillForm from "./skill-form";
 import SkillCard from "./skill-card";
+import SkillSkeleton from "@/components/ui/skill-skeleton";
 
 const SkillView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -34,11 +35,7 @@ const SkillView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <SkillSkeleton />;
   }
 
   return (
@@ -63,7 +60,7 @@ const SkillView = () => {
           <SkillCard key={skill.id} skill={skill} />
         ))}
       </div>
-      {skills?.length === 0 && (
+      {skills?.length === 0 && !isLoading && (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No skills entries yet</AlertTitle>

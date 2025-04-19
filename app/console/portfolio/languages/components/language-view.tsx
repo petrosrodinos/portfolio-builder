@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { getSkills } from "services/skills";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info, Plus } from "lucide-react";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -14,6 +13,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import SkillForm from "./language-form";
 import LanguageCard from "./language-card";
+import SkillSkeleton from "@/components/ui/skill-skeleton";
 
 const LanguageView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -34,11 +34,7 @@ const LanguageView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <SkillSkeleton />;
   }
 
   return (
@@ -63,7 +59,7 @@ const LanguageView = () => {
           <LanguageCard key={language.id} language={language} />
         ))}
       </div>
-      {languages?.length === 0 && (
+      {languages?.length === 0 && !isLoading && (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No languages entries yet</AlertTitle>

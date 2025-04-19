@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
 import EducationCard from "./education-card";
+import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 
 const EducationView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -19,7 +20,7 @@ const EducationView = () => {
 
   const { data: educations, isLoading } = useQuery({
     queryKey: ["educations"],
-    queryFn: () => getExperiences(user_id, portfolioExperienceTypes.education),
+    queryFn: () => getExperiences(user_id, PortfolioExperienceTypes.education),
     enabled: !!user_id,
   });
 
@@ -32,11 +33,7 @@ const EducationView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <ExperienceSkeleton />;
   }
 
   return (
@@ -57,7 +54,7 @@ const EducationView = () => {
         </DialogContent>
       </Dialog>
 
-      {!educations?.length ? (
+      {!educations?.length && !isLoading ? (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No education entries yet</AlertTitle>

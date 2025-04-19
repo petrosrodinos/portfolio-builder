@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { getSkills } from "services/skills";
-import { Spinner } from "@/components/ui/spinner";
 import LinkCard from "./link-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info, Plus } from "lucide-react";
@@ -14,6 +13,7 @@ import { DialogContent } from "@/components/ui/dialog";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import LinkForm from "./link-form";
+import SkillSkeleton from "@/components/ui/skill-skeleton";
 
 const LinkView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -34,11 +34,7 @@ const LinkView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <SkillSkeleton />;
   }
 
   return (
@@ -63,7 +59,7 @@ const LinkView = () => {
           <LinkCard key={link.id} link={link} />
         ))}
       </div>
-      {links?.length === 0 && (
+      {links?.length === 0 && !isLoading && (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No links entries yet</AlertTitle>

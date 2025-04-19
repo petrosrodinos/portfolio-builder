@@ -8,10 +8,10 @@ import ExperienceForm from "./experience-form";
 import { useQuery } from "@tanstack/react-query";
 import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ExperienceCard from "./experience-card";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
+import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 
 const ExperienceView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -19,7 +19,7 @@ const ExperienceView = () => {
 
   const { data: experiences, isLoading } = useQuery({
     queryKey: ["experiences"],
-    queryFn: () => getExperiences(user_id, portfolioExperienceTypes.experience),
+    queryFn: () => getExperiences(user_id, PortfolioExperienceTypes.experience),
     enabled: !!user_id,
   });
 
@@ -32,11 +32,7 @@ const ExperienceView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <ExperienceSkeleton />;
   }
 
   return (
@@ -57,7 +53,7 @@ const ExperienceView = () => {
         </DialogContent>
       </Dialog>
 
-      {!experiences?.length ? (
+      {!experiences?.length && !isLoading ? (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No experiences yet</AlertTitle>

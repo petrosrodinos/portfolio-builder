@@ -75,9 +75,10 @@ const SkillCard = ({ skill }: SkillCardProps) => {
     <>
       <Card className="group p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 hover:text-primary transition-colors">
+          <div className="flex flex-col gap-1 hover:text-primary transition-colors">
             {/* <Icon className="h-5 w-5" /> */}
             <span className="font-medium">{skillOption.label}</span>
+            {skill.level && <span className="text-sm text-muted-foreground">{skill.level}</span>}
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">

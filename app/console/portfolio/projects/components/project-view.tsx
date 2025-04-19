@@ -8,10 +8,10 @@ import ProjectForm from "./project-form";
 import { useQuery } from "@tanstack/react-query";
 import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProjectCard from "./project-card";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
+import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 
 const ProjectView = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -19,7 +19,7 @@ const ProjectView = () => {
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
-    queryFn: () => getExperiences(user_id, portfolioExperienceTypes.project),
+    queryFn: () => getExperiences(user_id, PortfolioExperienceTypes.project),
     enabled: !!user_id,
   });
 
@@ -32,11 +32,7 @@ const ProjectView = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-32">
-        <Spinner />
-      </div>
-    );
+    return <ExperienceSkeleton />;
   }
 
   return (
@@ -57,7 +53,7 @@ const ProjectView = () => {
         </DialogContent>
       </Dialog>
 
-      {!projects?.length ? (
+      {!projects?.length && !isLoading ? (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No projects yet</AlertTitle>
