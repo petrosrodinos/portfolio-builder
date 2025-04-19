@@ -4,17 +4,17 @@ import PortfolioNotFound from "./components/not-found";
 
 export default async function Portfolio({ params }) {
   const { id } = await params;
-  const portfolio = await getPortfolio(id);
+  const data = await getPortfolio(id);
 
-  console.log(portfolio);
+  console.log(data);
 
-  if (!portfolio) {
+  if (!data) {
     return <PortfolioNotFound />;
   }
 
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">
-      <BasicTemplate portfolio={portfolio} id={id} />
+      <BasicTemplate data={data} id={id} />
     </div>
   );
 }

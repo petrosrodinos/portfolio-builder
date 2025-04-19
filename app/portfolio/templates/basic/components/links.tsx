@@ -25,7 +25,9 @@ export const LinksSection = ({ links = [] }: LinksSectionProps) => {
           <div className="flex flex-wrap gap-2">
             {links.map((link, index) => {
               const socialMedia = SocialMediaOptions.find((option) => option.value === link.title);
-
+              if (!socialMedia) {
+                return null;
+              }
               const Icon = socialMedia.icon;
               return (
                 <Badge

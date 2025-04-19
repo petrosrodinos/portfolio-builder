@@ -16,6 +16,9 @@ export const ProfileSection = ({
   country,
 }: ProfileSectionProps) => {
   const languageOption = LanguagesOptions.find((option) => option.value === country);
+  if (!languageOption) {
+    return null;
+  }
   const Icon = icons[languageOption?.iconCode as keyof typeof icons];
   return (
     <div id="profile">
@@ -49,7 +52,7 @@ export const ProfileSection = ({
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4" />
                     <span className="text-sm sm:text-base">{address}</span>
-                    <Icon className="h-4 w-4" />
+                    {Icon && <Icon className="h-4 w-4" />}
                   </div>
                 )}
               </div>

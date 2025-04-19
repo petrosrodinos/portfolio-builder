@@ -13,7 +13,7 @@ export const PortfolioData: Portfolio = {
     },
     user: {
         full_name: "John Doe",
-        country: "US",
+        country: "GR",
         date_of_birth: "1990-01-01",
         avatar: {
             url: "https://i.pravatar.cc/300",
@@ -59,6 +59,13 @@ export const PortfolioData: Portfolio = {
             finish: "2021-06",
             description: "Built a full-stack e-commerce platform using Next.js and Node.js",
             link: "https://github.com",
+        }, {
+            title: "Sass Portfolio",
+            company: "Google",
+            start: "2021-01",
+            finish: "2021-06",
+            description: "Built a full-stack e-commerce platform using Next.js and Node.js",
+            link: "https://google.com",
         }
     ],
     services: [
@@ -85,12 +92,12 @@ export const PortfolioData: Portfolio = {
     ],
     languages: [
         {
-            title: "AL",
-            level: "begginer",
+            title: "GRf",
+            level: "advanced",
         },
         {
-            title: "ES",
-            level: "intermediate",
+            title: "IE",
+            level: "advanced",
         },
     ],
     links: [

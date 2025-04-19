@@ -25,6 +25,9 @@ export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
               const languageOption = LanguagesOptions.find(
                 (option) => option.value === language.title
               );
+              if (!languageOption) {
+                return null;
+              }
               const Icon = icons[languageOption?.iconCode as keyof typeof icons];
               return (
                 <Badge key={index} variant="secondary">
