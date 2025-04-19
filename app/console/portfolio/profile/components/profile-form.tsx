@@ -1,6 +1,5 @@
 "use client";
-import { z } from "zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -15,26 +14,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ProfileSchema } from "validation-schemas/portfolio";
+import { ProfileFormValues, ProfileSchema } from "validation-schemas/portfolio";
 import { upsertProfile, getProfile } from "services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
 
-type ProfileFormValues = z.infer<typeof ProfileSchema>;
-
 interface ProfileFormProps {
   onCancel: () => void;
 }
 
 export default function ProfileForm({ onCancel }: ProfileFormProps) {
-  const { user_id } = useAuthStore((state) => state);
+  const { user_id, email } = useAuthStore((state) => state);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      email: "",
+      email: email || "",
       phone: "",
       address: "",
       welcome_message: "",
@@ -78,12 +75,6 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
       form.reset(data);
     }
   }, [data, isSuccess]);
-
-  // useEffect(() => {
-  //   if (form.formState.errors) {
-  //     console.log(form.formState.errors);
-  //   }
-  // }, [form.formState.errors]);
 
   return (
     <div className="space-y-6">

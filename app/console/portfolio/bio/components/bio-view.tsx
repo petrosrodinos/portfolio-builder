@@ -6,6 +6,7 @@ import { getProfile } from "services/profile";
 import { FileText, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 
 interface BioViewProps {
   onEdit: () => void;
@@ -21,15 +22,18 @@ export default function BioView({ onEdit }: BioViewProps) {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-8">
-        <Spinner show={isLoading} />
-      </div>
-    );
+    return <ExperienceSkeleton />;
   }
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-end">
+        <Button onClick={onEdit} className="gap-2">
+          <Pencil className="h-4 w-4" />
+          Edit Bio
+        </Button>
+      </div>
+
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Role</h3>
         <p className="text-gray-700">{data?.role || "No role specified"}</p>
@@ -54,13 +58,6 @@ export default function BioView({ onEdit }: BioViewProps) {
           </a>
         </div>
       )}
-
-      <div className="flex justify-start pt-4">
-        <Button variant="secondary" size="sm" onClick={onEdit} className="flex items-center gap-2">
-          <Pencil className="h-4 w-4" />
-          Edit Bio
-        </Button>
-      </div>
     </div>
   );
 }

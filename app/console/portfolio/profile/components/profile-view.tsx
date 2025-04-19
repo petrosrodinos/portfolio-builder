@@ -4,9 +4,9 @@ import { getProfile } from "services/profile";
 import { useAuthStore } from "stores/auth";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { Spinner } from "@/components/ui/spinner";
 import { Info } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import ExperienceSkeleton from "@/components/ui/experience-skeleton";
 interface ProfileViewProps {
   onEdit: () => void;
 }
@@ -14,7 +14,7 @@ interface ProfileViewProps {
 export default function ProfileView({ onEdit }: ProfileViewProps) {
   const { user_id } = useAuthStore((state) => state);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
     enabled: !!user_id,
@@ -22,22 +22,19 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-8">
-        <Spinner show={isLoading} />
-      </div>
-    );
+    return <ExperienceSkeleton />;
   }
-
-  // useEffect(() => {
-  //   if (error) {
-  //     onEdit();
-  //   }
-  // }, [error]);
 
   return (
     <div className="space-y-6">
-      {data ? (
+      <div className="flex justify-end">
+        <Button onClick={onEdit} className="gap-2">
+          <Pencil className="h-4 w-4" />
+          Edit Profile
+        </Button>
+      </div>
+
+      {data && !isLoading && (
         <>
           <div>
             <h3 className="font-medium">Email</h3>
@@ -55,19 +52,9 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
             <h3 className="font-medium">Welcome Message</h3>
             <p className="text-sm text-muted-foreground">{data.welcome_message}</p>
           </div>
-          <div className="flex justify-start pt-4">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={onEdit}
-              className="flex items-center gap-2"
-            >
-              <Pencil className="h-4 w-4" />
-              Edit Profile
-            </Button>
-          </div>
         </>
-      ) : (
+      )}
+      {!data && !isLoading && (
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>Profile Incomplete</AlertTitle>
