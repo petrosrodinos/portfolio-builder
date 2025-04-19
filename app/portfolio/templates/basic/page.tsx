@@ -1,12 +1,12 @@
-import { ProfileSection } from "./components/ProfileSection";
-import { BioSection } from "./components/BioSection";
-import { ExperienceSection } from "./components/ExperienceSection";
-import { ProjectsSection } from "./components/ProjectsSection";
-import { EducationSection } from "./components/EducationSection";
-import { SkillsSection } from "./components/SkillsSection";
-import { LanguagesSection } from "./components/LanguagesSection";
-import { ServicesSection } from "./components/ServicesSection";
-import { ContactSection } from "./components/ContactSection";
+import { ProfileSection } from "./components/profile";
+import { BioSection } from "./components/bio";
+import { ExperienceSection } from "./components/experience";
+import { ProjectsSection } from "./components/projects";
+import { EducationSection } from "./components/education";
+import { SkillsSection } from "./components/skills";
+import { LanguagesSection } from "./components/language";
+import { ServicesSection } from "./components/services";
+import { ContactSection } from "./components/contact";
 import NavBar from "./components/nav-bar";
 interface BasicTemplateProps {
   initialData: any;
