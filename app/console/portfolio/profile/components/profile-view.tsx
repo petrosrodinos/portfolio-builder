@@ -37,6 +37,10 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
       {data && !isLoading && (
         <>
           <div>
+            <h3 className="font-medium">Vanity URL</h3>
+            <p className="text-sm text-muted-foreground">{data.vanity_url || "No vanity URL"}</p>
+          </div>
+          <div>
             <h3 className="font-medium">Email</h3>
             <p className="text-sm text-muted-foreground">{data.email}</p>
           </div>

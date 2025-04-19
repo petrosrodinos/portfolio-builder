@@ -12,6 +12,7 @@ export interface UpdatePortfolioProfileBio {
 }
 
 export interface PortfolioProfileBio {
+    vanity_url: string;
     email: string;
     phone?: string;
     address: string;

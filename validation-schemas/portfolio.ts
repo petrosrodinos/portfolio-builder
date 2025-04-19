@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const ProfileSchema = z.object({
+    vanity_url: z.string().min(3, "Vanity URL is required"),
     email: z.string().email(),
     phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").optional(),
     address: z.string().min(5, "Address is required").optional(),

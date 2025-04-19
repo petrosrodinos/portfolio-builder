@@ -4,12 +4,23 @@ import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supa
 import { supabase } from "@/lib/supabase";
 import { Portfolio } from "@/interfaces/portfolio";
 
-export async function getPortfolio(user_id: string): Promise<Portfolio | null> {
-    const { data, error } = await supabase
-        .from("users")
-        .select("*,profiles(*),experiences(*),skills(*)")
-        .eq("user_id", user_id)
+export async function getPortfolio(id: string): Promise<Portfolio | null> {
+    let { data, error } = await supabase
+        .from("profiles")
+        .select("*,users(*),experiences(*),skills(*)")
+        .eq("vanity_url", id)
         .single();
+
+    if (!data) {
+        const result = await supabase
+            .from("profiles")
+            .select("*,users(*),experiences(*),skills(*)")
+            .eq("user_id", id)
+            .single();
+
+        data = result.data;
+        error = result.error;
+    }
 
     if (error) {
         console.error(error);
@@ -42,10 +53,9 @@ export async function getPortfolio(user_id: string): Promise<Portfolio | null> {
         linksType = data.skills.filter((link: any) => link.type == PortfolioSkillsTypes.link);
     }
 
-
-    return {
+    const portfolio = {
         ...data,
-        profile: data.profiles,
+        user: data.users,
         experiences: experiencesType,
         educations: educationType,
         projects: projectsType,
@@ -55,4 +65,7 @@ export async function getPortfolio(user_id: string): Promise<Portfolio | null> {
         links: linksType,
     }
 
+    delete portfolio.users;
+
+    return portfolio
 }

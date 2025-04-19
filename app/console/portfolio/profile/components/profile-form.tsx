@@ -31,6 +31,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
+      vanity_url: "",
       email: email || "",
       phone: "",
       address: "",
@@ -83,6 +84,23 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
+            name="vanity_url"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Vanity URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="johndoe" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This will be the URL of your portfolio and must be unique, e.g.
+                  https://portfolio.com/johndoe
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
@@ -90,9 +108,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input type="email" placeholder="john@gmail.com" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is the email that will be visible at your portfolio.
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -106,9 +122,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input type="tel" placeholder="+1 (123) 456-7890" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is the phone number that will be visible at your portfolio.
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -122,9 +136,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input placeholder="123 Main St, City, Country" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is the address that will be visible at your portfolio.
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -139,8 +151,6 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Textarea placeholder="Hi there! Welcome to my profile." {...field} />
                 </FormControl>
-                <FormDescription>This will appear on your portfolio page.</FormDescription>
-                <FormMessage />
               </FormItem>
             )}
           />
