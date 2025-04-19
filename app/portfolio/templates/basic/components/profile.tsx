@@ -3,17 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { LanguagesOptions } from "@/constants/dropdowns/languages";
 import * as icons from "country-flag-icons/react/3x2";
-
-interface ProfileSectionProps {
-  avatar: string;
-  email: string;
-  phone: string;
-  address: string;
-  welcome_message: string;
-  role: string;
-  full_name: string;
-  country: string;
-}
+import { ProfileSectionProps } from "@/interfaces/templates";
 
 export const ProfileSection = ({
   email,

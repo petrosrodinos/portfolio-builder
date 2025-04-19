@@ -3,11 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Languages } from "lucide-react";
 import { LanguagesOptions } from "@/constants/dropdowns/languages";
 import * as icons from "country-flag-icons/react/3x2";
-
-interface Language {
-  title: string;
-  level: string;
-}
+import { Language } from "@/interfaces/templates";
 
 interface LanguagesSectionProps {
   languages: Language[];

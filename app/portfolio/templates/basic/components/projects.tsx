@@ -1,16 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Code, LinkIcon } from "lucide-react";
-
-interface Project {
-  title: string;
-  company: string;
-  start: string;
-  finish: string;
-  description: string;
-  link?: string;
-  image?: string;
-}
+import { Project } from "@/interfaces/templates";
 
 interface ProjectsSectionProps {
   projects: Project[];

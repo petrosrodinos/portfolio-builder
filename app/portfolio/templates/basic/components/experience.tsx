@@ -1,14 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Experience } from "@/interfaces/templates";
 import { Briefcase } from "lucide-react";
-
-interface Experience {
-  title: string;
-  company: string;
-  location: string;
-  start: string;
-  finish: string;
-  description: string;
-}
 
 interface ExperienceSectionProps {
   experiences: Experience[];

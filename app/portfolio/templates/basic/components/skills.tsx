@@ -2,11 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import { SkillOptions } from "@/constants/dropdowns/skills";
-
-interface Skill {
-  title: string;
-  level: string;
-}
+import { Skill } from "@/interfaces/templates";
 
 interface SkillsSectionProps {
   skills: Skill[];

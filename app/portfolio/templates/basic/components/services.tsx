@@ -1,11 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Service } from "@/interfaces/templates";
 import { Globe } from "lucide-react";
-
-interface Service {
-  title: string;
-  description: string;
-  price?: string;
-}
 
 interface ServicesSectionProps {
   services: Service[];

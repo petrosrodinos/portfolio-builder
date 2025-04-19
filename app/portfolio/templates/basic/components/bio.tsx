@@ -2,11 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { LinkIcon } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-interface BioSectionProps {
-  bio: string;
-  resume: string;
-}
+import { BioSectionProps } from "@/interfaces/templates";
 
 export const BioSection = ({ bio, resume }: BioSectionProps) => {
   return (

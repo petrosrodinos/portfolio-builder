@@ -1,13 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Education } from "@/interfaces/templates";
 import { GraduationCap } from "lucide-react";
-
-interface Education {
-  title: string;
-  institution: string;
-  start: string;
-  finish: string;
-  description?: string;
-}
 
 interface EducationSectionProps {
   education: Education[];
