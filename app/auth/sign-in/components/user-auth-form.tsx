@@ -22,7 +22,7 @@ import { toast } from "@/hooks/use-toast";
 import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
-import { signinSchema } from "validation-schemas/auth";
+import { SigninSchema } from "validation-schemas/auth";
 import { z } from "zod";
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
@@ -30,8 +30,8 @@ type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<z.infer<typeof signinSchema>>({
-    resolver: zodResolver(signinSchema),
+  const form = useForm<SigninSchema>({
+    resolver: zodResolver(SigninSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -69,7 +69,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof signinSchema>) {
+  function onSubmit(data: z.infer<typeof SigninSchema>) {
     mutate({ email: data.email, password: data.password });
   }
 

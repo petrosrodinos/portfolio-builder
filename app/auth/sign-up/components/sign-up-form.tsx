@@ -22,14 +22,14 @@ import { SignUpUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import { signupSchema } from "validation-schemas/auth";
+import { SignupSchema, signupSchema } from "validation-schemas/auth";
 
 type SignUpFormProps = HTMLAttributes<HTMLDivElement>;
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<z.infer<typeof signupSchema>>({
+  const form = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
