@@ -48,7 +48,7 @@ export interface Skill {
 
 export interface Link {
     title: string;
-    url: string;
+    link: string;
 }
 
 export interface Language {

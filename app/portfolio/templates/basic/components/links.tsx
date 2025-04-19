@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link } from "@/interfaces/templates";
@@ -26,7 +28,12 @@ export const LinksSection = ({ links = [] }: LinksSectionProps) => {
 
               const Icon = socialMedia.icon;
               return (
-                <Badge key={index} variant="secondary" className="flex items-center gap-2">
+                <Badge
+                  onClick={() => window.open(link.link, "_blank")}
+                  key={index}
+                  variant="secondary"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors"
+                >
                   <Icon className="h-4 w-4" />
                   {socialMedia?.label}
                 </Badge>
