@@ -18,9 +18,9 @@ import {
   Star,
   Send,
 } from "lucide-react";
+import { ThemeSwitch } from "@/components/theme-switch";
 
-const PortfolioTemplate = () => {
-  // This would typically come from your database/API
+const BasicTemplate = () => {
   const profile = {
     email: "example@email.com",
     phone: "+1 234 567 8900",
@@ -115,21 +115,24 @@ const PortfolioTemplate = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b mb-8">
+      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b mb-8">
         <div className="flex items-center justify-between py-4">
           <h1 className="text-xl font-bold">{bio.role}</h1>
-          <div className="flex gap-4 overflow-x-auto no-scrollbar">
-            {sections.map((section) => (
-              <Button
-                key={section.id}
-                variant="ghost"
-                size="sm"
-                onClick={() => scrollToSection(section.id)}
-                className="whitespace-nowrap"
-              >
-                {section.label}
-              </Button>
-            ))}
+          <div className="flex items-center gap-4">
+            <div className="flex gap-4 overflow-x-auto no-scrollbar">
+              {sections.map((section) => (
+                <Button
+                  key={section.id}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => scrollToSection(section.id)}
+                  className="whitespace-nowrap"
+                >
+                  {section.label}
+                </Button>
+              ))}
+            </div>
+            <ThemeSwitch />
           </div>
         </div>
       </nav>
@@ -387,4 +390,4 @@ const PortfolioTemplate = () => {
   );
 };
 
-export default PortfolioTemplate;
+export default BasicTemplate;
