@@ -1,9 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Copy } from "lucide-react";
 import { LanguagesOptions } from "@/constants/dropdowns/languages";
 import * as icons from "country-flag-icons/react/3x2";
 import { ProfileSectionProps } from "@/interfaces/templates";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { CopyButton } from "./copy-button";
 
 export const ProfileSection = ({
   email,
@@ -20,6 +23,7 @@ export const ProfileSection = ({
     return null;
   }
   const Icon = icons[languageOption?.iconCode as keyof typeof icons];
+
   return (
     <section id="profile">
       <Card className="mb-8">
@@ -40,12 +44,32 @@ export const ProfileSection = ({
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />
                     <span className="text-sm sm:text-base">{email}</span>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <CopyButton text={email} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Copy email</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                 )}
                 {phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4" />
                     <span className="text-sm sm:text-base">{phone}</span>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <CopyButton text={phone} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Copy phone</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                 )}
                 {address && (
