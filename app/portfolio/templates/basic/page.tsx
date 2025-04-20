@@ -1,13 +1,13 @@
 import { Portfolio } from "@/interfaces/templates";
-import BasicTemplate from "./components";
 import { PortfolioData } from "@/constants/templates";
-interface BasicTemplateProps {
+import ProfessionalTemplate from "./components";
+interface ProfessionalTemplatePageProps {
   data: Portfolio;
   id?: string;
 }
 
-const BasicTemplatePage = ({ data }: BasicTemplateProps) => {
-  return <BasicTemplate data={data || PortfolioData} />;
+const ProfessionalTemplatePage = ({ data }: ProfessionalTemplatePageProps) => {
+  return <ProfessionalTemplate data={data || PortfolioData} />;
 };
 
-export default BasicTemplatePage;
+export default ProfessionalTemplatePage;

@@ -3,30 +3,6 @@ import { UpdateUser, User, UserAvatar } from 'interfaces/user';
 import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { deleteFile, uploadFile } from './storage';
 
-export const createUser = async (payload: UpdateUser): Promise<User> => {
-    try {
-        const { error, data } = await supabase
-            .from(SupabaseTables.users)
-            .insert(payload).select().single();
-
-        console.log('data-create', data);
-
-        if (error) {
-            throw error;
-        }
-
-        if (data) {
-            return data;
-        }
-
-
-
-    } catch (error) {
-        console.error('Error creating user', error);
-        throw error;
-    }
-}
-
 export const upsertUser = async (payload: UpdateUser): Promise<User> => {
     try {
         let avatar = payload.avatar as UserAvatar;

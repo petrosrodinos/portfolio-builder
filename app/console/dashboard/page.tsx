@@ -5,35 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Eye, FileText, Palette, Share2, Settings, Star, Check, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
-import { useRouter } from "next/navigation";
+import { PortfolioTemplates } from "@/constants/templates";
 
 const Dashboard = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [isProfileVisible, setIsProfileVisible] = useState(true);
-  const router = useRouter();
-  const templates = [
-    {
-      id: "minimal",
-      name: "Minimal",
-      description: "Clean and simple design focusing on your content",
-      gradient: "from-primary/20 to-primary/5",
-      preview: "/portfolio/templates/basic",
-    },
-    {
-      id: "professional",
-      name: "Professional",
-      description: "Modern layout with emphasis on your achievements",
-      gradient: "from-secondary/20 to-secondary/5",
-      preview: "/portfolio/templates/premium",
-    },
-    {
-      id: "creative",
-      name: "Creative",
-      description: "Dynamic design with interactive elements",
-      preview: "/portfolio/templates/premium",
-      gradient: "from-accent/20 to-accent/5",
-    },
-  ];
 
   return (
     <div className="container mx-auto p-6">
@@ -154,7 +130,7 @@ const Dashboard = () => {
           </p>
 
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {templates.map((template) => (
+            {PortfolioTemplates.map((template) => (
               <Card
                 key={template.id}
                 className={cn(

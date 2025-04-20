@@ -11,12 +11,12 @@ import { LinksSection } from "./links";
 import NavBar from "./nav-bar";
 import { Portfolio } from "@/interfaces/templates";
 
-interface BasicTemplateProps {
+interface ProfessionalTemplateProps {
   data: Portfolio;
   id?: string;
 }
 
-const BasicTemplate = ({ data }: BasicTemplateProps) => {
+const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <NavBar full_name={data?.user?.full_name} />
@@ -44,4 +44,4 @@ const BasicTemplate = ({ data }: BasicTemplateProps) => {
   );
 };
 
-export default BasicTemplate;
+export default ProfessionalTemplate;

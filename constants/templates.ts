@@ -112,3 +112,41 @@ export const PortfolioData: Portfolio = {
     ],
 }
 
+export const PortfolioTypes = {
+    minimal: 'minimal',
+    professional: 'professional',
+    creative: 'creative',
+    default: 'professional',
+}
+
+export const PortfolioTemplates = [
+    {
+        id: PortfolioTypes.minimal,
+        name: "Minimal",
+        description: "Clean and simple design focusing on your content",
+        gradient: "from-primary/20 to-primary/5",
+        preview: "/portfolio/templates/professional",
+    },
+    {
+        id: PortfolioTypes.professional,
+        name: "Professional",
+        description: "Modern layout with emphasis on your achievements",
+        gradient: "from-secondary/20 to-secondary/5",
+        preview: "/portfolio/templates/professional",
+    },
+    {
+        id: PortfolioTypes.creative,
+        name: "Creative",
+        description: "Dynamic design with interactive elements",
+        preview: "/portfolio/templates/premium",
+        gradient: "from-accent/20 to-accent/5",
+    },
+    // {
+    //     id: 'premium',
+    //     name: 'Premium',
+    //     description: 'Premium design with interactive elements',
+    //     preview: '/portfolio/templates/premium',
+    //     gradient: 'from-accent/20 to-accent/5',
+    // }
+]
+

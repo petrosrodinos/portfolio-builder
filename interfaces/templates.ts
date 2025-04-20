@@ -1,15 +1,5 @@
 import { PortfolioResume } from "./portfolio";
 
-export interface User {
-    full_name: string;
-    country: string;
-    date_of_birth: string;
-    avatar: {
-        url: string;
-        name: string;
-    };
-}
-
 export interface ProfileSectionProps {
     avatar: string;
     email: string;
@@ -24,6 +14,16 @@ export interface ProfileSectionProps {
 export interface BioSectionProps {
     bio: string;
     resume: string;
+}
+
+export interface User {
+    full_name: string;
+    country: string;
+    date_of_birth: string;
+    avatar: {
+        url: string;
+        name: string;
+    };
 }
 
 export interface Experience {

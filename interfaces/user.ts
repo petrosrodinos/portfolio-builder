@@ -1,3 +1,5 @@
+import { PortfolioTypes } from "@/constants/templates";
+
 export interface UpdateUser {
     user_id: string;
     fullname: string;
@@ -6,6 +8,7 @@ export interface UpdateUser {
     date_of_birth: string;
     avatar?: File | UserAvatar;
     avatar_to_delete?: UserAvatar;
+    preferences?: UserPreferences;
 }
 export interface User {
     id: number;
@@ -15,6 +18,7 @@ export interface User {
     email: string;
     date_of_birth: string;
     avatar?: UserAvatar;
+    preferences?: UserPreferences;
     created_at: string;
 }
 
@@ -22,3 +26,10 @@ export interface UserAvatar {
     name: string;
     url: string;
 }
+
+export interface UserPreferences {
+    portfolio_theme: typeof PortfolioTypes;
+    dashboard_theme: string;
+    font: string;
+}
+

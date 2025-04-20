@@ -20,7 +20,7 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createUser, getUser, upsertUser } from "services/user";
+import { getUser, upsertUser } from "services/user";
 import { useAuthStore } from "stores/auth";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -35,6 +35,7 @@ import {
 import { CountriesOptions } from "@/constants/dropdowns/countries";
 import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
+import { PortfolioTypes } from "@/constants/templates";
 
 export default function UserProfileForm() {
   const router = useRouter();
@@ -51,7 +52,6 @@ export default function UserProfileForm() {
       date_of_birth: "",
       avatar: null,
     },
-    mode: "onChange",
   });
 
   const { data, isSuccess } = useQuery({
@@ -88,12 +88,21 @@ export default function UserProfileForm() {
   });
 
   function onSubmit(data: ProfileFormValues) {
-    mutate({
+    let userData: any = {
       ...data,
       user_id,
       avatar_to_delete: fileToDelete,
       email,
-    });
+    };
+    if (!isProfilePage) {
+      userData = {
+        ...userData,
+        preferences: {
+          portfolio_theme: PortfolioTypes.default,
+        },
+      };
+    }
+    mutate(userData);
   }
 
   const handleAvatarChange = (file: File) => {
