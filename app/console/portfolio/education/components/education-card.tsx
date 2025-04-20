@@ -80,7 +80,7 @@ const EducationCard = ({ education }: EducationCardProps) => {
                 className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 mt-2"
               >
                 <LinkIcon className="h-3 w-3" />
-                View Education
+                View Link
                 <ExternalLink className="h-3 w-3" />
               </a>
             )}

@@ -21,6 +21,7 @@ export const ExperienceFormSchema = z.object({
     start: z.string().min(1, "Start date is required").optional(),
     finish: z.string().optional(),
     description: z.string().min(10, "Description is required"),
+    link: z.string().url("Invalid link").optional(),
 });
 
 export const ProjectFormSchema = z.object({
@@ -39,6 +40,7 @@ export const EducationFormSchema = z.object({
     start: z.string().min(1, "Start date is required").optional(),
     finish: z.string().optional(),
     description: z.string().min(10, "Description is required").optional(),
+    link: z.string().url("Invalid link").optional(),
 });
 
 export const ServiceFormSchema = z.object({

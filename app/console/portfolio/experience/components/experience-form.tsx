@@ -37,6 +37,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
       start: "",
       finish: "",
       description: "",
+      link: "",
     },
   });
 
@@ -156,6 +157,20 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
                   className="min-h-[100px]"
                   {...field}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="link"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Link</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g. https://www.google.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

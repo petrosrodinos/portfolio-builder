@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Pencil, Trash2, MapPin, Building2, Calendar } from "lucide-react";
+import { Pencil, Trash2, MapPin, Building2, Calendar, ExternalLink, LinkIcon } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PortfolioExperience } from "interfaces/portfolio";
@@ -75,6 +75,18 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             <h3 className="text-xl font-semibold leading-none tracking-tight">
               {experience.title}
             </h3>
+            {experience.link && (
+              <a
+                href={experience.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 mt-2"
+              >
+                <LinkIcon className="h-3 w-3" />
+                View Link
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            )}
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">

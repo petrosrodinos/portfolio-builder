@@ -36,6 +36,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
       start: "",
       finish: "",
       description: "",
+      link: "",
     },
   });
 
@@ -141,6 +142,20 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
                   className="min-h-[100px]"
                   {...field}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="link"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Link</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g. https://www.google.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

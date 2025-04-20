@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Experience } from "@/interfaces/templates";
-import { Briefcase } from "lucide-react";
+import { Briefcase, LinkIcon } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ExperienceSectionProps {
   experiences: Experience[];
@@ -28,6 +30,18 @@ export const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
                 {exp.start} - {exp?.finish || "Present"}
               </p>
               <p className="mt-2">{exp.description}</p>
+              {exp.link && (
+                <Link
+                  href={exp.link}
+                  target="_blank"
+                  className={cn(
+                    "inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mt-2"
+                  )}
+                >
+                  <LinkIcon className="h-4 w-4" />
+                  <span>View Link</span>
+                </Link>
+              )}
             </div>
           ))}
         </CardContent>
