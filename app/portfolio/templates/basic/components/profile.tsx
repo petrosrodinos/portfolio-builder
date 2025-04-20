@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, MapPin, Copy } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { ProfileSectionProps } from "@/interfaces/templates";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CopyButton } from "./copy-button";
@@ -17,9 +17,6 @@ export const ProfileSection = ({
   country,
 }: ProfileSectionProps) => {
   const countryOption = CountriesOptions.find((option) => option.value === country);
-  if (!countryOption) {
-    return null;
-  }
 
   return (
     <section id="profile">
@@ -33,7 +30,7 @@ export const ProfileSection = ({
             <div className="w-full sm:text-left">
               {role && <h1 className="text-2xl sm:text-3xl font-bold">{role}</h1>}
               <h2 className="text-lg sm:text-xl font-bold">{full_name}</h2>
-              {country && (
+              {countryOption && (
                 <div className="flex items-center gap-2">
                   <span className="text-sm sm:text-base">{countryOption.label}</span>
                 </div>

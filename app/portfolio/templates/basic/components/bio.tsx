@@ -12,17 +12,19 @@ export const BioSection = ({ bio, resume }: BioSectionProps) => {
           <h2 className="text-2xl font-bold">About Me</h2>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-700">{bio}</p>
-          <Link
-            href={resume}
-            target="_blank"
-            className={cn(
-              "inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mt-4"
-            )}
-          >
-            <LinkIcon className="h-4 w-4" />
-            <span>View Resume</span>
-          </Link>
+          {bio && <p className="text-gray-700">{bio}</p>}
+          {resume && (
+            <Link
+              href={resume}
+              target="_blank"
+              className={cn(
+                "inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mt-4"
+              )}
+            >
+              <LinkIcon className="h-4 w-4" />
+              <span>View Resume</span>
+            </Link>
+          )}
         </CardContent>
       </Card>
     </section>
