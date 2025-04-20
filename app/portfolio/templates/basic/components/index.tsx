@@ -21,25 +21,27 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <NavBar full_name={data?.user?.full_name} />
 
-      <ProfileSection
-        full_name={data?.user?.full_name}
-        country={data?.user?.country}
-        role={data.role}
-        welcome_message={data?.welcome_message}
-        email={data?.email}
-        phone={data?.phone}
-        address={data?.address}
-        avatar={data?.user?.avatar?.url}
-      />
-      <BioSection bio={data.bio} resume={data.resume.url} />
-      <ExperienceSection experiences={data?.experiences} />
-      <ProjectsSection projects={data?.projects} />
-      <EducationSection education={data?.educations} />
-      <SkillsSection skills={data?.skills} />
-      <LanguagesSection languages={data?.languages} />
-      <ServicesSection services={data?.services} />
-      <LinksSection links={data?.links} />
-      <ContactSection />
+      <div className="pt-20">
+        <ProfileSection
+          full_name={data?.user?.full_name}
+          country={data?.user?.country}
+          role={data.role}
+          welcome_message={data?.welcome_message}
+          email={data?.email}
+          phone={data?.phone}
+          address={data?.address}
+          avatar={data?.user?.avatar?.url}
+        />
+        <BioSection bio={data.bio} resume={data.resume.url} />
+        <ExperienceSection experiences={data?.experiences} />
+        <ProjectsSection projects={data?.projects} />
+        <EducationSection education={data?.educations} />
+        <SkillsSection skills={data?.skills} />
+        <LanguagesSection languages={data?.languages} />
+        <ServicesSection services={data?.services} />
+        <LinksSection links={data?.links} />
+        <ContactSection />
+      </div>
     </div>
   );
 };

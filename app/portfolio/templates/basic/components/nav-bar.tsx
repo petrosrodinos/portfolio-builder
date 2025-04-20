@@ -29,12 +29,12 @@ const NavBar = ({ full_name }: NavBarProps) => {
 
   return (
     <div>
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b mb-8">
-        <div className="flex items-center justify-between py-4 px-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+        <div className="flex items-center justify-between py-4 px-4 max-w-7xl mx-auto">
           <h1 className="text-xl font-bold">{full_name}</h1>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 flex-1 justify-center">
             <div className="flex gap-4 overflow-x-auto no-scrollbar">
               {sections.map((section) => (
                 <Button
@@ -48,6 +48,9 @@ const NavBar = ({ full_name }: NavBarProps) => {
                 </Button>
               ))}
             </div>
+          </div>
+
+          <div className="hidden md:block">
             <ThemeSwitch />
           </div>
 
