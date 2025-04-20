@@ -35,7 +35,7 @@ import {
 import { CountriesOptions } from "@/constants/dropdowns/countries";
 import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
-import { PortfolioTypes } from "@/constants/templates";
+import { TemplateTypes } from "@/constants/templates";
 
 export default function UserProfileForm() {
   const router = useRouter();
@@ -98,7 +98,7 @@ export default function UserProfileForm() {
       userData = {
         ...userData,
         preferences: {
-          portfolio_theme: PortfolioTypes.default,
+          portfolio_theme: TemplateTypes.default,
         },
       };
     }
