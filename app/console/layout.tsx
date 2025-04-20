@@ -12,11 +12,14 @@ import { Search } from "@/components/search";
 import { Header } from "@/components/layout/header";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
+import Link from "next/link";
 
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, user_id } = useAuthStore();
   if (!isLoggedIn) {
     router.push("/auth/sign-in");
   }
@@ -40,6 +43,17 @@ export default function ConsoleLayout({ children }: { children: React.ReactNode 
             <Header>
               <Search />
               <div className="ml-auto flex items-center space-x-4">
+                <Button variant="outline" size="sm" asChild>
+                  <Link
+                    href={`/portfolio/${user_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <FileText size={18} />
+                    <span>Portfolio</span>
+                  </Link>
+                </Button>
                 <ThemeSwitch />
                 <ProfileDropdown />
               </div>
