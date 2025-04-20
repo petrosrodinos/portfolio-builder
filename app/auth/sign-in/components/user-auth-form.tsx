@@ -24,7 +24,12 @@ import { useRouter } from "next/navigation";
 import { SigninSchema } from "validation-schemas/auth";
 import { z } from "zod";
 
-export function UserAuthForm({ className, ...props }) {
+interface UserAuthFormProps {
+  className?: string;
+  props?: any;
+}
+
+export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SigninSchema>({

@@ -1,8 +1,8 @@
 "use client";
 import { FC } from "react";
-import { UserAuthForm } from "./components/user-auth-form";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import { UserAuthForm } from "./components/user-auth-form";
 
 const Login: FC = () => {
   return (

@@ -1,7 +1,6 @@
 "use client";
 
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-
 import {
   Accordion,
   AccordionContent,
@@ -139,22 +138,22 @@ const Navbar = ({
 }: Navbar1Props) => {
   const { isLoggedIn } = useAuthStore((state) => state);
   return (
-    <section className="py-4 px-4">
-      <div className="">
-        {/* Desktop Menu */}
-        <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center gap-6">
-            {/* Logo */}
+    <section className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto">
+        <nav className="hidden justify-between items-center h-16 lg:flex">
+          <div className="flex items-center">
             <a href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="max-h-8" alt={logo.alt} />
               <span className="text-lg font-semibold tracking-tighter">{logo.title}</span>
             </a>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>{menu.map((item) => renderMenuItem(item))}</NavigationMenuList>
-              </NavigationMenu>
-            </div>
           </div>
+
+          <div className="flex items-center justify-center flex-1">
+            <NavigationMenu>
+              <NavigationMenuList>{menu.map((item) => renderMenuItem(item))}</NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
           <div className="flex items-center gap-2">
             <ThemeSwitch />
             {isLoggedIn ? (
@@ -176,8 +175,7 @@ const Navbar = ({
 
         {/* Mobile Menu */}
         <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
+          <div className="flex items-center justify-between h-16">
             <a href={logo.url} className="flex items-center gap-2">
               <img src={logo.src} className="max-h-8" alt={logo.alt} />
             </a>

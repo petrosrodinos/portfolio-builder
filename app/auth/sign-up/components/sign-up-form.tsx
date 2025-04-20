@@ -23,7 +23,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { SignupSchema, signupSchema } from "validation-schemas/auth";
 
-export function SignUpForm({ className, ...props }) {
+interface SignUpFormProps {
+  className?: string;
+  props?: any;
+}
+
+export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SignupSchema>({
