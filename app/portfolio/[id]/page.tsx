@@ -1,7 +1,13 @@
 import { getPortfolio } from "services/portfolio";
-import BasicTemplate from "../templates/professional/page";
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import UserMessage from "./components/user-message";
+import { TemplateTypes } from "@/constants/templates";
+
+const TEMPLATES = {
+  professional: dynamic(() => import("../templates/professional/page"), { ssr: true }),
+  creative: dynamic(() => import("../templates/premium/page"), { ssr: true }),
+} as const;
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -23,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Portfolio({ params }) {
+export default async function PortfolioPage({ params }) {
   const { id } = await params;
   const data = await getPortfolio(id);
 
@@ -31,9 +37,12 @@ export default async function Portfolio({ params }) {
     return <UserMessage />;
   }
 
+  const templateKey = data?.user?.preferences?.portfolio_theme || TemplateTypes.default;
+  const Template = TEMPLATES[templateKey];
+
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">
-      <BasicTemplate data={data} id={id} />
+      <Template data={data} id={id} />
     </div>
   );
 }

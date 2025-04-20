@@ -127,18 +127,18 @@ export const PortfolioTemplates: any = [
         gradient: "from-secondary/20 to-secondary/5",
         preview: "/portfolio/templates/professional",
     },
-    {
-        id: TemplateTypes.minimal,
-        name: "Minimal",
-        description: "Clean and simple design focusing on your content",
-        gradient: "from-primary/20 to-primary/5",
-        preview: "/portfolio/templates/professional",
-    },
+    // {
+    //     id: TemplateTypes.minimal,
+    //     name: "Minimal",
+    //     description: "Clean and simple design focusing on your content",
+    //     gradient: "from-primary/20 to-primary/5",
+    //     preview: "/portfolio/templates/professional",
+    // },
     {
         id: TemplateTypes.creative,
         name: "Creative",
-        description: "Dynamic design with interactive elements",
-        preview: "/portfolio/templates/premium",
+        description: "Dynamic design with interactive elements and animations",
+        preview: "/portfolio/templates/creative",
         gradient: "from-accent/20 to-accent/5",
     },
     // {

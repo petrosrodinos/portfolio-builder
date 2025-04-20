@@ -1,4 +1,5 @@
 import { PortfolioResume } from "./portfolio";
+import { UserPreferences } from "./user";
 
 export interface ProfileSectionProps {
     avatar: string;
@@ -20,6 +21,7 @@ export interface User {
     full_name: string;
     country: string;
     date_of_birth: string;
+    preferences?: UserPreferences;
     avatar: {
         url: string;
         name: string;
