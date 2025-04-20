@@ -1,3 +1,5 @@
+"use client";
+
 import { SearchProvider } from "@/context/search-context";
 import { cn } from "lib/utils";
 import React from "react";
@@ -8,9 +10,16 @@ import { ProfileDropdown } from "@/components/profile-dropdown";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Search } from "@/components/search";
 import { Header } from "@/components/layout/header";
+import { useAuthStore } from "stores/auth";
+import { useRouter } from "next/navigation";
 
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
+  const router = useRouter();
+  const { isLoggedIn } = useAuthStore();
+  if (!isLoggedIn) {
+    router.push("/auth/sign-in");
+  }
   return (
     <section>
       <SearchProvider>
