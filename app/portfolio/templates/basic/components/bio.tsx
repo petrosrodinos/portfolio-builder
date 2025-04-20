@@ -6,7 +6,7 @@ import { BioSectionProps } from "@/interfaces/templates";
 
 export const BioSection = ({ bio, resume }: BioSectionProps) => {
   return (
-    <div id="about">
+    <section id="about">
       <Card className="mb-8">
         <CardHeader>
           <h2 className="text-2xl font-bold">About Me</h2>
@@ -25,6 +25,6 @@ export const BioSection = ({ bio, resume }: BioSectionProps) => {
           </Link>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };

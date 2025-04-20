@@ -21,7 +21,7 @@ export const ProfileSection = ({
   }
   const Icon = icons[languageOption?.iconCode as keyof typeof icons];
   return (
-    <div id="profile">
+    <section id="profile">
       <Card className="mb-8">
         <CardContent className="pt-6">
           <div className="flex items-start gap-4 sm:gap-6">
@@ -60,6 +60,6 @@ export const ProfileSection = ({
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };
