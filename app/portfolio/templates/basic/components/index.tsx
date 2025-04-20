@@ -32,7 +32,7 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
           address={data?.address}
           avatar={data?.user?.avatar?.url}
         />
-        <BioSection bio={data.bio} resume={data.resume.url} />
+        <BioSection bio={data.bio} resume={data?.resume?.url} />
         <ExperienceSection experiences={data?.experiences} />
         <ProjectsSection projects={data?.projects} />
         <EducationSection education={data?.educations} />

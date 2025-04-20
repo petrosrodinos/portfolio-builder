@@ -5,6 +5,10 @@ import { cn } from "@/lib/utils";
 import { BioSectionProps } from "@/interfaces/templates";
 
 export const BioSection = ({ bio, resume }: BioSectionProps) => {
+  if (!bio && !resume) {
+    return null;
+  }
+
   return (
     <section id="about">
       <Card className="mb-8">

@@ -35,12 +35,14 @@ export default function BioView({ onEdit }: BioViewProps) {
 
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Role</h3>
-        <p className="text-gray-700">{data?.role || "No role specified"}</p>
+        <p className="text-sm text-muted-foreground">{data?.role || "No role specified"}</p>
       </div>
 
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Bio</h3>
-        <p className="text-gray-700 whitespace-pre-line">{data?.bio || "No bio provided"}</p>
+        <p className="text-sm text-muted-foreground whitespace-pre-line">
+          {data?.bio || "No bio provided"}
+        </p>
       </div>
 
       <div className="space-y-2">
@@ -56,7 +58,7 @@ export default function BioView({ onEdit }: BioViewProps) {
             <span>View resume</span>
           </a>
         ) : (
-          <p className="text-gray-700">No resume provided</p>
+          <p className="text-sm text-muted-foreground">No resume provided</p>
         )}
       </div>
     </div>

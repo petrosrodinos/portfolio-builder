@@ -42,19 +42,21 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
           </div>
           <div>
             <h3 className="font-medium">Email</h3>
-            <p className="text-sm text-muted-foreground">{data.email}</p>
+            <p className="text-sm text-muted-foreground">{data?.email || "No email"}</p>
           </div>
           <div>
             <h3 className="font-medium">Phone</h3>
-            <p className="text-sm text-muted-foreground">{data.phone}</p>
+            <p className="text-sm text-muted-foreground">{data?.phone || "No phone"}</p>
           </div>
           <div>
             <h3 className="font-medium">Address</h3>
-            <p className="text-sm text-muted-foreground">{data.address}</p>
+            <p className="text-sm text-muted-foreground">{data?.address || "No address"}</p>
           </div>
           <div>
             <h3 className="font-medium">Welcome Message</h3>
-            <p className="text-sm text-muted-foreground">{data.welcome_message}</p>
+            <p className="text-sm text-muted-foreground">
+              {data?.welcome_message || "No welcome message"}
+            </p>
           </div>
         </>
       )}
