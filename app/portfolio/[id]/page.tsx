@@ -1,6 +1,5 @@
 import { getPortfolio } from "services/portfolio";
-import BasicTemplate from "../templates/basic/page";
-import PortfolioNotFound from "./components/not-found";
+import BasicTemplate from "../templates/professional/page";
 import type { Metadata } from "next";
 import UserMessage from "./components/user-message";
 
