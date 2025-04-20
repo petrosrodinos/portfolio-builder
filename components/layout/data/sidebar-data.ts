@@ -1,5 +1,4 @@
 import {
-  IconBrowserCheck,
   IconHelp,
   IconLayoutDashboard,
   IconPalette,
@@ -19,6 +18,7 @@ import {
   IconStars,
   IconUser,
   IconLink,
+  IconCreditCard,
 } from '@tabler/icons-react'
 import { Command, CreditCard } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -32,6 +32,26 @@ export const sidebarData: SidebarData = {
     },
   ],
   navGroups: [
+    {
+      title: 'Admin',
+      items: [
+        {
+          title: 'Dashboard',
+          url: '/console/admin/dashboard',
+          icon: IconLayoutDashboard,
+        },
+        {
+          title: 'Users',
+          url: '/console/admin/users',
+          icon: IconUser,
+        },
+        {
+          title: "Subscriptions",
+          url: "/console/admin/subscriptions",
+          icon: IconCreditCard,
+        },
+      ],
+    },
     {
       title: 'General',
       items: [

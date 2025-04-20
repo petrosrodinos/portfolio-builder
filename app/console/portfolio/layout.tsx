@@ -12,6 +12,7 @@ import {
   IconUser,
   IconUserCircle,
   IconEye,
+  IconSettings,
 } from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
