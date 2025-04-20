@@ -7,6 +7,7 @@ interface ServicesSectionProps {
 }
 
 export const ServicesSection = ({ services }: ServicesSectionProps) => {
+  if (!services?.length) return null;
   return (
     <section id="services">
       <Card className="mb-8">

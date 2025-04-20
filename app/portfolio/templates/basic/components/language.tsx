@@ -10,6 +10,7 @@ interface LanguagesSectionProps {
 }
 
 export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
+  if (!languages?.length) return null;
   return (
     <section id="languages">
       <Card className="mb-8">

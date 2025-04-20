@@ -9,6 +9,7 @@ interface SkillsSectionProps {
 }
 
 export const SkillsSection = ({ skills }: SkillsSectionProps) => {
+  if (!skills?.length) return null;
   return (
     <section id="skills">
       <Card className="mb-8">

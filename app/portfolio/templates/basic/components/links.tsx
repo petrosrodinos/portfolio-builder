@@ -12,6 +12,7 @@ interface LinksSectionProps {
 }
 
 export const LinksSection = ({ links = [] }: LinksSectionProps) => {
+  if (!links?.length) return null;
   return (
     <section id="links">
       <Card className="mb-8">
