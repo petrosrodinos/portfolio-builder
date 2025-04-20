@@ -25,7 +25,7 @@ export const SkillsSection = ({ skills }: SkillsSectionProps) => {
               const skillOption = SkillOptions.find((option) => option.value === skill.title);
               return (
                 <Badge key={index} variant="secondary">
-                  {skillOption?.label} • {skill.level}
+                  {skillOption?.label} • {skill?.level}
                 </Badge>
               );
             })}

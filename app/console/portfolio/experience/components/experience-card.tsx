@@ -118,7 +118,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <span>
-              {experience.start} - {experience.finish}
+              {experience.start} - {experience?.finish || "Present"}
             </span>
           </div>
 

@@ -29,7 +29,7 @@ export const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
                   <p className="text-sm text-gray-500">
                     {project.start} - {project?.finish || "Present"}
                   </p>
-                  <p className="mt-2">{project.description}</p>
+                  {project.description && <p className="mt-2">{project.description}</p>}
                   {project.link && (
                     <Link
                       href={project.link}

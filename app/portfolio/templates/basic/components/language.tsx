@@ -33,7 +33,7 @@ export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
               return (
                 <Badge key={index} variant="secondary">
                   <Icon className="w-4 h-4 mr-2" />
-                  {languageOption.label} • {language.level}
+                  {languageOption?.label} • {language?.level}
                 </Badge>
               );
             })}

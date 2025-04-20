@@ -151,6 +151,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Textarea placeholder="Hi there! Welcome to my profile." {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />

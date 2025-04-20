@@ -23,7 +23,7 @@ export const EducationSection = ({ education }: EducationSectionProps) => {
             <div key={index} className="mb-6 last:mb-0">
               <h3 className="text-xl font-semibold">{edu.title}</h3>
 
-              <p className="text-gray-600">{edu.institution}</p>
+              {edu.institution && <p className="text-gray-600">{edu.institution}</p>}
               <p className="text-sm text-gray-500">
                 {edu.start} - {edu?.finish || "Present"}
               </p>

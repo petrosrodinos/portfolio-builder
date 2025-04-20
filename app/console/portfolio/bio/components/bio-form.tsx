@@ -95,7 +95,11 @@ export default function BioForm({ onCancel }: BioFormProps) {
 
   useEffect(() => {
     if (isSuccess && data) {
-      form.reset(data);
+      form.reset({
+        role: data.role || "",
+        bio: data.bio || "",
+        resume: data.resume || "",
+      });
     }
   }, [data, isSuccess]);
 
