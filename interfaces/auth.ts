@@ -1,3 +1,5 @@
+import { UserPreferences } from "./user";
+
 export interface SignInUser {
     email: string;
     password: string;
@@ -17,4 +19,5 @@ export interface AuthUser {
     full_name?: string;
     isNewUser?: boolean;
     isLoggedIn?: boolean;
+    preferences?: UserPreferences;
 }

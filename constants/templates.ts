@@ -121,17 +121,17 @@ export const TemplateTypes = {
 
 export const PortfolioTemplates: any = [
     {
-        id: TemplateTypes.minimal,
-        name: "Minimal",
-        description: "Clean and simple design focusing on your content",
-        gradient: "from-primary/20 to-primary/5",
-        preview: "/portfolio/templates/professional",
-    },
-    {
         id: TemplateTypes.professional,
         name: "Professional",
         description: "Modern layout with emphasis on your achievements",
         gradient: "from-secondary/20 to-secondary/5",
+        preview: "/portfolio/templates/professional",
+    },
+    {
+        id: TemplateTypes.minimal,
+        name: "Minimal",
+        description: "Clean and simple design focusing on your content",
+        gradient: "from-primary/20 to-primary/5",
         preview: "/portfolio/templates/professional",
     },
     {

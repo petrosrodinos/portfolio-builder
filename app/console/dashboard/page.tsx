@@ -126,9 +126,7 @@ const Dashboard = () => {
             Select a template to customize your portfolio's layout and style
           </p>
 
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            <PortfolioTemplates />
-          </div>
+          <PortfolioTemplates />
         </Card>
       </div>
     </div>

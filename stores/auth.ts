@@ -2,11 +2,9 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Cookies from 'js-cookie'
 import { AuthUser } from "interfaces/auth";
-
+import { TemplateTypes } from "@/constants/templates";
 
 interface UserStore extends AuthUser {
-    isLoggedIn: boolean;
-    isNewUser: boolean;
     login(user: any): void;
     logout(): void;
     updateUser(user: any): void;
@@ -20,6 +18,9 @@ const initialValues: UserStore = {
     access_token: null,
     expires_at: null,
     avatar: null,
+    preferences: {
+        portfolio_theme: TemplateTypes.default,
+    },
     login: () => { },
     logout: () => { },
     updateUser: () => { },

@@ -1,5 +1,4 @@
 
-import { TemplateType, TemplateTypes } from "@/constants/templates";
 
 export interface UpdateUser {
     user_id?: string;
@@ -29,7 +28,7 @@ export interface UserAvatar {
 }
 
 export interface UserPreferences {
-    portfolio_theme: typeof TemplateTypes;
+    portfolio_theme: string;
     dashboard_theme?: string;
     font?: string;
 }

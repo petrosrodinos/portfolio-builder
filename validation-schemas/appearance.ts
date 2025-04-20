@@ -1,5 +1,4 @@
 import { fonts } from "@/config/fonts";
-import { TemplateType } from "@/constants/templates";
 import { z } from "zod";
 
 
@@ -15,10 +14,6 @@ export const AccountAppearanceFormSchema = z.object({
 });
 
 export const PortfolioAppearanceFormSchema = z.object({
-    template: z.enum(TemplateType, {
-        invalid_type_error: "Select a template",
-        required_error: "Please select a template.",
-    }),
     font: z.enum(fonts, {
         invalid_type_error: "Select a font",
         required_error: "Please select a font.",

@@ -31,7 +31,6 @@ export function AppearanceForm() {
     resolver: zodResolver(PortfolioAppearanceFormSchema),
     defaultValues: {
       font,
-      template: TemplateTypes.default,
     },
   });
 
