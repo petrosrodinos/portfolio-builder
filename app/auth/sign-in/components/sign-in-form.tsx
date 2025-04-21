@@ -22,14 +22,13 @@ import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { SigninSchema } from "validation-schemas/auth";
-import { z } from "zod";
 
 interface UserAuthFormProps {
   className?: string;
   props?: any;
 }
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function SignInForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SigninSchema>({
@@ -43,7 +42,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
     onSuccess: (data: AuthUser) => {
-      console.log("signIn onSuccess", data);
       if (data.isNewUser) {
         login({
           ...data,
@@ -71,7 +69,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof SigninSchema>) {
+  function onSubmit(data: SigninSchema) {
     mutate({ email: data.email, password: data.password });
   }
 

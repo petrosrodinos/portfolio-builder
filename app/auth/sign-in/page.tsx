@@ -2,8 +2,7 @@
 import { FC } from "react";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-import { UserAuthForm } from "./components/user-auth-form";
-
+import { SignInForm } from "./components/sign-in-form";
 const Login: FC = () => {
   return (
     <Card className="p-6">
@@ -14,7 +13,7 @@ const Login: FC = () => {
           to log into your account
         </p>
       </div>
-      <UserAuthForm />
+      <SignInForm />
 
       <div className="text-center text-sm mt-3">
         Don&apos;t have an account?{" "}
@@ -23,7 +22,7 @@ const Login: FC = () => {
         </Link>
       </div>
 
-      <p className="mt-4 px-8 text-center text-sm text-muted-foreground">
+      {/* <p className="mt-4 px-8 text-center text-sm text-muted-foreground">
         By clicking login, you agree to our{" "}
         <a href="/terms" className="underline underline-offset-4 hover:text-primary">
           Terms of Service
@@ -33,7 +32,7 @@ const Login: FC = () => {
           Privacy Policy
         </a>
         .
-      </p>
+      </p> */}
     </Card>
   );
 };
