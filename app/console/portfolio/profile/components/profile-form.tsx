@@ -20,6 +20,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
+import { SupabaseErrorCodes } from "@/constants/supabase";
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -56,10 +57,13 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
       });
       onCancel();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: "Could not save data",
-        description: error.message,
+        description:
+          error.code === SupabaseErrorCodes.unique_violation
+            ? "Vanity URL already exists"
+            : error.message,
         duration: 3000,
       });
     },
@@ -155,36 +159,6 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
               </FormItem>
             )}
           />
-          {/* <div>
-            {fields.map((field, index) => (
-              <FormField
-                control={form.control}
-                key={field.id}
-                name={`urls.${index}.value`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className={cn(index !== 0 && "sr-only")}>URLs</FormLabel>
-                    <FormDescription className={cn(index !== 0 && "sr-only")}>
-                      Add links to your website, blog, or social media profiles.
-                    </FormDescription>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="mt-2"
-              onClick={() => append({ value: "" })}
-            >
-              Add URL
-            </Button>
-          </div> */}
           <div className="flex gap-4">
             <Button disabled={isPending} loading={isPending} type="submit">
               Save

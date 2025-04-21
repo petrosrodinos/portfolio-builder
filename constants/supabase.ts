@@ -24,6 +24,10 @@ export const PortfolioSkillsTypes = {
     award: 'award',
 } as const;
 
+export const SupabaseErrorCodes = {
+    unique_violation: '23505',
+} as const;
+
 export type PortfolioExperienceType = typeof PortfolioExperienceTypes[keyof typeof PortfolioExperienceTypes];
 
 export type SupabaseTable = keyof typeof SupabaseTables;
