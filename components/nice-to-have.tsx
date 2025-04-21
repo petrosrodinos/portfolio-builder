@@ -41,7 +41,6 @@ const NiceToHave = () => {
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",
-        variant: "destructive",
       });
     },
   });
@@ -49,10 +48,10 @@ const NiceToHave = () => {
   const handleSubmit = (values: { feedback: string }) => {
     if (!values.feedback) return;
     mutate({
-      user_id,
-      email,
-      full_name,
       feedback: values.feedback,
+      full_name,
+      email,
+      user_id,
     });
   };
 
