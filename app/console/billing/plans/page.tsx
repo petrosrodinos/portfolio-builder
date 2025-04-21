@@ -1,5 +1,9 @@
 import React from "react";
 import { Check } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 const plans = [
   {
@@ -66,43 +70,37 @@ const Plans = () => {
 
       <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-3">
         {plans.map((plan) => (
-          <div
+          <Card
             key={plan.name}
-            className={`rounded-2xl shadow-lg divide-y divide-gray-200 dark:divide-gray-700 backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 ${
+            className={`relative transition-all duration-300 hover:scale-105 ${
               plan.popular
-                ? "border-2 border-blue-500 dark:border-blue-400 relative ring-1 ring-blue-500 dark:ring-blue-400"
-                : "border border-gray-200 dark:border-gray-700"
-            } transition-all duration-300 hover:scale-105 hover:shadow-xl`}
+                ? "border-2 border-blue-500 dark:border-blue-400 ring-1 ring-blue-500 dark:ring-blue-400"
+                : ""
+            }`}
           >
             {plan.popular && (
               <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 transform">
-                <span className="inline-flex rounded-full bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+                <Badge
+                  variant="default"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500"
+                >
                   Popular
-                </span>
+                </Badge>
               </div>
             )}
-            <div className="p-6">
+            <CardHeader>
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{plan.name}</h3>
-              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">{plan.description}</p>
-              <p className="mt-8">
+              <p className="text-sm text-gray-500 dark:text-gray-400">{plan.description}</p>
+              <div className="mt-4">
                 <span className="text-4xl font-extrabold text-gray-900 dark:text-white">
                   ${plan.price}
                 </span>
                 <span className="text-base font-medium text-gray-500 dark:text-gray-400">
                   /month
                 </span>
-              </p>
-              <button
-                className={`mt-8 block w-full py-3 px-6 border border-transparent rounded-xl text-center font-medium transition-all duration-200 ${
-                  plan.popular
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 text-white hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-500 dark:hover:to-blue-600"
-                    : "bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                }`}
-              >
-                {plan.buttonText}
-              </button>
-            </div>
-            <div className="pt-6 pb-8 px-6">
+              </div>
+            </CardHeader>
+            <CardContent>
               <h4 className="text-sm font-medium text-gray-900 dark:text-white tracking-wide uppercase">
                 What's included
               </h4>
@@ -114,8 +112,19 @@ const Plans = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+                className={`w-full ${
+                  plan.popular
+                    ? "bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 hover:from-blue-600 hover:to-blue-700 dark:hover:from-blue-500 dark:hover:to-blue-600"
+                    : "bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+                }`}
+              >
+                {plan.buttonText}
+              </Button>
+            </CardFooter>
+          </Card>
         ))}
       </div>
 

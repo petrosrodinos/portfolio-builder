@@ -43,8 +43,8 @@ const Invoices = () => {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-white">Invoices</h1>
-        <Button className="bg-primary hover:bg-primary/90">
+        <h1 className="text-2xl font-bold">Invoices</h1>
+        <Button>
           <FileText className="mr-2 h-4 w-4" />
           Generate Invoice
         </Button>
@@ -52,51 +52,48 @@ const Invoices = () => {
 
       <div className="flex gap-4 items-center">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search invoices..."
-            className="pl-10 bg-gray-800 border-gray-700 text-white"
-          />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input placeholder="Search invoices..." className="pl-10" />
         </div>
-        <Button variant="outline" className="border-gray-700 text-white">
+        <Button variant="outline">
           <Filter className="mr-2 h-4 w-4" />
           Filter
         </Button>
       </div>
 
-      <div className="rounded-lg border border-gray-800 bg-gray-900">
+      <div className="rounded-lg border">
         <Table>
           <TableHeader>
-            <TableRow className="border-gray-800 hover:bg-gray-800/50">
-              <TableHead className="text-gray-400">Invoice ID</TableHead>
-              <TableHead className="text-gray-400">Date</TableHead>
-              <TableHead className="text-gray-400">Amount</TableHead>
-              <TableHead className="text-gray-400">Status</TableHead>
-              <TableHead className="text-gray-400">Description</TableHead>
-              <TableHead className="text-gray-400">Actions</TableHead>
+            <TableRow>
+              <TableHead>Invoice ID</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {invoices.map((invoice) => (
-              <TableRow key={invoice.id} className="border-gray-800 hover:bg-gray-800/50">
-                <TableCell className="text-white">{invoice.id}</TableCell>
-                <TableCell className="text-gray-300">{invoice.date}</TableCell>
-                <TableCell className="text-white">{invoice.amount}</TableCell>
+              <TableRow key={invoice.id}>
+                <TableCell>{invoice.id}</TableCell>
+                <TableCell>{invoice.date}</TableCell>
+                <TableCell>{invoice.amount}</TableCell>
                 <TableCell>
                   <Badge
                     variant="secondary"
-                    className="bg-green-900/20 text-green-400 border-green-900"
+                    className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
                   >
                     {invoice.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-gray-300">{invoice.description}</TableCell>
+                <TableCell>{invoice.description}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                    <Button variant="ghost" size="icon">
                       <Eye className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                    <Button variant="ghost" size="icon">
                       <Download className="h-4 w-4" />
                     </Button>
                   </div>

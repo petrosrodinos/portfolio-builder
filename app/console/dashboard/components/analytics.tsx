@@ -19,7 +19,7 @@ const Analytics = () => {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card className="p-6 relative group">
         <Link
-          href="/console/portfolio/analytics"
+          href="/console/billing/plans"
           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Button variant="ghost" size="icon" className="h-8 w-8">
