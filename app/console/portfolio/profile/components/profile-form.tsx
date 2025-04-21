@@ -21,6 +21,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
 import { useEffect } from "react";
 import { SupabaseErrorCodes } from "@/constants/supabase";
+import Link from "next/link";
+import { UserCircle } from "lucide-react";
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -84,6 +86,14 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-end">
+        <Link href="/console/account/profile">
+          <Button variant="outline" type="button" className="flex items-center gap-2">
+            <UserCircle className="h-4 w-4" />
+            Set Avatar
+          </Button>
+        </Link>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
