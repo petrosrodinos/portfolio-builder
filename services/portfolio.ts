@@ -25,6 +25,7 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
 
         console.log(data);
 
+
         if (error) {
             console.error(error);
             return null;
@@ -68,7 +69,7 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             links: linksType,
         }
 
-        delete portfolio.users;
+
 
         return portfolio;
     } catch (error) {
