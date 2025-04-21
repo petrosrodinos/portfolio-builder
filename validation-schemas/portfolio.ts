@@ -1,8 +1,11 @@
 import { z } from "zod";
 
 export const ProfileSchema = z.object({
-    // TODO: Add regex for vanity url not special characters and spaces
-    vanity_url: z.string().min(3, "Vanity URL is too short").max(20, "Vanity URL is too long"),
+    vanity_url: z.string()
+        .min(3, "Vanity URL is too short")
+        .max(20, "Vanity URL is too long")
+        .regex(/^[a-zA-Z0-9-]+$/, "Vanity URL can only contain letters, numbers, and hyphens")
+        .refine(val => val.trim() !== "", "Vanity URL cannot be empty"),
     email: z.string().email(),
     phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").or(z.string().max(0)),
     address: z.string().min(3, "Address is too short").max(50, "Address is to long").or(z.string().max(0)),
