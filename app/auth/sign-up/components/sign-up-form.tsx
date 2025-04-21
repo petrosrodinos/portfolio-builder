@@ -60,7 +60,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   });
 
-  function onSubmit(data: z.infer<typeof signupSchema>) {
+  function onSubmit(data: SignupSchema) {
     mutate({ email: data.email, password: data.password });
   }
 
