@@ -11,11 +11,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Search } from "@/components/search";
 import { Header } from "@/components/layout/header";
 import { useAuthStore } from "stores/auth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 import Link from "next/link";
-
+import NiceToHave from "@/components/nice-to-have";
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
   // const router = useRouter();
@@ -41,7 +41,8 @@ export default function ConsoleLayout({ children }: { children: React.ReactNode 
             )}
           >
             <Header>
-              <Search />
+              <NiceToHave />
+              {/* <Search /> */}
               <div className="ml-auto flex items-center space-x-4">
                 <Button variant="outline" size="sm" asChild>
                   <Link
