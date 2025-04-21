@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data?.user?.full_name || ""} | Portfolio`,
     description: data?.bio,
-    keywords: data?.skills?.map((skill) => skill.title),
+    keywords: [...data?.skills?.map((skill) => skill.title), data?.user?.full_name],
     openGraph: {
       title: data?.user?.full_name,
       description: data?.bio,

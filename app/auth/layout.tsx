@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuthStore } from "stores/auth";
-import { useRouter } from "next/navigation";
+// import { useAuthStore } from "stores/auth";
+// import { useRouter } from "next/navigation";
 import Navbar from "@/components/layout/navbar";
 
 interface Props {
@@ -9,11 +9,11 @@ interface Props {
 }
 
 export default function AuthLayout({ children }: Props) {
-  const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
-  if (isLoggedIn) {
-    router.push("/console/dashboard");
-  }
+  // const router = useRouter();
+  // const { isLoggedIn } = useAuthStore();
+  // if (isLoggedIn) {
+  //   router.push("/console/dashboard");
+  // }
   return (
     <div className="flex flex-col h-screen">
       <Navbar />

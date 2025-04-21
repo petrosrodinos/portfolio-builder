@@ -15,10 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ProfileFormValues, UserSchema } from "validation-schemas/user";
-import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUser, upsertUser } from "services/user";
 import { useAuthStore } from "stores/auth";
@@ -37,7 +33,7 @@ import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
 import { TemplateTypes } from "@/constants/templates";
 
-export default function UserProfileForm() {
+export default function AccountProfileForm() {
   const router = useRouter();
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";

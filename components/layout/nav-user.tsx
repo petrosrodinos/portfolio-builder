@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "stores/auth";
 import { useMemo } from "react";
 import { generateInitials } from "@/lib/utils";
+import { signOut } from "@/services/auth";
 
 export function NavUser() {
   const { full_name, avatar, email, logout } = useAuthStore((state) => state);
@@ -29,7 +30,8 @@ export function NavUser() {
 
   const handleLogOut = async () => {
     logout();
-    router.push("/auth/sign-in");
+    await signOut();
+    window.location.href = "/auth/sign-in";
   };
 
   const initials = useMemo(() => {

@@ -1,7 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,57 +13,70 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { resetPassword } from "services/auth";
-import { ResetPasswordFormValues, ResetPasswordSchema } from "@/validation-schemas/auth";
-import { useRouter } from "next/navigation";
+import { updatePassword, signOut } from "services/auth";
+import { UpdatePasswordFormValues, UpdatePasswordSchema } from "@/validation-schemas/auth";
 import { useAuthStore } from "stores/auth";
 
-interface ForgotPasswordFormProps {
-  className?: string;
-  props?: any;
-}
-
-export function ResetPasswordForm({ className, ...props }: ForgotPasswordFormProps) {
-  const router = useRouter();
-  const { isLoggedIn } = useAuthStore((state) => state);
-  const form = useForm<ResetPasswordFormValues>({
-    resolver: zodResolver(ResetPasswordSchema),
+export function ChangePassword() {
+  const { email, logout } = useAuthStore((state) => state);
+  const form = useForm<UpdatePasswordFormValues>({
+    resolver: zodResolver(UpdatePasswordSchema),
     defaultValues: {
+      old_password: "",
       password: "",
       confirm_password: "",
     },
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => resetPassword(data),
+    mutationFn: async (data: UpdatePasswordFormValues) =>
+      updatePassword(email, data.old_password, data.password),
     onSuccess: () => {
       toast({
-        title: "Password reset",
-        description: "Password reset successfully",
+        title: "Password changed",
+        description: "Password changed successfully",
         duration: 3000,
       });
-      if (!isLoggedIn) {
-        router.push("/auth/sign-in");
-      }
+      logout();
+      signOut();
+      window.location.href = "/auth/sign-in";
     },
     onError: (error) => {
       toast({
-        title: "Could not reset password",
+        title: "Could not change password",
         description: error.message,
         duration: 3000,
       });
     },
   });
 
-  function onSubmit(data: ResetPasswordFormValues) {
-    mutate(data.password);
+  function onSubmit(data: UpdatePasswordFormValues) {
+    mutate(data);
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className="grid gap-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-2">
+            <FormField
+              control={form.control}
+              name="old_password"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel>Old Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      autoComplete="off"
+                      placeholder="Old Password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="password"
@@ -72,7 +84,7 @@ export function ResetPasswordForm({ className, ...props }: ForgotPasswordFormPro
                 <FormItem className="space-y-1">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
+                    <Input type="password" autoComplete="off" placeholder="Password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,7 +97,12 @@ export function ResetPasswordForm({ className, ...props }: ForgotPasswordFormPro
                 <FormItem className="space-y-1">
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Confirm Password" {...field} />
+                    <Input
+                      type="password"
+                      autoComplete="off"
+                      placeholder="Confirm Password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +110,7 @@ export function ResetPasswordForm({ className, ...props }: ForgotPasswordFormPro
             />
 
             <Button className="mt-2" disabled={isPending} loading={isPending}>
-              Reset Password
+              Update Password
             </Button>
           </div>
         </form>
@@ -102,4 +119,4 @@ export function ResetPasswordForm({ className, ...props }: ForgotPasswordFormPro
   );
 }
 
-export default ResetPasswordForm;
+export default ChangePassword;

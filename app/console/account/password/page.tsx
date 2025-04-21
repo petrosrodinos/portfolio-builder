@@ -1,16 +1,15 @@
 "use client";
 
 import ContentSection from "@/components/content-section";
-import { AccountForm } from "./account-form";
+import ChangePassword from "./components/change-password";
 
-export default function SettingsAccount() {
+export default function AccountPassword() {
   return (
     <ContentSection
-      title="Account"
-      desc="Update your account settings. Set your preferred language and
-          timezone."
+      title="Password"
+      desc="Update your password. You will be logged out after updating your password."
     >
-      <AccountForm />
+      <ChangePassword />
     </ContentSection>
   );
 }

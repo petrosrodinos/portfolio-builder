@@ -108,3 +108,31 @@ export const resetPassword = async (password: string) => {
     }
 }
 
+export const updatePassword = async (email: string, old_password: string, password: string) => {
+    try {
+        const { data: userData, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: old_password,
+        })
+
+        if (error) {
+            throw error;
+        }
+
+        if (userData?.user) {
+            const data = await resetPassword(password);
+            return data;
+        }
+
+    } catch (error) {
+        console.error('Error updating password:', error);
+        throw error;
+    }
+}
+
+export const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+        throw error;
+    }
+}

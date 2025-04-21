@@ -18,11 +18,11 @@ import Link from "next/link";
 
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
-  const router = useRouter();
+  // const router = useRouter();
   const { isLoggedIn, user_id } = useAuthStore();
-  if (!isLoggedIn) {
-    router.push("/auth/sign-in");
-  }
+  // if (!isLoggedIn) {
+  //   router.push("/auth/sign-in");
+  // }
   return (
     <section>
       <SearchProvider>
