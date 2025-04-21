@@ -80,9 +80,14 @@ export function ChangePassword() {
               name="password"
               render={({ field }) => (
                 <FormItem className="space-y-1">
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>New Password</FormLabel>
                   <FormControl>
-                    <Input type="password" autoComplete="off" placeholder="Password" {...field} />
+                    <Input
+                      type="password"
+                      autoComplete="off"
+                      placeholder="New Password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

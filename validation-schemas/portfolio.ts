@@ -10,13 +10,13 @@ export const ProfileSchema = z.object({
 });
 
 export const BioSchema = z.object({
-    role: z.string().min(2, "Role is required").max(50, "Role is too long"),
+    role: z.string().min(2, "Role is too short").max(50, "Role is too long"),
     bio: z.string().min(5, "Detailed bio must be at least 50 characters").max(2000, "Detailed bio is too long").or(z.string().max(0)),
     resume: z.any().optional(),
 });
 
 export const ExperienceFormSchema = z.object({
-    title: z.string().min(5, "Title is required").max(50, "Title is too long"),
+    title: z.string().min(5, "Title is too short").max(50, "Title is too long"),
     company: z.string().min(3, "Company is required").max(50, "Company is too long"),
     location: z.string().min(5, "Location is required").max(50, "Location is too long"),
     start: z.string().min(1, "Start date is required"),
@@ -26,7 +26,7 @@ export const ExperienceFormSchema = z.object({
 });
 
 export const ProjectFormSchema = z.object({
-    title: z.string().min(5, "Title is required").max(50, "Title is too long"),
+    title: z.string().min(5, "Title is too short").max(50, "Title is too long"),
     company: z.string().min(3, "Company is required").max(50, "Company is too long"),
     start: z.string().min(1, "Start date is required"),
     finish: z.string().optional(),
@@ -36,7 +36,7 @@ export const ProjectFormSchema = z.object({
 });
 
 export const EducationFormSchema = z.object({
-    title: z.string().min(5, "Title is required").max(50, "Title is too long"),
+    title: z.string().min(5, "Title is too short").max(50, "Title is too long"),
     institution: z.string().min(3, "Institution is required").max(50, "Institution is too long").or(z.string().max(0)),
     start: z.string().min(1, "Start date is required"),
     finish: z.string().optional(),
@@ -45,7 +45,7 @@ export const EducationFormSchema = z.object({
 });
 
 export const ServiceFormSchema = z.object({
-    title: z.string().min(5, "Title is required").max(50, "Title is too long"),
+    title: z.string().min(5, "Title is too short").max(50, "Title is too long"),
     description: z.string().min(10, "Description is required").max(2000, "Description is too long"),
     price: z.string().optional(),
 });

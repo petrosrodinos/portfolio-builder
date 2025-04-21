@@ -26,6 +26,7 @@ export const PortfolioSkillsTypes = {
 
 export const SupabaseErrorCodes = {
     unique_violation: '23505',
+    foreign_key_violation: '23503',
 } as const;
 
 export type PortfolioExperienceType = typeof PortfolioExperienceTypes[keyof typeof PortfolioExperienceTypes];

@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { PortfolioExperienceType, SupabaseTables } from "@/constants/supabase";
+import { PortfolioExperienceType, SupabaseTables, SupabaseErrorCodes } from "@/constants/supabase";
 import { PortfolioExperience } from "interfaces/portfolio";
 
 export const upsertExperience = async (payload: PortfolioExperience): Promise<PortfolioExperience> => {
@@ -12,6 +12,9 @@ export const upsertExperience = async (payload: PortfolioExperience): Promise<Po
             })
 
         if (error) {
+            if (error.code === SupabaseErrorCodes.foreign_key_violation) {
+                throw new Error('Please set up your profile first');
+            }
             throw error;
         }
 

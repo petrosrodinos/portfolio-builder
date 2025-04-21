@@ -31,11 +31,11 @@ const sidebarNavItems = [
     icon: <IconUser size={18} />,
     href: "/console/account/profile",
   },
-  {
-    title: "Email",
-    icon: <IconMail size={18} />,
-    href: "/console/account/email",
-  },
+  // {
+  //   title: "Email",
+  //   icon: <IconMail size={18} />,
+  //   href: "/console/account/email",
+  // },
   {
     title: "Password",
     icon: <IconLockPassword size={18} />,
