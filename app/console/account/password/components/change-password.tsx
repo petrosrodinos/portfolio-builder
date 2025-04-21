@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { updatePassword, signOut } from "services/auth";
+import { updatePassword } from "services/auth";
 import { UpdatePasswordFormValues, UpdatePasswordSchema } from "@/validation-schemas/auth";
 import { useAuthStore } from "stores/auth";
 
@@ -38,8 +38,6 @@ export function ChangePassword() {
         duration: 3000,
       });
       logout();
-      signOut();
-      window.location.href = "/auth/sign-in";
     },
     onError: (error) => {
       toast({

@@ -21,18 +21,11 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "stores/auth";
 import { useMemo } from "react";
 import { generateInitials } from "@/lib/utils";
-import { signOut } from "@/services/auth";
 
 export function NavUser() {
   const { full_name, avatar, email, logout } = useAuthStore((state) => state);
   const router = useRouter();
   const { isMobile } = useSidebar();
-
-  const handleLogOut = async () => {
-    logout();
-    await signOut();
-    window.location.href = "/auth/sign-in";
-  };
 
   const initials = useMemo(() => {
     return generateInitials(full_name);
@@ -99,7 +92,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogOut}>
+            <DropdownMenuItem onClick={() => logout()}>
               <LogOut />
               Log out
             </DropdownMenuItem>

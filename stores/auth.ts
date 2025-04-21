@@ -3,6 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import Cookies from 'js-cookie'
 import { AuthUser } from "interfaces/auth";
 import { TemplateTypes } from "@/constants/templates";
+import { signOut } from "@/services/auth";
 
 interface UserStore extends AuthUser {
     login(user: any): void;
@@ -43,6 +44,8 @@ export const useAuthStore = create<UserStore>()(
                 logout: () => {
                     set(initialValues);
                     localStorage.removeItem(STORE_KEY);
+                    signOut();
+                    window.location.href = "/auth/sign-in";
                     // Cookies.remove(ACCESS_TOKEN)
                 },
                 updateUser: async (user: Partial<AuthUser>) => {

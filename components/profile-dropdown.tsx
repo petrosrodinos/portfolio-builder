@@ -13,19 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "stores/auth";
-import { useRouter } from "next/navigation";
 import { generateInitials } from "@/lib/utils";
-import { signOut } from "@/services/auth";
 
 export function ProfileDropdown() {
   const { full_name, avatar, email, logout } = useAuthStore((state) => state);
-  const router = useRouter();
-
-  const handleLogOut = async () => {
-    logout();
-    await signOut();
-    window.location.href = "/auth/sign-in";
-  };
 
   return (
     <DropdownMenu modal={false}>
@@ -66,7 +57,7 @@ export function ProfileDropdown() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogOut}>
+        <DropdownMenuItem onClick={() => logout()}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
