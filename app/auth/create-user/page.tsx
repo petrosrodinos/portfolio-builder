@@ -1,6 +1,6 @@
 import React from "react";
-import CreateUserForm from "./components/create-user-form";
 import { CheckCircle2 } from "lucide-react";
+import ProfileForm from "app/console/account/profile/components/profile-form";
 
 const CreateUser = () => {
   return (
@@ -23,7 +23,7 @@ const CreateUser = () => {
           <div className="mb-6">
             <h2 className="text-lg font-semibold">Personal Information</h2>
           </div>
-          <CreateUserForm />
+          <ProfileForm />
         </div>
 
         <div className="mt-3 text-center text-sm text-muted-foreground">

@@ -21,7 +21,7 @@ import { toast } from "@/hooks/use-toast";
 import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
-import { SigninSchema } from "validation-schemas/auth";
+import { SignInSchema, SignInFormValues } from "validation-schemas/auth";
 
 interface UserAuthFormProps {
   className?: string;
@@ -31,8 +31,8 @@ interface UserAuthFormProps {
 export function SignInForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<SigninSchema>({
-    resolver: zodResolver(SigninSchema),
+  const form = useForm<SignInFormValues>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -69,7 +69,7 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  function onSubmit(data: SigninSchema) {
+  function onSubmit(data: SignInFormValues) {
     mutate({ email: data.email, password: data.password });
   }
 
@@ -99,7 +99,7 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
                   <div className="flex items-center justify-between">
                     <FormLabel>Password</FormLabel>
                     <Link
-                      href="/forgot-password"
+                      href="/auth/forgot-password"
                       className="text-sm font-medium text-muted-foreground hover:opacity-75"
                     >
                       Forgot password?

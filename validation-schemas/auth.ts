@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SigninSchema = z.object({
+export const SignInSchema = z.object({
     email: z
         .string()
         .min(1, { message: "Please enter your email" })
@@ -15,7 +15,7 @@ export const SigninSchema = z.object({
         }),
 });
 
-export const signupSchema = z
+export const SignUpSchema = z
     .object({
         email: z
             .string()
@@ -29,13 +29,26 @@ export const signupSchema = z
             .min(6, {
                 message: "Password must be at least 6 characters long",
             }),
-        confirmPassword: z.string(),
+        confirm_password: z.string(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.password === data.confirm_password, {
         message: "Passwords don't match.",
-        path: ["confirmPassword"],
+        path: ["confirm_password"],
     });
 
-export type SigninSchema = z.infer<typeof SigninSchema>;
-export type SignupSchema = z.infer<typeof signupSchema>;
+export const ForgotPasswordSchema = z.object({
+    email: z.string().email("Please enter a valid email address"),
+});
 
+export const ResetPasswordSchema = z.object({
+    password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
+    confirm_password: z.string(),
+}).refine((data) => data.password === data.confirm_password, {
+    message: "Passwords don't match.",
+    path: ["confirm_password"],
+});
+
+export type SignInFormValues = z.infer<typeof SignInSchema>;
+export type SignUpFormValues = z.infer<typeof SignUpSchema>;
+export type ForgotPasswordFormValues = z.infer<typeof ForgotPasswordSchema>;
+export type ResetPasswordFormValues = z.infer<typeof ResetPasswordSchema>;

@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
 import { formatAuthUser } from './utils';
 import { SupabaseTables } from '@/constants/supabase';
+import { ResetPasswordFormValues } from '@/validation-schemas/auth';
 
 export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser | any> => {
 
@@ -52,7 +53,7 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
 
 }
 
-export const signUp = async ({ email, password }: SignUpUser): Promise<AuthUser | any> => {
+export const signUp = async ({ email, password }: SignUpUser) => {
     try {
         const { data, error } = await supabase.auth.signUp({
             email: email,
@@ -72,3 +73,38 @@ export const signUp = async ({ email, password }: SignUpUser): Promise<AuthUser 
         throw error;
     }
 }
+
+export const forgotPassword = async (email: string) => {
+    try {
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/auth/reset-password`,
+        })
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error sending reset password email:', error);
+        throw error;
+    }
+}
+
+export const resetPassword = async (password: string) => {
+    try {
+        const { data, error } = await supabase.auth.updateUser({
+            password: password,
+        })
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        throw error;
+    }
+}
+

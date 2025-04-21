@@ -20,7 +20,7 @@ import { SignUpUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import { SignupSchema, signupSchema } from "validation-schemas/auth";
+import { SignUpSchema, SignUpFormValues } from "validation-schemas/auth";
 
 interface SignUpFormProps {
   className?: string;
@@ -30,12 +30,12 @@ interface SignUpFormProps {
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
-  const form = useForm<SignupSchema>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<SignUpFormValues>({
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
     },
   });
 
@@ -59,7 +59,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   });
 
-  function onSubmit(data: SignupSchema) {
+  function onSubmit(data: SignUpFormValues) {
     mutate({ email: data.email, password: data.password });
   }
 
@@ -96,7 +96,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
             />
             <FormField
               control={form.control}
-              name="confirmPassword"
+              name="confirm_password"
               render={({ field }) => (
                 <FormItem className="space-y-1">
                   <FormLabel>Confirm Password</FormLabel>
