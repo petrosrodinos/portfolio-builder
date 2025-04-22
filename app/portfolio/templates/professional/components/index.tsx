@@ -23,9 +23,9 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
       <div className="pt-20">
         <ProfileSection
           full_name={data?.user?.full_name}
-          country={data?.user?.country}
-          role={data.role}
           welcome_message={data?.welcome_message}
+          role={data.role}
+          country={data?.user?.country}
           email={data?.email}
           phone={data?.phone}
           address={data?.address}

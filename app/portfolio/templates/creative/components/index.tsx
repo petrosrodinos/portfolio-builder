@@ -34,7 +34,13 @@ export default function CreativeTemplate({ data }: CreativeTemplateProps) {
         isDarkMode={isDarkMode}
         setIsDarkMode={toggleDarkMode}
       />
-      <Header />
+      <Header
+        full_name={data?.user?.full_name}
+        welcome_message={data?.welcome_message}
+        role={data.role}
+        resume={data?.resume?.url}
+        avatar={data?.user?.avatar?.url}
+      />
       <About isDarkMode={isDarkMode} />
       <Services isDarkMode={isDarkMode} />
       <Work isDarkMode={isDarkMode} />
