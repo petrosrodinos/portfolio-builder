@@ -10,6 +10,7 @@ export const ProfileSchema = z.object({
     phone: z.string().min(10, "Phone number is required").max(15, "Phone number is too long").or(z.string().max(0)),
     address: z.string().min(3, "Address is too short").max(50, "Address is to long").or(z.string().max(0)),
     welcome_message: z.string().min(10, "Message is too short").max(300, "Message too long").or(z.string().max(0)),
+    booking_link: z.string().url("Invalid link").or(z.string().max(0)),
 });
 
 export const BioSchema = z.object({

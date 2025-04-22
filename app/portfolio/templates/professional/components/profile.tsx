@@ -1,10 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { ProfileSectionProps } from "@/interfaces/templates";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CopyButton } from "./copy-button";
 import { CountriesOptions } from "@/constants/dropdowns/countries";
+import Link from "next/link";
 
 export const ProfileSection = ({
   email,
@@ -15,6 +16,7 @@ export const ProfileSection = ({
   avatar,
   full_name,
   country,
+  booking_link,
 }: ProfileSectionProps) => {
   const countryOption = CountriesOptions.find((option) => option.value === country);
 
@@ -39,6 +41,16 @@ export const ProfileSection = ({
                 <p className="text-sm sm:text-base text-gray-600 mt-2">{welcome_message}</p>
               )}
               <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                {booking_link && (
+                  <Link
+                    href={booking_link}
+                    target="_blank"
+                    className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    <Calendar className="h-4 w-4" />
+                    <span className="text-sm sm:text-base">Booking Link</span>
+                  </Link>
+                )}
                 {email && (
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4" />

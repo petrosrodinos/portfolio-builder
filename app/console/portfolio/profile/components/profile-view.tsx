@@ -58,6 +58,13 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
               {data?.welcome_message || "No welcome message"}
             </p>
           </div>
+
+          <div>
+            <h3 className="font-medium">Booking Link</h3>
+            <p className="text-sm text-muted-foreground">
+              {data?.booking_link || "No booking link"}
+            </p>
+          </div>
         </>
       )}
       {!data && !isLoading && (

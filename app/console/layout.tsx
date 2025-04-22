@@ -8,7 +8,6 @@ import Cookies from "js-cookie";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Search } from "@/components/search";
 import { Header } from "@/components/layout/header";
 import { useAuthStore } from "stores/auth";
 // import { useRouter } from "next/navigation";
@@ -42,9 +41,8 @@ export default function ConsoleLayout({ children }: { children: React.ReactNode 
           >
             <Header>
               <NiceToHave />
-              {/* <Search /> */}
-              <div className="ml-auto flex items-center space-x-4">
-                <Button variant="outline" size="sm" asChild>
+              <div className="ml-auto flex items-center gap-2 sm:gap-4">
+                <Button variant="outline" size="sm" asChild className="hidden sm:flex">
                   <Link
                     href={`/portfolio/${user_id}`}
                     target="_blank"
@@ -53,6 +51,11 @@ export default function ConsoleLayout({ children }: { children: React.ReactNode 
                   >
                     <FileText size={18} />
                     <span>Portfolio</span>
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="sm:hidden">
+                  <Link href={`/portfolio/${user_id}`} target="_blank" rel="noopener noreferrer">
+                    <FileText size={18} />
                   </Link>
                 </Button>
                 <ThemeSwitch />

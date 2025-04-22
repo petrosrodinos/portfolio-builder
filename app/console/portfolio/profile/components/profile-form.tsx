@@ -169,6 +169,21 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="booking_link"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Booking Link</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://calendly.com/johndoe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <div className="flex gap-4">
             <Button disabled={isPending} loading={isPending} type="submit">
               Save

@@ -1,12 +1,32 @@
 import { PortfolioResume } from "./portfolio";
 import { UserPreferences } from "./user";
 
+export interface Portfolio {
+    user: User;
+    bio?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    welcome_message?: string;
+    booking_link?: string;
+    role?: string;
+    experiences?: Experience[];
+    projects?: Project[];
+    educations?: Education[];
+    skills?: Skill[];
+    languages?: Language[];
+    links?: Link[];
+    services?: Service[];
+    resume?: PortfolioResume;
+}
+
 export interface ProfileSectionProps {
     avatar: string;
     email: string;
     phone: string;
     address: string;
     welcome_message: string;
+    booking_link: string;
     role: string;
     full_name: string;
     country: string;
@@ -16,6 +36,7 @@ export interface BioSectionProps {
     bio: string;
     resume: string;
 }
+
 
 export interface User {
     full_name: string;
@@ -77,20 +98,4 @@ export interface Service {
     price?: string;
 }
 
-export interface Portfolio {
-    user: User;
-    bio: string;
-    email: string;
-    phone: string;
-    address: string;
-    welcome_message: string;
-    role: string;
-    experiences: Experience[];
-    projects: Project[];
-    educations: Education[];
-    skills: Skill[];
-    languages: Language[];
-    links: Link[];
-    services: Service[];
-    resume: PortfolioResume;
-}
+

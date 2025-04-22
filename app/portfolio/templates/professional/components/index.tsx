@@ -31,6 +31,7 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
           phone={data?.phone}
           address={data?.address}
           avatar={data?.user?.avatar?.url}
+          booking_link={data?.booking_link}
         />
         <BioSection bio={data.bio} resume={data?.resume?.url} />
         <ExperienceSection experiences={data?.experiences} />
