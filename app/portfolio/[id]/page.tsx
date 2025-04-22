@@ -6,7 +6,7 @@ import { TemplateTypes } from "@/constants/templates";
 
 const TEMPLATES = {
   professional: dynamic(() => import("../templates/professional/page"), { ssr: true }),
-  creative: dynamic(() => import("../templates/premium/page"), { ssr: true }),
+  creative: dynamic(() => import("../templates/creative/page"), { ssr: true }),
 } as const;
 
 type Props = {

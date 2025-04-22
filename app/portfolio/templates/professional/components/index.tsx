@@ -13,7 +13,6 @@ import { Portfolio } from "@/interfaces/templates";
 
 interface ProfessionalTemplateProps {
   data: Portfolio;
-  id?: string;
 }
 
 const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
