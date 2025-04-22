@@ -16,7 +16,7 @@ const Login: FC = () => {
       <SignInForm />
 
       <div className="text-center text-sm mt-3">
-        <Link href="/auth/forget-password" className="text-muted-foreground hover:text-primary">
+        <Link href="/auth/forgot-password" className="text-muted-foreground hover:text-primary">
           Forgot password?
         </Link>
       </div>

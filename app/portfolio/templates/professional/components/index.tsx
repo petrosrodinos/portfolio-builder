@@ -37,9 +37,9 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
         <ExperienceSection experiences={data?.experiences} />
         <ProjectsSection projects={data?.projects} />
         <EducationSection education={data?.educations} />
+        <ServicesSection services={data?.services} />
         <SkillsSection skills={data?.skills} />
         <LanguagesSection languages={data?.languages} />
-        <ServicesSection services={data?.services} />
         <LinksSection links={data?.links} />
         <ContactSection />
       </div>
