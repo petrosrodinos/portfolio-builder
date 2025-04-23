@@ -7,7 +7,7 @@ import { CopyButton } from "./copy-button";
 import { CountriesOptions } from "@/constants/dropdowns/countries";
 import Link from "next/link";
 
-export const ProfileSection = ({
+const Profile = ({
   email,
   phone,
   address,
@@ -48,7 +48,7 @@ export const ProfileSection = ({
                     className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors"
                   >
                     <Calendar className="h-4 w-4" />
-                    <span className="text-sm sm:text-base">Booking Link</span>
+                    <span className="text-sm sm:text-base">Book Me</span>
                   </Link>
                 )}
                 {email && (
@@ -97,3 +97,4 @@ export const ProfileSection = ({
     </section>
   );
 };
+export default Profile;

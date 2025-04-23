@@ -1,17 +1,14 @@
-"use client";
-
-import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Link } from "@/interfaces/templates";
+import { Link as LinkType } from "@/interfaces/templates";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 import { Badge } from "@/components/ui/badge";
-import { LinkIcon, Star } from "lucide-react";
-
+import { LinkIcon } from "lucide-react";
+import Link from "next/link";
 interface LinksSectionProps {
-  links?: Link[];
+  links?: LinkType[];
 }
 
-export const LinksSection = ({ links = [] }: LinksSectionProps) => {
+const LinksSection = ({ links = [] }: LinksSectionProps) => {
   if (!links?.length) return null;
   return (
     <section id="links">
@@ -31,15 +28,16 @@ export const LinksSection = ({ links = [] }: LinksSectionProps) => {
               }
               const Icon = socialMedia.icon;
               return (
-                <Badge
-                  onClick={() => window.open(link.link, "_blank")}
-                  key={index}
-                  variant="secondary"
-                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors"
-                >
-                  <Icon className="h-4 w-4" />
-                  {socialMedia?.label}
-                </Badge>
+                <Link href={link.link} target="_blank" key={index}>
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {socialMedia?.label}
+                  </Badge>
+                </Link>
               );
             })}
           </div>
@@ -48,3 +46,5 @@ export const LinksSection = ({ links = [] }: LinksSectionProps) => {
     </section>
   );
 };
+
+export default LinksSection;

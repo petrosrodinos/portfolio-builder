@@ -1,18 +1,25 @@
 "use client";
 import { assets } from "@/assets/assets";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import React, { FC, useEffect, useRef, useState } from "react";
 
-interface NavbarProps {
-  full_name: string;
-  avatar: string;
-  isDarkMode: boolean;
-  setIsDarkMode: (isDarkMode: boolean) => void;
-}
+interface NavbarProps {}
 
-const Navbar: FC<NavbarProps> = ({ full_name, avatar, isDarkMode, setIsDarkMode }) => {
+const Navbar: FC<NavbarProps> = () => {
   const [isScroll, setIsScroll] = useState(false);
   const sideMenuRef = useRef(null);
+
+  const { theme, setTheme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setTheme(isDarkMode ? "light" : "dark");
+  };
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
 
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(-16rem)";
@@ -33,10 +40,6 @@ const Navbar: FC<NavbarProps> = ({ full_name, avatar, isDarkMode, setIsDarkMode 
 
   return (
     <>
-      <div className="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <Image src={assets.header_bg_color} alt="" className="w-full" />
-      </div>
-
       <nav
         className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-center z-50 ${
           isScroll
@@ -79,7 +82,7 @@ const Navbar: FC<NavbarProps> = ({ full_name, avatar, isDarkMode, setIsDarkMode 
             </li>
             <li>
               <div className="flex items-center gap-4">
-                <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                <button onClick={toggleDarkMode}>
                   <Image
                     src={isDarkMode ? assets.sun_icon : assets.moon_icon}
                     alt=""

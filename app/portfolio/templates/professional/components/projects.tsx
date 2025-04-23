@@ -8,7 +8,7 @@ interface ProjectsSectionProps {
   projects: Project[];
 }
 
-export const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
+const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
   if (!projects?.length) return null;
   return (
     <section id="projects">
@@ -51,3 +51,5 @@ export const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
     </section>
   );
 };
+
+export default ProjectsSection;

@@ -1,12 +1,13 @@
 import { Portfolio } from "@/interfaces/templates";
 
 export const PortfolioData: Portfolio = {
-    address: "New York, USA",
+    address: "New York",
     welcome_message: "Welcome to my portfolio! I'm a passionate developer focused on creating impactful solutions.",
     email: "john.doe@example.com",
     phone: "+1 234 567 8900",
     role: "Full Stack Developer",
     bio: "Experienced developer with a passion for creating elegant solutions to complex problems. Specialized in modern web technologies and best practices.",
+    booking_link: "https://example.com/booking",
     resume: {
         url: "https://example.com/resume.pdf",
         name: "resume",
@@ -26,6 +27,7 @@ export const PortfolioData: Portfolio = {
             institution: "University of Technology",
             start: "2016",
             finish: "2020",
+            link: "https://github.com",
         },
         {
             title: "Master of Computer Science",
@@ -92,7 +94,7 @@ export const PortfolioData: Portfolio = {
     ],
     languages: [
         {
-            title: "GRf",
+            title: "GR",
             level: "advanced",
         },
         {

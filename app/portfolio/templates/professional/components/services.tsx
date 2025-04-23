@@ -6,7 +6,7 @@ interface ServicesSectionProps {
   services: Service[];
 }
 
-export const ServicesSection = ({ services }: ServicesSectionProps) => {
+const ServicesSection = ({ services }: ServicesSectionProps) => {
   if (!services?.length) return null;
   return (
     <section id="services">
@@ -36,3 +36,5 @@ export const ServicesSection = ({ services }: ServicesSectionProps) => {
     </section>
   );
 };
+
+export default ServicesSection;

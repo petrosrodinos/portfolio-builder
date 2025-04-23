@@ -8,7 +8,7 @@ interface ExperienceSectionProps {
   experiences: Experience[];
 }
 
-export const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
+const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
   if (!experiences?.length) return null;
   return (
     <section id="experience">
@@ -49,3 +49,5 @@ export const ExperienceSection = ({ experiences }: ExperienceSectionProps) => {
     </section>
   );
 };
+
+export default ExperienceSection;

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { BioSectionProps } from "@/interfaces/templates";
 
-export const BioSection = ({ bio, resume }: BioSectionProps) => {
+const Bio = ({ bio, resume }: BioSectionProps) => {
   if (!bio && !resume) {
     return null;
   }
@@ -34,3 +34,5 @@ export const BioSection = ({ bio, resume }: BioSectionProps) => {
     </section>
   );
 };
+
+export default Bio;

@@ -7,7 +7,7 @@ interface EducationSectionProps {
   education: Education[];
 }
 
-export const EducationSection = ({ education }: EducationSectionProps) => {
+const EducationSection = ({ education }: EducationSectionProps) => {
   if (!education?.length) return null;
   return (
     <section id="education">
@@ -47,3 +47,5 @@ export const EducationSection = ({ education }: EducationSectionProps) => {
     </section>
   );
 };
+
+export default EducationSection;

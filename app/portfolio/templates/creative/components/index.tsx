@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import Header from "./Header";
 import About from "./About";
 import Services from "./Services";
@@ -9,31 +7,15 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { Portfolio } from "@/interfaces/templates";
-
+import EducationSection from "./education";
 interface CreativeTemplateProps {
   data: Portfolio;
 }
 
 export default function CreativeTemplate({ data }: CreativeTemplateProps) {
-  const { theme, setTheme } = useTheme();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setTheme(isDarkMode ? "light" : "dark");
-  };
-
-  useEffect(() => {
-    setIsDarkMode(theme === "dark");
-  }, [theme]);
-
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">
-      <Navbar
-        full_name={data?.user?.full_name}
-        avatar={data?.user?.avatar?.url}
-        isDarkMode={isDarkMode}
-        setIsDarkMode={toggleDarkMode}
-      />
+      <Navbar />
       <Header
         full_name={data?.user?.full_name}
         welcome_message={data?.welcome_message}
@@ -41,11 +23,31 @@ export default function CreativeTemplate({ data }: CreativeTemplateProps) {
         resume={data?.resume?.url}
         avatar={data?.user?.avatar?.url}
       />
-      <About isDarkMode={isDarkMode} />
-      <Services isDarkMode={isDarkMode} />
-      <Work isDarkMode={isDarkMode} />
-      <Contact isDarkMode={isDarkMode} />
-      <Footer isDarkMode={isDarkMode} />
+      <About
+        full_name={data?.user?.full_name}
+        avatar={data?.user?.avatar?.url}
+        bio={data.bio}
+        experiences={data?.experiences}
+        projects={data?.projects}
+        education={data?.educations}
+        skills={data?.skills}
+        services={data?.services}
+        languages={data?.languages}
+      />
+      <Services services={data?.services} />
+      <Work projects={data?.projects} />
+      <EducationSection education={data?.educations} />
+      <Contact />
+      <Footer
+        avatar={data?.user?.avatar?.url}
+        full_name={data?.user?.full_name}
+        email={data?.email}
+        phone={data?.phone}
+        address={data?.address}
+        booking_link={data?.booking_link}
+        country={data?.user?.country}
+        links={data?.links}
+      />
     </div>
   );
 }

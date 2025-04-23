@@ -1,13 +1,13 @@
-import { ProfileSection } from "./profile";
-import { BioSection } from "./bio";
-import { ExperienceSection } from "./experience";
-import { ProjectsSection } from "./projects";
-import { EducationSection } from "./education";
+import Profile from "./profile";
+import Bio from "./bio";
+import Experience from "./experience";
+import Projects from "./projects";
+import Education from "./education";
 import { SkillsSection } from "./skills";
-import { LanguagesSection } from "./language";
-import { ServicesSection } from "./services";
+import Languages from "./language";
+import Services from "./services";
 import { ContactSection } from "./contact";
-import { LinksSection } from "./links";
+import Links from "./links";
 import NavBar from "./nav-bar";
 import { Portfolio } from "@/interfaces/templates";
 
@@ -21,25 +21,25 @@ const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
       <NavBar full_name={data?.user?.full_name} />
 
       <div className="pt-20">
-        <ProfileSection
+        <Profile
           full_name={data?.user?.full_name}
           welcome_message={data?.welcome_message}
           role={data.role}
           country={data?.user?.country}
           email={data?.email}
           phone={data?.phone}
-          address={data?.address}
           avatar={data?.user?.avatar?.url}
+          address={data?.address}
           booking_link={data?.booking_link}
         />
-        <BioSection bio={data.bio} resume={data?.resume?.url} />
-        <ExperienceSection experiences={data?.experiences} />
-        <ProjectsSection projects={data?.projects} />
-        <EducationSection education={data?.educations} />
-        <ServicesSection services={data?.services} />
+        <Bio bio={data.bio} resume={data?.resume?.url} />
+        <Experience experiences={data?.experiences} />
+        <Projects projects={data?.projects} />
+        <Education education={data?.educations} />
+        <Services services={data?.services} />
         <SkillsSection skills={data?.skills} />
-        <LanguagesSection languages={data?.languages} />
-        <LinksSection links={data?.links} />
+        <Languages languages={data?.languages} />
+        <Links links={data?.links} />
         <ContactSection />
       </div>
     </div>

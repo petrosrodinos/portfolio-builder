@@ -9,7 +9,7 @@ interface LanguagesSectionProps {
   languages: Language[];
 }
 
-export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
+const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
   if (!languages?.length) return null;
   return (
     <section id="languages">
@@ -43,3 +43,5 @@ export const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
     </section>
   );
 };
+
+export default LanguagesSection;
