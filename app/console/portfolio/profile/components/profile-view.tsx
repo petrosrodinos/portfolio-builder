@@ -3,16 +3,28 @@ import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "services/profile";
 import { useAuthStore } from "stores/auth";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Pencil, FileText, Download } from "lucide-react";
 import { Info } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ExperienceSkeleton from "@/components/ui/experience-skeleton";
+import ResumeData from "./resume-data";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import CreateResume from "./create-resume";
+
 interface ProfileViewProps {
   onEdit: () => void;
 }
 
 export default function ProfileView({ onEdit }: ProfileViewProps) {
   const { user_id } = useAuthStore((state) => state);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
@@ -27,7 +39,23 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        {data && (
+          <Dialog open={isResumeModalOpen} onOpenChange={setIsResumeModalOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <FileText className="h-4 w-4" />
+                Create Resume
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl">
+              <DialogHeader>
+                <DialogTitle>Create your resume</DialogTitle>
+              </DialogHeader>
+              <CreateResume />
+            </DialogContent>
+          </Dialog>
+        )}
         <Button onClick={onEdit} className="gap-2">
           <Pencil className="h-4 w-4" />
           Edit Profile
@@ -65,6 +93,21 @@ export default function ProfileView({ onEdit }: ProfileViewProps) {
               {data?.booking_link || "No booking link"}
             </p>
           </div>
+
+          {data?.resume && (
+            <div>
+              <h3 className="font-medium">Resume</h3>
+              <a
+                href={data.resume.url as string}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download Resume</span>
+              </a>
+            </div>
+          )}
         </>
       )}
       {!data && !isLoading && (

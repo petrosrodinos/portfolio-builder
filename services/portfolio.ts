@@ -70,6 +70,7 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             links: linksType,
         }
 
+        console.log("portfolio", portfolio);
 
 
         return portfolio;
