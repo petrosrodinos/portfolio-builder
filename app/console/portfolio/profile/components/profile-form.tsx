@@ -19,10 +19,18 @@ import { upsertProfile, getProfile } from "services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "stores/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SupabaseErrorCodes } from "@/constants/supabase";
 import Link from "next/link";
-import { UserCircle } from "lucide-react";
+import { UserCircle, FileText } from "lucide-react";
+import ResumeData from "./resume-data";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -30,6 +38,7 @@ interface ProfileFormProps {
 
 export default function ProfileForm({ onCancel }: ProfileFormProps) {
   const { user_id, email } = useAuthStore((state) => state);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
@@ -86,7 +95,21 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <Dialog open={isResumeModalOpen} onOpenChange={setIsResumeModalOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" type="button" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Fill from resume
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-3xl">
+            <DialogHeader>
+              <DialogTitle>Upload your resume to fill your profile</DialogTitle>
+            </DialogHeader>
+            <ResumeData />
+          </DialogContent>
+        </Dialog>
         <Link href="/console/account/profile">
           <Button variant="outline" type="button" className="flex items-center gap-2">
             <UserCircle className="h-4 w-4" />

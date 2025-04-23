@@ -77,3 +77,27 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
         return null;
     }
 }
+
+export async function createPortfolioFromResume(user_id: string, file: File) {
+    try {
+        // const { data, error } = await supabase.from("portfolios").insert({
+        //     user_id: user_id,
+        // });
+
+        // if (error) {
+        //     console.error(error);
+        //     return null;
+        // }
+
+        console.log("file", file);
+
+        return {
+            user_id: user_id,
+            file: file,
+        };
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+

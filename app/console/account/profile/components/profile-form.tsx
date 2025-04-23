@@ -60,7 +60,7 @@ export default function AccountProfileForm() {
     mutationFn: (data: any) => upsertUser(data),
     onSuccess: (data: any) => {
       if (!isProfilePage) {
-        router.push("/console/portfolio/profile");
+        router.push("/auth/portfolio-resume");
       }
       updateStoreUser({
         ...data,
