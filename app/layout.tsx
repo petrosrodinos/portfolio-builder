@@ -37,7 +37,20 @@ export default function RootLayout({ children }) {
       <head></head>
       <body className={`${inter.className} ${manrope.className}`}>
         <QueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            // value={{
+            //   light: "light",
+            //   dark: "dark",
+            //   stone_light: "stone_light",
+            //   stone_dark: "stone_dark",
+            //   zinc_light: "zinc_light",
+            //   zinc_dark: "zinc_dark",
+            //   system: "system",
+            // }}
+          >
             <FontProvider>{children}</FontProvider>
           </ThemeProvider>
           <Toaster />

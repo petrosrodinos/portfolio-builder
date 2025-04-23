@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import tailwindCssAnimate from 'tailwindcss-animate'
 import { fonts } from './config/fonts'
+import { createThemes } from 'tw-colors';
 
 const { fontFamily = { sans: ['sans-serif'] } } = defaultTheme || {}
 
@@ -12,7 +13,7 @@ export default {
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
-	safelist: fonts.map((font) => `font-${font}`).concat(['stone-light', 'stone-dark', 'zinc-light', 'zinc-dark', 'light', 'dark']),
+	safelist: fonts.map((font) => `font-${font}`).concat(['stone_light', 'stone_dark', 'zinc_light', 'zinc_dark', 'light', 'dark']),
 	theme: {
 		container: {
 			center: 'true',
