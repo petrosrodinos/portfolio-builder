@@ -1,11 +1,11 @@
 "use client";
-import Header from "./header";
-import About from "./about";
-import Services from "./services";
-import Work from "./work";
-import Contact from "./contact";
-import Footer from "./footer";
-import Navbar from "./navbar";
+import Header from "./Header";
+import About from "./About";
+import Services from "./Services";
+import Work from "./Work";
+import Contact from "./Contact";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 import { Portfolio } from "@/interfaces/templates";
 import EducationSection from "./education";
 interface CreativeTemplateProps {

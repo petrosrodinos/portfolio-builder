@@ -39,7 +39,7 @@ export default {
 					foreground: 'var(--card-foreground)',
 				},
 				popover: {
-					DEFAULT: 'var(--popover))',
+					DEFAULT: 'var(--popover)',
 					foreground: 'var(--popover-foreground)',
 				},
 				primary: {
