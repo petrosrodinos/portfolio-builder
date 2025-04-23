@@ -31,7 +31,8 @@
       "@/constants/*": ["constants/*"],
       "@/validation-schemas/*": ["validation-schemas/*"],
       "@/interfaces/*": ["interfaces/*"],
-      "@/services/*": ["services/*"]
+      "@/services/*": ["services/*"],
+      "@/stores/*": ["stores/*"]
     }
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/portfolio/[id]"],

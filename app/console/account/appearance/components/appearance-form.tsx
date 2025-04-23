@@ -29,16 +29,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuthStore } from "@/stores/auth";
 
 export function AppearanceForm() {
   const { font, setFont } = useFont();
   const { theme, setTheme } = useTheme();
+  const { preferences, updateUser } = useAuthStore();
 
   const form = useForm<AccountAppearanceFormValues>({
     resolver: zodResolver(AccountAppearanceFormSchema),
     defaultValues: {
       font,
-      theme: theme as "light" | "dark",
+      theme: theme,
       color_scheme: theme,
     },
   });
@@ -46,9 +48,14 @@ export function AppearanceForm() {
   function onSubmit(data: AccountAppearanceFormValues) {
     console.log(data);
     if (data.font !== font) setFont(data.font);
-
-    // const newTheme = `${data.color_scheme}-${data.theme}`;
+    document.documentElement.classList.remove(theme);
     setTheme(data.color_scheme);
+    updateUser({
+      preferences: {
+        ...preferences,
+        dashboard_theme: data.color_scheme,
+      },
+    });
 
     toast({
       title: "Console appearance updated",
@@ -172,10 +179,8 @@ export function AppearanceForm() {
                   <SelectItem value="light">Default</SelectItem>
                   <SelectItem value="system">System</SelectItem>
                   <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="zinc_light">Zinc Light</SelectItem>
-                  <SelectItem value="zinc_dark">Zinc Dark</SelectItem>
-                  <SelectItem value="stone_light">Stone Light</SelectItem>
-                  <SelectItem value="stone_dark">Stone Dark</SelectItem>
+                  <SelectItem value="blue_light">Blue Light</SelectItem>
+                  <SelectItem value="blue_dark">Blue Dark</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>Select the color scheme for your console.</FormDescription>

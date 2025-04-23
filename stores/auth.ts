@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import Cookies from 'js-cookie'
 import { AuthUser } from "interfaces/auth";
 import { TemplateTypes } from "@/constants/templates";
 import { signOut } from "@/services/auth";
@@ -21,16 +20,14 @@ const initialValues: UserStore = {
     avatar: null,
     preferences: {
         portfolio_theme: TemplateTypes.default,
+        dashboard_theme: "system",
     },
     login: () => { },
     logout: () => { },
     updateUser: () => { },
 };
 
-
 const STORE_KEY = "auth";
-
-const ACCESS_TOKEN = 'thisisjustarandomstring'
 
 export const useAuthStore = create<UserStore>()(
     devtools(
@@ -38,7 +35,6 @@ export const useAuthStore = create<UserStore>()(
             (set) => ({
                 ...initialValues,
                 login: (user: AuthUser) => {
-                    // Cookies.set(ACCESS_TOKEN, JSON.stringify(user), { expires: 1 })
                     set((state) => ({ ...state, ...user }));
                 },
                 logout: () => {
@@ -46,7 +42,6 @@ export const useAuthStore = create<UserStore>()(
                     localStorage.removeItem(STORE_KEY);
                     signOut();
                     window.location.href = "/auth/sign-in";
-                    // Cookies.remove(ACCESS_TOKEN)
                 },
                 updateUser: async (user: Partial<AuthUser>) => {
                     set((state) => ({ ...state, ...user }));

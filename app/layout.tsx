@@ -41,15 +41,13 @@ export default function RootLayout({ children }) {
             attribute="class"
             defaultTheme="system"
             enableSystem
-            // value={{
-            //   light: "light",
-            //   dark: "dark",
-            //   stone_light: "stone_light",
-            //   stone_dark: "stone_dark",
-            //   zinc_light: "zinc_light",
-            //   zinc_dark: "zinc_dark",
-            //   system: "system",
-            // }}
+            value={{
+              light: "light",
+              dark: "dark",
+              blue_light: "blue_light",
+              blue_dark: "blue_dark",
+              system: "system",
+            }}
           >
             <FontProvider>{children}</FontProvider>
           </ThemeProvider>
