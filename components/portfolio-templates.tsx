@@ -19,7 +19,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useAuthStore } from "stores/auth";
-
+import Image from "next/image";
 const PortfolioTemplates = () => {
   const {
     preferences: { portfolio_theme },
@@ -61,8 +61,14 @@ const PortfolioTemplates = () => {
               portfolio_theme === template.id && "ring-2 ring-primary"
             )}
           >
-            <div className="aspect-video bg-muted w-full">
-              <div className={`h-full w-full bg-gradient-to-br ${template.gradient}`} />
+            <div className="relative w-full h-40">
+              <Image
+                src={template.image}
+                alt={template.name}
+                fill
+                className="object-cover w-20 h-20"
+              />
+              {/* <div className={`h-full w-full bg-gradient-to-br ${template.gradient}`} /> */}
             </div>
             <div className="p-4">
               <h3 className="font-semibold">{template.name}</h3>

@@ -128,6 +128,7 @@ export const PortfolioTemplates: any = [
         description: "Modern layout with emphasis on your achievements",
         gradient: "from-secondary/20 to-secondary/5",
         preview: "/portfolio/templates/professional",
+        image: "/illustration_1.jpg"
     },
     // {
     //     id: TemplateTypes.minimal,
@@ -142,6 +143,7 @@ export const PortfolioTemplates: any = [
         description: "Dynamic design with interactive elements and animations",
         preview: "/portfolio/templates/creative",
         gradient: "from-accent/20 to-accent/5",
+        image: "/illustration_2.jpg"
     },
     // {
     //     id: 'premium',
