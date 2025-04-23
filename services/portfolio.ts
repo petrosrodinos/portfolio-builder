@@ -2,6 +2,7 @@
 
 import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supabase";
 import { Portfolio } from "@/interfaces/templates";
+import { askAI } from "@/services/ai";
 import { supabase } from "@/lib/supabase";
 
 export async function getPortfolio(id: string): Promise<Portfolio | null> {
@@ -78,23 +79,13 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
     }
 }
 
-export async function createPortfolioFromResume(user_id: string, file: File) {
+export async function createPortfolioFromResume(user_id: string, data: string) {
     try {
-        // const { data, error } = await supabase.from("portfolios").insert({
-        //     user_id: user_id,
-        // });
 
-        // if (error) {
-        //     console.error(error);
-        //     return null;
-        // }
+        const response = await askAI(`create a summary of the following resume: ${data}`);
 
-        console.log("file", file);
+        return response;
 
-        return {
-            user_id: user_id,
-            file: file,
-        };
     } catch (error) {
         console.error(error);
         return null;

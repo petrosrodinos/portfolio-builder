@@ -18,13 +18,14 @@ import * as React from "react";
 import { createPortfolioFromResume } from "@/services/portfolio";
 import { useAuthStore } from "@/stores/auth";
 import { useCallback } from "react";
+import pdfToText from "react-pdftotext";
 
 function ResumeData() {
   const { user_id } = useAuthStore();
   const [files, setFiles] = React.useState<File[]>([]);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async () => createPortfolioFromResume(user_id, files[0]),
+    mutationFn: async (data: string) => createPortfolioFromResume(user_id, data),
     onSuccess: (data) => {
       console.log("data", data);
       toast({
@@ -41,8 +42,13 @@ function ResumeData() {
     });
   }, []);
 
-  const handleCreatePortfolio = () => {
-    mutate();
+  const handleCreatePortfolio = async () => {
+    try {
+      const text = await pdfToText(files[0]);
+      mutate(text);
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (
@@ -85,9 +91,10 @@ function ResumeData() {
       </FileUploadList>
       <Button
         onClick={handleCreatePortfolio}
-        disabled={files.length === 0}
+        // disabled={files.length === 0}
         className="mt-4 w-full"
         variant="default"
+        loading={isPending}
       >
         Create portfolio
       </Button>
