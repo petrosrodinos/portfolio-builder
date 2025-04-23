@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import UserMessage from "./components/user-message";
 import { TemplateTypes } from "@/constants/templates";
+import NotFound from "./components/not-found";
 
 const TEMPLATES = {
   professional: dynamic(() => import("../templates/professional/page"), { ssr: true }),
@@ -39,6 +40,14 @@ export default async function PortfolioPage({ params }) {
 
   const templateKey = data?.user?.preferences?.portfolio_theme || TemplateTypes.default;
   const Template = TEMPLATES[templateKey];
+
+  if (!data.visible) {
+    return (
+      <UserMessage visible={data.visible}>
+        <Template data={data} id={id} />
+      </UserMessage>
+    );
+  }
 
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">

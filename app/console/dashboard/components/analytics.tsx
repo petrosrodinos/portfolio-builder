@@ -1,21 +1,16 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Star, FileText, Share2, Briefcase, Eye, Lock, Pencil, Unlock } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { getPortfolio } from "@/services/portfolio";
-import { useAuthStore } from "stores/auth";
+import { Share2, Briefcase, Eye, Lock, Pencil, Unlock } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IconFolders, IconStars, IconTool } from "@tabler/icons-react";
+import { Portfolio } from "@/interfaces/templates";
 
-const Analytics = () => {
-  const { user_id } = useAuthStore();
-  const { data: portfolio } = useQuery({
-    queryKey: ["portfolio"],
-    queryFn: () => getPortfolio(user_id),
-    enabled: !!user_id,
-  });
+interface AnalyticsProps {
+  portfolio: Portfolio;
+}
 
+const Analytics = ({ portfolio }: AnalyticsProps) => {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card className="p-6 relative group">

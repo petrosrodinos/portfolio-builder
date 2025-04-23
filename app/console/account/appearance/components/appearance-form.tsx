@@ -46,7 +46,6 @@ export function AppearanceForm() {
   });
 
   function onSubmit(data: AccountAppearanceFormValues) {
-    console.log(data);
     if (data.font !== font) setFont(data.font);
     document.documentElement.classList.remove(theme);
     setTheme(data.color_scheme);

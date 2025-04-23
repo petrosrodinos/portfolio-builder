@@ -7,6 +7,7 @@ export interface Portfolio {
     email?: string;
     phone?: string;
     address?: string;
+    visible?: boolean;
     welcome_message?: string;
     booking_link?: string;
     role?: string;
