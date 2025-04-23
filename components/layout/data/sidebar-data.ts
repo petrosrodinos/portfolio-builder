@@ -20,7 +20,7 @@ import {
   IconLink,
   IconCreditCard,
 } from '@tabler/icons-react'
-import { Command, CreditCard } from 'lucide-react'
+import { Command, CreditCard, Share2 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -107,7 +107,7 @@ export const sidebarData: SidebarData = {
             {
               title: 'Links',
               url: '/console/portfolio/links',
-              icon: IconLink,
+              icon: Share2,
             },
             {
               title: 'Languages',

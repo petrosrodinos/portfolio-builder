@@ -4,7 +4,6 @@ import {
   IconBriefcase,
   IconFolders,
   IconLanguage,
-  IconLink,
   IconPalette,
   IconSchool,
   IconStars,
@@ -12,13 +11,13 @@ import {
   IconUser,
   IconUserCircle,
   IconEye,
-  IconSettings,
 } from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
 import SidebarNav from "@/components/sidebar-nav";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "stores/auth";
+import { Share2 } from "lucide-react";
 
 export default function Settings({ children }) {
   const { user_id } = useAuthStore();
@@ -96,7 +95,7 @@ const sidebarNavItems = [
   },
   {
     title: "Links",
-    icon: <IconLink size={18} />,
+    icon: <Share2 size={18} />,
     href: "/console/portfolio/links",
   },
   {

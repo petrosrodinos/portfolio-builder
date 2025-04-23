@@ -6,6 +6,7 @@ import { getPortfolio } from "@/services/portfolio";
 import { useAuthStore } from "stores/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { IconFolders, IconStars, IconTool } from "@tabler/icons-react";
 
 const Analytics = () => {
   const { user_id } = useAuthStore();
@@ -54,7 +55,7 @@ const Analytics = () => {
         </Link>
         <div className="flex items-center gap-4">
           <div className="rounded-full bg-primary/10 p-3">
-            <Star className="h-6 w-6 text-primary" />
+            <IconFolders className="h-6 w-6 text-primary" />
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Projects Added</p>
@@ -74,7 +75,7 @@ const Analytics = () => {
         </Link>
         <div className="flex items-center gap-4">
           <div className="rounded-full bg-primary/10 p-3">
-            <FileText className="h-6 w-6 text-primary" />
+            <IconStars className="h-6 w-6 text-primary" />
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Skills Listed</p>
@@ -119,6 +120,25 @@ const Analytics = () => {
           <div>
             <p className="text-sm text-muted-foreground">Experience</p>
             <h3 className="text-2xl font-bold">{portfolio?.experiences?.length || 0}</h3>
+          </div>
+        </div>
+      </Card>
+      <Card className="p-6 relative group">
+        <Link
+          href="/console/portfolio/services"
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Pencil className="h-4 w-4" />
+          </Button>
+        </Link>
+        <div className="flex items-center gap-4">
+          <div className="rounded-full bg-primary/10 p-3">
+            <IconTool className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Services</p>
+            <h3 className="text-2xl font-bold">{portfolio?.services?.length || 0}</h3>
           </div>
         </div>
       </Card>

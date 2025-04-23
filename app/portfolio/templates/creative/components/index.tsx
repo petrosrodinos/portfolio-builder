@@ -1,6 +1,6 @@
 "use client";
 import Header from "./Header";
-import About from "./About";
+import About from "./about";
 import Services from "./Services";
 import Work from "./Work";
 import Contact from "./Contact";
