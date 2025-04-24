@@ -35,7 +35,7 @@ const QuickActions = ({ portfolio }: QuickActionsProps) => {
           </Button>
         </Link>
       </div>
-      <PortfolioVisibility visible={portfolio.visible} />
+      <PortfolioVisibility visible={portfolio?.visible} />
     </Card>
   );
 };
