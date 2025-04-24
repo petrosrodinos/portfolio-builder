@@ -1,6 +1,6 @@
 import { FeedbackPayload } from "@/interfaces/contact";
 import axios from "axios";
-import { APICO_URL } from "../constants";
+import { apicoUrls } from "../constants";
 
 export const sendFeedback = async (payload: FeedbackPayload) => {
     let values = Object.values(payload);
@@ -8,7 +8,7 @@ export const sendFeedback = async (payload: FeedbackPayload) => {
     values = [...values, timestamp];
     const options: any = {
         method: "POST",
-        url: APICO_URL,
+        url: apicoUrls.feedBack,
         params: {
             valueInputOption: "USER_ENTERED",
             insertDataOption: "INSERT_ROWS",

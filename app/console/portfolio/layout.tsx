@@ -11,6 +11,7 @@ import {
   IconUser,
   IconUserCircle,
   IconEye,
+  IconBrowserCheck,
 } from "@tabler/icons-react";
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
@@ -108,9 +109,9 @@ const sidebarNavItems = [
     icon: <IconPalette size={18} />,
     href: "/console/portfolio/appearance",
   },
-  // {
-  //   title: "Display",
-  //   icon: <IconBrowserCheck size={18} />,
-  //   href: "/console/portfolio/display",
-  // },
+  {
+    title: "Display",
+    icon: <IconBrowserCheck size={18} />,
+    href: "/console/portfolio/display",
+  },
 ];

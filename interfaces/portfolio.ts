@@ -22,6 +22,7 @@ export interface PortfolioProfileBio {
     booking_link?: string;
     role: string;
     bio: string;
+    visible: boolean;
     resume?: PortfolioResume;
 }
 

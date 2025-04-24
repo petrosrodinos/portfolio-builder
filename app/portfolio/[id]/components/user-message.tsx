@@ -27,9 +27,9 @@ const UserMessage = ({ visible, children }: UserMessageProps) => {
               You can make it public by going to your{" "}
               <Link
                 className="underline font-bold hover:text-yellow-500 transition-colors"
-                href="/console/dashboard"
+                href="/console/portfolio/display"
               >
-                Dashboard.
+                Display Settings.
               </Link>
             </AlertTitle>
           </Alert>

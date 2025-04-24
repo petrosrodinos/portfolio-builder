@@ -16,8 +16,6 @@ export const askAI = async (prompt: string) => {
         // },
     });
 
-    console.log("response", response);
-
     return response.choices[0].message.content
 }
 
