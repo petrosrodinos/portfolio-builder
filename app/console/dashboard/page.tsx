@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Analytics from "./components/analytics";
 import RecentUpdates from "./components/recent-updates";
 import QuickActions from "./components/quick-actions";

@@ -17,27 +17,14 @@ import { Upload, X } from "lucide-react";
 import * as React from "react";
 import { createPortfolioFromResume } from "@/services/portfolio";
 import { useAuthStore } from "@/stores/auth";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback } from "react";
 import pdfToText from "react-pdftotext";
 import { Spinner } from "@/components/ui/spinner";
-
-const loadingSteps = [
-  "Reading data from your resume...",
-  "Getting personal information...",
-  "Getting education history...",
-  "Getting work experience...",
-  "Getting skills and certifications...",
-  "Getting projects...",
-  "Getting services...",
-  "Getting links...",
-  "Getting languages...",
-  "Creating your portfolio...",
-];
+import { useLoadingStep } from "./loading-step";
 
 function ResumeData() {
   const { user_id } = useAuthStore();
   const [files, setFiles] = React.useState<File[]>([]);
-  const [currentStep, setCurrentStep] = useState(0);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: string) => createPortfolioFromResume(user_id, data),
@@ -57,18 +44,7 @@ function ResumeData() {
     },
   });
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPending) {
-      setCurrentStep(0);
-      interval = setInterval(() => {
-        setCurrentStep((prev) => (prev < loadingSteps.length - 1 ? prev + 1 : 0));
-      }, 2000);
-    } else {
-      setCurrentStep(0);
-    }
-    return () => clearInterval(interval);
-  }, [isPending]);
+  const { currentStepText } = useLoadingStep(isPending);
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast({
@@ -133,7 +109,7 @@ function ResumeData() {
         <div className="flex flex-col items-center gap-4 p-4 border rounded-lg bg-muted/50">
           <Spinner size="medium" />
           <div className="text-center space-y-1">
-            <p className="text-sm font-medium">{loadingSteps[currentStep]}</p>
+            <p className="text-sm font-medium">{currentStepText}</p>
             <p className="text-xs text-muted-foreground">
               Please wait while we process your resume
             </p>
