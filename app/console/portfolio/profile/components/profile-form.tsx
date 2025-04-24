@@ -49,7 +49,6 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
       address: "",
       welcome_message: "",
     },
-    mode: "onChange",
   });
 
   const { data, isSuccess } = useQuery({

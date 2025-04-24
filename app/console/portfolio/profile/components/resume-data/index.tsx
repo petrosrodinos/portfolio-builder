@@ -17,17 +17,19 @@ import { Upload, X } from "lucide-react";
 import * as React from "react";
 import { createPortfolioFromResume } from "@/services/portfolio";
 import { useAuthStore } from "@/stores/auth";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import pdfToText from "react-pdftotext";
 import { Spinner } from "@/components/ui/spinner";
 import { useLoadingStep } from "./loading-step";
+import { createPortfolio } from "@/services/profile";
+import { PortfoloAIData } from "@/interfaces/portfolio";
 
 function ResumeData() {
   const { user_id } = useAuthStore();
-  const [files, setFiles] = React.useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => createPortfolioFromResume(user_id, data),
+  const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
+    mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data),
     onSuccess: (data) => {
       console.log("data", data);
       toast({
@@ -44,7 +46,20 @@ function ResumeData() {
     },
   });
 
-  const { currentStepText } = useLoadingStep(isPending);
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: string) => createPortfolioFromResume(user_id, data),
+    onSuccess: (data) => {
+      createPortfolioMutation(data);
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Error creating portfolio",
+      });
+    },
+  });
+
+  const { currentStepText } = useLoadingStep(isPending || isCreatingPortfolio);
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast({
@@ -64,7 +79,7 @@ function ResumeData() {
 
   return (
     <div className="space-y-4">
-      {!isPending && (
+      {!isPending && !isCreatingPortfolio && (
         <FileUpload
           maxFiles={1}
           maxSize={5 * 1024 * 1024}
@@ -105,7 +120,7 @@ function ResumeData() {
         </FileUpload>
       )}
 
-      {isPending && (
+      {(isPending || isCreatingPortfolio) && (
         <div className="flex flex-col items-center gap-4 p-4 border rounded-lg bg-muted/50">
           <Spinner size="medium" />
           <div className="text-center space-y-1">
@@ -119,7 +134,7 @@ function ResumeData() {
 
       <Button
         onClick={handleCreatePortfolio}
-        disabled={files.length === 0 || isPending}
+        disabled={files.length === 0 || isPending || isCreatingPortfolio}
         className="w-full"
         variant="default"
       >

@@ -4,6 +4,8 @@ import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supa
 import { Portfolio } from "@/interfaces/templates";
 import { askAI } from "@/services/ai";
 import { supabase } from "@/lib/supabase";
+import { createPortfolioPrompt, test } from "@/constants/prompts";
+import { createPortfolio } from "./profile";
 
 export async function getPortfolio(id: string): Promise<Portfolio | null> {
     try {
@@ -83,13 +85,21 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
 export async function createPortfolioFromResume(user_id: string, data: string) {
     try {
 
-        const response = await askAI(`create a summary of the following resume: ${data}`);
+        const response = await askAI(`${createPortfolioPrompt} ${data}`);
 
-        return response;
+        const jsonResponse = response.replace(/```(?:json)?\n?|```/g, '');
+
+        const payload = JSON.parse(jsonResponse);
+
+        return payload;
 
     } catch (error) {
         console.error(error);
         return null;
     }
 }
+
+
+
+
 
