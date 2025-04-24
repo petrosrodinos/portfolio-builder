@@ -1,15 +1,16 @@
 "use server"
 import OpenAI from "openai";
+import { aiConfig } from "../constants";
 
 export const askAI = async (prompt: string) => {
 
     const client = new OpenAI({
         apiKey: process.env.DEEPSEEK_API_KEY,
-        baseURL: 'https://api.deepseek.com/v1',
+        baseURL: aiConfig.deepSeek.baseURL,
     });
 
     const response = await client.chat.completions.create({
-        model: 'deepseek-chat',
+        model: aiConfig.deepSeek.model,
         messages: [{ role: 'user', content: prompt }],
         // response_format: {
         //     type: 'json_object',

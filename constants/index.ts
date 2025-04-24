@@ -10,3 +10,10 @@ const googleSheets = {
 export const apicoUrls = {
   feedBack: `https://api.apico.dev/v1/${APICO_INTEGRATION_ID}/${googleSheets.feedBack.sheetId}/values/${googleSheets.feedBack.sheetName}:append`,
 };
+
+export const aiConfig = {
+  deepSeek: {
+    baseURL: 'https://api.deepseek.com/v1',
+    model: 'deepseek-chat',
+  },
+};
