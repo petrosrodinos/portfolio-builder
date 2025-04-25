@@ -1,5 +1,7 @@
 import { SupabaseBucket, SupabaseBuckets } from "@/constants/supabase";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 
 export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: string, fileName: string) => {
     try {

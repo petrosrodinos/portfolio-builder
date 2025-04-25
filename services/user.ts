@@ -1,7 +1,9 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import { UpdateUser, User, UserAvatar } from 'interfaces/user';
 import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { deleteFile, uploadFile } from './storage';
+
+const supabase = createClient();
 
 export const upsertUser = async (payload: UpdateUser): Promise<User> => {
     try {

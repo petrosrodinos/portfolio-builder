@@ -1,6 +1,8 @@
-import { supabase } from "@/lib/supabase";
 import { PortfolioExperienceType, SupabaseTables, SupabaseErrorCodes } from "@/constants/supabase";
 import { PortfolioExperience } from "interfaces/portfolio";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 
 export const upsertExperience = async (payload: PortfolioExperience): Promise<PortfolioExperience> => {
     try {

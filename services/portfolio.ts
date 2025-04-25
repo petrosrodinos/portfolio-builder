@@ -3,9 +3,10 @@
 import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supabase";
 import { Portfolio } from "@/interfaces/templates";
 import { askAI } from "@/services/ai";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import { createPortfolioPrompt, test } from "@/constants/prompts";
-import { createPortfolio } from "./profile";
+
+const supabase = createClient();
 
 export async function getPortfolio(id: string): Promise<Portfolio | null> {
     try {
@@ -26,7 +27,6 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             error = result.error;
         }
 
-        console.log(data);
 
 
         if (error) {
@@ -72,7 +72,6 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             links: linksType,
         }
 
-        console.log("portfolio", portfolio);
 
 
         return portfolio;

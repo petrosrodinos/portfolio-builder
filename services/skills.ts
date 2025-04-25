@@ -1,6 +1,8 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import { PortfolioSkillsType, SupabaseErrorCodes, SupabaseTables } from "@/constants/supabase";
 import { PortfolioSkill } from "interfaces/portfolio";
+
+const supabase = createClient();
 
 export const upsertSkill = async (payload: PortfolioSkill): Promise<PortfolioSkill> => {
     try {

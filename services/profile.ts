@@ -1,9 +1,11 @@
-import { supabase } from "@/lib/supabase";
 import { SupabaseTables, SupabaseBuckets, PortfolioSkillsTypes } from "@/constants/supabase";
 import { uploadFile, deleteFile } from "./storage";
 import { PortfolioProfileBio, UpdatePortfolioProfileBio, PortfolioResume, PortfoloAIData } from "interfaces/portfolio";
 import { SkillOptions } from "@/constants/dropdowns/skills";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 
 export const upsertProfile = async (user_id: string, payload: UpdatePortfolioProfileBio): Promise<PortfolioProfileBio> => {
     try {
