@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IconFolders, IconStars, IconTool } from "@tabler/icons-react";
 import { Portfolio } from "@/interfaces/templates";
+import { Badge } from "@/components/ui/badge";
 
 interface AnalyticsProps {
   portfolio: Portfolio;
@@ -14,6 +15,23 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card className="p-6 relative group">
+        <div className="absolute top-2 right-2">
+          <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+            Building
+          </Badge>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="rounded-full bg-primary/10 p-3">
+            <Eye className="h-6 w-6 text-primary" />
+          </div>
+          <div className="relative">
+            <p className="text-sm text-muted-foreground">Portfolio Views</p>
+            <h3 className="text-2xl font-bold">-</h3>
+          </div>
+        </div>
+      </Card>
+
+      {/* <Card className="p-6 relative group">
         <Link
           href="/console/billing/plans"
           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -37,7 +55,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
             </div>
           </div>
         </div>
-      </Card>
+      </Card> */}
 
       <Card className="p-6 relative group">
         <Link
