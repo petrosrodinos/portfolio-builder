@@ -3,8 +3,10 @@ import { Card } from "@/components/ui/card";
 import ResumeData from "app/console/portfolio/profile/components/resume-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const PortfolioResumePage = () => {
+  const router = useRouter();
   return (
     <Card className="p-6">
       <div className="mb-2 flex flex-col space-y-2 text-left">
@@ -16,7 +18,7 @@ const PortfolioResumePage = () => {
       </p>
 
       <div className="mt-4 flex flex-col gap-4">
-        <ResumeData />
+        <ResumeData onSuccess={() => router.push("/console/portfolio/profile")} />
         <Link href="/console/portfolio/profile">
           <Button variant="outline" className="w-full">
             I will do it manually

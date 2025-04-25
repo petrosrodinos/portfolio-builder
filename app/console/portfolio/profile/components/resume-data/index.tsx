@@ -24,7 +24,11 @@ import { useLoadingStep } from "./loading-step";
 import { createPortfolio } from "@/services/profile";
 import { PortfoloAIData } from "@/interfaces/portfolio";
 
-function ResumeData() {
+interface ResumeDataProps {
+  onSuccess?: () => void;
+}
+
+function ResumeData({ onSuccess }: ResumeDataProps) {
   const { user_id } = useAuthStore();
   const [files, setFiles] = useState<File[]>([]);
 
@@ -36,6 +40,7 @@ function ResumeData() {
         title: "Portfolio created",
         description: "Portfolio created successfully",
       });
+      onSuccess?.();
     },
     onError: (error) => {
       console.error("Error", error);

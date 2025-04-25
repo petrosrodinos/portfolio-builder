@@ -56,7 +56,7 @@ export const getProfile = async (user_id: string): Promise<PortfolioProfileBio> 
     }
 }
 
-export async function createPortfolio(user_id: string, payload: PortfoloAIData) {
+export async function createPortfolio(user_id: string, payload: PortfoloAIData): Promise<boolean> {
 
     try {
 
@@ -99,7 +99,7 @@ export async function createPortfolio(user_id: string, payload: PortfoloAIData) 
             console.error(error);
         }
 
-        const totalSkills = [...payload.links, ...payload.languages]
+        const totalSkills = [...payload.links, ...payload.languages, ...payload.skills]
 
         const skills = totalSkills.map((skill: any) => ({
             user_id: user_id,
