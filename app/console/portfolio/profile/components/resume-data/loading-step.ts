@@ -12,11 +12,11 @@ const loadingSteps = [
   "Getting languages...",
   "Creating your portfolio...",
   "Creating your profile...",
-  "Creating your experiences...",
-  "Creating your skills...",
-  "Creating your projects...",
-  "Creating your links...",
-  "Creating your languages...",
+  "Adding your experiences...",
+  "Adding your skills...",
+  "Adding your projects...",
+  "Adding your links...",
+  "Adding your languages...",
 ];
 
 export const useLoadingStep = (isPending: boolean) => {

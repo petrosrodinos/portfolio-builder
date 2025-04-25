@@ -33,7 +33,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   const [files, setFiles] = useState<File[]>([]);
 
   const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
-    mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data),
+    mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
     onSuccess: (data) => {
       console.log("data", data);
       toast({
