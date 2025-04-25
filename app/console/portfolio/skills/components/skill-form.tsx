@@ -1,7 +1,7 @@
 "use client";
 
 import { SkillFormValues, SkillFormSchema } from "@/validation-schemas/portfolio";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 import { upsertSkill } from "services/skills";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SkillFormProps {
   onCancel: () => void;
@@ -34,6 +44,7 @@ interface SkillFormProps {
 
 const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
   const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
 
   const form = useForm<SkillFormValues>({
     resolver: zodResolver(SkillFormSchema),
@@ -78,22 +89,51 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col">
               <FormLabel>Skill</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a skill" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {SkillOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-full justify-between"
+                    >
+                      {field.value
+                        ? SkillOptions.find((option) => option.value === field.value)?.label
+                        : "Select a skill"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Search skills..." />
+                    <CommandEmpty>No skill found.</CommandEmpty>
+                    <CommandGroup>
+                      {SkillOptions.map((option) => (
+                        <CommandItem
+                          key={option.value}
+                          value={option.value}
+                          onSelect={(currentValue) => {
+                            field.onChange(currentValue);
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              field.value === option.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {option.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
