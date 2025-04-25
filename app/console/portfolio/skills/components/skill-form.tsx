@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -34,7 +35,7 @@ import { PortfolioSkill } from "interfaces/portfolio";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 import { upsertSkill } from "services/skills";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SkillFormProps {
@@ -45,6 +46,8 @@ interface SkillFormProps {
 const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [isManualEntry, setIsManualEntry] = useState(false);
+  const [manualSkill, setManualSkill] = useState("");
 
   const form = useForm<SkillFormValues>({
     resolver: zodResolver(SkillFormSchema),
@@ -82,6 +85,19 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
     });
   };
 
+  const handleManualSkillSubmit = () => {
+    if (manualSkill.trim()) {
+      form.setValue("title", manualSkill.trim());
+      setManualSkill("");
+      setIsManualEntry(false);
+    }
+  };
+
+  const handlePlusClick = () => {
+    setManualSkill(form.getValues("title"));
+    setIsManualEntry(true);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -91,49 +107,86 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Skill</FormLabel>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+              {isManualEntry ? (
+                <div className="flex gap-2">
                   <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={open}
-                      className="w-full justify-between"
-                    >
-                      {field.value
-                        ? SkillOptions.find((option) => option.value === field.value)?.label
-                        : "Select a skill"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
+                    <Input
+                      placeholder="Enter skill name"
+                      value={manualSkill}
+                      onChange={(e) => setManualSkill(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleManualSkillSubmit();
+                        }
+                      }}
+                    />
                   </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                  <Command>
-                    <CommandInput placeholder="Search skills..." />
-                    <CommandEmpty>No skill found.</CommandEmpty>
-                    <CommandGroup>
-                      {SkillOptions.map((option) => (
-                        <CommandItem
-                          key={option.value}
-                          value={option.value}
-                          onSelect={(currentValue) => {
-                            field.onChange(currentValue);
-                            setOpen(false);
-                          }}
+                  <Button type="button" variant="outline" onClick={handleManualSkillSubmit}>
+                    Add
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => {
+                      setIsManualEntry(false);
+                      setManualSkill("");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className="w-full justify-between"
                         >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              field.value === option.value ? "opacity-100" : "opacity-0"
-                            )}
-                          />
-                          {option.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                          {field.value
+                            ? SkillOptions.find((option) => option.value === field.value)?.label ||
+                              field.value
+                            : "Select a skill"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0">
+                      <Command>
+                        <CommandInput placeholder="Search skills..." />
+                        <CommandEmpty>No skill found.</CommandEmpty>
+                        <CommandGroup>
+                          {SkillOptions.map((option) => (
+                            <CommandItem
+                              key={option.value}
+                              value={option.value}
+                              onSelect={(currentValue) => {
+                                field.onChange(currentValue);
+                                setOpen(false);
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  field.value === option.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {option.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <Button type="button" variant="outline" size="icon" onClick={handlePlusClick}>
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
               <FormMessage />
             </FormItem>
           )}
