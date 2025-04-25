@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
-import { SkillOptions } from "@/constants/dropdowns/skills";
 import { Skill } from "@/interfaces/templates";
+import { getSkillLabel } from "@/lib/utils";
 
 interface SkillsSectionProps {
   skills: Skill[];
@@ -22,10 +22,10 @@ export const SkillsSection = ({ skills }: SkillsSectionProps) => {
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill, index) => {
-              const skillOption = SkillOptions.find((option) => option.value === skill.title);
+              const label = getSkillLabel(skill);
               return (
                 <Badge key={index} variant="secondary">
-                  {skillOption?.label} • {skill?.level}
+                  {label} {skill?.level && `• ${skill?.level}`}
                 </Badge>
               );
             })}

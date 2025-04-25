@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
-import { formatAuthUser } from './utils';
 import { SupabaseTables } from '@/constants/supabase';
+import { formatAuthUser } from '@/lib/utils';
 
 export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser | any> => {
 

@@ -12,9 +12,9 @@ export const askAI = async (prompt: string) => {
     const response = await client.chat.completions.create({
         model: aiConfig.deepSeek.model,
         messages: [{ role: 'user', content: prompt }],
-        // response_format: {
-        //     type: 'json_object',
-        // },
+        response_format: {
+            type: 'json_object',
+        },
     });
 
     return response.choices[0].message.content

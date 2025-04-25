@@ -1,9 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Languages } from "lucide-react";
-import { LanguagesOptions } from "@/constants/dropdowns/languages";
-import * as icons from "country-flag-icons/react/3x2";
 import { Language } from "@/interfaces/templates";
+import { getLanguageLabelAndIcon } from "@/lib/utils";
 
 interface LanguagesSectionProps {
   languages: Language[];
@@ -23,17 +22,12 @@ const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {languages.map((language, index) => {
-              const languageOption = LanguagesOptions.find(
-                (option) => option.value === language.title
-              );
-              if (!languageOption) {
-                return null;
-              }
-              const Icon = icons[languageOption?.iconCode as keyof typeof icons];
+              const { label, Icon } = getLanguageLabelAndIcon(language);
               return (
                 <Badge key={index} variant="secondary">
-                  <Icon className="w-4 h-4 mr-2" />
-                  {languageOption?.label} • {language?.level}
+                  {Icon && <Icon className="w-4 h-4 mr-2" />}
+                  {label}
+                  {language?.level && `• ${language?.level}`}
                 </Badge>
               );
             })}

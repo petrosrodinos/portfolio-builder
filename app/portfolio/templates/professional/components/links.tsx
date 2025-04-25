@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link as LinkType } from "@/interfaces/templates";
-import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 import { Badge } from "@/components/ui/badge";
 import { LinkIcon } from "lucide-react";
 import Link from "next/link";
+import { getLinkLabelAndIcon } from "@/lib/utils";
 interface LinksSectionProps {
   links?: LinkType[];
 }
@@ -22,11 +22,7 @@ const LinksSection = ({ links = [] }: LinksSectionProps) => {
         <CardContent>
           <div className="flex flex-wrap gap-2">
             {links.map((link, index) => {
-              const socialMedia = SocialMediaOptions.find((option) => option.value === link.title);
-              if (!socialMedia) {
-                return null;
-              }
-              const Icon = socialMedia.icon;
+              const { label, Icon } = getLinkLabelAndIcon(link);
               return (
                 <Link href={link.link} target="_blank" key={index}>
                   <Badge
@@ -34,8 +30,8 @@ const LinksSection = ({ links = [] }: LinksSectionProps) => {
                     variant="secondary"
                     className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 transition-colors"
                   >
-                    <Icon className="h-4 w-4" />
-                    {socialMedia?.label}
+                    {Icon && <Icon className="h-4 w-4" />}
+                    {label}
                   </Badge>
                 </Link>
               );
