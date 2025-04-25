@@ -24,7 +24,12 @@ const LinksSection = ({ links = [] }: LinksSectionProps) => {
             {links.map((link, index) => {
               const { label, Icon } = getLinkLabelAndIcon(link);
               return (
-                <Link href={link.link} target="_blank" key={index}>
+                <Link
+                  href={link.link.startsWith("http") ? link.link : `https://${link.link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={index}
+                >
                   <Badge
                     key={index}
                     variant="secondary"

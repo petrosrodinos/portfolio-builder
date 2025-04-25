@@ -32,17 +32,6 @@ export const formatAuthUser = (data: any): AuthUser => {
   };
 }
 
-export const getLanguageLabelAndIcon = (language: Language) => {
-  const languageOption = LanguagesOptions.find(
-    (option) => option.value === language.title
-  );
-
-  const label = languageOption?.label || language.title;
-  const Icon = icons[languageOption?.iconCode as keyof typeof icons];
-
-  return { label, Icon };
-};
-
 export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill) => {
   const languageOption = LanguagesOptions.find(
     (option) => option.value === language.title
@@ -57,11 +46,6 @@ export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill
   return { label, level, Icon };
 };
 
-export const getSkillLabel = (skill: Skill | PortfolioSkill) => {
-  const skillOption = SkillOptions.find((option) => option.value === skill.title);
-  const label = skillOption?.label || skill.title;
-  return label;
-};
 
 export const getSkillLabelAndLevel = (skill: Skill | PortfolioSkill) => {
   const skillOption = SkillOptions.find((option) => option.value === skill.title);

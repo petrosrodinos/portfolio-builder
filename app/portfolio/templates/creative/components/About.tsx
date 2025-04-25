@@ -5,6 +5,7 @@ import { Education, Experience, Skill, Project, Service, Language } from "@/inte
 import { GraduationCap, Code, Briefcase } from "lucide-react";
 import { SkillOptions } from "@/constants/dropdowns/skills";
 import { LanguagesOptions } from "@/constants/dropdowns/languages";
+import { getLanguageLabelLevelAndIcon, getSkillLabelAndLevel } from "@/lib/utils";
 
 interface AboutProps {
   avatar: string;
@@ -154,14 +155,15 @@ const About: FC<AboutProps> = ({
                 className="flex items-center gap-3 sm:gap-5"
               >
                 {skills?.map((skill, index) => {
-                  const skillOption = SkillOptions.find((option) => option.value === skill.title);
+                  const { label, level } = getSkillLabelAndLevel(skill);
+
                   return (
                     <motion.li
                       whileHover={{ scale: 1.05, y: -5 }}
                       className="flex flex-col items-center p-3 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg dark:shadow-gray-900 transition-all duration-300 cursor-pointer group"
                       key={index}
                     >
-                      {skillOption?.label} • {skill?.level}
+                      {label} • {level}
                     </motion.li>
                   );
                 })}
@@ -186,19 +188,15 @@ const About: FC<AboutProps> = ({
                 className="flex items-center gap-3 sm:gap-5"
               >
                 {languages?.map((language, index) => {
-                  const languageOption = LanguagesOptions.find(
-                    (option) => option.value === language.title
-                  );
-                  if (!languageOption) {
-                    return null;
-                  }
+                  const { label, level } = getLanguageLabelLevelAndIcon(language);
+
                   return (
                     <motion.li
                       whileHover={{ scale: 1.05, y: -5 }}
                       className="flex flex-col items-center p-3 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg dark:shadow-gray-900 transition-all duration-300 cursor-pointer group"
                       key={index}
                     >
-                      {languageOption?.label} • {language?.level}
+                      {label} {level && `• ${level}`}
                     </motion.li>
                   );
                 })}
