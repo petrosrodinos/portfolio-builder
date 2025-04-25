@@ -19,8 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import LanguageForm from "./language-form";
-import { SkillLevelOptions } from "@/constants/dropdowns/skills";
-import { LanguagesOptions } from "@/constants/dropdowns/languages";
+import { getLanguageLabelLevelAndIcon } from "@/lib/utils";
 
 interface LanguageCardProps {
   language: PortfolioSkill;
@@ -67,18 +66,15 @@ const LanguageCard = ({ language }: LanguageCardProps) => {
     setIsEditModalOpen(false);
   };
 
-  const languageOption = LanguagesOptions.find((option) => option.value === language.title);
-  const levelOption = SkillLevelOptions.find((option) => option.value === language.level);
-  if (!languageOption) return null;
+  const { label, level } = getLanguageLabelLevelAndIcon(language);
 
   return (
     <>
       <Card className="group p-4">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1 hover:text-primary transition-colors">
-            {/* <Icon className="h-5 w-5" /> */}
-            <span className="font-medium">{languageOption.label}</span>
-            <span className="text-sm text-muted-foreground">{levelOption.label}</span>
+            <span className="font-medium">{label}</span>
+            <span className="text-sm text-muted-foreground">{level}</span>
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">
@@ -113,7 +109,7 @@ const LanguageCard = ({ language }: LanguageCardProps) => {
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your language entry
-              {` of ${languageOption.label}`}.
+              {` of ${label}`}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

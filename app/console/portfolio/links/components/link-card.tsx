@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import LinkForm from "./link-form";
-import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
+import { getLinkLabelAndIcon } from "@/lib/utils";
+
 interface LinkCardProps {
   link: PortfolioSkill;
 }
@@ -65,10 +66,7 @@ const LinkCard = ({ link }: LinkCardProps) => {
     setIsEditModalOpen(false);
   };
 
-  const socialMedia = SocialMediaOptions.find((option) => option.value === link.title);
-  if (!socialMedia) return null;
-
-  const Icon = socialMedia.icon;
+  const { label, Icon } = getLinkLabelAndIcon(link);
 
   return (
     <>
@@ -80,8 +78,8 @@ const LinkCard = ({ link }: LinkCardProps) => {
             rel="noopener noreferrer"
             className="flex items-center gap-3 hover:text-primary transition-colors"
           >
-            <Icon className="h-5 w-5" />
-            <span className="font-medium">{socialMedia.label}</span>
+            {Icon && <Icon className="h-5 w-5" />}
+            <span className="font-medium">{label}</span>
           </a>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">
@@ -116,7 +114,7 @@ const LinkCard = ({ link }: LinkCardProps) => {
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your link entry
-              {` of ${socialMedia.label}`}.
+              {` of ${label}`}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

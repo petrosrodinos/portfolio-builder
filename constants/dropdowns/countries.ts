@@ -16,6 +16,7 @@ export const CountriesOptions: DropdownOption[] = [
     { label: "France", value: "FR", iconCode: "FR" },
     { label: "Germany", value: "DE", iconCode: "DE" },
     { label: "Greece", value: "GR", iconCode: "GR" },
+    { label: "Great Britain", value: "GB", iconCode: "GB" },
     { label: "Hungary", value: "HU", iconCode: "HU" },
     { label: "Iceland", value: "IS", iconCode: "IS" },
     { label: "Ireland", value: "IE", iconCode: "IE" },

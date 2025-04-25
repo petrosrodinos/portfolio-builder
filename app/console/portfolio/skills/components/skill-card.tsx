@@ -20,6 +20,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import SkillForm from "./skill-form";
 import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
+import { getSkillLabel, getSkillLabelAndLevel } from "@/lib/utils";
 
 interface SkillCardProps {
   skill: PortfolioSkill;
@@ -66,18 +67,15 @@ const SkillCard = ({ skill }: SkillCardProps) => {
     setIsEditModalOpen(false);
   };
 
-  const skillOption = SkillOptions.find((option) => option.value === skill.title);
-  const levelOption = SkillLevelOptions.find((option) => option.value === skill.level);
-  if (!skillOption) return null;
+  const { label, level } = getSkillLabelAndLevel(skill);
 
   return (
     <>
       <Card className="group p-4">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1 hover:text-primary transition-colors">
-            {/* <Icon className="h-5 w-5" /> */}
-            <span className="font-medium">{skillOption.label}</span>
-            <span className="text-sm text-muted-foreground">{levelOption.label}</span>
+            <span className="font-medium">{label}</span>
+            <span className="text-sm text-muted-foreground">{level}</span>
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" onClick={handleEdit} className="h-8 w-8">
@@ -112,7 +110,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your skill entry
-              {` of ${skillOption.label}`}.
+              {` of ${label}`}.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
