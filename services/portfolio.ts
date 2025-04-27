@@ -4,7 +4,7 @@ import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supa
 import { Portfolio } from "@/interfaces/templates";
 import { askAI } from "@/services/ai";
 import { createClient } from "@/lib/supabase/client";
-import { createPortfolioPrompt, test } from "@/constants/prompts";
+import { createPortfolioPrompt } from "@/constants/prompts";
 
 const supabase = createClient();
 

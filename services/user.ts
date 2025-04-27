@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import { UpdateUser, User, UserAvatar } from 'interfaces/user';
 import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { deleteFile, uploadFile } from './storage';
+import { cache } from 'react';
 
 const supabase = createClient();
 
@@ -55,4 +56,11 @@ export const getUser = async (user_id: string): Promise<User> => {
         throw error;
     }
 }
+
+export const getLoggedUser = cache(async () => {
+    const {
+        data: { user }
+    } = await supabase.auth.getUser();
+    return user;
+});
 

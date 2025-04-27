@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import {
@@ -11,8 +12,32 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/constants/plans";
+import { getLoggedUser } from "@/services/user";
+import { getSubscription } from "@/services/subscriptions/subscription";
+import { getProducts } from "@/services/subscriptions/subscription";
+import { useQuery } from "@tanstack/react-query";
 
-const Plans = () => {
+export default function Plans() {
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: getLoggedUser,
+  });
+
+  const { data: products } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  });
+
+  const { data: subscription } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: getSubscription,
+  });
+
+  useEffect(() => {
+    console.log(products);
+    console.log(subscription);
+  }, [products, subscription]);
+
   return (
     <div className="grid md:grid-cols-3 gap-8 mb-12">
       {plans.map((plan) => (
@@ -51,6 +76,4 @@ const Plans = () => {
       ))}
     </div>
   );
-};
-
-export default Plans;
+}

@@ -1,3 +1,5 @@
+'use server';
+
 import { toDateTime } from '@/lib/helpers';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
@@ -72,12 +74,11 @@ const upsertPriceRecord = async (
     }
 };
 
-// TODO: change to product_id
 const deleteProductRecord = async (product: Stripe.Product) => {
     const { error: deletionError } = await supabaseAdmin
         .from('products')
         .delete()
-        .eq('id', product.id);
+        .eq('product_id', product.id);
     if (deletionError)
         throw new Error(`Product deletion failed: ${deletionError.message}`);
     console.log(`Product deleted: ${product.id}`);
@@ -87,7 +88,7 @@ const deletePriceRecord = async (price: Stripe.Price) => {
     const { error: deletionError } = await supabaseAdmin
         .from('prices')
         .delete()
-        .eq('id', price.id);
+        .eq('price_id', price.id);
     if (deletionError) throw new Error(`Price deletion failed: ${deletionError.message}`);
     console.log(`Price deleted: ${price.id}`);
 };
@@ -204,7 +205,7 @@ const copyBillingDetailsToCustomer = async (
             billing_address: { ...address },
             payment_method: { ...payment_method[payment_method.type] }
         })
-        .eq('id', uuid);
+        .eq('user_id', uuid);
     if (updateError) throw new Error(`Customer update failed: ${updateError.message}`);
 };
 
@@ -216,14 +217,14 @@ const manageSubscriptionStatusChange = async (
     // Get customer's UUID from mapping table.
     const { data: customerData, error: noCustomerError } = await supabaseAdmin
         .from('customers')
-        .select('id')
+        .select('user_id')
         .eq('stripe_customer_id', customerId)
         .single();
 
     if (noCustomerError)
         throw new Error(`Customer lookup failed: ${noCustomerError.message}`);
 
-    const { id: uuid } = customerData!;
+    const { user_id: uuid } = customerData!;
 
     const subscription: any = await stripe.subscriptions.retrieve(subscriptionId, {
         expand: ['default_payment_method']
@@ -237,7 +238,7 @@ const manageSubscriptionStatusChange = async (
         price_id: subscription.items.data[0].price.id,
         //TODO check quantity on subscription
         // @ts-ignore
-        quantity: subscription.quantity,
+        quantity: subscription?.quantity,
         cancel_at_period_end: subscription.cancel_at_period_end,
         cancel_at: subscription.cancel_at
             ? toDateTime(subscription.cancel_at).toISOString()
@@ -246,10 +247,10 @@ const manageSubscriptionStatusChange = async (
             ? toDateTime(subscription.canceled_at).toISOString()
             : null,
         current_period_start: toDateTime(
-            subscription.current_period_start
+            subscription?.current_period_start ?? 0
         ).toISOString(),
         current_period_end: toDateTime(
-            subscription.current_period_end
+            subscription?.current_period_end ?? 0
         ).toISOString(),
         created: toDateTime(subscription.created).toISOString(),
         ended_at: subscription.ended_at
