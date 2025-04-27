@@ -3,9 +3,10 @@
 import Stripe from 'stripe';
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { calculateTrialEndUnixTimestamp, getErrorRedirect, getURL } from '@/lib/helpers';
-import { stripe } from './config';
+import { calculateTrialEndUnixTimestamp, getErrorRedirect, getURL } from '@/lib/stripe/stripe_helpers';
+import { stripe } from '../../../lib/stripe/config';
 import { createOrRetrieveCustomer } from '../web_hooks';
+import { createClient } from '@/lib/supabase/server';
 
 type Price = any;
 
@@ -14,30 +15,30 @@ type CheckoutResponse = {
   sessionId?: string;
 };
 
-const createClient = async () => {
-  const cookieStore = await cookies()
+// const createClient = async () => {
+//   const cookieStore = await cookies()
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
+//   return createServerClient(
+//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+//     {
+//       cookies: {
+//         getAll() {
+//           return cookieStore.getAll()
+//         },
+//         setAll(cookiesToSet) {
+//           try {
+//             cookiesToSet.forEach(({ name, value, options }) =>
+//               cookieStore.set(name, value, options)
+//             )
+//           } catch {
 
-          }
-        },
-      },
-    }
-  )
-}
+//           }
+//         },
+//       },
+//     }
+//   )
+// }
 
 export async function checkoutWithStripe(
   price: Price,
@@ -45,7 +46,6 @@ export async function checkoutWithStripe(
 ): Promise<CheckoutResponse> {
   try {
 
-    // Get the user from Supabase auth
     const supabase = await createClient();
     const {
       error,

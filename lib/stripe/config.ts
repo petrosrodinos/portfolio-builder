@@ -6,9 +6,9 @@ export const stripe = new Stripe(
     // @ts-ignore
     apiVersion: null,
     appInfo: {
-      name: 'Next.js Subscription Starter',
-      version: '0.0.0',
-      url: 'https://github.com/vercel/nextjs-subscription-payments'
+      name: 'Portfolio-Builder',
+      version: '0.0.1',
+      url: 'https://github.com/petrosrodinos/portfolio-builder'
     }
   }
 );

@@ -1,9 +1,9 @@
 'use server';
 
-import { toDateTime } from '@/lib/helpers';
+import { toDateTime } from '@/lib/stripe/stripe_helpers';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
-import { stripe } from './stripe/config';
+import { stripe } from '../../lib/stripe/config';
 
 
 // Change to control trial period length

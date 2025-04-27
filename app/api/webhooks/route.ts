@@ -1,5 +1,5 @@
 import { upsertProductRecord, upsertPriceRecord, deletePriceRecord, deleteProductRecord, manageSubscriptionStatusChange } from '@/services/subscriptions/web_hooks';
-import { stripe } from '@/services/subscriptions/stripe/config';
+import { stripe } from '@/lib/stripe/config';
 import Stripe from 'stripe';
 
 
