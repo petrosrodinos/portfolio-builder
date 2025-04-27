@@ -1,58 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
-
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Plans from "./components/plans";
 const Subscription = () => {
-  const plans = [
-    {
-      name: "Free",
-      price: "$0",
-      features: [
-        "Basic portfolio templates",
-        "Up to 3 projects",
-        "Basic analytics",
-        "Community support",
-      ],
-      current: true,
-    },
-    {
-      name: "Pro",
-      price: "$9.99",
-      period: "month",
-      features: [
-        "All Free features",
-        "Premium templates",
-        "Unlimited projects",
-        "Advanced analytics",
-        "Priority support",
-        "Custom domain",
-      ],
-      popular: true,
-    },
-    {
-      name: "Enterprise",
-      price: "$29.99",
-      period: "month",
-      features: [
-        "All Pro features",
-        "Team collaboration",
-        "API access",
-        "Custom branding",
-        "Dedicated support",
-        "SLA guarantee",
-      ],
-    },
-  ];
-
   return (
     <div className="container py-8">
       <div className="max-w-7xl mx-auto">
@@ -63,46 +13,7 @@ const Subscription = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={`relative ${plan.popular ? "border-primary" : ""}`}>
-              {plan.popular && (
-                <Badge className="absolute top-0 right-0 rounded-bl-lg rounded-tr-lg">
-                  Popular
-                </Badge>
-              )}
-              <CardHeader>
-                <CardTitle>{plan.name}</CardTitle>
-                <CardDescription>
-                  <div className="flex items-baseline">
-                    <span className="text-3xl font-bold">{plan.price}</span>
-                    {plan.period && (
-                      <span className="text-muted-foreground ml-2">/{plan.period}</span>
-                    )}
-                  </div>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <Check className="h-5 w-5 text-primary mr-2" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  className="w-full"
-                  variant={plan.current ? "secondary" : plan.popular ? "default" : "outline"}
-                >
-                  {plan.current ? "Current Plan" : "Upgrade"}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+        <Plans />
 
         <Card>
           <CardHeader>

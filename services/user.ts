@@ -25,7 +25,6 @@ export const upsertUser = async (payload: UpdateUser): Promise<User> => {
                 { onConflict: 'user_id' }
             ).select().single();
 
-        console.log('data-update', data);
 
         if (error) {
             throw error;
@@ -45,8 +44,6 @@ export const getUser = async (user_id: string): Promise<User> => {
             .select('*')
             .eq('user_id', user_id)
             .single();
-
-        console.log('getUser data', data);
 
         if (error) {
             throw error;

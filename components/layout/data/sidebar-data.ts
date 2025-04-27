@@ -17,8 +17,8 @@ import {
   IconSchool,
   IconStars,
   IconUser,
-  IconLink,
   IconCreditCard,
+  IconBrowserCheck,
 } from '@tabler/icons-react'
 import { Command, CreditCard, Share2 } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -119,11 +119,11 @@ export const sidebarData: SidebarData = {
               url: '/console/portfolio/appearance',
               icon: IconPalette,
             },
-            // {
-            //   title: 'Display',
-            //   url: '/console/portfolio/display',
-            //   icon: IconBrowserCheck,
-            // },
+            {
+              title: 'Display',
+              url: '/console/portfolio/display',
+              icon: IconBrowserCheck,
+            },
           ],
         },
         {
@@ -135,11 +135,11 @@ export const sidebarData: SidebarData = {
               url: '/console/account/profile',
               icon: IconUserCog,
             },
-            {
-              title: 'Email',
-              url: '/console/account/email',
-              icon: IconMail,
-            },
+            // {
+            //   title: 'Email',
+            //   url: '/console/account/email',
+            //   icon: IconMail,
+            // },
             {
               title: 'Password',
               url: '/console/account/password',
@@ -160,11 +160,6 @@ export const sidebarData: SidebarData = {
               title: 'Subscription',
               url: '/console/billing/subscription',
               icon: IconCalendarDue,
-            },
-            {
-              title: 'Plans',
-              url: '/console/billing/plans',
-              icon: IconAlignBoxLeftStretch,
             },
             {
               title: 'invoices',
