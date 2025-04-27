@@ -10,18 +10,15 @@ import { ProfileDropdown } from "@/components/profile-dropdown";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Header } from "@/components/layout/header";
 import { useAuthStore } from "stores/auth";
-// import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 import Link from "next/link";
 import NiceToHave from "@/components/nice-to-have";
+
 export default function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const defaultOpen = Cookies.get("sidebar:state") !== "false";
-  // const router = useRouter();
-  const { isLoggedIn, user_id } = useAuthStore();
-  // if (!isLoggedIn) {
-  //   router.push("/auth/sign-in");
-  // }
+  const { user_id } = useAuthStore();
+
   return (
     <section>
       <SearchProvider>

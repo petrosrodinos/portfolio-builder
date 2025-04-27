@@ -94,7 +94,10 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
 
   useEffect(() => {
     if (isSuccess && data) {
-      form.reset(data);
+      form.reset({
+        ...data,
+        booking_link: data.booking_link || "",
+      });
     }
   }, [data, isSuccess]);
 

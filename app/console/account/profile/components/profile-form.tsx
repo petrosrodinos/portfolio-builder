@@ -1,7 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -116,6 +115,12 @@ export default function AccountProfileForm() {
     }
   }, [data, isSuccess]);
 
+  useEffect(() => {
+    if (!isProfilePage) {
+      router.prefetch("/auth/portfolio-resume");
+    }
+  }, [router]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -181,7 +186,7 @@ export default function AccountProfileForm() {
             <FormItem>
               <FormLabel>Date of birth</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <Input type="date" max={new Date().toISOString().split("T")[0]} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

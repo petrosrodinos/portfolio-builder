@@ -1,5 +1,4 @@
 "use client";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +17,6 @@ import {
 } from "@/components/ui/form";
 import { useFont } from "@/context/font-context";
 import PortfolioTemplates from "@/components/portfolio-templates";
-import { TemplateTypes } from "@/constants/templates";
 import {
   PortfolioAppearanceFormSchema,
   PortfolioAppearanceFormValues,

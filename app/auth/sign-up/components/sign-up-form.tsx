@@ -21,6 +21,7 @@ import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { SignUpSchema, SignUpFormValues } from "validation-schemas/auth";
+import { useEffect } from "react";
 
 interface SignUpFormProps {
   className?: string;
@@ -62,6 +63,10 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   function onSubmit(data: SignUpFormValues) {
     mutate({ email: data.email, password: data.password });
   }
+
+  useEffect(() => {
+    router.prefetch("/auth/create-user");
+  }, [router]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

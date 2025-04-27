@@ -19,7 +19,7 @@ const PortfolioResumePage = () => {
 
       <div className="mt-4 flex flex-col gap-4">
         <ResumeData onSuccess={() => router.push("/console/portfolio/profile")} />
-        <Link href="/console/portfolio/profile">
+        <Link href="/console/portfolio/profile" prefetch={true}>
           <Button variant="outline" className="w-full">
             I will do it manually
           </Button>

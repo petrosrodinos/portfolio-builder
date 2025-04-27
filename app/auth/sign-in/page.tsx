@@ -23,7 +23,7 @@ const Login: FC = () => {
 
       <div className="text-center text-sm mt-3">
         Don&apos;t have an account?{" "}
-        <Link href="/auth/sign-up" className="underline underline-offset-4">
+        <Link href="/auth/sign-up" className="underline underline-offset-4" prefetch={true}>
           Sign up
         </Link>
       </div>
