@@ -20,6 +20,7 @@ import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
 import { useRouter } from "next/navigation";
 import { SignInSchema, SignInFormValues } from "validation-schemas/auth";
+import { useEffect } from "react";
 
 interface UserAuthFormProps {
   className?: string;
@@ -70,6 +71,10 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
   function onSubmit(data: SignInFormValues) {
     mutate({ email: data.email, password: data.password });
   }
+
+  useEffect(() => {
+    router.prefetch("/console/dashboard");
+  }, [router]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

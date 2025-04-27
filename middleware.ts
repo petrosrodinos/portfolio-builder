@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     //     return NextResponse.redirect(new URL('/auth/sign-in', request.url))
     // }
 
-    // return await updateSession(request)
+    return await updateSession(request)
 
 }
 

@@ -4,9 +4,15 @@ import ResumeData from "app/console/portfolio/profile/components/resume-data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const PortfolioResumePage = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/console/portfolio/profile");
+  }, [router]);
+
   return (
     <Card className="p-6">
       <div className="mb-2 flex flex-col space-y-2 text-left">
