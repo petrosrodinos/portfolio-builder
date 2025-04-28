@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
@@ -6,7 +6,9 @@ export async function middleware(request: NextRequest) {
     //     return NextResponse.redirect(new URL('/auth/sign-in', request.url))
     // }
 
-    return await updateSession(request)
+    // return await updateSession(request)
+
+    return NextResponse.next()
 
 }
 

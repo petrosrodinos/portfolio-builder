@@ -7,7 +7,7 @@ import { stripe } from '../../lib/stripe/config';
 
 
 // Change to control trial period length
-const TRIAL_PERIOD_DAYS = 0;
+const TRIAL_PERIOD_DAYS = 30;
 
 // Note: supabaseAdmin uses the SERVICE_ROLE_KEY which you must only use in a secure server-side context
 // as it has admin privileges and overwrites RLS policies!
@@ -96,7 +96,7 @@ const deletePriceRecord = async (price: Stripe.Price) => {
 const upsertCustomerToSupabase = async (uuid: string, customerId: string) => {
     const { error: upsertError } = await supabaseAdmin
         .from('customers')
-        .upsert([{ id: uuid, stripe_customer_id: customerId }]);
+        .upsert([{ user_id: uuid, stripe_customer_id: customerId }]);
 
     if (upsertError)
         throw new Error(`Supabase customer record creation failed: ${upsertError.message}`);
@@ -124,7 +124,7 @@ const createOrRetrieveCustomer = async ({
         await supabaseAdmin
             .from('customers')
             .select('*')
-            .eq('id', uuid)
+            .eq('user_id', uuid)
             .maybeSingle();
 
     if (queryError) {
@@ -157,7 +157,7 @@ const createOrRetrieveCustomer = async ({
             const { error: updateError } = await supabaseAdmin
                 .from('customers')
                 .update({ stripe_customer_id: stripeCustomerId })
-                .eq('id', uuid);
+                .eq('user_id', uuid);
 
             if (updateError)
                 throw new Error(
@@ -231,7 +231,7 @@ const manageSubscriptionStatusChange = async (
     });
     // Upsert the latest status of the subscription object.
     const subscriptionData: any = {
-        id: subscription.id,
+        subscription_id: subscription.id,
         user_id: uuid,
         metadata: subscription.metadata,
         status: subscription.status,
@@ -263,6 +263,8 @@ const manageSubscriptionStatusChange = async (
             ? toDateTime(subscription.trial_end).toISOString()
             : null
     };
+
+    console.log('data', subscriptionData);
 
     const { error: upsertError } = await supabaseAdmin
         .from('subscriptions')

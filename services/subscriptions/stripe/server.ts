@@ -78,7 +78,7 @@ export async function checkoutWithStripe(
       },
       line_items: [
         {
-          price: price.id,
+          price: price.price_id,
           quantity: 1
         }
       ],

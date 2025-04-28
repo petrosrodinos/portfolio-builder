@@ -22,7 +22,6 @@ export async function POST(req: Request) {
   const webhookSecret = 'whsec_d4c4f1a99d1a9571391ee8fdb89be0a779390b0a928cdff0ad1686cdbd4f3622';
   let event: Stripe.Event;
 
-
   try {
     if (!sig || !webhookSecret)
       return new Response('Webhook secret not found.', { status: 400 });

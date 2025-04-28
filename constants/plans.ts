@@ -11,9 +11,10 @@ export const plans = [
         current: true,
     },
     {
-        name: "Pro",
-        price: "$9.99",
+        name: "Basic",
+        price: "$4",
         period: "month",
+        price_id: 'price_1RI2hUR9wa3GrFgkkpZ7f9uL',
         features: [
             "All Free features",
             "Premium templates",
@@ -25,8 +26,9 @@ export const plans = [
         popular: true,
     },
     {
-        name: "Enterprise",
-        price: "$29.99",
+        name: "Professional",
+        price: "$9",
+        price_id: 'price_1RI2ijR9wa3GrFgk1haqJ5FD',
         period: "month",
         features: [
             "All Pro features",
