@@ -39,6 +39,12 @@ export async function updateSession(request: NextRequest) {
 
 
 
+    if (request.nextUrl.pathname.startsWith('/api/webhooks')) {
+        return supabaseResponse
+    }
+
+
+
     if (
         !user &&
         !request.nextUrl.pathname.startsWith('/auth') && request.nextUrl.pathname != '/'
