@@ -20,9 +20,9 @@ import { getStripe } from "@/services/subscriptions/stripe/client";
 import { getErrorRedirect } from "@/lib/stripe/stripe_helpers";
 import { usePathname } from "next/navigation";
 import { checkoutWithStripe } from "@/services/subscriptions/stripe/server";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-type BillingInterval = "lifetime" | "year" | "month";
+
+type BillingInterval = "year" | "month";
 
 export default function Plans() {
   const router = useRouter();
@@ -51,12 +51,14 @@ export default function Plans() {
 
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
 
+  const [populatedPlans, setPopulatedPlans] = useState<any[]>([]);
+
   const handleStripeCheckout = async (price: any) => {
     setPriceIdLoading(price.id);
 
     if (!user) {
       setPriceIdLoading(undefined);
-      return router.push("/signin/signup");
+      return router.push("/auth/sign-up");
     }
 
     const { errorRedirect, sessionId } = await checkoutWithStripe(price, currentPath);
@@ -84,43 +86,52 @@ export default function Plans() {
   };
 
   useEffect(() => {
-    console.log(products);
+    if (products?.length) {
+      const populatedPlans = plans.map((plan) => {
+        const product = products.find((product) => product.product_id === plan.product_id);
+        if (!product) return null;
+        return {
+          ...plan,
+          name: product.name,
+          description: product.description,
+          prices: product.prices,
+        };
+      });
+      console.log("populatedPlans", populatedPlans);
+      setPopulatedPlans(populatedPlans);
+    }
     console.log(subscription);
   }, [products, subscription]);
 
   return (
     <div>
-      <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
-        {intervals?.includes("month") && (
-          <button
-            onClick={() => setBillingInterval("month")}
-            type="button"
-            className={`${
-              billingInterval === "month"
-                ? "relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white"
-                : "ml-0.5 relative w-1/2 border border-transparent text-zinc-400"
-            } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-          >
-            Monthly billing
-          </button>
-        )}
-        {intervals?.includes("year") && (
-          <button
-            onClick={() => setBillingInterval("year")}
-            type="button"
-            className={`${
-              billingInterval === "year"
-                ? "relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white"
-                : "ml-0.5 relative w-1/2 border border-transparent text-zinc-400"
-            } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-          >
-            Yearly billing
-          </button>
-        )}
+      <div className="flex justify-center mb-12">
+        <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
+          {intervals?.includes("month") && (
+            <Button
+              onClick={() => setBillingInterval("month")}
+              type="button"
+              variant={billingInterval === "month" ? "default" : "ghost"}
+              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+            >
+              Monthly billing
+            </Button>
+          )}
+          {intervals?.includes("year") && (
+            <Button
+              onClick={() => setBillingInterval("year")}
+              type="button"
+              variant={billingInterval === "year" ? "default" : "ghost"}
+              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+            >
+              Yearly billing
+            </Button>
+          )}
+        </div>
       </div>
-      <div className="mt-12 space-y-0 sm:mt-16 flex flex-wrap justify-center gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
-        {products?.map((product) => {
-          const price = product?.prices?.find((price) => price.interval === billingInterval);
+      <div className="grid md:grid-cols-3 gap-8 mb-12">
+        {populatedPlans.map((plan, index) => {
+          const price = plan.prices?.find((price) => price.interval === billingInterval);
           if (!price) return null;
           const priceString = new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -128,76 +139,48 @@ export default function Plans() {
             minimumFractionDigits: 0,
           }).format((price?.unit_amount || 0) / 100);
           return (
-            <div
-              key={product.id}
-              className={cn(
-                "flex flex-col rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900",
-                {
-                  "border border-pink-500": subscription
-                    ? product.name === subscription?.prices?.products?.name
-                    : product.name === "Freelancer",
-                },
-                "flex-1", // This makes the flex item grow to fill the space
-                "basis-1/3", // Assuming you want each card to take up roughly a third of the container's width
-                "max-w-xs" // Sets a maximum width to the cards to prevent them from getting too large
+            <Card key={index} className={`relative ${plan.popular ? "border-primary" : ""}`}>
+              {plan.popular && (
+                <Badge className="absolute top-0 right-0 rounded-bl-lg rounded-tr-lg">
+                  Popular
+                </Badge>
               )}
-            >
-              <div className="p-6">
-                <h2 className="text-2xl font-semibold leading-6 text-white">{product.name}</h2>
-                <p className="mt-4 text-zinc-300">{product.description}</p>
-                <p className="mt-8">
-                  <span className="text-5xl font-extrabold white">{priceString}</span>
-                  <span className="text-base font-medium text-zinc-100">/{billingInterval}</span>
-                </p>
+              <CardHeader>
+                <CardTitle className="text-3xl font-bold mb-2">{plan.name}</CardTitle>
+                <CardDescription className="text-base min-h-[60px]">
+                  {plan.description}
+                </CardDescription>
+                <div className="flex items-baseline mt-4">
+                  <span className="text-4xl font-bold">{priceString}</span>
+                  <span className="text-base font-medium text-muted-foreground ml-2">
+                    /{billingInterval}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-center">
+                      <Check className="h-5 w-5 text-primary mr-2" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
                 <Button
-                  type="button"
+                  className="w-full"
+                  variant={subscription ? "default" : plan.popular ? "default" : "outline"}
                   loading={priceIdLoading === price.id}
                   onClick={() => handleStripeCheckout(price)}
-                  className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900"
                 >
-                  {subscription ? "Manage" : "Subscribe"}
+                  {subscription ? "Manage Subscription" : "Upgrade"}
                 </Button>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
           );
         })}
       </div>
-      {/* <div className="grid md:grid-cols-3 gap-8 mb-12">
-      {plans.map((plan) => (
-        <Card key={plan.name} className={`relative ${plan.popular ? "border-primary" : ""}`}>
-          {plan.popular && (
-            <Badge className="absolute top-0 right-0 rounded-bl-lg rounded-tr-lg">Popular</Badge>
-          )}
-          <CardHeader>
-            <CardTitle>{plan.name}</CardTitle>
-            <CardDescription>
-              <div className="flex items-baseline">
-                <span className="text-3xl font-bold">{plan.price}</span>
-                {plan.period && <span className="text-muted-foreground ml-2">/{plan.period}</span>}
-              </div>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {plan.features.map((feature) => (
-                <li key={feature} className="flex items-center">
-                  <Check className="h-5 w-5 text-primary mr-2" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-          <CardFooter>
-            <Button
-              className="w-full"
-              variant={plan.current ? "secondary" : plan.popular ? "default" : "outline"}
-            >
-              {plan.current ? "Current Plan" : "Upgrade"}
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
-    </div> */}
     </div>
   );
 }

@@ -1,7 +1,9 @@
 export const plans = [
     {
+        product_id: "prod_SCxGsQLbS5GSVI",
         name: "Free",
-        price: "$0",
+        description: "",
+        prices: [],
         features: [
             "Basic portfolio templates",
             "Up to 3 projects",
@@ -12,9 +14,9 @@ export const plans = [
     },
     {
         name: "Basic",
-        price: "$4",
-        period: "month",
-        price_id: 'price_1RI2hUR9wa3GrFgkkpZ7f9uL',
+        product_id: "prod_SCx9DAt7Nwt7vG",
+        description: "",
+        prices: [],
         features: [
             "All Free features",
             "Premium templates",
@@ -27,9 +29,9 @@ export const plans = [
     },
     {
         name: "Professional",
-        price: "$9",
-        price_id: 'price_1RI2ijR9wa3GrFgk1haqJ5FD',
-        period: "month",
+        product_id: "prod_SDNZeXFBuDnISY",
+        description: "",
+        prices: [],
         features: [
             "All Pro features",
             "Team collaboration",
