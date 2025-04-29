@@ -11,6 +11,8 @@ export const plans = [
             "Community support",
         ],
         current: true,
+        popular: true,
+
     },
     {
         name: "Basic",
@@ -25,7 +27,6 @@ export const plans = [
             "Priority support",
             "Custom domain",
         ],
-        popular: true,
     },
     {
         name: "Professional",

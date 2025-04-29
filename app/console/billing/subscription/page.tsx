@@ -1,8 +1,21 @@
+"use client";
+
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Plans from "./components/plans";
-const Subscription = () => {
+import { getSubscription } from "@/services/subscriptions/subscription";
+import { useQuery } from "@tanstack/react-query";
+import { useAuthStore } from "@/stores/auth";
+import Subscription from "./components/subscription";
+
+const SubscriptionPage = () => {
+  const { user_id } = useAuthStore();
+
+  const { data: subscription } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: getSubscription,
+    enabled: !!user_id,
+  });
+
   return (
     <div className="container py-8">
       <div className="max-w-7xl mx-auto">
@@ -13,40 +26,12 @@ const Subscription = () => {
           </p>
         </div>
 
-        <Plans />
+        <Plans subscription={subscription} />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Current Subscription</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <p className="text-muted-foreground">Status</p>
-                <p className="text-green-500 font-medium">Active</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Next Billing Date</p>
-                <p className="font-medium">March 1, 2024</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Payment Method</p>
-                <p className="font-medium">•••• •••• •••• 4242</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Billing Cycle</p>
-                <p className="font-medium">Monthly</p>
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex gap-4">
-            <Button variant="outline">Update Payment Method</Button>
-            <Button variant="outline">View Billing History</Button>
-          </CardFooter>
-        </Card>
+        <Subscription subscription={subscription} />
       </div>
     </div>
   );
 };
 
-export default Subscription;
+export default SubscriptionPage;

@@ -1,8 +1,6 @@
 'use server';
 
 import Stripe from 'stripe';
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { calculateTrialEndUnixTimestamp, getErrorRedirect, getURL } from '@/lib/stripe/stripe_helpers';
 import { stripe } from '../../../lib/stripe/config';
 import { createOrRetrieveCustomer } from '../web_hooks';
@@ -14,31 +12,6 @@ type CheckoutResponse = {
   errorRedirect?: string;
   sessionId?: string;
 };
-
-// const createClient = async () => {
-//   const cookieStore = await cookies()
-
-//   return createServerClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//     {
-//       cookies: {
-//         getAll() {
-//           return cookieStore.getAll()
-//         },
-//         setAll(cookiesToSet) {
-//           try {
-//             cookiesToSet.forEach(({ name, value, options }) =>
-//               cookieStore.set(name, value, options)
-//             )
-//           } catch {
-
-//           }
-//         },
-//       },
-//     }
-//   )
-// }
 
 export async function checkoutWithStripe(
   price: Price,
@@ -162,42 +135,33 @@ export async function createStripePortal(currentPath: string) {
         uuid: user.id || '',
         email: user.email || ''
       });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       throw new Error('Unable to access customer record.');
     }
+
 
     if (!customer) {
       throw new Error('Could not get customer.');
     }
 
     try {
-      const { url } = await stripe.billingPortal.sessions.create({
+      const portalSession = await stripe.billingPortal.sessions.create({
         customer,
-        return_url: getURL('/account')
+        return_url: getURL('/console/billing/subscription')
       });
-      if (!url) {
+      if (!portalSession) {
         throw new Error('Could not create billing portal');
       }
-      return url;
-    } catch (err) {
-      console.error(err);
+      return portalSession.url;
+    } catch (error) {
+      console.error("ERROR 1", error);
       throw new Error('Could not create billing portal');
     }
   } catch (error) {
     if (error instanceof Error) {
       console.error(error);
-      return getErrorRedirect(
-        currentPath,
-        error.message,
-        'Please try again later or contact a system administrator.'
-      );
-    } else {
-      return getErrorRedirect(
-        currentPath,
-        'An unknown error occurred.',
-        'Please try again later or contact a system administrator.'
-      );
+      throw new Error(error.message);
     }
   }
 }

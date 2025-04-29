@@ -12,35 +12,42 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/constants/plans";
-import { getLoggedUser } from "@/services/user";
-import { getSubscription } from "@/services/subscriptions/subscription";
 import { getProducts } from "@/services/subscriptions/subscription";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getStripe } from "@/services/subscriptions/stripe/client";
 import { getErrorRedirect } from "@/lib/stripe/stripe_helpers";
 import { usePathname } from "next/navigation";
-import { checkoutWithStripe } from "@/services/subscriptions/stripe/server";
+import { checkoutWithStripe, createStripePortal } from "@/services/subscriptions/stripe/server";
 import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 type BillingInterval = "year" | "month";
 
-export default function Plans() {
+interface PlansProps {
+  subscription: any;
+}
+
+export default function Plans({ subscription }: PlansProps) {
   const router = useRouter();
   const currentPath = usePathname();
-
-  const { data: user } = useQuery({
-    queryKey: ["user"],
-    queryFn: getLoggedUser,
-  });
 
   const { data: products } = useQuery({
     queryKey: ["products"],
     queryFn: getProducts,
   });
 
-  const { data: subscription } = useQuery({
-    queryKey: ["subscription"],
-    queryFn: getSubscription,
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => createStripePortal(currentPath),
+    onSuccess: (redirectUrl: string) => {
+      router.push(redirectUrl);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Could not open portal",
+        description: error.message,
+        duration: 3000,
+      });
+    },
   });
 
   const intervals = Array.from(
@@ -55,11 +62,6 @@ export default function Plans() {
 
   const handleStripeCheckout = async (price: any) => {
     setPriceIdLoading(price.id);
-
-    if (!user) {
-      setPriceIdLoading(undefined);
-      return router.push("/auth/sign-up");
-    }
 
     const { errorRedirect, sessionId } = await checkoutWithStripe(price, currentPath);
 
@@ -83,6 +85,14 @@ export default function Plans() {
     stripe?.redirectToCheckout({ sessionId });
 
     setPriceIdLoading(undefined);
+  };
+
+  const handlePlanClick = (price: any) => {
+    if (subscription) {
+      mutate();
+    } else {
+      handleStripeCheckout(price);
+    }
   };
 
   useEffect(() => {
@@ -129,7 +139,7 @@ export default function Plans() {
           )}
         </div>
       </div>
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
         {populatedPlans.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
           if (!price) return null;
@@ -172,7 +182,7 @@ export default function Plans() {
                   className="w-full"
                   variant={subscription ? "default" : plan.popular ? "default" : "outline"}
                   loading={priceIdLoading === price.id}
-                  onClick={() => handleStripeCheckout(price)}
+                  onClick={() => handlePlanClick(price)}
                 >
                   {subscription ? "Manage Subscription" : "Upgrade"}
                 </Button>

@@ -10,6 +10,11 @@ export const getSubscription = cache(async () => {
         .in('status', ['trialing', 'active'])
         .maybeSingle();
 
+    if (error) {
+        console.error(error);
+        throw new Error(error.message);
+    }
+
     return subscription;
 });
 
@@ -21,6 +26,11 @@ export const getProducts = cache(async () => {
         .eq('prices.active', true)
         .order('metadata->index')
         .order('unit_amount', { referencedTable: 'prices' });
+
+    if (error) {
+        console.error(error);
+        throw new Error(error.message);
+    }
 
     return products;
 });
