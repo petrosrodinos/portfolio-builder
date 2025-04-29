@@ -1,7 +1,7 @@
 'use server';
 
 import Stripe from 'stripe';
-import { calculateTrialEndUnixTimestamp, getErrorRedirect, getURL } from '@/lib/stripe/stripe_helpers';
+import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/stripe/stripe_helpers';
 import { stripe } from '../../../lib/stripe/config';
 import { createOrRetrieveCustomer } from '../web_hooks';
 import { createClient } from '@/lib/supabase/server';
@@ -9,13 +9,12 @@ import { createClient } from '@/lib/supabase/server';
 type Price = any;
 
 type CheckoutResponse = {
-  errorRedirect?: string;
   sessionId?: string;
 };
 
 export async function checkoutWithStripe(
   price: Price,
-  redirectPath: string = '/account'
+  redirectPath: string
 ): Promise<CheckoutResponse> {
   try {
 
@@ -30,7 +29,6 @@ export async function checkoutWithStripe(
       throw new Error('Could not get user session.');
     }
 
-    // Retrieve or create the customer in Stripe
     let customer: string;
     try {
       customer = await createOrRetrieveCustomer({
@@ -55,30 +53,14 @@ export async function checkoutWithStripe(
           quantity: 1
         }
       ],
-      cancel_url: getURL(),
+      mode: 'subscription',
+      subscription_data: {
+        trial_end: calculateTrialEndUnixTimestamp(price.trial_period_days)
+      },
+      cancel_url: getURL(redirectPath),
       success_url: getURL(redirectPath)
     };
 
-    console.log(
-      'Trial end:',
-      calculateTrialEndUnixTimestamp(price.trial_period_days)
-    );
-    if (price.type === 'recurring') {
-      params = {
-        ...params,
-        mode: 'subscription',
-        subscription_data: {
-          trial_end: calculateTrialEndUnixTimestamp(price.trial_period_days)
-        }
-      };
-    } else if (price.type === 'one_time') {
-      params = {
-        ...params,
-        mode: 'payment'
-      };
-    }
-
-    // Create a checkout session in Stripe
     let session;
     try {
       session = await stripe.checkout.sessions.create(params);
@@ -87,7 +69,6 @@ export async function checkoutWithStripe(
       throw new Error('Unable to create checkout session.');
     }
 
-    // Instead of returning a Response, just return the data or error.
     if (session) {
       return { sessionId: session.id };
     } else {
@@ -95,22 +76,10 @@ export async function checkoutWithStripe(
     }
   } catch (error) {
     if (error instanceof Error) {
-      return {
-        errorRedirect: getErrorRedirect(
-          redirectPath,
-          error.message,
-          'Please try again later or contact a system administrator.'
-        )
-      };
+      throw new Error(error.message);
     } else {
-      return {
-        errorRedirect: getErrorRedirect(
-          redirectPath,
-          'An unknown error occurred.',
-          'Please try again later or contact a system administrator.'
-        )
-      };
-    }
+      throw new Error('An unknown error occurred.');
+    };
   }
 }
 

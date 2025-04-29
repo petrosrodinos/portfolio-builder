@@ -15,20 +15,6 @@ export const plans = [
 
     },
     {
-        name: "Basic",
-        product_id: "prod_SCx9DAt7Nwt7vG",
-        description: "",
-        prices: [],
-        features: [
-            "All Free features",
-            "Premium templates",
-            "Unlimited projects",
-            "Advanced analytics",
-            "Priority support",
-            "Custom domain",
-        ],
-    },
-    {
         name: "Professional",
         product_id: "prod_SDNZeXFBuDnISY",
         description: "",

@@ -6,11 +6,12 @@ import { getSubscription } from "@/services/subscriptions/subscription";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth";
 import Subscription from "./components/subscription";
+import Loading from "./loading";
 
 const SubscriptionPage = () => {
   const { user_id } = useAuthStore();
 
-  const { data: subscription } = useQuery({
+  const { data: subscription, isLoading } = useQuery({
     queryKey: ["subscription"],
     queryFn: getSubscription,
     enabled: !!user_id,
@@ -26,9 +27,14 @@ const SubscriptionPage = () => {
           </p>
         </div>
 
-        <Plans subscription={subscription} />
-
-        <Subscription subscription={subscription} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <Plans subscription={subscription} />
+            <Subscription subscription={subscription} />
+          </>
+        )}
       </div>
     </div>
   );

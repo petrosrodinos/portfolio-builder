@@ -161,11 +161,11 @@ export const sidebarData: SidebarData = {
               url: '/console/billing/subscription',
               icon: IconCalendarDue,
             },
-            {
-              title: 'invoices',
-              url: '/console/billing/invoices',
-              icon: IconFileInvoiceFilled,
-            },
+            // {
+            //   title: 'invoices',
+            //   url: '/console/billing/invoices',
+            //   icon: IconFileInvoiceFilled,
+            // },
           ],
         },
       ],

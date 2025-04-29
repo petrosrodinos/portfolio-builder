@@ -28,51 +28,55 @@ const Subscription = ({ subscription }: SubscriptionProps) => {
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Current Subscription</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-muted-foreground">Status</p>
-            <p
-              className={`font-medium ${
-                subscription?.status === "active" ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {subscription?.status === "active" ? "Active" : "Inactive"}
-            </p>
-          </div>
-          <div>
-            <p className="text-muted-foreground">Next Billing Date</p>
-            <p className="font-medium">
-              {subscription?.current_period_end
-                ? new Date(subscription?.current_period_end).toLocaleDateString()
-                : "N/A"}
-            </p>
-          </div>
-          {/* <div>
-            <p className="text-muted-foreground">Payment Method</p>
-            <p className="font-medium">
-              {subscription?.default_payment_method?.card?.brand || "N/A"}
-            </p>
-          </div> */}
-          <div>
-            <p className="text-muted-foreground">Billing Cycle</p>
-            <p className="font-medium">
-              {subscription?.prices?.interval === "month" ? "Monthly" : "Yearly"}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex gap-4">
-        {/* <Button variant="outline">Update Payment Method</Button> */}
-        <Button disabled={isPending} onClick={() => mutate()} variant="outline">
-          {isPending ? "Opening Portal..." : "Open Portal"}
-        </Button>
-      </CardFooter>
-    </Card>
+    <>
+      {subscription && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Subscription</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-muted-foreground">Status</p>
+                <p
+                  className={`font-medium ${
+                    subscription?.status === "active" ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {subscription?.status === "active" ? "Active" : "Inactive"}
+                </p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Next Billing Date</p>
+                <p className="font-medium">
+                  {subscription?.current_period_end
+                    ? new Date(subscription?.current_period_end).toLocaleDateString()
+                    : "N/A"}
+                </p>
+              </div>
+              {/* <div>
+              <p className="text-muted-foreground">Payment Method</p>
+              <p className="font-medium">
+                {subscription?.default_payment_method?.card?.brand || "N/A"}
+              </p>
+            </div> */}
+              <div>
+                <p className="text-muted-foreground">Billing Cycle</p>
+                <p className="font-medium">
+                  {subscription?.prices?.interval === "month" ? "Monthly" : "Yearly"}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex gap-4">
+            {/* <Button variant="outline">Update Payment Method</Button> */}
+            <Button disabled={isPending} onClick={() => mutate()} variant="outline">
+              {isPending ? "Opening Portal..." : "Open Portal"}
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
+    </>
   );
 };
 

@@ -15,7 +15,6 @@ import { plans } from "@/constants/plans";
 import { getProducts } from "@/services/subscriptions/subscription";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getStripe } from "@/services/subscriptions/stripe/client";
-import { getErrorRedirect } from "@/lib/stripe/stripe_helpers";
 import { usePathname } from "next/navigation";
 import { checkoutWithStripe, createStripePortal } from "@/services/subscriptions/stripe/server";
 import { useRouter } from "next/navigation";
@@ -30,13 +29,16 @@ interface PlansProps {
 export default function Plans({ subscription }: PlansProps) {
   const router = useRouter();
   const currentPath = usePathname();
+  const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
+  const [priceIdLoading, setPriceIdLoading] = useState<string>();
+  const [populatedPlans, setPopulatedPlans] = useState<any[]>([]);
 
-  const { data: products } = useQuery({
+  const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: getProducts,
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: openPortal } = useMutation({
     mutationFn: () => createStripePortal(currentPath),
     onSuccess: (redirectUrl: string) => {
       router.push(redirectUrl);
@@ -50,63 +52,51 @@ export default function Plans({ subscription }: PlansProps) {
     },
   });
 
+  const { mutate: checkoutMutation } = useMutation({
+    mutationFn: async (price: any) => {
+      const response = await checkoutWithStripe(price, currentPath);
+      return response.sessionId;
+    },
+    onSuccess: async (sessionId: string) => {
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Could not checkout",
+        description: error.message,
+        duration: 3000,
+      });
+    },
+  });
+
   const intervals = Array.from(
     new Set(products?.flatMap((product) => product?.prices?.map((price) => price?.interval)))
   );
 
-  const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
-
-  const [priceIdLoading, setPriceIdLoading] = useState<string>();
-
-  const [populatedPlans, setPopulatedPlans] = useState<any[]>([]);
-
-  const handleStripeCheckout = async (price: any) => {
-    setPriceIdLoading(price.id);
-
-    const { errorRedirect, sessionId } = await checkoutWithStripe(price, currentPath);
-
-    if (errorRedirect) {
-      setPriceIdLoading(undefined);
-      return router.push(errorRedirect);
-    }
-
-    if (!sessionId) {
-      setPriceIdLoading(undefined);
-      return router.push(
-        getErrorRedirect(
-          currentPath,
-          "An unknown error occurred.",
-          "Please try again later or contact a system administrator."
-        )
-      );
-    }
-
-    const stripe = await getStripe();
-    stripe?.redirectToCheckout({ sessionId });
-
-    setPriceIdLoading(undefined);
-  };
-
   const handlePlanClick = (price: any) => {
+    setPriceIdLoading(price.id);
     if (subscription) {
-      mutate();
+      openPortal();
     } else {
-      handleStripeCheckout(price);
+      checkoutMutation(price);
     }
   };
 
   useEffect(() => {
     if (products?.length) {
-      const populatedPlans = plans.map((plan) => {
-        const product = products.find((product) => product.product_id === plan.product_id);
-        if (!product) return null;
-        return {
-          ...plan,
-          name: product.name,
-          description: product.description,
-          prices: product.prices,
-        };
-      });
+      const populatedPlans = plans
+        .map((plan) => {
+          const product = products.find((product) => product.product_id === plan.product_id);
+          if (!product) return null;
+          return {
+            ...plan,
+            name: product.name,
+            description: product.description,
+            prices: product.prices,
+          };
+        })
+        .filter(Boolean);
       console.log("populatedPlans", populatedPlans);
       setPopulatedPlans(populatedPlans);
     }
@@ -115,30 +105,32 @@ export default function Plans({ subscription }: PlansProps) {
 
   return (
     <div>
-      <div className="flex justify-center mb-12">
-        <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
-          {intervals?.includes("month") && (
-            <Button
-              onClick={() => setBillingInterval("month")}
-              type="button"
-              variant={billingInterval === "month" ? "default" : "ghost"}
-              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-            >
-              Monthly billing
-            </Button>
-          )}
-          {intervals?.includes("year") && (
-            <Button
-              onClick={() => setBillingInterval("year")}
-              type="button"
-              variant={billingInterval === "year" ? "default" : "ghost"}
-              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-            >
-              Yearly billing
-            </Button>
-          )}
+      {!isLoading && (
+        <div className="flex justify-center mb-12">
+          <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
+            {intervals?.includes("month") && (
+              <Button
+                onClick={() => setBillingInterval("month")}
+                type="button"
+                variant={billingInterval === "month" ? "default" : "ghost"}
+                className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+              >
+                Monthly billing
+              </Button>
+            )}
+            {intervals?.includes("year") && (
+              <Button
+                onClick={() => setBillingInterval("year")}
+                type="button"
+                variant={billingInterval === "year" ? "default" : "ghost"}
+                className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+              >
+                Yearly billing
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         {populatedPlans.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
@@ -149,7 +141,7 @@ export default function Plans({ subscription }: PlansProps) {
             minimumFractionDigits: 0,
           }).format((price?.unit_amount || 0) / 100);
           return (
-            <Card key={index} className={`relative ${plan.popular ? "border-primary" : ""}`}>
+            <Card key={index} className={`relative ${subscription ? "border-primary" : ""}`}>
               {plan.popular && (
                 <Badge className="absolute top-0 right-0 rounded-bl-lg rounded-tr-lg">
                   Popular
@@ -180,7 +172,7 @@ export default function Plans({ subscription }: PlansProps) {
               <CardFooter>
                 <Button
                   className="w-full"
-                  variant={subscription ? "default" : plan.popular ? "default" : "outline"}
+                  variant={subscription ? "default" : "outline"}
                   loading={priceIdLoading === price.id}
                   onClick={() => handlePlanClick(price)}
                 >

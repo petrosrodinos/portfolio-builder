@@ -23,23 +23,6 @@ export const getURL = (path: string = '') => {
     return path ? `${url}/${path}` : url;
 };
 
-export const postData = async ({
-    url,
-    data
-}: {
-    url: string;
-    data?: { price: any };
-}) => {
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        credentials: 'same-origin',
-        body: JSON.stringify(data)
-    });
-
-    return res.json();
-};
-
 export const toDateTime = (secs: number) => {
     var t = new Date(+0); // Unix epoch start.
     t.setSeconds(secs);
@@ -65,66 +48,3 @@ export const calculateTrialEndUnixTimestamp = (
     return Math.floor(trialEnd.getTime() / 1000); // Convert to Unix timestamp in seconds
 };
 
-const toastKeyMap: { [key: string]: string[] } = {
-    status: ['status', 'status_description'],
-    error: ['error', 'error_description']
-};
-
-const getToastRedirect = (
-    path: string,
-    toastType: string,
-    toastName: string,
-    toastDescription: string = '',
-    disableButton: boolean = false,
-    arbitraryParams: string = ''
-): string => {
-    const [nameKey, descriptionKey] = toastKeyMap[toastType];
-
-    let redirectPath = `${path}?${nameKey}=${encodeURIComponent(toastName)}`;
-
-    if (toastDescription) {
-        redirectPath += `&${descriptionKey}=${encodeURIComponent(toastDescription)}`;
-    }
-
-    if (disableButton) {
-        redirectPath += `&disable_button=true`;
-    }
-
-    if (arbitraryParams) {
-        redirectPath += `&${arbitraryParams}`;
-    }
-
-    return redirectPath;
-};
-
-export const getStatusRedirect = (
-    path: string,
-    statusName: string,
-    statusDescription: string = '',
-    disableButton: boolean = false,
-    arbitraryParams: string = ''
-) =>
-    getToastRedirect(
-        path,
-        'status',
-        statusName,
-        statusDescription,
-        disableButton,
-        arbitraryParams
-    );
-
-export const getErrorRedirect = (
-    path: string,
-    errorName: string,
-    errorDescription: string = '',
-    disableButton: boolean = false,
-    arbitraryParams: string = ''
-) =>
-    getToastRedirect(
-        path,
-        'error',
-        errorName,
-        errorDescription,
-        disableButton,
-        arbitraryParams
-    );
