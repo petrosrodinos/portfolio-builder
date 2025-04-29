@@ -1,21 +1,16 @@
 'use server';
 
 import Stripe from 'stripe';
-import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/stripe/stripe_helpers';
-import { stripe } from '../../../lib/stripe/config';
-import { createOrRetrieveCustomer } from '../web_hooks';
 import { createClient } from '@/lib/supabase/server';
+import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/utils';
+import { createOrRetrieveCustomer } from './web_hooks';
+import { stripe } from '@/lib/stripe/config';
 
-type Price = any;
-
-type CheckoutResponse = {
-  sessionId?: string;
-};
 
 export async function checkoutWithStripe(
-  price: Price,
+  price: any,
   redirectPath: string
-): Promise<CheckoutResponse> {
+): Promise<string> {
   try {
 
     const supabase = await createClient();
@@ -70,7 +65,7 @@ export async function checkoutWithStripe(
     }
 
     if (session) {
-      return { sessionId: session.id };
+      return session.id;
     } else {
       throw new Error('Unable to create checkout session.');
     }
@@ -83,7 +78,7 @@ export async function checkoutWithStripe(
   }
 }
 
-export async function createStripePortal(currentPath: string) {
+export async function createStripePortal(returnUrl: string) {
   try {
     const supabase = await createClient();
     const {
@@ -117,7 +112,7 @@ export async function createStripePortal(currentPath: string) {
     try {
       const portalSession = await stripe.billingPortal.sessions.create({
         customer,
-        return_url: getURL('/console/billing/subscription')
+        return_url: getURL(returnUrl)
       });
       if (!portalSession) {
         throw new Error('Could not create billing portal');

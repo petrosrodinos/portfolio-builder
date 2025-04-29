@@ -1,4 +1,8 @@
 const APICO_INTEGRATION_ID = process.env.NEXT_PUBLIC_APICO_INTEGRATION_ID;
+const BASIC_PRODUCT_ID = process.env.NEXT_PUBLIC_BASIC_PRODUCT_ID;
+const PROFESSIONAL_PRODUCT_ID = process.env.NEXT_PUBLIC_PROFESSIONAL_PRODUCT_ID;
+export const TRIAL_PERIOD_DAYS = 30;
+
 
 const googleSheets = {
   feedBack: {
@@ -16,4 +20,9 @@ export const aiConfig = {
     baseURL: 'https://api.deepseek.com/v1',
     model: 'deepseek-chat',
   },
+};
+
+export const products = {
+  basic: BASIC_PRODUCT_ID,
+  professional: PROFESSIONAL_PRODUCT_ID
 };

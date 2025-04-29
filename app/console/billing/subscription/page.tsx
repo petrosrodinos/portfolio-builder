@@ -2,7 +2,7 @@
 
 import React from "react";
 import Plans from "./components/plans";
-import { getSubscription } from "@/services/subscriptions/subscription";
+import { getSubscription } from "@/services/subscriptions/products";
 import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth";
 import Subscription from "./components/subscription";

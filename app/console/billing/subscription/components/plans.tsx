@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/constants/plans";
-import { getProducts } from "@/services/subscriptions/subscription";
+import { getProducts } from "@/services/subscriptions/products";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getStripe } from "@/services/subscriptions/stripe/client";
 import { usePathname } from "next/navigation";
-import { checkoutWithStripe, createStripePortal } from "@/services/subscriptions/stripe/server";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { getStripe } from "@/lib/stripe/client";
+import { checkoutWithStripe, createStripePortal } from "@/services/subscriptions/stripe";
 
 type BillingInterval = "year" | "month";
 
@@ -54,8 +54,8 @@ export default function Plans({ subscription }: PlansProps) {
 
   const { mutate: checkoutMutation } = useMutation({
     mutationFn: async (price: any) => {
-      const response = await checkoutWithStripe(price, currentPath);
-      return response.sessionId;
+      const sessionId = await checkoutWithStripe(price, currentPath);
+      return sessionId;
     },
     onSuccess: async (sessionId: string) => {
       const stripe = await getStripe();

@@ -19,11 +19,10 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
         if (data && data.user) {
             const { data: userData, error: userError } = await supabase
                 .from(SupabaseTables.users)
-                .select('*')
+                .select('*, subscriptions(*)')
                 .eq('user_id', data.user.id)
                 .single();
 
-            console.log('signIn data', data);
             console.log('signIn userData', userData, userError);
 
 

@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { fonts } from "@/config/fonts";
+import { fonts } from "@/constants/fonts";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";

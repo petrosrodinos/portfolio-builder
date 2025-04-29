@@ -3,6 +3,10 @@ export const SupabaseTables = {
     profiles: 'profiles',
     experiences: 'experiences',
     skills: 'skills',
+    products: 'products',
+    prices: 'prices',
+    subscriptions: 'subscriptions',
+    customers: 'customers',
 } as const;
 
 export const SupabaseBuckets = {

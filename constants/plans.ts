@@ -1,6 +1,8 @@
+import { products } from ".";
+
 export const plans = [
     {
-        product_id: "prod_SCxGsQLbS5GSVI",
+        product_id: products.basic || "prod_SCxGsQLbS5GSVI",
         name: "Free",
         description: "",
         prices: [],
@@ -16,7 +18,7 @@ export const plans = [
     },
     {
         name: "Professional",
-        product_id: "prod_SDNZeXFBuDnISY",
+        product_id: products.professional || "prod_SDNZeXFBuDnISY",
         description: "",
         prices: [],
         features: [
