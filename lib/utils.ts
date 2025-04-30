@@ -7,7 +7,7 @@ import * as icons from "country-flag-icons/react/3x2";
 import { Language, Link, Skill } from "@/interfaces/templates";
 import { SkillLevelOptions, SkillOptions } from "@/constants/dropdowns/skills";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
-
+import { defaultPreferences } from "@/stores/auth";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -28,7 +28,9 @@ export const formatAuthUser = (data: any): AuthUser => {
     access_token: data.session.access_token,
     expires_at: data.session.expires_at,
     avatar: data?.avatar?.url ?? null,
-    full_name: data?.full_name ?? 'Anonymous',
+    full_name: data?.full_name ?? 'A/N',
+    preferences: data?.preferences ?? defaultPreferences,
+    subscription: data?.subscriptions ?? null
   };
 }
 

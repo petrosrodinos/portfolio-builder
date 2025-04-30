@@ -1,3 +1,4 @@
+import { Subscription } from "./billing";
 import { UserPreferences } from "./user";
 
 export interface SignInUser {
@@ -20,4 +21,5 @@ export interface AuthUser {
     isNewUser?: boolean;
     isLoggedIn?: boolean;
     preferences?: UserPreferences;
+    subscription?: Subscription;
 }

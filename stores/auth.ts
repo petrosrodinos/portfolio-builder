@@ -3,12 +3,18 @@ import { devtools, persist } from "zustand/middleware";
 import { AuthUser } from "interfaces/auth";
 import { TemplateTypes } from "@/constants/templates";
 import { signOut } from "@/services/auth";
+import { UserPreferences } from "@/interfaces/user";
 
 interface UserStore extends AuthUser {
     login(user: any): void;
     logout(): void;
     updateUser(user: any): void;
 }
+
+export const defaultPreferences: UserPreferences = {
+    portfolio_theme: TemplateTypes.default,
+    dashboard_theme: "system",
+};
 
 const initialValues: UserStore = {
     isLoggedIn: false,
@@ -18,10 +24,8 @@ const initialValues: UserStore = {
     access_token: null,
     expires_at: null,
     avatar: null,
-    preferences: {
-        portfolio_theme: TemplateTypes.default,
-        dashboard_theme: "system",
-    },
+    preferences: defaultPreferences,
+    subscription: null,
     login: () => { },
     logout: () => { },
     updateUser: () => { },

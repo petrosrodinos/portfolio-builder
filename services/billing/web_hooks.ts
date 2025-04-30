@@ -131,10 +131,8 @@ const manageSubscriptionStatusChange = async (
     const subscriptionData: any = {
         subscription_id: subscription.id,
         user_id: uuid,
-        metadata: subscription.metadata,
         status: subscription.status,
         price_id: subscription.items.data[0].price.id,
-        quantity: subscription?.quantity,
         cancel_at_period_end: subscription.cancel_at_period_end,
         cancel_at: toDateTime(subscription.cancel_at),
         canceled_at: toDateTime(subscription.canceled_at),
