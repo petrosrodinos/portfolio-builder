@@ -10,7 +10,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useQuery } from "@tanstack/react-query";
 import { getSubscription } from "@/services/billing/products";
 import Loading from "./loading";
-
+import { getPlanType } from "@/lib/utils";
 const SubscriptionPaymentPage = () => {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
@@ -27,6 +27,7 @@ const SubscriptionPaymentPage = () => {
       setSuccess(true);
       updateUser({
         subscription: subscriptionData,
+        plan: getPlanType(subscriptionData?.prices?.product_id),
       });
     }
   }, [subscription]);

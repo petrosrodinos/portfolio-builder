@@ -14,23 +14,26 @@ import { Button } from "@/components/ui/button";
 import { plans } from "@/constants/plans";
 import { getProducts } from "@/services/billing/products";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
-import { checkoutWithStripe, createStripePortal } from "@/services/billing/stripe";
+import { checkoutWithStripe } from "@/services/billing/stripe";
 import Loading from "../loading";
 import { Subscription } from "@/interfaces/billing";
-
+import { useAuthStore } from "@/stores/auth";
+import { cn } from "@/lib/utils";
 type BillingInterval = "year" | "month";
 
 interface PlansProps {
-  subscription: Subscription;
+  subscription?: Subscription;
+  onOpenPortal?: () => void;
+  isPending?: boolean;
+  className?: string;
 }
 
-export default function Plans({ subscription }: PlansProps) {
+export default function Plans({ subscription, onOpenPortal, isPending, className }: PlansProps) {
   const router = useRouter();
-  const currentPath = usePathname();
+  const { isLoggedIn } = useAuthStore();
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
   const [populatedPlans, setPopulatedPlans] = useState<any[]>([]);
@@ -40,21 +43,11 @@ export default function Plans({ subscription }: PlansProps) {
     queryFn: getProducts,
   });
 
-  const { mutate: openPortal } = useMutation({
-    mutationFn: () => createStripePortal(currentPath),
-    onSuccess: (redirectUrl: string) => {
-      router.push(redirectUrl);
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Could not open portal",
-        description: error.message,
-        duration: 3000,
-      });
-    },
-  });
+  const intervals = Array.from(
+    new Set(products?.flatMap((product) => product?.prices?.map((price) => price?.interval)))
+  );
 
-  const { mutate: checkoutMutation } = useMutation({
+  const { mutate: checkoutMutation, isPending: checkoutPending } = useMutation({
     mutationFn: async (price: any) => {
       const sessionId = await checkoutWithStripe(price, "/subscription_payment");
       return sessionId;
@@ -72,14 +65,14 @@ export default function Plans({ subscription }: PlansProps) {
     },
   });
 
-  const intervals = Array.from(
-    new Set(products?.flatMap((product) => product?.prices?.map((price) => price?.interval)))
-  );
-
   const handlePlanClick = (price: any) => {
     setPriceIdLoading(price.id);
+    if (!isLoggedIn) {
+      router.push("/auth/sign-up");
+      return;
+    }
     if (subscription) {
-      openPortal();
+      onOpenPortal?.();
     } else {
       checkoutMutation(price);
     }
@@ -106,11 +99,11 @@ export default function Plans({ subscription }: PlansProps) {
   }, [products, subscription]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading type="plans" />;
   }
 
   return (
-    <div>
+    <div className={cn("container mx-auto py-8", className)}>
       <div className="flex justify-center mb-12">
         <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
           {intervals?.includes("month") && (
@@ -136,7 +129,7 @@ export default function Plans({ subscription }: PlansProps) {
         </div>
       </div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 mb-12">
-        {populatedPlans.map((plan, index) => {
+        {populatedPlans?.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
           if (!price) return null;
           const priceString = new Intl.NumberFormat("en-US", {
@@ -178,9 +171,10 @@ export default function Plans({ subscription }: PlansProps) {
                   className="w-full"
                   variant={subscription ? "default" : "outline"}
                   loading={priceIdLoading === price.id}
+                  disabled={checkoutPending}
                   onClick={() => handlePlanClick(price)}
                 >
-                  {subscription ? "Manage Subscription" : "Upgrade"}
+                  {subscription ? "Manage" : "Subscribe"}
                 </Button>
               </CardFooter>
             </Card>

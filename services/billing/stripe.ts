@@ -39,6 +39,11 @@ export async function checkoutWithStripe(
       allow_promotion_codes: true,
       billing_address_collection: 'required',
       customer,
+      metadata: {
+        user_id: user?.id || '',
+        email: user?.email || '',
+      },
+      customer_email: user?.email || '',
       customer_update: {
         address: 'auto'
       },

@@ -1,34 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
 import { formatDate } from "@/lib/utils";
-import { createStripePortal } from "@/services/billing/stripe";
-import { useMutation } from "@tanstack/react-query";
-import { usePathname, useRouter } from "next/navigation";
 import { Subscription as SubscriptionType } from "@/interfaces/billing";
 
 interface SubscriptionProps {
   subscription: SubscriptionType;
+  onOpenPortal: () => void;
+  isPending: boolean;
 }
 
-const Subscription = ({ subscription }: SubscriptionProps) => {
-  const router = useRouter();
-  const currentPath = usePathname();
-
-  const { mutate: openPortal, isPending } = useMutation({
-    mutationFn: () => createStripePortal(currentPath),
-    onSuccess: (redirectUrl: string) => {
-      router.push(redirectUrl);
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Could not open portal",
-        description: error.message,
-        duration: 3000,
-      });
-    },
-  });
-
+const Subscription = ({ subscription, onOpenPortal, isPending }: SubscriptionProps) => {
   return (
     <>
       {subscription && (
@@ -80,7 +61,7 @@ const Subscription = ({ subscription }: SubscriptionProps) => {
             </div>
           </CardContent>
           <CardFooter className="flex gap-4">
-            <Button disabled={isPending} onClick={() => openPortal()} variant="outline">
+            <Button disabled={isPending} onClick={() => onOpenPortal()} variant="outline">
               {isPending ? "Opening Portal..." : "Open Portal"}
             </Button>
           </CardFooter>

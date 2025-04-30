@@ -1,4 +1,5 @@
 import { Subscription } from "./billing";
+import { PlanType } from "@/constants/plans";
 import { UserPreferences } from "./user";
 
 export interface SignInUser {
@@ -22,4 +23,5 @@ export interface AuthUser {
     isLoggedIn?: boolean;
     preferences?: UserPreferences;
     subscription?: Subscription;
+    plan?: PlanType;
 }

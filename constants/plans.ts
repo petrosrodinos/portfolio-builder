@@ -1,9 +1,16 @@
 import { products } from ".";
 
+export const planTypes = {
+    free: "free",
+    basic: "basic",
+    professional: "professional",
+} as const;
+
+
 export const plans = [
     {
         product_id: products.basic || "prod_SCxGsQLbS5GSVI",
-        type: "free",
+        type: planTypes.free,
         name: "Free",
         description: "",
         prices: [],
@@ -19,7 +26,7 @@ export const plans = [
     },
     {
         name: "Basic",
-        type: "basic",
+        type: planTypes.basic,
         product_id: products.basic || "prod_SCxGsQLbS5GSVI",
         description: "",
         prices: [],
@@ -34,7 +41,7 @@ export const plans = [
     },
     {
         name: "Professional",
-        type: "professional",
+        type: planTypes.professional,
         product_id: products.professional || "prod_SDNZeXFBuDnISY",
         description: "",
         prices: [],
@@ -48,3 +55,5 @@ export const plans = [
         ],
     },
 ];
+
+export type PlanType = typeof planTypes[keyof typeof planTypes];

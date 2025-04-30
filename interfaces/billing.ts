@@ -8,22 +8,26 @@ export interface Subscription {
     current_period_start: string;
     current_period_end: string;
     created: string;
-    prices: {
-        price_id: string;
-        product_id: string;
-        active: boolean;
-        currency: string;
-        interval: string;
-        type: string;
-        unit_amount: number;
-        trial_period_days: number;
-    }
+    prices: Price;
+}
+
+
+export interface Price {
+    price_id: string;
+    product_id: string;
+    active: boolean;
+    currency: string;
+    interval: string;
+    type: string;
+    unit_amount: number;
+    trial_period_days: number;
+    products: Product;
 }
 
 export interface Product {
-
+    product_id: string;
+    name: string;
+    description: string;
+    active: boolean;
 }
 
-export interface Price {
-
-}

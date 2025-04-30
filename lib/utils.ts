@@ -8,6 +8,9 @@ import { Language, Link, Skill } from "@/interfaces/templates";
 import { SkillLevelOptions, SkillOptions } from "@/constants/dropdowns/skills";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 import { defaultPreferences } from "@/stores/auth";
+import { PlanType, planTypes } from '@/constants/plans';
+import { plans } from '@/constants/plans';
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -30,8 +33,15 @@ export const formatAuthUser = (data: any): AuthUser => {
     avatar: data?.avatar?.url ?? null,
     full_name: data?.full_name ?? 'A/N',
     preferences: data?.preferences ?? defaultPreferences,
-    subscription: data?.subscriptions ?? null
+    subscription: data?.subscriptions ?? null,
+    plan: getPlanType(data?.subscriptions?.prices?.product_id)
   };
+}
+
+export const getPlanType = (product_id: string): PlanType => {
+  if (!product_id) return planTypes.free;
+  const plan = plans.find((plan) => plan.product_id === product_id);
+  return plan?.type;
 }
 
 export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill) => {

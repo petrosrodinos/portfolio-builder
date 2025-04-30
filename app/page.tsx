@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Code, Palette, Rocket, Shield, Star, Users, Check } from "lucide-react";
+import Plans from "./console/billing/subscription/components/plans";
 
 export default function Home() {
   return (
@@ -98,93 +99,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Plans Section */}
-      <section className="relative py-32">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
-            <p className="text-lg text-muted-foreground">
-              Choose the perfect plan for your portfolio needs
-            </p>
-          </div>
-          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:max-w-5xl lg:mx-auto">
-            {/* Basic Plan */}
-            <div className="relative rounded-2xl border bg-background p-8 shadow-sm transition-all hover:shadow-md">
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold">Basic</h3>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-4xl font-bold">$0</span>
-                  <span className="ml-2 text-muted-foreground">/month</span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">Perfect for getting started</p>
-              </div>
-              <ul className="mb-8 space-y-4">
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>1 Portfolio Template</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Basic Customization</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Up to 10 Projects</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Community Support</span>
-                </li>
-              </ul>
-              <Button className="w-full" variant="outline">
-                Get Started
-              </Button>
-            </div>
-
-            {/* Professional Plan */}
-            <div className="relative rounded-2xl border-2 border-primary bg-background p-8 shadow-sm transition-all hover:shadow-md">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-sm font-medium text-primary-foreground">
-                Most Popular
-              </div>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold">Professional</h3>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-4xl font-bold">$9</span>
-                  <span className="ml-2 text-muted-foreground">/month</span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">For serious professionals</p>
-              </div>
-              <ul className="mb-8 space-y-4">
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>All Basic Features</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>All Premium Templates</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Unlimited Projects</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Custom Domain</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Priority Support</span>
-                </li>
-                <li className="flex items-center">
-                  <Check className="mr-2 h-5 w-5 text-primary" />
-                  <span>Analytics Dashboard</span>
-                </li>
-              </ul>
-              <Button className="w-full">Get Started</Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Plans />
 
       {/* CTA Section */}
       <section className="relative overflow-hidden py-32">
