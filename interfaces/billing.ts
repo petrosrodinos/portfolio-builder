@@ -17,3 +17,7 @@ export interface Subscription {
 export interface Product {
 
 }
+
+export interface Price {
+
+}

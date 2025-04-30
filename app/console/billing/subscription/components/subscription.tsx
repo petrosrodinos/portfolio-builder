@@ -4,6 +4,7 @@ import { toast } from "@/hooks/use-toast";
 import { createStripePortal } from "@/services/billing/stripe";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface SubscriptionProps {
   subscription: any;
