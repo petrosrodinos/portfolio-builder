@@ -19,7 +19,7 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
         if (data && data.user) {
             const { data: userData, error: userError } = await supabase
                 .from(SupabaseTables.users)
-                .select('*, subscriptions(*)')
+                .select('*, subscriptions(*, prices(*))')
                 .eq('user_id', data.user.id)
                 .single();
 

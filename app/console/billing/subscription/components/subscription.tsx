@@ -5,9 +5,10 @@ import { formatDate } from "@/lib/utils";
 import { createStripePortal } from "@/services/billing/stripe";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
+import { Subscription as SubscriptionType } from "@/interfaces/billing";
 
 interface SubscriptionProps {
-  subscription: any;
+  subscription: SubscriptionType;
 }
 
 const Subscription = ({ subscription }: SubscriptionProps) => {

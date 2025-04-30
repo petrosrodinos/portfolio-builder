@@ -20,11 +20,12 @@ import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
 import { checkoutWithStripe, createStripePortal } from "@/services/billing/stripe";
 import Loading from "../loading";
+import { Subscription } from "@/interfaces/billing";
 
 type BillingInterval = "year" | "month";
 
 interface PlansProps {
-  subscription: any;
+  subscription: Subscription;
 }
 
 export default function Plans({ subscription }: PlansProps) {
@@ -55,7 +56,7 @@ export default function Plans({ subscription }: PlansProps) {
 
   const { mutate: checkoutMutation } = useMutation({
     mutationFn: async (price: any) => {
-      const sessionId = await checkoutWithStripe(price, currentPath);
+      const sessionId = await checkoutWithStripe(price, "/subscription_payment");
       return sessionId;
     },
     onSuccess: async (sessionId: string) => {
@@ -134,7 +135,7 @@ export default function Plans({ subscription }: PlansProps) {
           )}
         </div>
       </div>
-      <div className="grid md:grid-cols-2 gap-8 mb-12">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 mb-12">
         {populatedPlans.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
           if (!price) return null;

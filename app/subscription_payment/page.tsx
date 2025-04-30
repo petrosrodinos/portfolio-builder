@@ -1,20 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/layout/navbar";
-import { useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/stores/auth";
+import { useQuery } from "@tanstack/react-query";
+import { getSubscription } from "@/services/billing/products";
+import Loading from "./loading";
 
 const SubscriptionPaymentPage = () => {
   const router = useRouter();
-  const success: boolean = false;
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-  const { updateUser } = useAuthStore();
+  const [success, setSuccess] = useState(false);
+  const { updateUser, user_id, subscription } = useAuthStore();
+
+  const { data: subscriptionData, isPending } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: () => getSubscription(user_id),
+    enabled: !!user_id && !!subscription,
+  });
+
+  useEffect(() => {
+    if (subscriptionData?.status === "active") {
+      setSuccess(true);
+      updateUser({
+        subscription: subscriptionData,
+      });
+    }
+  }, [subscription]);
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -28,9 +47,10 @@ const SubscriptionPaymentPage = () => {
             {success ? (
               <>
                 <CheckCircle2 className="h-16 w-16 text-green-500" />
-                <p className="text-lg font-medium text-center">Payment Successful!</p>
+                <p className="text-lg font-medium text-center">Subscription Successful!</p>
                 <p className="text-sm text-muted-foreground text-center">
-                  Your payment has been processed successfully. Thank you for your purchase!
+                  Your subscription has been processed successfully. You can now access all the
+                  features for your portfolio!
                 </p>
               </>
             ) : (
@@ -43,7 +63,7 @@ const SubscriptionPaymentPage = () => {
               </>
             )}
             <Button onClick={() => router.push("/console/dashboard")} className="w-full mt-4">
-              Return to Dashboard
+              Continue to Dashboard
             </Button>
           </CardContent>
         </Card>

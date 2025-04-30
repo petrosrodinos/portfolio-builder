@@ -13,7 +13,7 @@ const SubscriptionPage = () => {
 
   const { data: subscription, isLoading } = useQuery({
     queryKey: ["subscription"],
-    queryFn: getSubscription,
+    queryFn: () => getSubscription(user_id),
     enabled: !!user_id,
   });
 

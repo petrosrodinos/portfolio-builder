@@ -44,7 +44,7 @@ const createOrRetrieveCustomer = async ({
             .from(SupabaseTables.customers)
             .select('*')
             .eq('user_id', uuid)
-            .maybeSingle();
+            .single();
 
     if (queryError) {
         throw new Error(`Supabase customer lookup failed: ${queryError.message}`);

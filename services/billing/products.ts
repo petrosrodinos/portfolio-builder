@@ -16,7 +16,7 @@ export const upsertProductRecord = async (product: Stripe.Product) => {
         name: product.name,
         description: product.description ?? null,
         image: product.images?.[0] ?? null,
-        metadata: product.metadata
+        // metadata: product.metadata
     };
 
     const { error: upsertError } = await supabaseAdmin
@@ -88,12 +88,13 @@ export const deletePriceRecord = async (price: Stripe.Price) => {
     console.log(`Price deleted: ${price.id}`);
 };
 
-export const getSubscription = cache(async () => {
+export const getSubscription = cache(async (userId: string) => {
     const { data: subscription, error } = await supabaseAdmin
         .from(SupabaseTables.subscriptions)
         .select('*, prices(*, products(*))')
         .in('status', ['trialing', 'active'])
-        .maybeSingle();
+        .eq('user_id', userId)
+        .single();
 
     if (error) {
         console.error(error);
@@ -109,7 +110,6 @@ export const getProducts = cache(async () => {
         .select('*, prices(*)')
         .eq('active', true)
         .eq('prices.active', true)
-        .order('metadata->index')
         .order('unit_amount', { referencedTable: 'prices' });
 
     if (error) {
