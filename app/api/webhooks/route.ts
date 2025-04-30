@@ -1,7 +1,7 @@
-import { manageSubscriptionStatusChange } from '@/services/subscriptions/web_hooks';
+import { manageSubscriptionStatusChange } from '@/services/billing/web_hooks';
 import { stripe } from '@/lib/stripe/config';
 import Stripe from 'stripe';
-import { upsertProductRecord, upsertPriceRecord, deletePriceRecord, deleteProductRecord } from '@/services/subscriptions/products';
+import { upsertProductRecord, upsertPriceRecord, deletePriceRecord, deleteProductRecord } from '@/services/billing/products';
 
 
 const relevantEvents = new Set([

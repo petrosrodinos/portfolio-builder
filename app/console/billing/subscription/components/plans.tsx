@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/constants/plans";
-import { getProducts } from "@/services/subscriptions/products";
+import { getProducts } from "@/services/billing/products";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
-import { checkoutWithStripe, createStripePortal } from "@/services/subscriptions/stripe";
+import { checkoutWithStripe, createStripePortal } from "@/services/billing/stripe";
+import Loading from "../loading";
 
 type BillingInterval = "year" | "month";
 
@@ -103,34 +104,36 @@ export default function Plans({ subscription }: PlansProps) {
     console.log(subscription);
   }, [products, subscription]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div>
-      {!isLoading && (
-        <div className="flex justify-center mb-12">
-          <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
-            {intervals?.includes("month") && (
-              <Button
-                onClick={() => setBillingInterval("month")}
-                type="button"
-                variant={billingInterval === "month" ? "default" : "ghost"}
-                className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-              >
-                Monthly billing
-              </Button>
-            )}
-            {intervals?.includes("year") && (
-              <Button
-                onClick={() => setBillingInterval("year")}
-                type="button"
-                variant={billingInterval === "year" ? "default" : "ghost"}
-                className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-              >
-                Yearly billing
-              </Button>
-            )}
-          </div>
+      <div className="flex justify-center mb-12">
+        <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
+          {intervals?.includes("month") && (
+            <Button
+              onClick={() => setBillingInterval("month")}
+              type="button"
+              variant={billingInterval === "month" ? "default" : "ghost"}
+              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+            >
+              Monthly billing
+            </Button>
+          )}
+          {intervals?.includes("year") && (
+            <Button
+              onClick={() => setBillingInterval("year")}
+              type="button"
+              variant={billingInterval === "year" ? "default" : "ghost"}
+              className={`relative w-1/2 rounded-md m-1 py-2.5 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+            >
+              Yearly billing
+            </Button>
+          )}
         </div>
-      )}
+      </div>
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         {populatedPlans.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
