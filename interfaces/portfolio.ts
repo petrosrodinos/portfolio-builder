@@ -1,4 +1,6 @@
 import { PortfolioExperienceType, PortfolioSkillsType } from "@/constants/supabase";
+import { Education, Language, Link, Project, Skill } from "./templates";
+import { Experience } from "./templates";
 
 export interface UpdatePortfolioProfileBio {
     email?: string;
@@ -64,62 +66,10 @@ export interface PortfoloAIData {
         bio: string;
         role: string;
     },
-    experiences: {
-        title: string;
-        description: string;
-        company: string;
-        location: string;
-        start: string;
-        finish: string;
-        link: string;
-        type: PortfolioExperienceType;
-    }[],
-    projects: {
-        title: string;
-        description: string;
-        start: string;
-        finish: string;
-        company: string;
-        location: string;
-        link: string;
-        type: PortfolioExperienceType;
-    }[],
-    educations: {
-        title: string;
-        description: string;
-        start: string;
-        finish: string;
-        institution: string;
-        type: PortfolioExperienceType;
-    }[],
-    languages: {
-        title: string;
-        level: string;
-        type: PortfolioSkillsType;
-    }[],
-    links: {
-        title: string;
-        link: string;
-        type: PortfolioSkillsType;
-    }[],
-    skills: {
-        title: string;
-        level: string;
-        type: PortfolioSkillsType;
-    }[]
+    experiences: Experience[],
+    projects: Project[],
+    educations: Education[],
+    languages: Language[],
+    links: Link[],
+    skills: Skill[]
 }
-
-// export interface Portfolio {
-//     id: string;
-//     user: User;
-//     user_id: string;
-//     profile: PortfolioProfileBio;
-//     experiences: PortfolioExperience[];
-//     services: PortfolioExperience[];
-//     projects: PortfolioExperience[];
-//     educations: PortfolioExperience[];
-//     skills: PortfolioSkill[];
-//     languages: PortfolioSkill[];
-//     links: PortfolioSkill[];
-// }
-

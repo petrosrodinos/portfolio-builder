@@ -69,7 +69,6 @@ const Subscription = ({ subscription }: SubscriptionProps) => {
             </div>
           </CardContent>
           <CardFooter className="flex gap-4">
-            {/* <Button variant="outline">Update Payment Method</Button> */}
             <Button disabled={isPending} onClick={() => mutate()} variant="outline">
               {isPending ? "Opening Portal..." : "Open Portal"}
             </Button>

@@ -36,8 +36,7 @@ export const signIn = async ({ email, password }: SignInUser): Promise<AuthUser 
                 return {
                     ...formatAuthUser({
                         ...data,
-                        full_name: userData.full_name,
-                        avatar: userData.avatar,
+                        ...userData
                     }),
                     isNewUser: false
                 }

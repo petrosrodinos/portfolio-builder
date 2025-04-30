@@ -1,5 +1,6 @@
+import { PortfolioExperienceType, PortfolioSkillsType } from "@/constants/supabase";
 import { PortfolioResume } from "./portfolio";
-import { UserPreferences } from "./user";
+import { UserAvatar, UserPreferences } from "./user";
 
 export interface Portfolio {
     user: User;
@@ -44,10 +45,7 @@ export interface User {
     country: string;
     date_of_birth: string;
     preferences?: UserPreferences;
-    avatar: {
-        url: string;
-        name: string;
-    };
+    avatar: UserAvatar
 }
 
 export interface Experience {
@@ -58,6 +56,7 @@ export interface Experience {
     finish?: string;
     description: string;
     link?: string;
+    type?: PortfolioExperienceType;
 }
 
 export interface Project {
@@ -67,6 +66,7 @@ export interface Project {
     finish: string;
     description: string;
     link?: string;
+    type?: PortfolioExperienceType;
 }
 
 export interface Education {
@@ -76,21 +76,25 @@ export interface Education {
     finish: string;
     description?: string;
     link?: string;
+    type?: PortfolioExperienceType;
 }
 
 export interface Skill {
     title: string;
     level: string;
+    type?: PortfolioSkillsType;
 }
 
 export interface Link {
     title: string;
     link: string;
+    type?: PortfolioSkillsType;
 }
 
 export interface Language {
     title: string;
     level: string;
+    type?: PortfolioSkillsType;
 }
 
 export interface Service {
