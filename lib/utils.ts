@@ -110,3 +110,8 @@ export const calculateTrialEndUnixTimestamp = (
   ); // Add trial days
   return Math.floor(trialEnd.getTime() / 1000); // Convert to Unix timestamp in seconds
 };
+
+export const formatDate = (date: string) => {
+  if (!date) return "N/A";
+  return new Date(date).toLocaleDateString();
+};
