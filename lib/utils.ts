@@ -87,9 +87,10 @@ export const getURL = (path: string = '') => {
 };
 
 export const toDateTime = (secs: number) => {
+  if (!secs) return null;
   var t = new Date(+0); // Unix epoch start.
   t.setSeconds(secs);
-  return t;
+  return t.toISOString();
 };
 
 export const calculateTrialEndUnixTimestamp = (

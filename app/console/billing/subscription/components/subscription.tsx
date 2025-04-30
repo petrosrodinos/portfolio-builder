@@ -68,7 +68,7 @@ const Subscription = ({ subscription }: SubscriptionProps) => {
                 )}
                 {subscription.canceled_at && (
                   <p className="font-medium text-red-500">
-                    Will be active until {formatDate(subscription?.cancel_at)}
+                    Active until {formatDate(subscription?.cancel_at)}
                   </p>
                 )}
               </div>

@@ -136,28 +136,14 @@ const manageSubscriptionStatusChange = async (
         price_id: subscription.items.data[0].price.id,
         quantity: subscription?.quantity,
         cancel_at_period_end: subscription.cancel_at_period_end,
-        cancel_at: subscription.canceled_at
-            ? toDateTime(subscription.canceled_at).toISOString()
-            : null,
-        canceled_at: subscription.canceled_at
-            ? toDateTime(subscription.canceled_at).toISOString()
-            : null,
-        current_period_start: toDateTime(
-            subscription?.current_period_start ?? 0
-        ).toISOString(),
-        current_period_end: toDateTime(
-            subscription?.current_period_end ?? 0
-        ).toISOString(),
-        created: toDateTime(subscription.created).toISOString(),
-        ended_at: subscription.ended_at
-            ? toDateTime(subscription.ended_at).toISOString()
-            : null,
-        trial_start: subscription.trial_start
-            ? toDateTime(subscription.trial_start).toISOString()
-            : null,
-        trial_end: subscription.trial_end
-            ? toDateTime(subscription.trial_end).toISOString()
-            : null,
+        cancel_at: toDateTime(subscription.cancel_at),
+        canceled_at: toDateTime(subscription.canceled_at),
+        current_period_start: toDateTime(subscription?.current_period_start ?? 0),
+        current_period_end: toDateTime(subscription?.current_period_end ?? 0),
+        created: toDateTime(subscription.created),
+        ended_at: toDateTime(subscription.ended_at),
+        trial_start: toDateTime(subscription.trial_start),
+        trial_end: toDateTime(subscription.trial_end),
     };
 
     const { error: upsertError } = await supabaseAdmin
