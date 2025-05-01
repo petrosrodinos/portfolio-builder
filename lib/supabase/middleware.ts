@@ -38,6 +38,7 @@ export async function updateSession(request: NextRequest) {
     } = await supabase.auth.getUser()
 
 
+    console.log("TRUE", request.url)
 
     if (request.nextUrl.pathname.startsWith('/api/webhooks')) {
         return supabaseResponse
@@ -45,19 +46,14 @@ export async function updateSession(request: NextRequest) {
 
 
     if (
-        !user &&
-        !request.nextUrl.pathname.startsWith('/auth') &&
-        request.nextUrl.pathname != '/'
+        !user && request.nextUrl.pathname.startsWith('/console')
     ) {
         return NextResponse.redirect(new URL('/auth/sign-in', request.url))
     }
 
     if (
         user &&
-        request.nextUrl.pathname.startsWith('/auth') &&
-        request.nextUrl.pathname != '/auth/new-user' &&
-        request.nextUrl.pathname != '/auth/select-plan' &&
-        request.nextUrl.pathname != '/auth/portfolio-resume'
+        (request.nextUrl.pathname == '/auth/sign-in' || request.nextUrl.pathname == '/auth/sign-up')
     ) {
         return NextResponse.redirect(new URL('/', request.url))
     }
