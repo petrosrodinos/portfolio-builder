@@ -37,16 +37,19 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser()
 
-
-    console.log("TRUE", request.url)
-
     if (request.nextUrl.pathname.startsWith('/api/webhooks')) {
         return supabaseResponse
     }
 
 
     if (
-        !user && request.nextUrl.pathname.startsWith('/console')
+        !user && (
+            request.nextUrl.pathname.startsWith('/console') ||
+            request.nextUrl.pathname == '/auth/create-user' ||
+            request.nextUrl.pathname == '/auth/select-plan' ||
+            request.nextUrl.pathname == '/auth/portfolio-resume'
+        )
+
     ) {
         return NextResponse.redirect(new URL('/auth/sign-in', request.url))
     }
