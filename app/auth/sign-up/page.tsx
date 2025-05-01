@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SignUp() {
   return (
-    <Card className="p-6">
+    <Card className="p-6 max-w-md mx-auto">
       <div className="mb-2 flex flex-col space-y-2 text-left">
         <h1 className="text-lg font-semibold tracking-tight">Create an account</h1>
       </div>

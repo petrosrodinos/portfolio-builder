@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/navbar";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code, Palette, Rocket, Shield, Star, Users, Check } from "lucide-react";
+import { ArrowRight, Code, Palette, Rocket, Shield, Star, Users } from "lucide-react";
 import Plans from "./console/billing/subscription/components/plans";
 
 export default function Home() {
@@ -99,7 +99,21 @@ export default function Home() {
         </div>
       </section>
 
-      <Plans />
+      {/* Pricing Section Header */}
+      <section className="relative">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
+            <p className="text-lg text-muted-foreground">
+              Choose the perfect plan for your needs. Whether you're just starting out or need
+              advanced features, we have a plan that fits your goals. All plans include our core
+              features with additional benefits as you upgrade.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Plans redirectParam="/auth/portfolio-resume" />
 
       {/* CTA Section */}
       <section className="relative overflow-hidden py-32">

@@ -32,7 +32,15 @@ import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
 import { TemplateTypes } from "@/constants/templates";
 
-export default function AccountProfileForm() {
+interface AccountProfileFormProps {
+  onSuccess?: () => void;
+  isCheckoutPending?: boolean;
+}
+
+export default function AccountProfileForm({
+  onSuccess,
+  isCheckoutPending,
+}: AccountProfileFormProps) {
   const router = useRouter();
   const pathname = usePathname();
   const isProfilePage = pathname === "/console/account/profile";
@@ -58,15 +66,13 @@ export default function AccountProfileForm() {
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => upsertUser(data),
     onSuccess: (data: any) => {
-      if (!isProfilePage) {
-        router.push("/auth/portfolio-resume");
-      }
       updateStoreUser({
         ...data,
         avatar: data?.avatar?.url,
         isLoggedIn: true,
         isNewUser: false,
       });
+      onSuccess?.();
       toast({
         title: "Profile saved successfully",
         description: "You have successfully saved your profile",
@@ -226,7 +232,11 @@ export default function AccountProfileForm() {
             </FormItem>
           )}
         /> */}
-        <Button disabled={isPending} loading={isPending} type="submit">
+        <Button
+          disabled={isPending || isCheckoutPending}
+          loading={isPending || isCheckoutPending}
+          type="submit"
+        >
           Save
         </Button>
       </form>

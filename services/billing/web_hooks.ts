@@ -44,7 +44,10 @@ const createOrRetrieveCustomer = async ({
             .from(SupabaseTables.customers)
             .select('*')
             .eq('user_id', uuid)
-            .single();
+            .limit(1);
+
+    let customer = existingSupabaseCustomer?.[0];
+
 
     if (queryError) {
         throw new Error(`Supabase customer lookup failed: ${queryError.message}`);
@@ -52,9 +55,9 @@ const createOrRetrieveCustomer = async ({
 
     // Retrieve the Stripe customer ID using the Supabase customer ID, with email fallback
     let stripeCustomerId: string | undefined;
-    if (existingSupabaseCustomer?.stripe_customer_id) {
+    if (customer?.stripe_customer_id) {
         const existingStripeCustomer = await stripe.customers.retrieve(
-            existingSupabaseCustomer.stripe_customer_id
+            customer.stripe_customer_id
         );
         stripeCustomerId = existingStripeCustomer.id;
     } else {
@@ -70,9 +73,9 @@ const createOrRetrieveCustomer = async ({
         : await createCustomerInStripe(uuid, email);
     if (!stripeIdToInsert) throw new Error('Stripe customer creation failed.');
 
-    if (existingSupabaseCustomer && stripeCustomerId) {
+    if (customer && stripeCustomerId) {
         // If Supabase has a record but doesn't match Stripe, update Supabase record
-        if (existingSupabaseCustomer.stripe_customer_id !== stripeCustomerId) {
+        if (customer.stripe_customer_id !== stripeCustomerId) {
             const { error: updateError } = await supabaseAdmin
                 .from(SupabaseTables.customers)
                 .update({ stripe_customer_id: stripeCustomerId })

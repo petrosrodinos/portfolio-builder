@@ -5,10 +5,11 @@ import { createClient } from '@/lib/supabase/server';
 import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/utils';
 import { createOrRetrieveCustomer } from './web_hooks';
 import { stripe } from '@/lib/stripe/config';
+import { TRIAL_PERIOD_DAYS } from '@/constants/index';
 
 
 export async function checkoutWithStripe(
-  price: any,
+  price_id: string,
   redirectPath: string
 ): Promise<string> {
   try {
@@ -23,7 +24,6 @@ export async function checkoutWithStripe(
       console.error(error);
       throw new Error('Could not get user session.');
     }
-
     let customer: string;
     try {
       customer = await createOrRetrieveCustomer({
@@ -43,23 +43,23 @@ export async function checkoutWithStripe(
         user_id: user?.id || '',
         email: user?.email || '',
       },
-      customer_email: user?.email || '',
       customer_update: {
         address: 'auto'
       },
       line_items: [
         {
-          price: price.price_id,
+          price: price_id,
           quantity: 1
         }
       ],
       mode: 'subscription',
       subscription_data: {
-        trial_end: calculateTrialEndUnixTimestamp(price.trial_period_days)
+        trial_end: calculateTrialEndUnixTimestamp(TRIAL_PERIOD_DAYS)
       },
       cancel_url: getURL(redirectPath),
       success_url: getURL(redirectPath)
     };
+
 
     let session;
     try {

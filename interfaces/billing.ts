@@ -13,6 +13,7 @@ export interface Subscription {
 
 
 export interface Price {
+    id: string;
     price_id: string;
     product_id: string;
     active: boolean;

@@ -4,33 +4,42 @@ import React, { useEffect, useState } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/layout/navbar";
 import { useAuthStore } from "@/stores/auth";
 import { useQuery } from "@tanstack/react-query";
 import { getSubscription } from "@/services/billing/products";
 import Loading from "./loading";
 import { getPlanType } from "@/lib/utils";
+
 const SubscriptionPaymentPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get("redirect");
   const [success, setSuccess] = useState(false);
-  const { updateUser, user_id, subscription } = useAuthStore();
+  const { updateUser, user_id } = useAuthStore();
 
   const { data: subscriptionData, isPending } = useQuery({
     queryKey: ["subscription"],
     queryFn: () => getSubscription(user_id),
-    enabled: !!user_id && !!subscription,
+    enabled: !!user_id,
   });
 
   useEffect(() => {
-    if (subscriptionData?.status === "active") {
+    if (subscriptionData?.status === "active" || subscriptionData?.status === "trialing") {
       setSuccess(true);
       updateUser({
         subscription: subscriptionData,
         plan: getPlanType(subscriptionData?.prices?.product_id),
       });
     }
-  }, [subscription]);
+  }, [subscriptionData]);
+
+  useEffect(() => {
+    if (redirectParam) {
+      router.prefetch(redirectParam);
+    }
+  }, [redirectParam]);
 
   if (isPending) {
     return <Loading />;
@@ -63,8 +72,11 @@ const SubscriptionPaymentPage = () => {
                 </p>
               </>
             )}
-            <Button onClick={() => router.push("/console/dashboard")} className="w-full mt-4">
-              Continue to Dashboard
+            <Button
+              onClick={() => router.push(redirectParam ?? "/console/dashboard")}
+              className="w-full mt-4"
+            >
+              Continue
             </Button>
           </CardContent>
         </Card>

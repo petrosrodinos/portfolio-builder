@@ -19,9 +19,10 @@ import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
 import { checkoutWithStripe } from "@/services/billing/stripe";
 import Loading from "../loading";
-import { Subscription } from "@/interfaces/billing";
+import { Price, Subscription } from "@/interfaces/billing";
 import { useAuthStore } from "@/stores/auth";
 import { cn } from "@/lib/utils";
+import Cookies from "js-cookie";
 type BillingInterval = "year" | "month";
 
 interface PlansProps {
@@ -29,9 +30,16 @@ interface PlansProps {
   onOpenPortal?: () => void;
   isPending?: boolean;
   className?: string;
+  redirectParam?: string;
 }
 
-export default function Plans({ subscription, onOpenPortal, isPending, className }: PlansProps) {
+export default function Plans({
+  subscription,
+  onOpenPortal,
+  isPending,
+  className,
+  redirectParam,
+}: PlansProps) {
   const router = useRouter();
   const { isLoggedIn } = useAuthStore();
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
@@ -48,8 +56,11 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
   );
 
   const { mutate: checkoutMutation, isPending: checkoutPending } = useMutation({
-    mutationFn: async (price: any) => {
-      const sessionId = await checkoutWithStripe(price, "/subscription_payment");
+    mutationFn: async (price_id: string) => {
+      const sessionId = await checkoutWithStripe(
+        price_id,
+        `/subscription_payment?redirect=${redirectParam}`
+      );
       return sessionId;
     },
     onSuccess: async (sessionId: string) => {
@@ -57,6 +68,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
       stripe?.redirectToCheckout({ sessionId });
     },
     onError: (error: any) => {
+      setPriceIdLoading(undefined);
       toast({
         title: "Could not checkout",
         description: error.message,
@@ -65,16 +77,17 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
     },
   });
 
-  const handlePlanClick = (price: any) => {
+  const handlePlanClick = (price: Price) => {
     setPriceIdLoading(price.id);
     if (!isLoggedIn) {
+      Cookies.set("checkout-session-price", price.price_id, { expires: 1 / 288 });
       router.push("/auth/sign-up");
       return;
     }
     if (subscription) {
       onOpenPortal?.();
     } else {
-      checkoutMutation(price);
+      checkoutMutation(price.price_id);
     }
   };
 
@@ -103,9 +116,9 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
   }
 
   return (
-    <div className={cn("container mx-auto py-8", className)}>
+    <div className={cn("w-full py-4", className)}>
       <div className="flex justify-center mb-12">
-        <div className="relative self-center mt-6 bg-background rounded-lg p-0.5 flex justify-center sm:mt-8 border border-border w-1/2 shadow-md">
+        <div className="relative self-center bg-background rounded-lg p-0.5 flex justify-center sm:mt-2 border border-border w-1/2 shadow-md">
           {intervals?.includes("month") && (
             <Button
               onClick={() => setBillingInterval("month")}
@@ -128,7 +141,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
           )}
         </div>
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-8 mb-12">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-12">
         {populatedPlans?.map((plan, index) => {
           const price = plan.prices?.find((price) => price.interval === billingInterval);
           if (!price) return null;
@@ -138,7 +151,10 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
             minimumFractionDigits: 0,
           }).format((price?.unit_amount || 0) / 100);
           return (
-            <Card key={index} className={`relative ${subscription ? "border-primary" : ""}`}>
+            <Card
+              key={index}
+              className={`relative flex flex-col ${subscription ? "border-primary" : ""}`}
+            >
               {plan.popular && (
                 <Badge className="absolute top-0 right-0 rounded-bl-lg rounded-tr-lg">
                   Popular
@@ -156,7 +172,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
                   </span>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <ul className="space-y-3">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-center">
@@ -166,7 +182,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="mt-auto">
                 <Button
                   className="w-full"
                   variant={subscription ? "default" : "outline"}

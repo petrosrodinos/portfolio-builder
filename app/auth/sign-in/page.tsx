@@ -5,7 +5,7 @@ import Link from "next/link";
 import { SignInForm } from "./components/sign-in-form";
 const Login: FC = () => {
   return (
-    <Card className="p-6">
+    <Card className="p-6 max-w-md mx-auto">
       <div className="flex flex-col space-y-2 text-left">
         <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
         <p className="text-sm text-muted-foreground">

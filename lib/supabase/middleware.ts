@@ -44,17 +44,20 @@ export async function updateSession(request: NextRequest) {
     }
 
 
-
     if (
         !user &&
-        !request.nextUrl.pathname.startsWith('/auth') && request.nextUrl.pathname != '/'
+        !request.nextUrl.pathname.startsWith('/auth') &&
+        request.nextUrl.pathname != '/'
     ) {
         return NextResponse.redirect(new URL('/auth/sign-in', request.url))
     }
 
     if (
         user &&
-        request.nextUrl.pathname.startsWith('/auth') && request.nextUrl.pathname != '/auth/new-user' && request.nextUrl.pathname != '/auth/portfolio-resume'
+        request.nextUrl.pathname.startsWith('/auth') &&
+        request.nextUrl.pathname != '/auth/new-user' &&
+        request.nextUrl.pathname != '/auth/select-plan' &&
+        request.nextUrl.pathname != '/auth/portfolio-resume'
     ) {
         return NextResponse.redirect(new URL('/', request.url))
     }

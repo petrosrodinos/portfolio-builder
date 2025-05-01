@@ -1,10 +1,54 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { CheckCircle2 } from "lucide-react";
 import ProfileForm from "app/console/account/profile/components/profile-form";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { toast } from "@/hooks/use-toast";
+import { getStripe } from "@/lib/stripe/client";
+import { checkoutWithStripe } from "@/services/billing/stripe";
+import { useMutation } from "@tanstack/react-query";
 
 const CreateUser = () => {
+  const router = useRouter();
+
+  const { mutate: checkoutMutation, isPending: checkoutPending } = useMutation({
+    mutationFn: async (price_id: string) => {
+      const sessionId = await checkoutWithStripe(
+        price_id,
+        `/subscription_payment?redirect=/auth/portfolio-resume`
+      );
+      return sessionId;
+    },
+    onSuccess: async (sessionId: string) => {
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Could not checkout",
+        description: error.message,
+        duration: 3000,
+      });
+    },
+  });
+
+  const handleCreateUser = () => {
+    const openCheckoutSession = Cookies.get("checkout-session-price");
+    if (openCheckoutSession) {
+      checkoutMutation(openCheckoutSession);
+    } else {
+      router.push("/auth/select-plan");
+    }
+  };
+
+  useEffect(() => {
+    router.prefetch("/auth/select-plan");
+  }, [router]);
+
   return (
-    <div className="flex flex-col items-center justify-center from-background to-muted/20">
+    <div className="flex flex-col items-center justify-center from-background to-muted/20 max-w-md mx-auto">
       <div className="w-full max-w-3xl">
         <div className="mb-4 text-center">
           <div className="mb-2 flex justify-center">
@@ -23,7 +67,7 @@ const CreateUser = () => {
           <div className="mb-6">
             <h2 className="text-lg font-semibold">Personal Information</h2>
           </div>
-          <ProfileForm />
+          <ProfileForm onSuccess={handleCreateUser} isCheckoutPending={checkoutPending} />
         </div>
 
         <div className="mt-3 text-center text-sm text-muted-foreground">
