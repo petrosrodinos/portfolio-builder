@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { plans } from "@/constants/plans";
+import { plans, planTypes } from "@/constants/plans";
 import { getProducts } from "@/services/billing/products";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ import { checkoutWithStripe } from "@/services/billing/stripe";
 import Loading from "../loading";
 import { Price, Subscription } from "@/interfaces/billing";
 import { useAuthStore } from "@/stores/auth";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import Cookies from "js-cookie";
 type BillingInterval = "year" | "month";
 
@@ -41,7 +41,7 @@ export default function Plans({
   redirectParam,
 }: PlansProps) {
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn, plan: currentPlan } = useAuthStore();
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
   const [populatedPlans, setPopulatedPlans] = useState<any[]>([]);
@@ -78,6 +78,7 @@ export default function Plans({
   });
 
   const handlePlanClick = (price: Price) => {
+    if (!price?.id) return;
     setPriceIdLoading(price.id);
     if (!isLoggedIn) {
       Cookies.set("checkout-session-price", price.price_id, { expires: 1 / 288 });
@@ -93,18 +94,16 @@ export default function Plans({
 
   useEffect(() => {
     if (products?.length) {
-      const populatedPlans = plans
-        .map((plan) => {
-          const product = products.find((product) => product.product_id === plan.product_id);
-          if (!product) return null;
-          return {
-            ...plan,
-            name: product.name,
-            description: product.description,
-            prices: product.prices,
-          };
-        })
-        .filter(Boolean);
+      const populatedPlans = plans.map((plan) => {
+        const product = products.find((product) => product.product_id === plan.product_id);
+        if (!product) return plan;
+        return {
+          ...plan,
+          name: product.name,
+          description: product.description,
+          prices: product.prices,
+        };
+      });
       console.log("populatedPlans", populatedPlans);
       setPopulatedPlans(populatedPlans);
     }
@@ -116,8 +115,8 @@ export default function Plans({
   }
 
   return (
-    <div className={cn("w-full py-4", className)}>
-      <div className="flex justify-center mb-12">
+    <div className={cn("w-full", className)}>
+      <div className="flex justify-center mb-5">
         <div className="relative self-center bg-background rounded-lg p-0.5 flex justify-center sm:mt-2 border border-border w-1/2 shadow-md">
           {intervals?.includes("month") && (
             <Button
@@ -143,13 +142,7 @@ export default function Plans({
       </div>
       <div className="grid xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-12">
         {populatedPlans?.map((plan, index) => {
-          const price = plan.prices?.find((price) => price.interval === billingInterval);
-          if (!price) return null;
-          const priceString = new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: price.currency!,
-            minimumFractionDigits: 0,
-          }).format((price?.unit_amount || 0) / 100);
+          const price = plan.prices?.find((price) => price?.interval === billingInterval);
           return (
             <Card
               key={index}
@@ -166,7 +159,7 @@ export default function Plans({
                   {plan.description}
                 </CardDescription>
                 <div className="flex items-baseline mt-4">
-                  <span className="text-4xl font-bold">{priceString}</span>
+                  <span className="text-4xl font-bold">{formatPrice(price) || "0"}</span>
                   <span className="text-base font-medium text-muted-foreground ml-2">
                     /{billingInterval}
                   </span>
@@ -185,12 +178,14 @@ export default function Plans({
               <CardFooter className="mt-auto">
                 <Button
                   className="w-full"
-                  variant={subscription ? "default" : "outline"}
-                  loading={priceIdLoading === price.id}
-                  disabled={checkoutPending}
+                  variant={currentPlan == plan.type ? "default" : "outline"}
+                  loading={price?.id && priceIdLoading === price?.id}
+                  disabled={checkoutPending || isPending || plan.type == planTypes.free}
                   onClick={() => handlePlanClick(price)}
                 >
-                  {subscription ? "Manage" : "Subscribe"}
+                  {currentPlan == plan.type && plan.type != planTypes.free && "Manage"}
+                  {currentPlan == plan.type && plan.type == planTypes.free && "Current Plan"}
+                  {currentPlan != plan.type && "Subscribe"}
                 </Button>
               </CardFooter>
             </Card>

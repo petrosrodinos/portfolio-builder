@@ -21,6 +21,7 @@ const SubscriptionPage = () => {
     queryKey: ["subscription"],
     queryFn: () => getSubscription(user_id),
     enabled: !!user_id,
+    retry: false,
   });
 
   const { mutate: openPortal, isPending } = useMutation({

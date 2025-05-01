@@ -73,7 +73,9 @@ const SubscriptionPaymentPage = () => {
               </>
             )}
             <Button
-              onClick={() => router.push(redirectParam ?? "/console/dashboard")}
+              onClick={() =>
+                router.push(redirectParam !== "undefined" ? redirectParam : "/console/dashboard")
+              }
               className="w-full mt-4"
             >
               Continue

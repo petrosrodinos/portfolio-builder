@@ -9,10 +9,11 @@ export const planTypes = {
 
 export const plans = [
     {
-        product_id: products.basic || "prod_SCxGsQLbS5GSVI",
+        order: 1,
+        product_id: null,
         type: planTypes.free,
         name: "Free",
-        description: "",
+        description: "The best way to start your portfolio",
         prices: [],
         features: [
             "Basic portfolio templates",
@@ -20,15 +21,14 @@ export const plans = [
             "Basic analytics",
             "Community support",
         ],
-        current: true,
-        popular: true,
-
     },
     {
+        order: 2,
         name: "Basic",
         type: planTypes.basic,
-        product_id: products.basic || "prod_SCxGsQLbS5GSVI",
+        product_id: products.basic || "prod_SES1tGFTBcDhYY",
         description: "",
+        popular: true,
         prices: [],
         features: [
             "All Pro features",
@@ -40,9 +40,10 @@ export const plans = [
         ],
     },
     {
+        order: 3,
         name: "Professional",
         type: planTypes.professional,
-        product_id: products.professional || "prod_SDNZeXFBuDnISY",
+        product_id: products.professional || "prod_SES16JQgCSIxI7",
         description: "",
         prices: [],
         features: [

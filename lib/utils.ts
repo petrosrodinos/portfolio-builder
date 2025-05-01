@@ -10,6 +10,7 @@ import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
 import { defaultPreferences } from "@/stores/auth";
 import { PlanType, planTypes } from '@/constants/plans';
 import { plans } from '@/constants/plans';
+import { Price } from '@/interfaces/billing';
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -42,6 +43,14 @@ export const getPlanType = (product_id: string): PlanType => {
   if (!product_id) return planTypes.free;
   const plan = plans.find((plan) => plan.product_id === product_id);
   return plan?.type;
+}
+
+export const formatPrice = (price: Price): string => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: price?.currency || "usd",
+    minimumFractionDigits: 0,
+  }).format((price?.unit_amount || 0) / 100);
 }
 
 export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill) => {
