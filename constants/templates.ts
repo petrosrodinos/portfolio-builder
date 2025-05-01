@@ -155,5 +155,5 @@ export const PortfolioTemplates: any = [
     // }
 ]
 
-export const TemplateType = Object.values(TemplateTypes) as [string, ...string[]]
+export type TemplateType = typeof TemplateTypes[keyof typeof TemplateTypes]
 
