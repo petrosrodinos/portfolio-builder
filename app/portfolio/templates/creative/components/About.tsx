@@ -163,7 +163,7 @@ const About: FC<AboutProps> = ({
                       className="flex flex-col items-center p-3 rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg dark:shadow-gray-900 transition-all duration-300 cursor-pointer group"
                       key={index}
                     >
-                      {label} • {level}
+                      {label} {level && `• ${level}`}
                     </motion.li>
                   );
                 })}
