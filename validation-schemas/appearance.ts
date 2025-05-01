@@ -1,4 +1,4 @@
-import { fonts } from "@/constants/fonts";
+import { fonts } from "@/config/fonts";
 import { z } from "zod";
 
 

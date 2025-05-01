@@ -42,7 +42,7 @@ export const getSkills = async (user_id: string, type: PortfolioSkillsType): Pro
 
 
     } catch (error) {
-        // console.error('Error getting profile', error);
+        console.error('Error getting skills', error);
         throw error;
     }
 }
