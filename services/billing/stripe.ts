@@ -155,7 +155,8 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
   }
 
   if (accountExist) {
-    return { account_id: accountExist.id, account_link: accountExist.login_page.url };
+    const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
+    return { account_id: accountExist.id, account_link: loginLink.url };
   }
 
   const account = await stripe.accounts.create({
@@ -188,6 +189,12 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
 export async function getAccount(account_id: string) {
   const account = await stripe.accounts.retrieve(account_id);
   return account;
+}
+
+export async function getAccountLoginLink(stripe_account_id: string): Promise<string | null> {
+  const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
+
+  return loginLink?.url;
 }
 
 export async function hasFinishedOnboarding(account_id: string): Promise<boolean> {

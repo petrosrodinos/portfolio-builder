@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, DollarSign } from "lucide-react";
 import GenerateCode from "./components/generate-code";
@@ -8,10 +8,8 @@ import { getReferredUsers } from "@/services/affiliate";
 import { useAuthStore } from "@/stores/auth";
 import { useQuery } from "@tanstack/react-query";
 import ReferedUsers from "./components/refered-users";
-
+import { AFFILIATE_COMMISSION_PERCENTAGE } from "@/constants/index";
 const AffiliatePage = () => {
-  const totalEarnings = 80;
-
   const { user_id } = useAuthStore();
 
   const { data, isLoading } = useQuery({
@@ -19,6 +17,15 @@ const AffiliatePage = () => {
     queryFn: () => getReferredUsers(user_id),
     enabled: !!user_id,
   });
+
+  const totalCommission = useMemo(() => {
+    if (!data) return 0;
+    console.log(data);
+    return data.reduce((acc, user) => {
+      const amount = user.users.subscriptions?.prices?.unit_amount / 100 || 0;
+      return acc + amount * AFFILIATE_COMMISSION_PERCENTAGE;
+    }, 0);
+  }, [data]);
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
@@ -31,7 +38,7 @@ const AffiliatePage = () => {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalEarnings}</div>
+              <div className="text-2xl font-bold">${totalCommission}</div>
             </CardContent>
           </Card>
           <Card className="w-full sm:w-[200px]">

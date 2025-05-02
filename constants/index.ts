@@ -3,6 +3,7 @@ const BASIC_PRODUCT_ID = process.env.NEXT_PUBLIC_BASIC_PRODUCT_ID;
 const PROFESSIONAL_PRODUCT_ID = process.env.NEXT_PUBLIC_PROFESSIONAL_PRODUCT_ID;
 export const PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 export const TRIAL_PERIOD_DAYS = 7;
+export const AFFILIATE_COMMISSION_PERCENTAGE = 0.1; // 10%
 
 
 const googleSheets = {

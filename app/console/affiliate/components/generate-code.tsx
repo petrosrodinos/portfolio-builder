@@ -1,7 +1,7 @@
 "use client";
 
 import { PUBLIC_SITE_URL } from "@/constants/index";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "@/stores/auth";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -11,7 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Copy, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Loading from "../loading";
-import { createAccountInStripeAndOnboard, getAccount } from "@/services/billing/stripe";
+import {
+  createAccountInStripeAndOnboard,
+  getAccount,
+  getAccountLoginLink,
+} from "@/services/billing/stripe";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -35,6 +39,14 @@ export default function GenerateCode() {
     queryFn: async () => {
       const account = await getAccount(data?.stripe_account_id);
       return account;
+    },
+    enabled: !!data?.stripe_account_id,
+  });
+
+  const { data: loginLink, isPending: isLoadingLoginLink } = useQuery({
+    queryKey: ["login-link", data?.stripe_account_id],
+    queryFn: async () => {
+      return getAccountLoginLink(data.stripe_account_id);
     },
     enabled: !!data?.stripe_account_id,
   });
@@ -96,7 +108,7 @@ export default function GenerateCode() {
     setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${data.code}`);
   }, [data]);
 
-  if (isLoading || isLoadingAccount) return <Loading />;
+  if (isLoading || isLoadingAccount || isLoadingLoginLink) return <Loading />;
 
   return (
     <Card>
@@ -137,19 +149,20 @@ export default function GenerateCode() {
                 allows us to process payments and send your earnings.
               </p>
             )}
-            {!stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && (
+            {!stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled ? (
               <p className="text-sm text-muted-foreground">
                 Your Stripe account is created. Please finish onboarding to start earning
                 commissions.
               </p>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Your Stripe account is created. You are now ready to start earning commissions.
+              </p>
             )}
-            {data?.stripe_account_id && (
+            {loginLink && (
               <p className="text-sm text-blue-500">
-                <Link
-                  href={`https://dashboard.stripe.com/connect/accounts/${data.stripe_account_id}`}
-                  target="_blank"
-                >
-                  Onboarding
+                <Link href={loginLink || ""} target="_blank">
+                  Stripe Portal
                 </Link>
               </p>
             )}

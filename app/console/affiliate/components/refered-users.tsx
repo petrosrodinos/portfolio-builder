@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import Loading from "../loading";
 import { ReferredUser } from "@/interfaces/affiliate";
-
 interface ReferedUsersProps {
   referredUsers: ReferredUser[];
   isLoading: boolean;
