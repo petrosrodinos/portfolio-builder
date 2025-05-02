@@ -137,3 +137,7 @@ export const formatDate = (date: string) => {
   if (!date) return "N/A";
   return new Date(date).toLocaleDateString();
 };
+
+export const generateCode = (length: number = 6) => {
+  return Math.random().toString(36).substring(2, 2 + length);
+};

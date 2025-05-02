@@ -7,6 +7,8 @@ export const SupabaseTables = {
     prices: 'prices',
     subscriptions: 'subscriptions',
     customers: 'customers',
+    affiliate_links: 'affiliate_links',
+    referred_users: 'referred_users',
 } as const;
 
 export const SupabaseBuckets = {
