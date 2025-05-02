@@ -46,11 +46,7 @@ export const sidebarData: SidebarData = {
           url: '/console/admin/users',
           icon: IconUser,
         },
-        {
-          title: "Subscriptions",
-          url: "/console/admin/subscriptions",
-          icon: IconCreditCard,
-        },
+
       ],
     },
     {

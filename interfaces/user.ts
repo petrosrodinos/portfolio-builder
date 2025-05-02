@@ -1,3 +1,4 @@
+import { Subscription } from "./billing";
 
 
 export interface UpdateUser {
@@ -20,6 +21,7 @@ export interface User {
     avatar?: UserAvatar;
     preferences?: UserPreferences;
     created_at: string;
+    subscriptions?: Subscription;
 }
 
 export interface UserAvatar {

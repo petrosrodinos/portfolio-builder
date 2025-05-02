@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/client';
 import { UpdateUser, User, UserAvatar } from 'interfaces/user';
 import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { deleteFile, uploadFile } from './storage';
-import { cache } from 'react';
 import { getAffiliateCodeByCode } from './affiliate';
 
 const supabase = createClient();
@@ -68,10 +67,19 @@ export const getUser = async (user_id: string): Promise<User> => {
     }
 }
 
-export const getLoggedUser = cache(async () => {
-    const {
-        data: { user }
-    } = await supabase.auth.getUser();
-    return user;
-});
+export const getUsers = async (): Promise<User[]> => {
+    try {
+        const { error, data } = await supabase
+            .from(SupabaseTables.users)
+            .select('*,subscriptions(*,prices(*,products(*)))');
 
+        if (error) {
+            throw error;
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching users', error);
+        throw error;
+    }
+}
