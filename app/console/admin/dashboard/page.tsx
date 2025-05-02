@@ -7,12 +7,9 @@ import Users from "./components/users";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "@/services/user";
 import Loading from "./components/loading";
+
 function DashboardView() {
-  const {
-    data: users,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: () => getUsers(),
   });

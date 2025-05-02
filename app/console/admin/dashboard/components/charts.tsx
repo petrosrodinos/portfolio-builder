@@ -1,53 +1,21 @@
 "use client";
 
-import { Globe, Briefcase, Calendar, Users } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
+import { Globe, Briefcase, Calendar, Users, CreditCard } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { User } from "@/interfaces/user";
+import { getUserDemographics } from "@/lib/admin_statistics";
+import { PIE_CHART_COLORS } from "@/constants/charts";
 
 interface ChartsProps {
   users: User[];
 }
 
 const Charts = ({ users }: ChartsProps) => {
-  const ageData = [
-    { age: "18-24", users: 400 },
-    { age: "25-34", users: 800 },
-    { age: "35-44", users: 600 },
-    { age: "45-54", users: 300 },
-    { age: "55+", users: 200 },
-  ];
-
-  const userCreationData = [
-    { date: "2024-01", users: 100 },
-    { date: "2024-02", users: 250 },
-    { date: "2024-03", users: 400 },
-    { date: "2024-04", users: 600 },
-    { date: "2024-05", users: 800 },
-    { date: "2024-06", users: 1000 },
-  ];
-
-  const professionData = [
-    { name: "Software", value: 35 },
-    { name: "Healthcare", value: 20 },
-    { name: "Education", value: 15 },
-    { name: "Business", value: 20 },
-    { name: "Other", value: 10 },
-  ];
-
-  const countryData = [
-    { country: "USA", users: 1000 },
-    { country: "UK", users: 500 },
-    { country: "Canada", users: 300 },
-    { country: "Australia", users: 200 },
-    { country: "Germany", users: 400 },
-  ];
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
+  const { userCreationData, ageData, professionData, countryData, subscriptionData } = getUserDemographics(users);
 
   return (
     <div>
-      {/* User Demographics Charts */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {/* User Creation Trend */}
         <Card className="w-full">
@@ -118,7 +86,7 @@ const Charts = ({ users }: ChartsProps) => {
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
                     {professionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -139,13 +107,55 @@ const Charts = ({ users }: ChartsProps) => {
           <CardContent>
             <div className="h-[250px] md:h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={countryData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="country" />
-                  <YAxis />
+                <PieChart>
+                  <Pie
+                    data={countryData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="users"
+                    label={({ country, percent }) => `${country} ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {countryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]} />
+                    ))}
+                  </Pie>
                   <Tooltip />
-                  <Bar dataKey="users" fill="#82ca9d" />
-                </BarChart>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Subscription Distribution */}
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <CreditCard className="mr-2 h-4 w-4" />
+              Subscription Distribution
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[250px] md:h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={subscriptionData} cx="50%" cy="50%" labelLine={true} outerRadius={80} innerRadius={40} fill="#8884d8" dataKey="value" label={({ name, value }) => `${name}: ${value}`}>
+                    {subscriptionData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]}
+                        style={{
+                          stroke: "#fff",
+                          strokeWidth: 1,
+                        }}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: number, name: string) => [`${value} users`, name]} />
+                  <Legend verticalAlign="bottom" height={36} formatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)} />
+                </PieChart>
               </ResponsiveContainer>
             </div>
           </CardContent>

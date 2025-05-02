@@ -4,42 +4,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UsersIcon, ArrowUpRight, ArrowDownRight, UserCheck } from "lucide-react";
 import React from "react";
 import { User } from "@/interfaces/user";
+import { getAdminStatistics } from "@/lib/admin_statistics";
 
 interface StatsProps {
   users: User[];
 }
 
 const Stats = ({ users }: StatsProps) => {
-  const totalUsers = users.length;
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
-
-  const usersThisMonth = users.filter((user) => {
-    const userDate = new Date(user.created_at);
-    return userDate.getMonth() === currentMonth && userDate.getFullYear() === currentYear;
-  }).length;
-
-  const usersLastMonth = users.filter((user) => {
-    const userDate = new Date(user.created_at);
-    const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-    const year = currentMonth === 0 ? currentYear - 1 : currentYear;
-    return userDate.getMonth() === lastMonth && userDate.getFullYear() === year;
-  }).length;
-
-  const activeUsers = users.filter((user) => user.subscriptions).length;
-
-  const calculatePercentageChange = (current: number, previous: number) => {
-    if (previous === 0) return 100;
-    return ((current - previous) / previous) * 100;
-  };
-
-  const newUsersChange = calculatePercentageChange(usersThisMonth, usersLastMonth);
-  const newUsersChangeFormatted = `${newUsersChange >= 0 ? "+" : ""}${newUsersChange.toFixed(1)}%`;
+  const { usersThisMonth, activeUsers, newUsersChange, newUsersChangeFormatted } = getAdminStatistics(users);
 
   const stats = [
     {
       title: "Total Users",
-      value: totalUsers.toString(),
+      value: users?.length.toString(),
       change: "",
       icon: UsersIcon,
       trend: "up",
@@ -54,7 +31,7 @@ const Stats = ({ users }: StatsProps) => {
     {
       title: "Active Users",
       value: activeUsers.toString(),
-      change: `${((activeUsers / totalUsers) * 100).toFixed(1)}%`,
+      change: `${((activeUsers / users?.length) * 100).toFixed(1)}%`,
       icon: UserCheck,
       trend: "up",
     },
