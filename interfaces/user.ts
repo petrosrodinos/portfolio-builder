@@ -14,7 +14,7 @@ export interface UpdateUser {
 export interface User {
     id: number;
     user_id: string;
-    fullname: string;
+    full_name: string;
     country: string;
     email: string;
     date_of_birth: string;

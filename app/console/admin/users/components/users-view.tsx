@@ -1,59 +1,38 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoreHorizontal, Search, UserPlus } from "lucide-react";
-
-// Mock data for demonstration
-const users = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Admin",
-    status: "Active",
-    lastActive: "2023-04-20",
-    avatar: "https://github.com/shadcn.png",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "User",
-    status: "Inactive",
-    lastActive: "2023-04-19",
-    avatar: "https://github.com/shadcn.png",
-  },
-  // Add more mock users as needed
-];
+import { MoreHorizontal, Search } from "lucide-react";
+import { getUsers } from "@/services/user";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "./loading";
+import { User } from "@/interfaces/user";
 
 const UsersView = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const { data: users, isLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => getUsers(),
+    select: (data) => {
+      if (!searchTerm) return data;
+      const term = searchTerm.toLowerCase();
+      return data.filter((user: User) => user.full_name.toLowerCase().includes(term) || user.email.toLowerCase().includes(term));
+    },
+  });
+
+  if (isLoading) return <Loading />;
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Users</h1>
-        <Button>
-          <UserPlus className="mr-2 h-4 w-4" />
-          Add User
-        </Button>
       </div>
 
       <Card>
@@ -64,7 +43,7 @@ const UsersView = () => {
           <div className="flex items-center mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search users..." className="pl-8" />
+              <Input placeholder="Search by name or email..." className="pl-8" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
 
@@ -72,40 +51,40 @@ const UsersView = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>User</TableHead>
-                  <TableHead>Role</TableHead>
+                  <TableHead>Avatar</TableHead>
+                  <TableHead>User ID</TableHead>
+                  <TableHead>Full Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Country</TableHead>
+                  <TableHead>Date of Birth</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Last Active</TableHead>
+                  <TableHead>Created At</TableHead>
                   <TableHead className="w-[70px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users.map((user) => (
-                  <TableRow key={user.id}>
+                {users?.map((user: User) => (
+                  <TableRow key={user.user_id}>
                     <TableCell>
-                      <div className="flex items-center gap-3">
-                        <Avatar>
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback>
-                            {user.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="font-medium">{user.name}</div>
-                          <div className="text-sm text-muted-foreground">{user.email}</div>
-                        </div>
-                      </div>
+                      <Avatar>
+                        <AvatarImage src={user.avatar?.url} alt={user.full_name} />
+                        <AvatarFallback>
+                          {user.full_name
+                            ?.split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </AvatarFallback>
+                      </Avatar>
                     </TableCell>
-                    <TableCell>{user.role}</TableCell>
+                    <TableCell>{user.user_id}</TableCell>
+                    <TableCell>{user.full_name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.country}</TableCell>
+                    <TableCell>{new Date(user.date_of_birth).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <Badge variant={user.status === "Active" ? "default" : "secondary"}>
-                        {user.status}
-                      </Badge>
+                      <Badge variant={user.subscriptions?.status === "active" ? "default" : "secondary"}>{user.subscriptions?.status}</Badge>
                     </TableCell>
-                    <TableCell>{user.lastActive}</TableCell>
+                    <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
