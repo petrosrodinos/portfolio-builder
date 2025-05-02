@@ -162,7 +162,7 @@ export default function GenerateCode() {
             {loginLink && (
               <p className="text-sm text-blue-500">
                 <Link href={loginLink || ""} target="_blank">
-                  Stripe Portal
+                  Stripe Account Portal
                 </Link>
               </p>
             )}
