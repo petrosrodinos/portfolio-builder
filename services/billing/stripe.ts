@@ -134,3 +134,11 @@ export async function createStripePortal(returnUrl: string) {
     }
   }
 }
+
+export const createCustomerInStripe = async (uuid: string, email: string) => {
+  const customerData = { metadata: { supabaseUUID: uuid }, email: email };
+  const newCustomer = await stripe.customers.create(customerData);
+  if (!newCustomer) throw new Error('Stripe customer creation failed.');
+
+  return newCustomer.id;
+};

@@ -5,6 +5,7 @@ import { stripe } from '../../lib/stripe/config';
 import { toDateTime } from '@/lib/utils';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { SupabaseTables } from '@/constants/supabase';
+import { createCustomerInStripe } from './stripe';
 
 
 const supabaseAdmin = await createAdminClient();
@@ -23,13 +24,7 @@ const upsertCustomerToSupabase = async (uuid: string, customerId: string) => {
     return customerId;
 };
 
-const createCustomerInStripe = async (uuid: string, email: string) => {
-    const customerData = { metadata: { supabaseUUID: uuid }, email: email };
-    const newCustomer = await stripe.customers.create(customerData);
-    if (!newCustomer) throw new Error('Stripe customer creation failed.');
 
-    return newCustomer.id;
-};
 
 const createOrRetrieveCustomer = async ({
     email,

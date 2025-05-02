@@ -19,6 +19,7 @@ import {
   IconUser,
   IconCreditCard,
   IconBrowserCheck,
+  IconUsers,
 } from '@tabler/icons-react'
 import { Command, CreditCard, Share2 } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -159,6 +160,22 @@ export const sidebarData: SidebarData = {
             {
               title: 'Subscription',
               url: '/console/billing/subscription',
+              icon: IconCalendarDue,
+            },
+            // {
+            //   title: 'invoices',
+            //   url: '/console/billing/invoices',
+            //   icon: IconFileInvoiceFilled,
+            // },
+          ],
+        },
+        {
+          title: 'Affiliate',
+          icon: IconUsers,
+          items: [
+            {
+              title: 'Affiliate',
+              url: '/console/affiliate',
               icon: IconCalendarDue,
             },
             // {
