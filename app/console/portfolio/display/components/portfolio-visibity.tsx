@@ -1,16 +1,8 @@
 import { Button } from "@/components/ui/button";
-import {
-  DialogHeader,
-  DialogFooter,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { DialogHeader, DialogFooter, Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { UpdatePortfolioProfileBio } from "@/interfaces/portfolio";
-import { Portfolio } from "@/interfaces/templates";
 import { upsertProfile } from "@/services/profile";
 import { useAuthStore } from "@/stores/auth";
 import { useMutation } from "@tanstack/react-query";
@@ -72,11 +64,8 @@ const PortfolioVisibility = ({ visible }: PortfolioVisibilityProps) => {
           <DialogHeader>
             <DialogTitle>Change Portfolio Visibility</DialogTitle>
             <DialogDescription>
-              Are you sure you want to{" "}
-              {isProfileVisible ? "make your portfolio visible" : "hide your portfolio"}?
-              {isProfileVisible
-                ? " Others will be able to view your portfolio."
-                : " Your portfolio will be hidden from public view."}
+              Are you sure you want to {!isProfileVisible ? "make your portfolio visible" : "hide your portfolio"}?
+              {!isProfileVisible ? " Others will be able to view your portfolio." : " Your portfolio will be hidden from public view."}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
