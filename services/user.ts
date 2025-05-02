@@ -3,10 +3,11 @@ import { UpdateUser, User, UserAvatar } from 'interfaces/user';
 import { SupabaseBuckets, SupabaseTables } from '@/constants/supabase';
 import { deleteFile, uploadFile } from './storage';
 import { cache } from 'react';
+import { getAffiliateCodeByCode } from './affiliate';
 
 const supabase = createClient();
 
-export const upsertUser = async (payload: UpdateUser): Promise<User> => {
+export const upsertUser = async (payload: UpdateUser, referral_code?: string): Promise<User> => {
     try {
         let avatar = payload.avatar as UserAvatar;
 
@@ -25,6 +26,16 @@ export const upsertUser = async (payload: UpdateUser): Promise<User> => {
             .upsert({ ...payload, avatar },
                 { onConflict: 'user_id' }
             ).select().single();
+
+        if (referral_code) {
+            const affiliateCode = await getAffiliateCodeByCode(referral_code);
+            if (affiliateCode) {
+                await supabase.from(SupabaseTables.referred_users).insert({
+                    user_id: data.user_id,
+                    referal_user_id: affiliateCode.user_id,
+                })
+            }
+        }
 
 
         if (error) {

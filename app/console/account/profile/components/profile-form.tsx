@@ -31,7 +31,8 @@ import { CountriesOptions } from "@/constants/dropdowns/countries";
 import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
 import { TemplateTypes } from "@/constants/templates";
-
+import Cookies from "js-cookie";
+import { CookieKeys } from "@/constants/cookies";
 interface AccountProfileFormProps {
   onSuccess?: () => void;
   isCheckoutPending?: boolean;
@@ -43,6 +44,7 @@ export default function AccountProfileForm({
 }: AccountProfileFormProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const referral_code = Cookies.get(CookieKeys.referral_code);
   const isProfilePage = pathname === "/console/account/profile";
   const { user_id, email, updateUser: updateStoreUser } = useAuthStore((state) => state);
   const [fileToDelete, setFileToDelete] = useState<UserAvatar | null>(null);
@@ -64,7 +66,7 @@ export default function AccountProfileForm({
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => upsertUser(data),
+    mutationFn: (data: any) => upsertUser(data, referral_code),
     onSuccess: (data: any) => {
       updateStoreUser({
         ...data,

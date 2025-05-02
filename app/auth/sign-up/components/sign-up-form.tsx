@@ -18,17 +18,21 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "services/auth";
 import { SignUpUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { SignUpSchema, SignUpFormValues } from "validation-schemas/auth";
 import { useEffect } from "react";
-
+import Cookies from "js-cookie";
+import { Cookie } from "next/dist/compiled/@next/font/dist/google";
+import { CookieKeys } from "@/constants/cookies";
 interface SignUpFormProps {
   className?: string;
   props?: any;
 }
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
+  const searchParams = useSearchParams();
+  const referral_code = searchParams.get("ref");
   const { login } = useAuthStore((state) => state);
   const router = useRouter();
   const form = useForm<SignUpFormValues>({
@@ -61,6 +65,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   });
 
   function onSubmit(data: SignUpFormValues) {
+    Cookies.set(CookieKeys.referral_code, referral_code);
     mutate({ email: data.email, password: data.password });
   }
 

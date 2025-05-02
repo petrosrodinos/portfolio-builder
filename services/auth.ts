@@ -2,6 +2,7 @@ import { AuthUser, SignInUser, SignUpUser } from 'interfaces/auth';
 import { SupabaseTables } from '@/constants/supabase';
 import { formatAuthUser } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
+import { getAffiliateCodeByCode } from './affiliate';
 
 const supabase = createClient();
 
