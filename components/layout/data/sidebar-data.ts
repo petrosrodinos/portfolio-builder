@@ -20,6 +20,7 @@ import {
   IconCreditCard,
   IconBrowserCheck,
   IconUsers,
+  IconMessageCircle,
 } from '@tabler/icons-react'
 import { Building2, Command, CreditCard, Share2 } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -46,7 +47,11 @@ export const sidebarData: SidebarData = {
           url: '/console/admin/users',
           icon: IconUser,
         },
-
+        {
+          title: 'Feedback',
+          url: '/console/admin/feedback',
+          icon: IconMessageCircle,
+        },
       ],
     },
     {

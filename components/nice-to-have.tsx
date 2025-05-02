@@ -4,18 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "stores/auth";
-import { sendFeedback } from "@/services/contact";
+import { sendFeedback } from "@/services/feedback";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const NiceToHave = () => {
   const { user_id, email, full_name } = useAuthStore();
@@ -58,19 +50,14 @@ const NiceToHave = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="relative h-7 w-24 flex justify-start rounded-md bg-muted/25 text-xs font-normal text-muted-foreground shadow-none hover:bg-muted/50"
-        >
+        <Button variant="outline" className="relative h-7 w-24 flex justify-start rounded-md bg-muted/25 text-xs font-normal text-muted-foreground shadow-none hover:bg-muted/50">
           Feedback
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Nice To Have</DialogTitle>
-          <DialogDescription>
-            Share your feedback on what features you'd like to see in the future.
-          </DialogDescription>
+          <DialogDescription>Share your feedback on what features you'd like to see in the future.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">

@@ -6,7 +6,7 @@ export const TRIAL_PERIOD_DAYS = 7;
 export const AFFILIATE_COMMISSION_PERCENTAGE = 0.1; // 10%
 
 
-const googleSheets = {
+export const googleSheets = {
   feedBack: {
     sheetId: "12tWOa9IFcM6UHAFV1nPVvPMKO2-CeHXKY2ryQ_-1Oig",
     sheetName: "Sheet1",
@@ -14,7 +14,7 @@ const googleSheets = {
 };
 
 export const apicoUrls = {
-  feedBack: `https://api.apico.dev/v1/${APICO_INTEGRATION_ID}/${googleSheets.feedBack.sheetId}/values/${googleSheets.feedBack.sheetName}:append`,
+  feedBack: `https://api.apico.dev/v1/${APICO_INTEGRATION_ID}/${googleSheets.feedBack.sheetId}`,
 };
 
 export const aiConfig = {
