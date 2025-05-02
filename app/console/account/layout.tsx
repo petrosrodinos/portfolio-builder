@@ -2,6 +2,7 @@ import { IconPalette, IconUser, IconMail, IconLockPassword } from "@tabler/icons
 import { Separator } from "@/components/ui/separator";
 import { Main } from "@/components/layout/main";
 import SidebarNav from "@/components/sidebar-nav";
+import { Building2 } from "lucide-react";
 
 export default function AccountLayout({ children }) {
   return (
@@ -31,6 +32,11 @@ const sidebarNavItems = [
     icon: <IconUser size={18} />,
     href: "/console/account/profile",
   },
+  // {
+  //   title: "Business",
+  //   icon: <Building2 size={18} />,
+  //   href: "/console/account/business",
+  // },
   // {
   //   title: "Email",
   //   icon: <IconMail size={18} />,

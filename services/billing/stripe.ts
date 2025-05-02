@@ -5,7 +5,8 @@ import { createClient } from '@/lib/supabase/server';
 import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/utils';
 import { createOrRetrieveCustomer } from './web_hooks';
 import { stripe } from '@/lib/stripe/config';
-import { TRIAL_PERIOD_DAYS } from '@/constants/index';
+import { PUBLIC_SITE_URL, TRIAL_PERIOD_DAYS } from '@/constants/index';
+import { SupabaseTables } from '@/constants/supabase';
 
 
 export async function checkoutWithStripe(
@@ -13,8 +14,8 @@ export async function checkoutWithStripe(
   redirectPath: string
 ): Promise<string> {
   try {
-
     const supabase = await createClient();
+
     const {
       error,
       data: { user }
@@ -86,6 +87,7 @@ export async function checkoutWithStripe(
 export async function createStripePortal(returnUrl: string) {
   try {
     const supabase = await createClient();
+
     const {
       error,
       data: { user }
@@ -135,10 +137,71 @@ export async function createStripePortal(returnUrl: string) {
   }
 }
 
-export const createCustomerInStripe = async (uuid: string, email: string) => {
+export async function createCustomerInStripe(uuid: string, email: string) {
   const customerData = { metadata: { supabaseUUID: uuid }, email: email };
   const newCustomer = await stripe.customers.create(customerData);
   if (!newCustomer) throw new Error('Stripe customer creation failed.');
 
   return newCustomer.id;
 };
+
+export async function createAccountInStripeAndOnboard(user_id: string, email: string, stripe_account_id?: string) {
+
+  const supabase = await createClient();
+
+  let accountExist;
+  if (stripe_account_id) {
+    accountExist = await getAccount(stripe_account_id);
+  }
+
+  if (accountExist) {
+    return { account_id: accountExist.id, account_link: accountExist.login_page.url };
+  }
+
+  const account = await stripe.accounts.create({
+    type: 'express',
+    email: email,
+    capabilities: {
+      transfers: { requested: true },
+    },
+  });
+
+  const { error } = await supabase
+    .from(SupabaseTables.affiliate_links)
+    .upsert({ user_id, stripe_account_id: account.id }, { onConflict: 'user_id' })
+
+  if (error) {
+    throw error;
+  }
+
+  const accountLink = await stripe.accountLinks.create({
+    account: account.id,
+    refresh_url: `${PUBLIC_SITE_URL}/console/affiliate`,
+    return_url: `${PUBLIC_SITE_URL}/console/affiliate`,
+    type: 'account_onboarding',
+  });
+
+  return { account_id: account.id, account_link: accountLink.url };
+};
+
+
+export async function getAccount(account_id: string) {
+  const account = await stripe.accounts.retrieve(account_id);
+  return account;
+}
+
+export async function hasFinishedOnboarding(account_id: string): Promise<boolean> {
+  const account = await getAccount(account_id);
+  return account.charges_enabled && account.payouts_enabled;
+}
+
+export async function createTransfer(account_id: string, amount: number) {
+  const transfer = await stripe.transfers.create({
+    amount: amount,
+    currency: 'usd',
+    destination: account_id,
+  });
+
+  return transfer;
+}
+

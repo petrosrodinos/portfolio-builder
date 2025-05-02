@@ -21,7 +21,7 @@ import {
   IconBrowserCheck,
   IconUsers,
 } from '@tabler/icons-react'
-import { Command, CreditCard, Share2 } from 'lucide-react'
+import { Building2, Command, CreditCard, Share2 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
@@ -136,6 +136,11 @@ export const sidebarData: SidebarData = {
               url: '/console/account/profile',
               icon: IconUserCog,
             },
+            // {
+            //   title: 'Business',
+            //   url: '/console/account/business',
+            //   icon: Building2,
+            // },
             // {
             //   title: 'Email',
             //   url: '/console/account/email',

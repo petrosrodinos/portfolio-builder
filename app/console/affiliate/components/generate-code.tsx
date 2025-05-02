@@ -1,3 +1,5 @@
+"use client";
+
 import { PUBLIC_SITE_URL } from "@/constants/index";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -6,22 +8,57 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { createAffiliateCode, getAffiliateCode } from "@/services/affiliate";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, Link } from "lucide-react";
+import { Copy, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Loading from "../loading";
-const GenerateCode = () => {
-  const { user_id } = useAuthStore();
+import { createAccountInStripeAndOnboard, getAccount } from "@/services/billing/stripe";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+export default function GenerateCode() {
+  const { user_id, email } = useAuthStore();
   const { toast } = useToast();
   const [affiliateLink, setAffiliateLink] = useState<string>("");
+  const router = useRouter();
 
   const { data, isPending: isLoading } = useQuery({
     queryKey: ["affiliate-code"],
-    queryFn: () => getAffiliateCode(user_id),
-    // retry: false,
+    queryFn: async () => {
+      const affiliateCode = await getAffiliateCode(user_id);
+      return affiliateCode;
+    },
+    enabled: !!user_id,
+  });
+
+  const { data: stripeAccount, isPending: isLoadingAccount } = useQuery({
+    queryKey: ["stripe-account"],
+    queryFn: async () => {
+      const account = await getAccount(data?.stripe_account_id);
+      return account;
+    },
+    enabled: !!data?.stripe_account_id,
+  });
+
+  const { mutate: createAccountInStripe, isPending: isCreatingAccount } = useMutation({
+    mutationFn: () => createAccountInStripeAndOnboard(user_id, email, data?.stripe_account_id),
+    onSuccess: (data) => {
+      toast({
+        title: "Account created",
+        description: "Your account has been created successfully.",
+      });
+      router.push(data.account_link);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
   });
 
   const { mutate: generateAffiliateCode, isPending } = useMutation({
-    mutationFn: () => createAffiliateCode(user_id),
+    mutationFn: () => createAffiliateCode({ user_id }),
     onSuccess: (data) => {
       setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${data.code}`);
       toast({
@@ -46,12 +83,20 @@ const GenerateCode = () => {
     });
   };
 
+  const handleGenerateCode = () => {
+    if (!data?.stripe_account_id) {
+      createAccountInStripe();
+    } else {
+      generateAffiliateCode();
+    }
+  };
+
   useEffect(() => {
-    if (!data) return;
+    if (!data?.code) return;
     setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${data.code}`);
   }, [data]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || isLoadingAccount) return <Loading />;
 
   return (
     <Card>
@@ -85,21 +130,43 @@ const GenerateCode = () => {
               <Copy className="h-3.5 w-3.5" />
             </Button>
           </div>
-          <div className="flex justify-start">
-            <Button
-              loading={isPending}
-              disabled={isPending || !!affiliateLink}
-              onClick={() => generateAffiliateCode()}
-              className="h-9 text-sm px-3"
-            >
-              <Link className="h-3.5 w-3.5 mr-1.5" />
-              Generate Link
-            </Button>
+          <div className="flex flex-col gap-2">
+            {!data?.stripe_account_id && (
+              <p className="text-sm text-muted-foreground">
+                To start earning commissions, you need to connect your Stripe account first. This
+                allows us to process payments and send your earnings.
+              </p>
+            )}
+            {!stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && (
+              <p className="text-sm text-muted-foreground">
+                Your Stripe account is created. Please finish onboarding to start earning
+                commissions.
+              </p>
+            )}
+            {data?.stripe_account_id && (
+              <p className="text-sm text-blue-500">
+                <Link
+                  href={`https://dashboard.stripe.com/connect/accounts/${data.stripe_account_id}`}
+                  target="_blank"
+                >
+                  Onboarding
+                </Link>
+              </p>
+            )}
+            <div className="flex justify-start">
+              <Button
+                loading={isPending || isCreatingAccount}
+                disabled={isPending || isCreatingAccount || !!affiliateLink}
+                onClick={() => handleGenerateCode()}
+                className="h-9 text-sm px-3"
+              >
+                <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
+                {!data?.stripe_account_id ? "Connect Stripe" : "Generate Link"}
+              </Button>
+            </div>
           </div>
         </div>
       </CardContent>
     </Card>
   );
-};
-
-export default GenerateCode;
+}

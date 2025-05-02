@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import {
@@ -16,7 +18,7 @@ interface ReferedUsersProps {
   isLoading: boolean;
 }
 
-const ReferedUsers = ({ referredUsers, isLoading }: ReferedUsersProps) => {
+export default function ReferedUsers({ referredUsers, isLoading }: ReferedUsersProps) {
   if (isLoading) {
     return <Loading type="table" />;
   }
@@ -25,7 +27,7 @@ const ReferedUsers = ({ referredUsers, isLoading }: ReferedUsersProps) => {
     <Card>
       <CardHeader>
         <CardTitle>Referred Users</CardTitle>
-        <CardDescription>Track your referrals and their status</CardDescription>
+        <CardDescription>Track your referrals and their status.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -40,7 +42,7 @@ const ReferedUsers = ({ referredUsers, isLoading }: ReferedUsersProps) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {referredUsers.map((user) => (
+              {referredUsers?.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.users.full_name}</TableCell>
                   <TableCell className="hidden sm:table-cell">{user.users.email}</TableCell>
@@ -62,7 +64,7 @@ const ReferedUsers = ({ referredUsers, isLoading }: ReferedUsersProps) => {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    {user.users.subscriptions?.prices?.products?.name || "N/A"}
+                    {user.users.subscriptions?.prices?.products?.name || "Free"}
                   </TableCell>
                 </TableRow>
               ))}
@@ -72,6 +74,4 @@ const ReferedUsers = ({ referredUsers, isLoading }: ReferedUsersProps) => {
       </CardContent>
     </Card>
   );
-};
-
-export default ReferedUsers;
+}

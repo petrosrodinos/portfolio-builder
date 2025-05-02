@@ -1,24 +1,23 @@
 import { createClient } from "@/lib/supabase/client";
 import { SupabaseTables } from "@/constants/supabase";
-import { AffiliateLink, ReferredUser } from "@/interfaces/affiliate";
+import { AffiliateCode, UpsertAffiliateCode, ReferredUser } from "@/interfaces/affiliate";
 import { generateCode } from "@/lib/utils";
-import { User } from "@/interfaces/user";
+
 const supabase = createClient();
 
-export const createAffiliateCode = async (user_id: string): Promise<AffiliateLink> => {
+export async function createAffiliateCode(payload: UpsertAffiliateCode): Promise<AffiliateCode> {
     try {
         const code = generateCode();
+
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
-            .insert({ user_id: user_id, code })
+            .upsert({ ...payload, code }, { onConflict: 'user_id' })
             .select('*')
             .single();
 
         if (error) {
             throw error;
         }
-
-
 
         return data;
     } catch (error) {
@@ -27,7 +26,7 @@ export const createAffiliateCode = async (user_id: string): Promise<AffiliateLin
     }
 };
 
-export const getAffiliateCode = async (user_id: string): Promise<AffiliateLink> => {
+export const getAffiliateCode = async (user_id: string): Promise<AffiliateCode> => {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
@@ -46,7 +45,7 @@ export const getAffiliateCode = async (user_id: string): Promise<AffiliateLink> 
     }
 };
 
-export const getAffiliateCodeByCode = async (code: string): Promise<AffiliateLink> => {
+export async function getAffiliateCodeByCode(code: string): Promise<AffiliateCode> {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
@@ -65,11 +64,11 @@ export const getAffiliateCodeByCode = async (code: string): Promise<AffiliateLin
     }
 };
 
-export const getReferredUsers = async (user_id: string): Promise<ReferredUser[]> => {
+export async function getReferredUsers(user_id: string): Promise<ReferredUser[]> {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.referred_users)
-            .select('*,users(full_name,email,subscriptions(*,prices(*,products(*))))')
+            .select('*,users!referred_users_user_id_fkey(full_name,email,subscriptions(*,prices(*,products(*))))')
             .eq('referal_user_id', user_id);
 
         if (error) {

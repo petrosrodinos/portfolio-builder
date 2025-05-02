@@ -4,7 +4,7 @@ import AccountProfileForm from "./components/profile-form";
 
 export default function AccountProfile() {
   return (
-    <ContentSection title="Profile" desc="Fill your profile informaion here.">
+    <ContentSection title="Profile" desc="Fill your profile information here.">
       <AccountProfileForm />
     </ContentSection>
   );
