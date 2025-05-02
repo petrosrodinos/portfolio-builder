@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import { SupabaseTables } from "@/constants/supabase";
-import { AffiliateLink } from "@/interfaces/affiliate";
+import { AffiliateLink, ReferredUser } from "@/interfaces/affiliate";
 import { generateCode } from "@/lib/utils";
 import { User } from "@/interfaces/user";
 const supabase = createClient();
@@ -65,12 +65,12 @@ export const getAffiliateCodeByCode = async (code: string): Promise<AffiliateLin
     }
 };
 
-export const getUserReferredUsers = async (user_id: string): Promise<User[]> => {
+export const getReferredUsers = async (user_id: string): Promise<ReferredUser[]> => {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.referred_users)
-            .select('*')
-            .eq('user_id', user_id);
+            .select('*,users(full_name,email,subscriptions(*,prices(*,products(*))))')
+            .eq('referal_user_id', user_id);
 
         if (error) {
             throw error;

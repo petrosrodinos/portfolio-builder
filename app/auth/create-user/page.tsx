@@ -9,7 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
 import { checkoutWithStripe } from "@/services/billing/stripe";
 import { useMutation } from "@tanstack/react-query";
-
+import { CookieKeys } from "@/constants/cookies";
 const CreateUser = () => {
   const router = useRouter();
 
@@ -35,7 +35,7 @@ const CreateUser = () => {
   });
 
   const handleCreateUser = () => {
-    const openCheckoutSession = Cookies.get("checkout-session-price");
+    const openCheckoutSession = Cookies.get(CookieKeys.checkout_session_price);
     if (openCheckoutSession) {
       checkoutMutation(openCheckoutSession);
     } else {

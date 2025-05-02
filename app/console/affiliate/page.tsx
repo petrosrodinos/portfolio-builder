@@ -1,45 +1,23 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, DollarSign } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { format } from "date-fns";
-import { useToast } from "@/hooks/use-toast";
-import { useAuthStore } from "@/stores/auth";
 import GenerateCode from "./components/generate-code";
-const mockReferredUsers = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    date: new Date("2024-03-15"),
-    status: "active",
-    commission: 50,
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    date: new Date("2024-03-10"),
-    status: "pending",
-    commission: 30,
-  },
-];
-
+import { getReferredUsers } from "@/services/affiliate";
+import { useAuthStore } from "@/stores/auth";
+import { useQuery } from "@tanstack/react-query";
+import ReferedUsers from "./components/refered-users";
 const AffiliatePage = () => {
-  const { user_id } = useAuthStore();
-  const { toast } = useToast();
   const totalEarnings = 80;
   const totalReferrals = 2;
+
+  const { user_id } = useAuthStore();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["referred-users", user_id],
+    queryFn: () => getReferredUsers(user_id),
+  });
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
@@ -61,7 +39,7 @@ const AffiliatePage = () => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalReferrals}</div>
+              <div className="text-2xl font-bold">{data?.length}</div>
             </CardContent>
           </Card>
         </div>
@@ -69,45 +47,7 @@ const AffiliatePage = () => {
 
       <GenerateCode />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Referred Users</CardTitle>
-          <CardDescription>Track your referrals and their status</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="min-w-[120px]">Name</TableHead>
-                  <TableHead className="min-w-[180px]">Email</TableHead>
-                  <TableHead className="min-w-[120px]">Date</TableHead>
-                  <TableHead className="min-w-[100px]">Status</TableHead>
-                  <TableHead className="text-right min-w-[100px]">Commission</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockReferredUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium">{user.name}</TableCell>
-                    <TableCell className="hidden sm:table-cell">{user.email}</TableCell>
-                    <TableCell>{format(user.date, "MMM d, yyyy")}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={user.status === "active" ? "default" : "secondary"}
-                        className="whitespace-nowrap"
-                      >
-                        {user.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">${user.commission}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+      <ReferedUsers referredUsers={data} isLoading={isLoading} />
     </div>
   );
 };

@@ -23,6 +23,7 @@ import { Price, Subscription } from "@/interfaces/billing";
 import { useAuthStore } from "@/stores/auth";
 import { cn, formatPrice } from "@/lib/utils";
 import Cookies from "js-cookie";
+import { CookieKeys } from "@/constants/cookies";
 type BillingInterval = "year" | "month";
 
 interface PlansProps {
@@ -81,7 +82,7 @@ export default function Plans({
     if (!price?.id) return;
     setPriceIdLoading(price.id);
     if (!isLoggedIn) {
-      Cookies.set("checkout-session-price", price.price_id, { expires: 1 / 288 });
+      Cookies.set(CookieKeys.checkout_session_price, price.price_id, { expires: 1 / 288 });
       router.push("/auth/sign-up");
       return;
     }
