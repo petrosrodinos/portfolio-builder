@@ -82,7 +82,7 @@ const UsersView = () => {
                     <TableCell>{user.country}</TableCell>
                     <TableCell>{new Date(user.date_of_birth).toLocaleDateString()}</TableCell>
                     <TableCell>
-                      <Badge variant={user.subscriptions?.status === "active" ? "default" : "secondary"}>{user.subscriptions?.status}</Badge>
+                      <Badge variant={user.subscriptions?.status === "active" ? "default" : "secondary"}>{user.subscriptions?.status || "free"}</Badge>
                     </TableCell>
                     <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                     <TableCell>

@@ -21,7 +21,7 @@ export const SkillsSection = ({ skills }: SkillsSectionProps) => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {skills.map((skill, index) => {
+            {skills?.map((skill, index) => {
               const { label, level } = getSkillLabelAndLevel(skill);
               return (
                 <Badge key={index} variant="secondary">

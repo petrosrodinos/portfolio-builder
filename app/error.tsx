@@ -5,13 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -26,9 +20,7 @@ export default function Error({
           <CardTitle className="text-2xl">Oops! Something went wrong</CardTitle>
         </CardHeader>
         <CardContent className="text-center">
-          <p className="text-muted-foreground mb-6">
-            {error.message || "An unexpected error occurred. Please try again."}
-          </p>
+          <p className="text-muted-foreground mb-6">{error.message || "An unexpected error occurred. Please try again."}</p>
           <Button onClick={() => reset()} size="lg">
             Try Again
           </Button>

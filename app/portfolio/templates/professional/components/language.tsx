@@ -21,7 +21,7 @@ const LanguagesSection = ({ languages }: LanguagesSectionProps) => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
-            {languages.map((language, index) => {
+            {languages?.map((language, index) => {
               const { label, level, Icon } = getLanguageLabelLevelAndIcon(language);
               return (
                 <Badge key={index} variant="secondary">

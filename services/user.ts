@@ -26,7 +26,7 @@ export const upsertUser = async (payload: UpdateUser, referral_code?: string): P
                 { onConflict: 'user_id' }
             ).select().single();
 
-        if (referral_code) {
+        if (referral_code && referral_code !== 'null') {
             const affiliateCode = await getAffiliateCodeByCode(referral_code);
             if (affiliateCode) {
                 await supabase.from(SupabaseTables.referred_users).insert({

@@ -19,13 +19,10 @@ export default function Home() {
             </div>
             <h1 className="mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight sm:text-6xl">
               Build Your Professional Portfolio
-              <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text">
-                In Minutes
-              </span>
+              <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text">In Minutes</span>
             </h1>
             <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-              Create a stunning portfolio website that showcases your work and skills. No coding
-              required - just choose a template and customize it to your needs.
+              Create a stunning portfolio website that showcases your work and skills. No coding required - just choose a template and customize it to your needs.
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button size="lg" className="gap-2">
@@ -54,9 +51,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="mb-4 text-3xl font-bold">Why Choose Our Portfolio Builder?</h2>
-            <p className="text-lg text-muted-foreground">
-              Everything you need to create a professional portfolio that stands out
-            </p>
+            <p className="text-lg text-muted-foreground">Everything you need to create a professional portfolio that stands out</p>
           </div>
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
@@ -64,36 +59,28 @@ export default function Home() {
                 <Rocket className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Quick Setup</h3>
-              <p className="text-muted-foreground">
-                Get your portfolio up and running in minutes with our intuitive builder.
-              </p>
+              <p className="text-muted-foreground">Get your portfolio up and running in minutes with our intuitive builder.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Palette className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Beautiful Templates</h3>
-              <p className="text-muted-foreground">
-                Choose from professionally designed templates that look great on any device.
-              </p>
+              <p className="text-muted-foreground">Choose from professionally designed templates that look great on any device.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Code className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Customizable</h3>
-              <p className="text-muted-foreground">
-                Customize every aspect of your portfolio to match your personal brand.
-              </p>
+              <p className="text-muted-foreground">Customize every aspect of your portfolio to match your personal brand.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Shield className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Secure & Reliable</h3>
-              <p className="text-muted-foreground">
-                Your portfolio is hosted on our secure platform with 99.9% uptime.
-              </p>
+              <p className="text-muted-foreground">Your portfolio is hosted on our secure platform with 99.9% uptime.</p>
             </div>
           </div>
         </div>
@@ -105,15 +92,14 @@ export default function Home() {
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
             <p className="text-lg text-muted-foreground">
-              Choose the perfect plan for your needs. Whether you're just starting out or need
-              advanced features, we have a plan that fits your goals. All plans include our core
-              features with additional benefits as you upgrade.
+              Choose the perfect plan for your needs. Whether you're just starting out or need advanced features, we have a plan that fits your goals. All plans include our core features with
+              additional benefits as you upgrade.
             </p>
           </div>
         </div>
       </section>
 
-      <Plans redirectParam="/auth/portfolio-resume" />
+      <Plans redirectParam="/auth/portfolio-resume" className="m-4" />
 
       {/* CTA Section */}
       <section className="relative overflow-hidden py-32">
@@ -121,10 +107,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-3xl font-bold">Ready to Showcase Your Work?</h2>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-              Join thousands of professionals who have already created their dream portfolio. Start
-              building yours today!
-            </p>
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Join thousands of professionals who have already created their dream portfolio. Start building yours today!</p>
             <Button size="lg" className="gap-2">
               Create Your Portfolio <ArrowRight className="h-4 w-4" />
             </Button>

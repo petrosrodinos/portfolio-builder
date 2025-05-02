@@ -4,14 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // import { IconBrandFacebook, IconBrandGithub } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useMutation } from "@tanstack/react-query";
@@ -65,7 +58,9 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   });
 
   function onSubmit(data: SignUpFormValues) {
-    Cookies.set(CookieKeys.referral_code, referral_code);
+    if (referral_code) {
+      Cookies.set(CookieKeys.referral_code, referral_code);
+    }
     mutate({ email: data.email, password: data.password });
   }
 

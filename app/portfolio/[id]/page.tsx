@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import UserMessage from "./components/user-message";
 import { TemplateTypes } from "@/constants/templates";
-import NotFound from "./components/not-found";
 
 const TEMPLATES = {
   professional: dynamic(() => import("../templates/professional/page"), { ssr: true }),
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data?.user?.full_name || ""} | Portfolio`,
     description: data?.bio,
-    keywords: [...data?.skills?.map((skill) => skill.title), data?.user?.full_name],
+    keywords: [...(data?.skills?.map?.((skill) => skill.title) || []), data?.user?.full_name].filter(Boolean),
     openGraph: {
       title: data?.user?.full_name,
       description: data?.bio,

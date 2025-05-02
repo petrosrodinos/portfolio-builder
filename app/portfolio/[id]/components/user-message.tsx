@@ -12,7 +12,7 @@ interface UserMessageProps {
   children?: any;
 }
 
-const UserMessage = ({ visible, children }: UserMessageProps) => {
+const UserMessage = ({ visible = true, children }: UserMessageProps) => {
   const { user_id } = useAuthStore();
   const { id } = useParams();
 
@@ -25,10 +25,7 @@ const UserMessage = ({ visible, children }: UserMessageProps) => {
               Your portfolio is private and only visible to you.
               <br />
               You can make it public by going to your{" "}
-              <Link
-                className="underline font-bold hover:text-yellow-500 transition-colors"
-                href="/console/portfolio/display"
-              >
+              <Link className="underline font-bold hover:text-yellow-500 transition-colors" href="/console/portfolio/display">
                 Display Settings.
               </Link>
             </AlertTitle>

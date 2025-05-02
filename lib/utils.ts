@@ -54,6 +54,7 @@ export const formatPrice = (price: Price): string => {
 }
 
 export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill) => {
+  if (!language) return { label: "N/A", level: "N/A", Icon: null };
   const languageOption = LanguagesOptions.find(
     (option) => option.value === language.title
   );
@@ -69,6 +70,7 @@ export const getLanguageLabelLevelAndIcon = (language: Language | PortfolioSkill
 
 
 export const getSkillLabelAndLevel = (skill: Skill | PortfolioSkill) => {
+  if (!skill) return { label: "N/A", level: "N/A" };
   const skillOption = SkillOptions.find((option) => option.value === skill.title);
   const label = skillOption?.label || skill.title;
   const levelOption = SkillLevelOptions.find((option) => option.value === skill.level);
