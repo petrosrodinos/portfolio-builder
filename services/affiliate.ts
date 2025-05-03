@@ -81,3 +81,33 @@ export async function getReferredUsers(user_id: string): Promise<ReferredUser[]>
         throw error;
     }
 }
+
+export async function getAllReferredUsers(): Promise<Record<string, ReferredUser[]>> {
+    try {
+        const { data, error } = await supabase
+            .from(SupabaseTables.referred_users)
+            .select(`
+                *,
+                users!referred_users_user_id_fkey(full_name,email,subscriptions(*,prices(*,products(*)))),
+                referrer:users!referred_users_referal_user_id_fkey(full_name,email)
+            `);
+
+        if (error) {
+            throw error;
+        }
+
+        const groupedData = data.reduce((acc, user) => {
+            const key = user.referal_user_id;
+            if (!acc[key]) {
+                acc[key] = [];
+            }
+            acc[key].push(user);
+            return acc;
+        }, {} as Record<string, ReferredUser[]>);
+
+        return groupedData;
+    } catch (error) {
+        console.error('Error getting all referred users', error);
+        throw error;
+    }
+}

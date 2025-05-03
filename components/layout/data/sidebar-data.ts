@@ -48,6 +48,11 @@ export const sidebarData: SidebarData = {
           icon: IconUser,
         },
         {
+          title: 'Affiliates',
+          url: '/console/admin/affiliates',
+          icon: IconUsers,
+        },
+        {
           title: 'Feedback',
           url: '/console/admin/feedback',
           icon: IconMessageCircle,
