@@ -1,26 +1,13 @@
 "use client";
 
-import { LinkFormValues, LlinkFormSchema } from "@/validation-schemas/portfolio";
+import { LinkFormValues, LinkFormSchema } from "@/validation-schemas/portfolio";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkill } from "interfaces/portfolio";
@@ -37,7 +24,7 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
   const queryClient = useQueryClient();
 
   const form = useForm<LinkFormValues>({
-    resolver: zodResolver(LlinkFormSchema),
+    resolver: zodResolver(LinkFormSchema),
     defaultValues: link || {
       title: "",
       link: "",

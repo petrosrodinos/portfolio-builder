@@ -1,6 +1,7 @@
 import { PortfolioExperienceType, PortfolioSkillsType } from "@/constants/supabase";
 import { PortfolioResume } from "./portfolio";
 import { UserAvatar, UserPreferences } from "./user";
+import { DegreeType } from "./portfolio";
 
 export interface Portfolio {
     user: User;
@@ -75,6 +76,7 @@ export interface Education {
     start: string;
     finish: string;
     description?: string;
+    degree_type?: DegreeType;
     link?: string;
     type?: PortfolioExperienceType;
 }

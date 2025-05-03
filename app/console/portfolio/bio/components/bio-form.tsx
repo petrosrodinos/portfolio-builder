@@ -5,14 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormField,
-} from "@/components/ui/form";
+import { Form, FormItem, FormLabel, FormControl, FormMessage, FormField, FormDescription } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { BioFormValues, BioSchema } from "validation-schemas/portfolio";
 import { useAuthStore } from "stores/auth";
@@ -20,17 +13,9 @@ import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getProfile, upsertProfile } from "services/profile";
 import { FileText, Trash2 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { PortfolioResume } from "interfaces/portfolio";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface BioFormProps {
   onCancel: () => void;
@@ -47,6 +32,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
       role: "",
       bio: "",
       resume: "",
+      years_of_experience: "1-3",
     },
   });
 
@@ -99,6 +85,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
         role: data.role || "",
         bio: data.bio || "",
         resume: data.resume || "",
+        years_of_experience: data.years_of_experience || "1-3",
       });
     }
   }, [data, isSuccess]);
@@ -121,17 +108,36 @@ export default function BioForm({ onCancel }: BioFormProps) {
         />
         <FormField
           control={form.control}
+          name="years_of_experience"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Years of Experience</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select years of experience" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="1-3">1-3 years</SelectItem>
+                  <SelectItem value="3-5">3-5 years</SelectItem>
+                  <SelectItem value="5-8">5-8 years</SelectItem>
+                  <SelectItem value="8+">8+ years</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>This will be not visible to your portfolio</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="bio"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Bio</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Write a detailed bio..."
-                  className="resize-none"
-                  rows={10}
-                  {...field}
-                />
+                <Textarea placeholder="Write a detailed bio..." className="resize-none" rows={10} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,22 +166,11 @@ export default function BioForm({ onCancel }: BioFormProps) {
                   )}
                   {data?.resume && !fileToDelete && (
                     <div className="flex items-center gap-4">
-                      <a
-                        href={data.resume.url as string}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
-                      >
+                      <a href={data.resume.url as string} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-600 hover:text-blue-800">
                         <FileText className="h-4 w-4" />
                         <span>View current resume</span>
                       </a>
-                      <Button
-                        type="button"
-                        onClick={() => setShowDeleteConfirmation(true)}
-                        variant="destructive"
-                        size="sm"
-                        className="flex items-center gap-2"
-                      >
+                      <Button type="button" onClick={() => setShowDeleteConfirmation(true)} variant="destructive" size="sm" className="flex items-center gap-2">
                         <Trash2 className="h-4 w-4" />
                         <span>Delete</span>
                       </Button>
@@ -201,16 +196,11 @@ export default function BioForm({ onCancel }: BioFormProps) {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your resume.
-              </AlertDialogDescription>
+              <AlertDialogDescription>This action cannot be undone. This will permanently delete your resume.</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleFilePermanentDelete}
-                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              >
+              <AlertDialogAction onClick={handleFilePermanentDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>

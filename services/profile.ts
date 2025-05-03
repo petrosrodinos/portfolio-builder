@@ -75,6 +75,7 @@ export async function createPortfolio(user_id: string, payload: PortfoloAIData, 
                 address: payload.profile?.address,
                 bio: payload.profile?.bio,
                 role: payload.profile?.role,
+                years_of_experience: payload.profile?.years_of_experience,
                 resume: {
                     name,
                     url
@@ -98,6 +99,7 @@ export async function createPortfolio(user_id: string, payload: PortfoloAIData, 
             link: experience?.link,
             institution: experience?.institution,
             type: experience?.type,
+            degree_type: experience?.degree_type,
         }))
 
 

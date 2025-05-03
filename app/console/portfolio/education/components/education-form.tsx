@@ -4,21 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { EducationFormValues, EducationFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DegreeTypeOptions } from "@/constants/dropdowns/professions";
 
 interface EducationFormProps {
   onCancel: () => void;
@@ -37,6 +31,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
       finish: "",
       description: "",
       link: "",
+      degree_type: "bachelor",
     },
   });
 
@@ -80,6 +75,34 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
               <FormControl>
                 <Input placeholder="e.g. Bachelor of Science in Computer Science" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="degree_type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Degree Type</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select degree type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {DegreeTypeOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormDescription>This will be not visible to your portfolio</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -137,11 +160,7 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Describe your education, achievements, and relevant coursework..."
-                  className="min-h-[100px]"
-                  {...field}
-                />
+                <Textarea placeholder="Describe your education, achievements, and relevant coursework..." className="min-h-[100px]" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

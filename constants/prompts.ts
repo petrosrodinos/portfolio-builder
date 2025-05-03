@@ -8,6 +8,7 @@ export const createPortfolioPrompt = `
         address: string;
         bio: string;
         role: string;
+        years_of_experience: '1-3' | '3-5' | '5-8' | '8+';
     },
     experiences: {
         title: string;
@@ -35,6 +36,7 @@ export const createPortfolioPrompt = `
         start: string;
         finish: string;
         institution: string;
+        degree_type: 'bachelor' | 'master' | 'phd' | 'diploma' | 'certificate' | 'seminar' | 'other';
         type:'education'
     }[],
     languages: {

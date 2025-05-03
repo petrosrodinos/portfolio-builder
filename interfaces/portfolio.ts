@@ -26,6 +26,7 @@ export interface PortfolioProfileBio {
     bio: string;
     visible: boolean;
     resume?: PortfolioResume;
+    years_of_experience: string;
 }
 
 export interface PortfolioResume {
@@ -47,6 +48,7 @@ export interface PortfolioExperience {
     image?: string | File;
     link?: string;
     price?: string;
+    degree_type?: DegreeType;
 }
 
 export interface PortfolioSkill {
@@ -65,6 +67,7 @@ export interface PortfoloAIData {
         address: string;
         bio: string;
         role: string;
+        years_of_experience: string;
     },
     experiences: Experience[],
     projects: Project[],
@@ -73,3 +76,5 @@ export interface PortfoloAIData {
     links: Link[],
     skills: Skill[]
 }
+
+export type DegreeType = 'bachelor' | 'master' | 'phd' | 'diploma' | 'certificate' | 'seminar' | 'other';

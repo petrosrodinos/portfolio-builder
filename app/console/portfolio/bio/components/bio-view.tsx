@@ -39,21 +39,19 @@ export default function BioView({ onEdit }: BioViewProps) {
       </div>
 
       <div className="space-y-2">
+        <h3 className="text-lg font-medium">Years of Experience</h3>
+        <p className="text-sm text-muted-foreground">{data?.years_of_experience || "No years of experience specified"}</p>
+      </div>
+
+      <div className="space-y-2">
         <h3 className="text-lg font-medium">Bio</h3>
-        <p className="text-sm text-muted-foreground whitespace-pre-line">
-          {data?.bio || "No bio provided"}
-        </p>
+        <p className="text-sm text-muted-foreground whitespace-pre-line">{data?.bio || "No bio provided"}</p>
       </div>
 
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Resume</h3>
         {data?.resume ? (
-          <a
-            href={data.resume.url as string}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
-          >
+          <a href={data.resume.url as string} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-600 hover:text-blue-800">
             <FileText className="h-4 w-4" />
             <span>View resume</span>
           </a>

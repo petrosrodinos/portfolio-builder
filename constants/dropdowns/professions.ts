@@ -18,3 +18,13 @@ export const ProfessionsOptions: DropdownOption[] = [
     { label: "Motion Designer", value: "motion_designer" },
     { label: "Other", value: "other" },
 ];
+
+export const DegreeTypeOptions: DropdownOption[] = [
+    { label: "Bachelor", value: "bachelor" },
+    { label: "Master", value: "master" },
+    { label: "PhD", value: "phd" },
+    { label: "Diploma", value: "diploma" },
+    { label: "Certificate", value: "certificate" },
+    { label: "Seminar", value: "seminar" },
+    { label: "Other", value: "other" },
+];
