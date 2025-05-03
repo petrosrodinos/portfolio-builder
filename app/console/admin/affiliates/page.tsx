@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AFFILIATE_COMMISSION_PERCENTAGE } from "@/constants/index";
+import Loading from "../users/components/loading";
 
 const Affiliates = () => {
   const { data, isLoading, error } = useQuery({
@@ -14,7 +15,7 @@ const Affiliates = () => {
     queryFn: getAllReferredUsers,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error loading data</div>;
 
   return (
