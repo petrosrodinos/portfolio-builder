@@ -4,14 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ServiceFormValues, ServiceFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
@@ -19,15 +12,17 @@ import { upsertExperience } from "services/experience";
 import { useAuthStore } from "stores/auth";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
-
+import { usePrivileges } from "@/hooks/use-privileges";
 interface ServiceFormProps {
   onCancel: () => void;
   service?: PortfolioExperience;
+  serviceLength: number;
 }
 
-const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
+const ServiceForm = ({ onCancel, service, serviceLength }: ServiceFormProps) => {
   const { user_id } = useAuthStore((state) => state);
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<ServiceFormValues>({
     resolver: zodResolver(ServiceFormSchema),
@@ -42,8 +37,8 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
     mutationFn: (data: any) => upsertExperience(data),
     onSuccess: () => {
       toast({
-        title: "Education saved successfully",
-        description: "You have successfully saved your education",
+        title: "Service saved successfully",
+        description: "You have successfully saved your service",
         duration: 1000,
       });
       queryClient.invalidateQueries({ queryKey: ["services"] });
@@ -51,7 +46,7 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
     },
     onError: (error) => {
       toast({
-        title: "Could not save education",
+        title: "Could not save service",
         description: error.message,
         duration: 3000,
       });
@@ -59,6 +54,8 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
   });
 
   const onSubmit = (data: ServiceFormValues) => {
+    if (!service && !canCreateRecord("services", serviceLength)) return;
+
     mutate({
       ...data,
       user_id,
@@ -105,11 +102,7 @@ const ServiceForm = ({ onCancel, service }: ServiceFormProps) => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Describe your service, what you do, what you offer..."
-                  className="min-h-[100px]"
-                  {...field}
-                />
+                <Textarea placeholder="Describe your service, what you do, what you offer..." className="min-h-[100px]" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

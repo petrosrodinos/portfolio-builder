@@ -20,7 +20,6 @@ const AffiliatePage = () => {
 
   const totalCommission = useMemo(() => {
     if (!data) return 0;
-    console.log(data);
     return data.reduce((acc, user) => {
       const amount = user.users.subscriptions?.prices?.unit_amount / 100 || 0;
       return acc + amount * AFFILIATE_COMMISSION_PERCENTAGE;
@@ -54,10 +53,7 @@ const AffiliatePage = () => {
       </div>
 
       <div className="bg-muted/50 p-2 rounded-lg">
-        <p className="text-sm text-muted-foreground">
-          Earn money once your referrals make a purchase! The more referrals you get, the more you
-          earn!
-        </p>
+        <p className="text-sm text-muted-foreground">Earn money once your referrals make a purchase! The more referrals you get, the more you earn!</p>
       </div>
 
       <GenerateCode />

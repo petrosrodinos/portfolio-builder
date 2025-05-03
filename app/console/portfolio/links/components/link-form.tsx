@@ -14,14 +14,16 @@ import { PortfolioSkill } from "interfaces/portfolio";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
 import { upsertSkill } from "services/skills";
 import { SocialMediaOptions } from "@/constants/dropdowns/social_media";
-
+import { usePrivileges } from "@/hooks/use-privileges";
 interface LinkFormProps {
   onCancel: () => void;
   link?: PortfolioSkill;
+  linkLength: number;
 }
 
-const LinkForm = ({ onCancel, link }: LinkFormProps) => {
+const LinkForm = ({ onCancel, link, linkLength }: LinkFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<LinkFormValues>({
     resolver: zodResolver(LinkFormSchema),
@@ -52,6 +54,8 @@ const LinkForm = ({ onCancel, link }: LinkFormProps) => {
   });
 
   const onSubmit = (data: LinkFormValues) => {
+    if (!link && !canCreateRecord("links", linkLength)) return;
+
     mutate({
       ...data,
       type: PortfolioSkillsTypes.link,

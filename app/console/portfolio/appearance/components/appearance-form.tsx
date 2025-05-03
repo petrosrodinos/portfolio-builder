@@ -5,21 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFont } from "@/context/font-context";
 import PortfolioTemplates from "@/components/portfolio-templates";
-import {
-  PortfolioAppearanceFormSchema,
-  PortfolioAppearanceFormValues,
-} from "@/validation-schemas/appearance";
+import { PortfolioAppearanceFormSchema, PortfolioAppearanceFormValues } from "@/validation-schemas/appearance";
 import { fonts } from "@/config/fonts";
 
 export function AppearanceForm() {
@@ -43,8 +32,8 @@ export function AppearanceForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <PortfolioTemplates />
-      <Form {...form}>
+      <PortfolioTemplates className="lg:grid-cols-2" />
+      {/* <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4">
           <FormField
             control={form.control}
@@ -80,7 +69,7 @@ export function AppearanceForm() {
 
           <Button type="submit">Update preferences</Button>
         </form>
-      </Form>
+      </Form> */}
     </div>
   );
 }

@@ -4,33 +4,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormDescription,
-} from "@/components/ui/form";
-import {
-  ExperienceFormValues,
-  ProjectFormValues,
-  ProjectFormSchema,
-} from "@/validation-schemas/portfolio";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
+import { ExperienceFormValues, ProjectFormValues, ProjectFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
+import { usePrivileges } from "@/hooks/use-privileges";
 
 interface ProjectFormProps {
   onCancel: () => void;
   project?: PortfolioExperience;
+  projectsLength: number;
 }
 
-const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
+const ProjectForm = ({ onCancel, project, projectsLength }: ProjectFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(ProjectFormSchema),
@@ -65,6 +56,8 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
   });
 
   const onSubmit = (data: ExperienceFormValues) => {
+    if (!project && !canCreateRecord("projects", projectsLength)) return;
+
     mutate({
       ...data,
       type: PortfolioExperienceTypes.project,
@@ -155,11 +148,7 @@ const ProjectForm = ({ onCancel, project }: ProjectFormProps) => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Describe your project and your role..."
-                  className="min-h-[100px]"
-                  {...field}
-                />
+                <Textarea placeholder="Describe your project and your role..." className="min-h-[100px]" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

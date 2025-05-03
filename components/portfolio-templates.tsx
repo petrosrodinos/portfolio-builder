@@ -11,7 +11,13 @@ import { upsertUser } from "services/user";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useAuthStore } from "stores/auth";
 import Image from "next/image";
-const PortfolioTemplates = () => {
+import { toast } from "@/hooks/use-toast";
+
+interface PortfolioTemplatesProps {
+  className?: string;
+}
+
+const PortfolioTemplates = ({ className }: PortfolioTemplatesProps) => {
   const {
     preferences: { portfolio_theme },
     updateUser,
@@ -24,6 +30,10 @@ const PortfolioTemplates = () => {
     onSuccess: (data) => {
       updateUser(data);
       setTemplateToConfirm(null);
+      toast({
+        title: "Template changed",
+        description: "Your portfolio template has been changed",
+      });
     },
   });
 
@@ -41,7 +51,7 @@ const PortfolioTemplates = () => {
 
   return (
     <>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-1">
+      <div className={cn("grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-1", className)}>
         {templates.map((template: any) => (
           <Card key={template.id} className={cn("overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] w-full", portfolio_theme === template.id && "ring-2 ring-primary")}>
             <div className="relative w-full h-40">

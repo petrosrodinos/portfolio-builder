@@ -21,14 +21,9 @@ const Subscription = ({ subscription, onOpenPortal, isPending }: SubscriptionPro
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <p className="text-muted-foreground">Status</p>
-                <p
-                  className={`font-medium ${
-                    ["active", "trialing"].includes(subscription?.status)
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
+                <p className={`font-medium ${["active", "trialing"].includes(subscription?.status) ? "text-green-500" : "text-red-500"}`}>
                   {["active", "trialing"].includes(subscription?.status) && "Active"}
+                  {subscription.status == "trialing" && " (Trial)"}
                   {subscription?.status === "past_due" && "Past Due"}
                   {subscription?.status === "unpaid" && "Unpaid"}
                   {subscription?.status === "incomplete" && "Incomplete"}
@@ -40,7 +35,10 @@ const Subscription = ({ subscription, onOpenPortal, isPending }: SubscriptionPro
                 {!subscription?.canceled_at && (
                   <div>
                     <p className="text-muted-foreground">Next Billing Date</p>
-                    <p className="font-medium">{formatDate(subscription?.current_period_end)}</p>
+                    <p className="font-medium">
+                      {subscription?.current_period_end && formatDate(subscription?.current_period_end)}
+                      {subscription?.trial_end && formatDate(subscription?.trial_end)}
+                    </p>
                   </div>
                 )}
                 {subscription?.canceled_at && (
@@ -52,26 +50,20 @@ const Subscription = ({ subscription, onOpenPortal, isPending }: SubscriptionPro
               </div>
               <div>
                 <p className="text-muted-foreground">Billing Cycle</p>
-                {!subscription.canceled_at && (
-                  <p className="font-medium">
-                    {subscription?.prices?.interval === "month" ? "Monthly" : "Yearly"}
-                  </p>
-                )}
-                {subscription.canceled_at && (
-                  <p className="font-medium text-red-500">
-                    Active until {formatDate(subscription?.cancel_at)}
-                  </p>
-                )}
+                {!subscription.canceled_at && <p className="font-medium">{subscription?.prices?.interval === "month" ? "Monthly" : "Yearly"}</p>}
+                {subscription.canceled_at && <p className="font-medium text-red-500">Active until {formatDate(subscription?.cancel_at)}</p>}
               </div>
               <div>
                 <p className="text-muted-foreground">Created at</p>
                 <p className="font-medium">{formatDate(subscription?.created)}</p>
               </div>
+              <div>
+                <p className="text-muted-foreground">Plan</p>
+                <p className="font-medium">{subscription?.prices?.products?.name}</p>
+              </div>
             </div>
           ) : (
-            <p className="text-muted-foreground">
-              No subscription found. Please subscribe to a plan above.
-            </p>
+            <p className="text-muted-foreground">No subscription found. Please subscribe to a plan above.</p>
           )}
         </CardContent>
         <CardFooter className="flex gap-4">

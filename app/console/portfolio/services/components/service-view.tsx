@@ -49,7 +49,7 @@ const ServiceView = () => {
           <DialogHeader>
             <DialogTitle>Add Service</DialogTitle>
           </DialogHeader>
-          <ProjectForm onCancel={handleCancel} />
+          <ProjectForm onCancel={handleCancel} serviceLength={services?.length || 0} />
         </DialogContent>
       </Dialog>
 

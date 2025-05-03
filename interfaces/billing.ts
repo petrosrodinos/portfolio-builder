@@ -9,6 +9,8 @@ export interface Subscription {
     current_period_end: string;
     created: string;
     prices: Price;
+    trial_end: string;
+    trial_start: string;
 }
 
 

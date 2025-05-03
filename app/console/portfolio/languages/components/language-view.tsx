@@ -51,12 +51,12 @@ const LanguageView = () => {
           <DialogHeader>
             <DialogTitle>Add Language</DialogTitle>
           </DialogHeader>
-          <SkillForm onCancel={handleCancel} />
+          <SkillForm onCancel={handleCancel} languageLength={languages?.length || 0} />
         </DialogContent>
       </Dialog>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {languages?.map((language) => (
-          <LanguageCard key={language.id} language={language} />
+        {languages?.map((language, index) => (
+          <LanguageCard key={index} language={language} />
         ))}
       </div>
       {languages?.length === 0 && !isLoading && (

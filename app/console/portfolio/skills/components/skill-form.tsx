@@ -6,28 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
@@ -37,14 +18,16 @@ import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
 import { upsertSkill } from "services/skills";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-
+import { usePrivileges } from "@/hooks/use-privileges";
 interface SkillFormProps {
   onCancel: () => void;
   skill?: PortfolioSkill;
+  skillLength: number;
 }
 
-const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
+const SkillForm = ({ onCancel, skill, skillLength }: SkillFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
   const [open, setOpen] = useState(false);
   const [isManualEntry, setIsManualEntry] = useState(false);
   const [manualSkill, setManualSkill] = useState("");
@@ -78,6 +61,8 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
   });
 
   const onSubmit = (data: SkillFormValues) => {
+    if (!skill && !canCreateRecord("skills", skillLength)) return;
+
     mutate({
       ...data,
       type: PortfolioSkillsTypes.skill,
@@ -141,16 +126,8 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          aria-expanded={open}
-                          className="w-full justify-between"
-                        >
-                          {field.value
-                            ? SkillOptions.find((option) => option.value === field.value)?.label ||
-                              field.value
-                            : "Select a skill"}
+                        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
+                          {field.value ? SkillOptions.find((option) => option.value === field.value)?.label || field.value : "Select a skill"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -169,12 +146,7 @@ const SkillForm = ({ onCancel, skill }: SkillFormProps) => {
                                 setOpen(false);
                               }}
                             >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  field.value === option.value ? "opacity-100" : "opacity-0"
-                                )}
-                              />
+                              <Check className={cn("mr-2 h-4 w-4", field.value === option.value ? "opacity-100" : "opacity-0")} />
                               {option.label}
                             </CommandItem>
                           ))}

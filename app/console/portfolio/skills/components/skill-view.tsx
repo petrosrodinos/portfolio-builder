@@ -51,7 +51,7 @@ const SkillView = () => {
           <DialogHeader>
             <DialogTitle>Add Skill</DialogTitle>
           </DialogHeader>
-          <SkillForm onCancel={handleCancel} />
+          <SkillForm onCancel={handleCancel} skillLength={skills?.length || 0} />
         </DialogContent>
       </Dialog>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -2,34 +2,17 @@
 import { useForm } from "react-hook-form";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { fonts } from "@/constants/fonts";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useFont } from "@/context/font-context";
 import { useTheme } from "next-themes";
-import {
-  AccountAppearanceFormSchema,
-  AccountAppearanceFormValues,
-} from "@/validation-schemas/appearance";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { AccountAppearanceFormSchema, AccountAppearanceFormValues } from "@/validation-schemas/appearance";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore } from "@/stores/auth";
+import { fonts } from "@/config/fonts";
 
 export function AppearanceForm() {
   const { font, setFont } = useFont();
@@ -46,9 +29,10 @@ export function AppearanceForm() {
   });
 
   function onSubmit(data: AccountAppearanceFormValues) {
+    console.log(data);
     if (data.font !== font) setFont(data.font);
-    document.documentElement.classList.remove(theme);
-    setTheme(data.color_scheme);
+    // document.documentElement.classList.remove(theme);
+    setTheme(data.theme);
     updateUser({
       preferences: {
         ...preferences,
@@ -65,7 +49,7 @@ export function AppearanceForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
+        {/* <FormField
           control={form.control}
           name="font"
           render={({ field }) => (
@@ -73,13 +57,7 @@ export function AppearanceForm() {
               <FormLabel>Font</FormLabel>
               <div className="relative w-max">
                 <FormControl>
-                  <select
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "w-[200px] appearance-none font-normal capitalize"
-                    )}
-                    {...field}
-                  >
+                  <select className={cn(buttonVariants({ variant: "outline" }), "w-[200px] appearance-none font-normal capitalize")} {...field}>
                     {fonts.map((font) => (
                       <option key={font} value={font}>
                         {font}
@@ -89,13 +67,11 @@ export function AppearanceForm() {
                 </FormControl>
                 <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               </div>
-              <FormDescription className="font-manrope">
-                Set the font you want to use in the dashboard.
-              </FormDescription>
+              <FormDescription className="font-manrope">Set the font you want to use in the dashboard.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="theme"
@@ -104,11 +80,7 @@ export function AppearanceForm() {
               <FormLabel>Theme</FormLabel>
               <FormDescription>Select the theme for your console.</FormDescription>
               <FormMessage />
-              <RadioGroup
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                className="grid max-w-md grid-cols-2 gap-8 pt-2"
-              >
+              <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid max-w-md grid-cols-2 gap-8 pt-2">
                 <FormItem>
                   <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
                     <FormControl>
@@ -162,7 +134,7 @@ export function AppearanceForm() {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="color_scheme"
           render={({ field }) => (
@@ -186,7 +158,7 @@ export function AppearanceForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <Button type="submit">Update preferences</Button>
       </form>

@@ -1,7 +1,7 @@
 "use client";
 
 import { PUBLIC_SITE_URL } from "@/constants/index";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "@/stores/auth";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -11,11 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Copy, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Loading from "../loading";
-import {
-  createAccountInStripeAndOnboard,
-  getAccount,
-  getAccountLoginLink,
-} from "@/services/billing/stripe";
+import { createAccountInStripeAndOnboard, getAccount, getAccountLoginLink } from "@/services/billing/stripe";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -25,7 +21,7 @@ export default function GenerateCode() {
   const [affiliateLink, setAffiliateLink] = useState<string>("");
   const router = useRouter();
 
-  const { data, isPending: isLoading } = useQuery({
+  const { data: affiliateCode, isPending: isLoading } = useQuery({
     queryKey: ["affiliate-code"],
     queryFn: async () => {
       const affiliateCode = await getAffiliateCode(user_id);
@@ -37,22 +33,22 @@ export default function GenerateCode() {
   const { data: stripeAccount, isPending: isLoadingAccount } = useQuery({
     queryKey: ["stripe-account"],
     queryFn: async () => {
-      const account = await getAccount(data?.stripe_account_id);
+      const account = await getAccount(affiliateCode?.stripe_account_id);
       return account;
     },
-    enabled: !!data?.stripe_account_id,
+    enabled: !!affiliateCode?.stripe_account_id,
   });
 
   const { data: loginLink, isPending: isLoadingLoginLink } = useQuery({
-    queryKey: ["login-link", data?.stripe_account_id],
+    queryKey: ["login-link", affiliateCode?.stripe_account_id],
     queryFn: async () => {
-      return getAccountLoginLink(data.stripe_account_id);
+      return getAccountLoginLink(affiliateCode.stripe_account_id);
     },
-    enabled: !!data?.stripe_account_id,
+    enabled: !!affiliateCode?.stripe_account_id,
   });
 
   const { mutate: createAccountInStripe, isPending: isCreatingAccount } = useMutation({
-    mutationFn: () => createAccountInStripeAndOnboard(user_id, email, data?.stripe_account_id),
+    mutationFn: () => createAccountInStripeAndOnboard(user_id, email, affiliateCode?.stripe_account_id),
     onSuccess: (data) => {
       toast({
         title: "Account created",
@@ -96,7 +92,7 @@ export default function GenerateCode() {
   };
 
   const handleGenerateCode = () => {
-    if (!data?.stripe_account_id) {
+    if (!affiliateCode?.stripe_account_id) {
       createAccountInStripe();
     } else {
       generateAffiliateCode();
@@ -104,9 +100,9 @@ export default function GenerateCode() {
   };
 
   useEffect(() => {
-    if (!data?.code) return;
-    setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${data.code}`);
-  }, [data]);
+    if (!affiliateCode?.code) return;
+    setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${affiliateCode.code}`);
+  }, [affiliateCode]);
 
   if (isLoading || isLoadingAccount || isLoadingLoginLink) return <Loading />;
 
@@ -114,9 +110,7 @@ export default function GenerateCode() {
     <Card>
       <CardHeader>
         <CardTitle>Your Affiliate Link</CardTitle>
-        <CardDescription>
-          Generate and share your unique affiliate link to earn commissions
-        </CardDescription>
+        <CardDescription>Generate and share your unique affiliate link to earn commissions</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex flex-col gap-2 w-full">
@@ -132,32 +126,18 @@ export default function GenerateCode() {
                 textOverflow: "unset",
               }}
             />
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-0 top-0 h-9 w-9"
-              onClick={copyToClipboard}
-              disabled={!affiliateLink}
-            >
+            <Button variant="outline" size="icon" className="absolute right-0 top-0 h-9 w-9" onClick={copyToClipboard} disabled={!affiliateLink}>
               <Copy className="h-3.5 w-3.5" />
             </Button>
           </div>
           <div className="flex flex-col gap-2">
-            {!data?.stripe_account_id && (
-              <p className="text-sm text-muted-foreground">
-                To start earning commissions, you need to connect your Stripe account first. This
-                allows us to process payments and send your earnings.
-              </p>
+            {!affiliateCode?.stripe_account_id && (
+              <p className="text-sm text-muted-foreground">To start earning commissions, you need to connect your Stripe account first. This allows us to process payments and send your earnings.</p>
             )}
             {!stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled ? (
-              <p className="text-sm text-muted-foreground">
-                Your Stripe account is created. Please finish onboarding to start earning
-                commissions.
-              </p>
+              <p className="text-sm text-muted-foreground">Your Stripe account is created. Please finish onboarding to start earning commissions.</p>
             ) : (
-              <p className="text-sm text-muted-foreground">
-                Your Stripe account is created. You are now ready to start earning commissions.
-              </p>
+              <p className="text-sm text-muted-foreground">Your Stripe account is created. You are now ready to start earning commissions.</p>
             )}
             {loginLink && (
               <p className="text-sm text-blue-500">
@@ -167,14 +147,9 @@ export default function GenerateCode() {
               </p>
             )}
             <div className="flex justify-start">
-              <Button
-                loading={isPending || isCreatingAccount}
-                disabled={isPending || isCreatingAccount || !!affiliateLink}
-                onClick={() => handleGenerateCode()}
-                className="h-9 text-sm px-3"
-              >
+              <Button loading={isPending || isCreatingAccount} disabled={isPending || isCreatingAccount || !!affiliateLink} onClick={() => handleGenerateCode()} className="h-9 text-sm px-3">
                 <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
-                {!data?.stripe_account_id ? "Connect Stripe" : "Generate Link"}
+                {!affiliateCode?.stripe_account_id ? "Connect Stripe" : "Generate Link"}
               </Button>
             </div>
           </div>

@@ -51,7 +51,7 @@ const LinkView = () => {
           <DialogHeader>
             <DialogTitle>Add Link</DialogTitle>
           </DialogHeader>
-          <LinkForm onCancel={handleCancel} />
+          <LinkForm onCancel={handleCancel} linkLength={links?.length || 0} />
         </DialogContent>
       </Dialog>
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">

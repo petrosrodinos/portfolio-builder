@@ -8,7 +8,6 @@ import ProjectForm from "./education-form";
 import { useQuery } from "@tanstack/react-query";
 import { getExperiences } from "services/experience";
 import { useAuthStore } from "stores/auth";
-import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
 import EducationCard from "./education-card";
@@ -50,7 +49,7 @@ const EducationView = () => {
           <DialogHeader>
             <DialogTitle>Add Education</DialogTitle>
           </DialogHeader>
-          <ProjectForm onCancel={handleCancel} />
+          <ProjectForm onCancel={handleCancel} educationLength={educations?.length || 0} />
         </DialogContent>
       </Dialog>
 
@@ -58,9 +57,7 @@ const EducationView = () => {
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No education entries yet</AlertTitle>
-          <AlertDescription>
-            Add your educational background to showcase your academic journey.
-          </AlertDescription>
+          <AlertDescription>Add your educational background to showcase your academic journey.</AlertDescription>
         </Alert>
       ) : (
         educations.map((education) => <EducationCard key={education.id} education={education} />)

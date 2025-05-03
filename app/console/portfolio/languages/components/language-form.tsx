@@ -5,21 +5,8 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { PortfolioSkillsTypes } from "@/constants/supabase";
@@ -28,14 +15,16 @@ import { upsertSkill } from "services/skills";
 import { LanguagesOptions } from "@/constants/dropdowns/languages";
 import * as icons from "country-flag-icons/react/3x2";
 import { PortfolioSkill } from "interfaces/portfolio";
-
+import { usePrivileges } from "@/hooks/use-privileges";
 interface LanguageFormProps {
   onCancel: () => void;
   language?: PortfolioSkill;
+  languageLength: number;
 }
 
-const LanguageForm = ({ onCancel, language }: LanguageFormProps) => {
+const LanguageForm = ({ onCancel, language, languageLength }: LanguageFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<LanguageFormValues>({
     resolver: zodResolver(LanguageFormSchema),
@@ -66,6 +55,8 @@ const LanguageForm = ({ onCancel, language }: LanguageFormProps) => {
   });
 
   const onSubmit = (data: LanguageFormValues) => {
+    if (!language && !canCreateRecord("languages", languageLength)) return;
+
     mutate({
       ...data,
       type: PortfolioSkillsTypes.language,

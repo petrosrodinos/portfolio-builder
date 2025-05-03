@@ -13,7 +13,7 @@ export const usePrivileges = () => {
         if (Privileges[plan]?.[type] > currentCount) return true;
 
         toast({
-            title: `You have reached the maximum number of ${type} records`,
+            title: `You have reached the maximum number of ${type}`,
             description: "You can upgrade to a higher plan to create more.",
         });
 

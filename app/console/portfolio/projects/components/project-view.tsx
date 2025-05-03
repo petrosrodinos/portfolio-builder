@@ -49,7 +49,7 @@ const ProjectView = () => {
           <DialogHeader>
             <DialogTitle>Add Project</DialogTitle>
           </DialogHeader>
-          <ProjectForm onCancel={handleCancel} />
+          <ProjectForm onCancel={handleCancel} projectsLength={projects?.length || 0} />
         </DialogContent>
       </Dialog>
 
@@ -57,9 +57,7 @@ const ProjectView = () => {
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No projects yet</AlertTitle>
-          <AlertDescription>
-            Add your projects to showcase your professional journey.
-          </AlertDescription>
+          <AlertDescription>Add your projects to showcase your professional journey.</AlertDescription>
         </Alert>
       ) : (
         projects.map((project) => <ProjectCard key={project.id} project={project} />)

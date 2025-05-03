@@ -13,14 +13,17 @@ import { PortfolioExperience } from "interfaces/portfolio";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DegreeTypeOptions } from "@/constants/dropdowns/professions";
+import { usePrivileges } from "@/hooks/use-privileges";
 
 interface EducationFormProps {
   onCancel: () => void;
   education?: PortfolioExperience;
+  educationLength: number;
 }
 
-const EducationForm = ({ onCancel, education }: EducationFormProps) => {
+const EducationForm = ({ onCancel, education, educationLength }: EducationFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<EducationFormValues>({
     resolver: zodResolver(EducationFormSchema),
@@ -56,6 +59,8 @@ const EducationForm = ({ onCancel, education }: EducationFormProps) => {
   });
 
   const onSubmit = (data: EducationFormValues) => {
+    if (!education && !canCreateRecord("education", educationLength)) return;
+
     mutate({
       ...data,
       type: PortfolioExperienceTypes.education,
