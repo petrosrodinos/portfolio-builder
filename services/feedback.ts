@@ -1,3 +1,5 @@
+// "use server";
+
 import { FeedbackPayload } from "@/interfaces/contact";
 import axios, { AxiosRequestConfig } from "axios";
 import { apicoUrls, googleSheets } from "../constants";
@@ -6,24 +8,37 @@ export interface SpreadSheetResponse {
     values: string[][];
 }
 export const sendFeedback = async (payload: FeedbackPayload) => {
-    let values = Object.values(payload);
-    const timestamp = new Date().toISOString();
-    values = [...values, timestamp];
-    const options: any = {
-        method: "POST",
-        url: `${apicoUrls.feedBack}/values/${googleSheets.feedBack.sheetName}:append`,
-        params: {
-            valueInputOption: "USER_ENTERED",
-            insertDataOption: "INSERT_ROWS",
-            includeValuesInResponse: true,
-        },
-        data: {
-            values: [values],
-        },
-    };
+    try {
+        const values = Object.values(payload).map(value =>
+            value !== null && value !== undefined ? String(value) : ''
+        );
 
-    const response = await axios(options);
-    return response;
+        const timestamp = new Date().toISOString();
+        const rowData = [...values, timestamp];
+
+
+        const options: AxiosRequestConfig = {
+            method: "POST",
+            url: `${apicoUrls.feedBack}/values/${googleSheets.feedBack.sheetName}:append`,
+            params: {
+                valueInputOption: "USER_ENTERED",
+                insertDataOption: "INSERT_ROWS",
+                includeValuesInResponse: true,
+            },
+            data: {
+                values: [rowData],
+            },
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        const response = await axios(options);
+        return response;
+    } catch (error) {
+        console.error('Error sending feedback:', error);
+        throw error;
+    }
 }
 
 export const getFeedbackData = async () => {
@@ -45,7 +60,7 @@ export const deleteFeedbackRow = async (index: number) => {
         method: "POST",
         url: `${apicoUrls.feedBack}:batchUpdate`,
         headers: {
-            "Authorization": `Bearer 2f5bdbec92765503846b6821f1c7ae452ca1192ef88b6ab02f8636c5250c2c31`,
+            "Authorization": `Bearer ${process.env.APICO_API_KEY}`,
         },
         data: {
             requests: [
