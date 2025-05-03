@@ -165,6 +165,9 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
     capabilities: {
       transfers: { requested: true },
     },
+    metadata: {
+      user_id,
+    },
   });
 
   const { error } = await supabase
@@ -187,14 +190,38 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
 
 
 export async function getAccount(account_id: string) {
-  const account = await stripe.accounts.retrieve(account_id);
-  return account;
+  try {
+    const account = await stripe.accounts.retrieve(account_id);
+    return {
+      id: account.id,
+      charges_enabled: account.charges_enabled,
+      payouts_enabled: account.payouts_enabled,
+      email: account.email,
+      type: account.type,
+      country: account.country,
+      default_currency: account.default_currency,
+      business_type: account.business_type,
+      capabilities: {
+        transfers: account.capabilities?.transfers === 'active'
+      }
+    };
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getAccountLoginLink(stripe_account_id: string): Promise<string | null> {
-  const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
+  try {
+    const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
 
-  return loginLink?.url;
+    if (!loginLink?.url) {
+      throw new Error('Could not get login link');
+    }
+
+    return loginLink?.url;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function hasFinishedOnboarding(account_id: string): Promise<boolean> {
