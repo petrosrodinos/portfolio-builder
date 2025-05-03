@@ -49,7 +49,7 @@ const ExperienceView = () => {
           <DialogHeader>
             <DialogTitle>Add Experience</DialogTitle>
           </DialogHeader>
-          <ExperienceForm onCancel={handleCancel} />
+          <ExperienceForm experiencesLength={experiences.length} onCancel={handleCancel} />
         </DialogContent>
       </Dialog>
 
@@ -57,14 +57,10 @@ const ExperienceView = () => {
         <Alert>
           <Info className="h-4 w-4" />
           <AlertTitle>No experiences yet</AlertTitle>
-          <AlertDescription>
-            Add your work experience to showcase your professional journey.
-          </AlertDescription>
+          <AlertDescription>Add your work experience to showcase your professional journey.</AlertDescription>
         </Alert>
       ) : (
-        experiences.map((experience) => (
-          <ExperienceCard key={experience.id} experience={experience} />
-        ))
+        experiences.map((experience) => <ExperienceCard key={experience.id} experience={experience} />)
       )}
     </div>
   );

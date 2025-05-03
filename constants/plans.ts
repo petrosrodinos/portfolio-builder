@@ -1,4 +1,9 @@
-import { products } from ".";
+import { BASIC_PRODUCT_ID, PROFESSIONAL_PRODUCT_ID } from ".";
+
+export const products = {
+    basic: BASIC_PRODUCT_ID,
+    professional: PROFESSIONAL_PRODUCT_ID
+};
 
 export const planTypes = {
     free: "free",
@@ -9,7 +14,6 @@ export const planTypes = {
 
 export const plans = [
     {
-        order: 1,
         product_id: null,
         type: planTypes.free,
         name: "Free",
@@ -23,7 +27,6 @@ export const plans = [
         ],
     },
     {
-        order: 2,
         name: "Basic",
         type: planTypes.basic,
         product_id: products.basic || "prod_SES1tGFTBcDhYY",
@@ -40,7 +43,6 @@ export const plans = [
         ],
     },
     {
-        order: 3,
         name: "Professional",
         type: planTypes.professional,
         product_id: products.professional || "prod_SES16JQgCSIxI7",

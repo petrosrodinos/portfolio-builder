@@ -54,7 +54,7 @@ const LinkView = () => {
           <LinkForm onCancel={handleCancel} />
         </DialogContent>
       </Dialog>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
         {links?.map((link) => (
           <LinkCard key={link.id} link={link} />
         ))}

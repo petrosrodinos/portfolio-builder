@@ -4,29 +4,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormDescription,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
 import { ExperienceFormValues, ExperienceFormSchema } from "@/validation-schemas/portfolio";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { upsertExperience } from "services/experience";
 import { PortfolioExperience } from "interfaces/portfolio";
 import { PortfolioExperienceTypes } from "@/constants/supabase";
+import { usePrivileges } from "@/hooks/use-privileges";
 
 interface ExperienceFormProps {
   onCancel: () => void;
   experience?: PortfolioExperience;
+  experiencesLength: number;
 }
 
-const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
+const ExperienceForm = ({ onCancel, experience, experiencesLength }: ExperienceFormProps) => {
   const queryClient = useQueryClient();
+  const { canCreateRecord } = usePrivileges();
 
   const form = useForm<ExperienceFormValues>({
     resolver: zodResolver(ExperienceFormSchema),
@@ -62,6 +57,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
   });
 
   const onSubmit = (data: ExperienceFormValues) => {
+    if (!experience && !canCreateRecord("experiences", experiencesLength)) return;
     mutate({
       ...data,
       type: PortfolioExperienceTypes.experience,
@@ -152,11 +148,7 @@ const ExperienceForm = ({ onCancel, experience }: ExperienceFormProps) => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Describe your role and responsibilities..."
-                  className="min-h-[100px]"
-                  {...field}
-                />
+                <Textarea placeholder="Describe your role and responsibilities..." className="min-h-[100px]" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -1,7 +1,7 @@
 import { Privileges as PrivilegesType } from "@/interfaces/privileges";
 import { TemplateTypes } from "./templates";
 
-const max = 100;
+const max = 1;
 
 export const Privileges: PrivilegesType = {
     free: {
@@ -20,8 +20,10 @@ export const Privileges: PrivilegesType = {
         experiences: 3,
         projects: 3,
         services: 2,
+        education: 3,
         skills: 10,
         links: 3,
+        languages: 3,
         teplates: [TemplateTypes.professional, TemplateTypes.creative]
     },
     basic: {

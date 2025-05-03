@@ -2,7 +2,7 @@
 
 import { FeedbackPayload } from "@/interfaces/contact";
 import axios, { AxiosRequestConfig } from "axios";
-import { apicoUrls, googleSheets } from "../constants";
+import { apicoUrls, googleSheets } from "../constants/apico";
 
 export interface SpreadSheetResponse {
     values: string[][];

@@ -18,8 +18,9 @@ type PrivilegeTier = {
     experiences?: number;
     projects?: number;
     services?: number;
-    skills: number;
-    links: number;
+    education?: number;
+    skills?: number;
+    links?: number;
     languages?: number;
     teplates: TemplateType[];
 };
