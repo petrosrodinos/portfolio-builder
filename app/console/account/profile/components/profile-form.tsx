@@ -3,15 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ProfileFormValues, UserSchema } from "validation-schemas/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -20,28 +12,21 @@ import { useAuthStore } from "stores/auth";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AvatarPicker from "@/components/avatar-picker";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CountriesOptions } from "@/constants/dropdowns/countries";
 import * as icons from "country-flag-icons/react/3x2";
 import { UserAvatar } from "interfaces/user";
 import { TemplateTypes } from "@/constants/templates";
 import Cookies from "js-cookie";
 import { CookieKeys } from "@/constants/cookies";
+import { ProfessionsOptions } from "@/constants/dropdowns/professions";
+
 interface AccountProfileFormProps {
   onSuccess?: () => void;
   isCheckoutPending?: boolean;
 }
 
-export default function AccountProfileForm({
-  onSuccess,
-  isCheckoutPending,
-}: AccountProfileFormProps) {
+export default function AccountProfileForm({ onSuccess, isCheckoutPending }: AccountProfileFormProps) {
   const router = useRouter();
   const pathname = usePathname();
   const referral_code = Cookies.get(CookieKeys.referral_code);
@@ -132,13 +117,7 @@ export default function AccountProfileForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {isProfilePage && (
-          <AvatarPicker
-            onFileChange={handleAvatarChange}
-            previewUrl={data?.avatar?.url}
-            onDelete={handleAvatarDelete}
-          />
-        )}
+        {isProfilePage && <AvatarPicker onFileChange={handleAvatarChange} previewUrl={data?.avatar?.url} onDelete={handleAvatarDelete} />}
 
         <FormField
           control={form.control}
@@ -149,7 +128,31 @@ export default function AccountProfileForm({
               <FormControl>
                 <Input placeholder="John Doe" {...field} />
               </FormControl>
-              <FormDescription>This will not be visible at your portfolio.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="profession"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Profession</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value || ""}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your profession" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {ProfessionsOptions.map((profession) => (
+                    <SelectItem key={profession.value} value={profession.value}>
+                      {profession.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -160,10 +163,7 @@ export default function AccountProfileForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Country</FormLabel>
-              <Select
-                onValueChange={(value: string) => field.onChange(value)}
-                value={field.value || ""}
-              >
+              <Select onValueChange={(value: string) => field.onChange(value)} value={field.value || ""}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select your country" />
@@ -234,11 +234,7 @@ export default function AccountProfileForm({
             </FormItem>
           )}
         /> */}
-        <Button
-          disabled={isPending || isCheckoutPending}
-          loading={isPending || isCheckoutPending}
-          type="submit"
-        >
+        <Button disabled={isPending || isCheckoutPending} loading={isPending || isCheckoutPending} type="submit">
           Save
         </Button>
       </form>

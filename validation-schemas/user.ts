@@ -6,6 +6,7 @@ export const UserSchema = z.object({
     country: z.string().min(1, "Country is required"),
     date_of_birth: z.string().min(1, "Date of birth is required"),
     avatar: z.any().optional(),
+    profession: z.string().min(1, "Profession is required"),
 });
 
 

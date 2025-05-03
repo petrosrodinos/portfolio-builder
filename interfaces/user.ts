@@ -18,6 +18,7 @@ export interface User {
     country: string;
     email: string;
     date_of_birth: string;
+    profession: string;
     avatar?: UserAvatar;
     preferences?: UserPreferences;
     created_at: string;

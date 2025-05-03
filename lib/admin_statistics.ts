@@ -1,5 +1,6 @@
 import { planTypes } from "@/constants/plans";
 import { User } from "@/interfaces/user";
+import { ProfessionsOptions } from "@/constants/dropdowns/professions";
 
 export const getAdminStatistics = (users: User[]) => {
     const currentMonth = new Date().getMonth();
@@ -121,13 +122,28 @@ const calculateCountryDistribution = (users: User[]) => {
 };
 
 const calculateProfessionDistribution = (users: User[]) => {
-    return [
-        { name: "Software", value: Math.floor(30 * 0.35) },
-        { name: "Healthcare", value: Math.floor(20 * 0.2) },
-        { name: "Education", value: Math.floor(25 * 0.15) },
-        { name: "Business", value: Math.floor(60 * 0.2) },
-        { name: "Other", value: Math.floor(55 * 0.1) },
-    ];
+    // Initialize a map to count each profession
+    const professionCounts = new Map<string, number>();
+
+    // Initialize all professions with 0 count
+    ProfessionsOptions.forEach(profession => {
+        professionCounts.set(profession.value, 0);
+    });
+
+    // Count actual professions from users
+    users.forEach(user => {
+        const currentCount = professionCounts.get(user.profession) || 0;
+        professionCounts.set(user.profession, currentCount + 1);
+    });
+
+    // Convert to array format for the chart
+    return Array.from(professionCounts.entries()).map(([value, count]) => {
+        const profession = ProfessionsOptions.find(p => p.value === value);
+        return {
+            name: profession?.label || "Other",
+            value: count
+        };
+    });
 };
 
 const calculateSubscriptionDistribution = (users: User[]) => {
@@ -154,7 +170,6 @@ const calculateSubscriptionDistribution = (users: User[]) => {
 };
 
 export const getUserDemographics = (users: User[]) => {
-    console.log(users);
 
     return {
         ageData: calculateAgeDistribution(users),
