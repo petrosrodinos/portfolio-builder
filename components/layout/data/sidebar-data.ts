@@ -1,84 +1,85 @@
 import {
-  IconHelp,
-  IconLayoutDashboard,
-  IconPalette,
-  IconUserCircle,
-  IconTool,
-  IconUserCog,
-  IconDatabase,
-  IconMail,
-  IconLockPassword,
-  IconCalendarDue,
   IconAlignBoxLeftStretch,
-  IconFileInvoiceFilled,
-  IconLanguage,
   IconBriefcase,
+  IconBrowserCheck,
+  IconCalendarDue,
+  IconCreditCard,
+  IconDatabase,
+  IconFileInvoiceFilled,
   IconFolders,
+  IconHelp,
+  IconLanguage,
+  IconLayoutDashboard,
+  IconLockPassword,
+  IconMail,
+  IconMessageCircle,
+  IconPalette,
   IconSchool,
   IconStars,
+  IconTool,
   IconUser,
-  IconCreditCard,
-  IconBrowserCheck,
+  IconUserCircle,
+  IconUserCog,
   IconUsers,
-  IconMessageCircle,
-} from '@tabler/icons-react'
-import { Building2, Command, CreditCard, Share2 } from 'lucide-react'
-import { type SidebarData } from '../types'
+} from "@tabler/icons-react";
+import { Building2, Command, CreditCard, Share2 } from "lucide-react";
+import { type SidebarData } from "../types";
 
 export const sidebarData: SidebarData = {
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: "Shadcn Admin",
       logo: Command,
-      plan: 'Vite + ShadcnUI',
+      plan: "Vite + ShadcnUI",
     },
   ],
   navGroups: [
     {
-      title: 'Admin',
+      title: "Admin",
+      type: "admin",
       items: [
         {
-          title: 'Dashboard',
-          url: '/console/admin/dashboard',
+          title: "Dashboard",
+          url: "/console/admin/dashboard",
           icon: IconLayoutDashboard,
         },
         {
-          title: 'Users',
-          url: '/console/admin/users',
+          title: "Users",
+          url: "/console/admin/users",
           icon: IconUser,
         },
         {
-          title: 'Affiliates',
-          url: '/console/admin/affiliates',
+          title: "Affiliates",
+          url: "/console/admin/affiliates",
           icon: IconUsers,
         },
         {
-          title: 'Feedback',
-          url: '/console/admin/feedback',
+          title: "Feedback",
+          url: "/console/admin/feedback",
           icon: IconMessageCircle,
         },
       ],
     },
     {
-      title: 'General',
+      title: "General",
       items: [
         {
-          title: 'Dashboard',
-          url: '/console/dashboard',
+          title: "Dashboard",
+          url: "/console/dashboard",
           icon: IconLayoutDashboard,
         },
       ],
     },
     {
-      title: 'Pages',
+      title: "Pages",
       items: [
         {
-          title: 'Portfolio',
+          title: "Portfolio",
           icon: IconDatabase,
           items: [
             {
-              title: 'Profile',
-              url: '/console/portfolio/profile',
+              title: "Profile",
+              url: "/console/portfolio/profile",
               icon: IconUser,
             },
             {
@@ -112,34 +113,34 @@ export const sidebarData: SidebarData = {
               icon: IconStars,
             },
             {
-              title: 'Links',
-              url: '/console/portfolio/links',
+              title: "Links",
+              url: "/console/portfolio/links",
               icon: Share2,
             },
             {
-              title: 'Languages',
-              url: '/console/portfolio/languages',
+              title: "Languages",
+              url: "/console/portfolio/languages",
               icon: IconLanguage,
             },
             {
-              title: 'Appearance',
-              url: '/console/portfolio/appearance',
+              title: "Appearance",
+              url: "/console/portfolio/appearance",
               icon: IconPalette,
             },
             {
-              title: 'Display',
-              url: '/console/portfolio/display',
+              title: "Display",
+              url: "/console/portfolio/display",
               icon: IconBrowserCheck,
             },
           ],
         },
         {
-          title: 'Account',
+          title: "Account",
           icon: IconUserCircle,
           items: [
             {
-              title: 'Profile',
-              url: '/console/account/profile',
+              title: "Profile",
+              url: "/console/account/profile",
               icon: IconUserCog,
             },
             // {
@@ -153,24 +154,24 @@ export const sidebarData: SidebarData = {
             //   icon: IconMail,
             // },
             {
-              title: 'Password',
-              url: '/console/account/password',
+              title: "Password",
+              url: "/console/account/password",
               icon: IconLockPassword,
             },
             {
-              title: 'Appearance',
-              url: '/console/account/appearance',
+              title: "Appearance",
+              url: "/console/account/appearance",
               icon: IconPalette,
             },
           ],
         },
         {
-          title: 'Billing',
+          title: "Billing",
           icon: CreditCard,
           items: [
             {
-              title: 'Subscription',
-              url: '/console/billing/subscription',
+              title: "Subscription",
+              url: "/console/billing/subscription",
               icon: IconCalendarDue,
             },
             // {
@@ -181,12 +182,12 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: 'Affiliate',
+          title: "Affiliate",
           icon: IconUsers,
           items: [
             {
-              title: 'Affiliate',
-              url: '/console/affiliate',
+              title: "Affiliate",
+              url: "/console/affiliate",
               icon: IconCalendarDue,
             },
             // {
@@ -199,14 +200,14 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      title: 'Other',
+      title: "Other",
       items: [
         {
-          title: 'Help Center',
-          url: '/console/help-center',
+          title: "Help Center",
+          url: "/console/help-center",
           icon: IconHelp,
         },
       ],
     },
   ],
-}
+};
