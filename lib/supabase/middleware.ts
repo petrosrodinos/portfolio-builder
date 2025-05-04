@@ -41,6 +41,10 @@ export async function updateSession(request: NextRequest) {
         return supabaseResponse
     }
 
+    if (user?.app_metadata?.role !== "super-admin" && request.nextUrl.pathname.startsWith('/console/admin')) {
+        return NextResponse.redirect(new URL('/auth/sign-in', request.url))
+    }
+
 
     if (
         !user && (
