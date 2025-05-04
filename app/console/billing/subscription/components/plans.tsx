@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { plans, planTypes } from "@/constants/plans";
+import { plans, PlanTypes } from "@/constants/plans";
 import { getProducts } from "@/services/billing/products";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
@@ -168,11 +168,11 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
                   className="w-full"
                   variant={currentPlan == plan.type && !isCreatingUser ? "default" : "outline"}
                   loading={price?.id && priceIdLoading === price?.id}
-                  disabled={checkoutPending || isPending || (plan.type == planTypes.free && !isCreatingUser)}
+                  disabled={checkoutPending || isPending || (plan.type == PlanTypes.free && !isCreatingUser)}
                   onClick={() => handlePlanClick(price)}
                 >
-                  {currentPlan == plan.type && plan.type != planTypes.free && "Manage"}
-                  {currentPlan == plan.type && plan.type == planTypes.free && !isCreatingUser && "Current Plan"}
+                  {currentPlan == plan.type && plan.type != PlanTypes.free && "Manage"}
+                  {currentPlan == plan.type && plan.type == PlanTypes.free && !isCreatingUser && "Current Plan"}
                   {currentPlan != plan.type && !isCreatingUser && "Select"}
                   {isCreatingUser && "Select"}
                 </Button>

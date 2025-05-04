@@ -1,21 +1,20 @@
 import { BASIC_PRODUCT_ID, PROFESSIONAL_PRODUCT_ID } from ".";
 
-export const products = {
+export const Products = {
     basic: BASIC_PRODUCT_ID,
-    professional: PROFESSIONAL_PRODUCT_ID
+    professional: PROFESSIONAL_PRODUCT_ID,
 };
 
-export const planTypes = {
+export const PlanTypes = {
     free: "free",
     basic: "basic",
     professional: "professional",
 } as const;
 
-
 export const plans = [
     {
         product_id: null,
-        type: planTypes.free,
+        type: PlanTypes.free,
         name: "Free",
         description: "The best way to start your portfolio",
         prices: [],
@@ -28,8 +27,8 @@ export const plans = [
     },
     {
         name: "Basic",
-        type: planTypes.basic,
-        product_id: products.basic || "prod_SES1tGFTBcDhYY",
+        type: PlanTypes.basic,
+        product_id: Products.basic,
         description: "",
         popular: true,
         prices: [],
@@ -44,8 +43,8 @@ export const plans = [
     },
     {
         name: "Professional",
-        type: planTypes.professional,
-        product_id: products.professional || "prod_SES16JQgCSIxI7",
+        type: PlanTypes.professional,
+        product_id: Products.professional,
         description: "",
         prices: [],
         features: [
@@ -59,4 +58,4 @@ export const plans = [
     },
 ];
 
-export type PlanType = typeof planTypes[keyof typeof planTypes];
+export type PlanType = typeof PlanTypes[keyof typeof PlanTypes];

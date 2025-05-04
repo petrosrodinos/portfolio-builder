@@ -1,4 +1,4 @@
-import { planTypes } from "@/constants/plans";
+import { PlanTypes } from "@/constants/plans";
 import { User } from "@/interfaces/user";
 import { ProfessionsOptions } from "@/constants/dropdowns/professions";
 
@@ -8,14 +8,16 @@ export const getAdminStatistics = (users: User[]) => {
 
     const usersThisMonth = users.filter((user) => {
         const userDate = new Date(user.created_at);
-        return userDate.getMonth() === currentMonth && userDate.getFullYear() === currentYear;
+        return userDate.getMonth() === currentMonth &&
+            userDate.getFullYear() === currentYear;
     }).length;
 
     const usersLastMonth = users.filter((user) => {
         const userDate = new Date(user.created_at);
         const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
         const year = currentMonth === 0 ? currentYear - 1 : currentYear;
-        return userDate.getMonth() === lastMonth && userDate.getFullYear() === year;
+        return userDate.getMonth() === lastMonth &&
+            userDate.getFullYear() === year;
     }).length;
 
     const activeUsers = users.filter((user) => user.subscriptions).length;
@@ -25,23 +27,30 @@ export const getAdminStatistics = (users: User[]) => {
         return ((current - previous) / previous) * 100;
     };
 
-    const newUsersChange = calculatePercentageChange(usersThisMonth, usersLastMonth);
-    const newUsersChangeFormatted = `${newUsersChange >= 0 ? "+" : ""}${newUsersChange.toFixed(1)}%`;
+    const newUsersChange = calculatePercentageChange(
+        usersThisMonth,
+        usersLastMonth,
+    );
+    const newUsersChangeFormatted = `${newUsersChange >= 0 ? "+" : ""}${
+        newUsersChange.toFixed(1)
+    }%`;
 
     return {
         usersThisMonth,
         activeUsers,
         newUsersChange,
-        newUsersChangeFormatted
-    }
-}
+        newUsersChangeFormatted,
+    };
+};
 
 const calculateAgeDistribution = (users: User[]) => {
     const ageData = users.reduce((acc, user) => {
         try {
             const birthDate = new Date(user.date_of_birth);
             if (isNaN(birthDate.getTime())) {
-                console.warn(`Invalid date_of_birth for user ${user.id}: ${user.date_of_birth}`);
+                console.warn(
+                    `Invalid date_of_birth for user ${user.id}: ${user.date_of_birth}`,
+                );
                 return acc;
             }
 
@@ -49,7 +58,11 @@ const calculateAgeDistribution = (users: User[]) => {
             const age = today.getFullYear() - birthDate.getFullYear();
             const monthDiff = today.getMonth() - birthDate.getMonth();
 
-            const adjustedAge = monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()) ? age - 1 : age;
+            const adjustedAge =
+                monthDiff < 0 ||
+                    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+                    ? age - 1
+                    : age;
 
             let ageGroup = "";
 
@@ -93,7 +106,9 @@ const calculateUserCreationTrend = (users: User[]) => {
     return users
         .reduce((acc, user) => {
             const date = new Date(user.created_at);
-            const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+            const monthYear = `${date.getFullYear()}-${
+                String(date.getMonth() + 1).padStart(2, "0")
+            }`;
 
             const existingMonth = acc.find((item) => item.date === monthYear);
             if (existingMonth) {
@@ -109,7 +124,9 @@ const calculateUserCreationTrend = (users: User[]) => {
 const calculateCountryDistribution = (users: User[]) => {
     return users
         .reduce((acc, user) => {
-            const existingCountry = acc.find((item) => item.country === user.country);
+            const existingCountry = acc.find((item) =>
+                item.country === user.country
+            );
             if (existingCountry) {
                 existingCountry.users++;
             } else {
@@ -126,29 +143,30 @@ const calculateProfessionDistribution = (users: User[]) => {
     const professionCounts = new Map<string, number>();
 
     // Initialize all professions with 0 count
-    ProfessionsOptions.forEach(profession => {
+    ProfessionsOptions.forEach((profession) => {
         professionCounts.set(profession.value, 0);
     });
 
     // Count actual professions from users
-    users.forEach(user => {
+    users.forEach((user) => {
         const currentCount = professionCounts.get(user.profession) || 0;
         professionCounts.set(user.profession, currentCount + 1);
     });
 
     // Convert to array format for the chart
     return Array.from(professionCounts.entries()).map(([value, count]) => {
-        const profession = ProfessionsOptions.find(p => p.value === value);
+        const profession = ProfessionsOptions.find((p) => p.value === value);
         return {
             name: profession?.label || "Other",
-            value: count
+            value: count,
         };
     });
 };
 
 const calculateSubscriptionDistribution = (users: User[]) => {
     const subscriptionData = users.reduce((acc, user) => {
-        const planType = user.subscriptions?.prices?.products?.name?.toLowerCase() || 'free';
+        const planType =
+            user.subscriptions?.prices?.products?.name?.toLowerCase() || "free";
 
         const existingPlan = acc.find((item) => item.name === planType);
         if (existingPlan) {
@@ -159,7 +177,7 @@ const calculateSubscriptionDistribution = (users: User[]) => {
         return acc;
     }, [] as { name: string; value: number }[]);
 
-    const allPlanTypes = ['free', 'basic', 'professional'];
+    const allPlanTypes = ["free", "basic", "professional"];
     allPlanTypes.forEach((planType) => {
         if (!subscriptionData.find((item) => item.name === planType)) {
             subscriptionData.push({ name: planType, value: 0 });
@@ -170,12 +188,11 @@ const calculateSubscriptionDistribution = (users: User[]) => {
 };
 
 export const getUserDemographics = (users: User[]) => {
-
     return {
         ageData: calculateAgeDistribution(users),
         userCreationData: calculateUserCreationTrend(users),
         countryData: calculateCountryDistribution(users),
         professionData: calculateProfessionDistribution(users),
-        subscriptionData: calculateSubscriptionDistribution(users)
+        subscriptionData: calculateSubscriptionDistribution(users),
     };
-}
+};
