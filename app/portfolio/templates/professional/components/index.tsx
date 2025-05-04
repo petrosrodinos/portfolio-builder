@@ -12,34 +12,34 @@ import NavBar from "./nav-bar";
 import { Portfolio } from "@/interfaces/templates";
 
 interface ProfessionalTemplateProps {
-  data: Portfolio;
+  portfolio: Portfolio;
 }
 
-const ProfessionalTemplate = ({ data }: ProfessionalTemplateProps) => {
+const ProfessionalTemplate = ({ portfolio }: ProfessionalTemplateProps) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <NavBar full_name={data?.user?.full_name} />
+      <NavBar full_name={portfolio?.user?.full_name} />
 
       <div className="pt-20">
         <Profile
-          full_name={data?.user?.full_name}
-          welcome_message={data?.welcome_message}
-          role={data.role}
-          country={data?.user?.country}
-          email={data?.email}
-          phone={data?.phone}
-          avatar={data?.user?.avatar?.url}
-          address={data?.address}
-          booking_link={data?.booking_link}
+          full_name={portfolio?.user?.full_name}
+          welcome_message={portfolio?.welcome_message}
+          role={portfolio.role}
+          country={portfolio?.user?.country}
+          email={portfolio?.email}
+          phone={portfolio?.phone}
+          avatar={portfolio?.user?.avatar?.url}
+          address={portfolio?.address}
+          booking_link={portfolio?.booking_link}
         />
-        <Bio bio={data.bio} resume={data?.resume?.url} />
-        <Experience experiences={data?.experiences} />
-        <Projects projects={data?.projects} />
-        <Education education={data?.educations} />
-        <Services services={data?.services} />
-        <SkillsSection skills={data?.skills} />
-        <Languages languages={data?.languages} />
-        <Links links={data?.links} />
+        <Bio bio={portfolio.bio} resume={portfolio?.resume?.url} />
+        <Experience experiences={portfolio?.experiences} />
+        <Projects projects={portfolio?.projects} />
+        <Education education={portfolio?.educations} />
+        <Services services={portfolio?.services} />
+        <SkillsSection skills={portfolio?.skills} />
+        <Languages languages={portfolio?.languages} />
+        <Links links={portfolio?.links} />
         <ContactSection />
       </div>
     </div>

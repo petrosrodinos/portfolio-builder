@@ -7,20 +7,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { deleteSkill } from "services/skills";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import SkillForm from "./skill-form";
-import { SkillOptions, SkillLevelOptions } from "@/constants/dropdowns/skills";
-import { getSkillLabel, getSkillLabelAndLevel } from "@/lib/utils";
+import { getSkillLabelAndLevel } from "@/lib/utils";
 
 interface SkillCardProps {
   skill: PortfolioSkill;
@@ -82,12 +72,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
               <Pencil className="h-4 w-4" />
               <span className="sr-only">Edit skill</span>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleDelete}
-              className="h-8 w-8 text-destructive hover:text-destructive"
-            >
+            <Button variant="ghost" size="icon" onClick={handleDelete} className="h-8 w-8 text-destructive hover:text-destructive">
               <Trash2 className="h-4 w-4" />
               <span className="sr-only">Delete skill</span>
             </Button>
@@ -115,10 +100,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
+            <AlertDialogAction onClick={handleConfirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

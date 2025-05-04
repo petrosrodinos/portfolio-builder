@@ -1,3 +1,5 @@
+"use client";
+
 import ContentSection from "@/components/content-section";
 import React from "react";
 import ExperienceView from "./components/experience-view";

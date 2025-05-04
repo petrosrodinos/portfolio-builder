@@ -92,7 +92,7 @@ export default function Home() {
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
             <p className="text-lg text-muted-foreground">
-              Choose the perfect plan for your needs. Whether you're just starting out or need advanced features, we have a plan that fits your goals. All plans include our core features with
+              Choose the perfect plan for your needs. Whether you&apos;re just starting out or need advanced features, we have a plan that fits your goals. All plans include our core features with
               additional benefits as you upgrade.
             </p>
           </div>

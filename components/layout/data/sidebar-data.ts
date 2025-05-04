@@ -22,7 +22,7 @@ import {
   IconUserCog,
   IconUsers,
 } from "@tabler/icons-react";
-import { Building2, Command, CreditCard, Share2 } from "lucide-react";
+import { Command, CreditCard, Share2 } from "lucide-react";
 import { type SidebarData } from "../types";
 
 export const sidebarData: SidebarData = {
@@ -36,7 +36,7 @@ export const sidebarData: SidebarData = {
   navGroups: [
     {
       title: "Admin",
-      type: "admin",
+      access: "admin",
       items: [
         {
           title: "Dashboard",
@@ -174,11 +174,6 @@ export const sidebarData: SidebarData = {
               url: "/console/billing/subscription",
               icon: IconCalendarDue,
             },
-            // {
-            //   title: 'invoices',
-            //   url: '/console/billing/invoices',
-            //   icon: IconFileInvoiceFilled,
-            // },
           ],
         },
         {
@@ -188,13 +183,8 @@ export const sidebarData: SidebarData = {
             {
               title: "Affiliate",
               url: "/console/affiliate",
-              icon: IconCalendarDue,
+              icon: IconUsers,
             },
-            // {
-            //   title: 'invoices',
-            //   url: '/console/billing/invoices',
-            //   icon: IconFileInvoiceFilled,
-            // },
           ],
         },
       ],

@@ -1,11 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const HelpCenter = () => {
   return (
@@ -24,7 +19,7 @@ const HelpCenter = () => {
               <li>Create your account and log in</li>
               <li>Choose a portfolio template that matches your style</li>
               <li>Add your personal information and projects</li>
-              <li>Customize your portfolio's colors and layout</li>
+              <li>Customize your portfolio&apos;s colors and layout</li>
               <li>Preview and publish your portfolio</li>
             </ol>
           </div>
@@ -41,23 +36,17 @@ const HelpCenter = () => {
             <AccordionItem value="item-1">
               <AccordionTrigger>How do I customize my portfolio?</AccordionTrigger>
               <AccordionContent>
-                You can customize your portfolio by clicking on the "Customize" button in your
-                dashboard. From there, you can modify colors, fonts, layouts, and add your own
-                content.
+                You can customize your portfolio by clicking on the &quot;Customize&quot; button in your dashboard. From there, you can modify colors, fonts, layouts, and add your own content.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>Can I add custom code to my portfolio?</AccordionTrigger>
-              <AccordionContent>
-                Yes, you can add custom HTML, CSS, and JavaScript to your portfolio through the
-                "Custom Code" section in the settings.
-              </AccordionContent>
+              <AccordionContent>Yes, you can add custom HTML, CSS, and JavaScript to your portfolio through the &quot;Custom Code&quot; section in the settings.</AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger>How do I add projects to my portfolio?</AccordionTrigger>
               <AccordionContent>
-                Navigate to the "Projects" section in your dashboard, click "Add New Project," and
-                fill in the details including title, description, images, and links.
+                Navigate to the &quot;Projects&quot; section in your dashboard, click &quot;Add New Project,&quot; and fill in the details including title, description, images, and links.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

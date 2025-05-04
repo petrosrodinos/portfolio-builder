@@ -29,7 +29,7 @@ type NavCollapsible = BaseNavItem & {
 type NavItem = NavCollapsible | NavLink;
 
 interface NavGroup {
-  type?: "admin" | "user";
+  access?: "admin" | "user";
   title: string;
   items: NavItem[];
 }

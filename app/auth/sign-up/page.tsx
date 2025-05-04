@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { SignUpForm } from "./components/sign-up-form";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function SignUp() {
   return (
@@ -9,7 +10,9 @@ export default function SignUp() {
       <div className="mb-2 flex flex-col space-y-2 text-left">
         <h1 className="text-lg font-semibold tracking-tight">Create an account</h1>
       </div>
-      <SignUpForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SignUpForm />
+      </Suspense>
 
       <div className="text-center text-sm mt-3">
         Already have an account?{" "}

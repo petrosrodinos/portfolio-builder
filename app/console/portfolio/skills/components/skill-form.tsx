@@ -22,7 +22,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface SkillFormProps {
   onCancel: () => void;
   skill?: PortfolioSkill;
-  skillLength: number;
+  skillLength?: number;
 }
 
 const SkillForm = ({ onCancel, skill, skillLength }: SkillFormProps) => {

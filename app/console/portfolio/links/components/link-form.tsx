@@ -18,7 +18,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface LinkFormProps {
   onCancel: () => void;
   link?: PortfolioSkill;
-  linkLength: number;
+  linkLength?: number;
 }
 
 const LinkForm = ({ onCancel, link, linkLength }: LinkFormProps) => {

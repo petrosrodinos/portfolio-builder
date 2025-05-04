@@ -1,6 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import tailwindCssAnimate from 'tailwindcss-animate'
-import { fonts } from './config/fonts'
+import { fonts } from './constants/fonts'
 
 const { fontFamily = { sans: ['sans-serif'] } } = defaultTheme || {}
 

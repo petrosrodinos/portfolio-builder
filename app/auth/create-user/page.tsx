@@ -15,10 +15,7 @@ const CreateUser = () => {
 
   const { mutate: checkoutMutation, isPending: checkoutPending } = useMutation({
     mutationFn: async (price_id: string) => {
-      const sessionId = await checkoutWithStripe(
-        price_id,
-        `/subscription_payment?redirect=/auth/portfolio-resume`
-      );
+      const sessionId = await checkoutWithStripe(price_id, `/subscription_payment?redirect=/auth/portfolio-resume`);
       return sessionId;
     },
     onSuccess: async (sessionId: string) => {
@@ -57,10 +54,7 @@ const CreateUser = () => {
             </div>
           </div>
           <h1 className="text-3xl font-bold tracking-tight">Complete Your Profile</h1>
-          <p className="mt-2 text-muted-foreground">
-            Great! Your account is created. Now let's set up your professional profile to start
-            building your portfolio.
-          </p>
+          <p className="mt-2 text-muted-foreground">Great! Your account is created. Now let&apos;s set up your professional profile to start building your portfolio.</p>
         </div>
 
         <div className="rounded-lg border bg-card p-6 shadow-sm">
@@ -71,8 +65,7 @@ const CreateUser = () => {
         </div>
 
         <div className="mt-3 text-center text-sm text-muted-foreground">
-          You can always update your profile later from your{" "}
-          <p className="font-medium text-primary">dashboard</p>
+          You can always update your profile later from your <p className="font-medium text-primary">dashboard</p>
         </div>
       </div>
     </div>

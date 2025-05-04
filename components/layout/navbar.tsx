@@ -1,24 +1,13 @@
 "use client";
 
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAuthStore } from "stores/auth";
 import { ThemeSwitch } from "@/components/theme-switch";
+import Image from "next/image";
 
 interface MenuItem {
   title: string;
@@ -143,7 +132,7 @@ const Navbar = ({
         <nav className="hidden justify-between items-center h-16 lg:flex">
           <div className="flex items-center">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              <Image src={logo.src} className="max-h-8" alt={logo.alt} />
               <span className="text-lg font-semibold tracking-tighter">{logo.title}</span>
             </a>
           </div>
@@ -177,7 +166,7 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between h-16">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="max-h-8" alt={logo.alt} />
+              <Image src={logo.src} className="max-h-8" alt={logo.alt} />
             </a>
             <div className="flex items-center gap-2">
               <ThemeSwitch />
@@ -191,7 +180,7 @@ const Navbar = ({
                   <SheetHeader>
                     <SheetTitle>
                       <a href={logo.url} className="flex items-center gap-2">
-                        <img src={logo.src} className="max-h-8" alt={logo.alt} />
+                        <Image src={logo.src} className="max-h-8" alt={logo.alt} />
                       </a>
                     </SheetTitle>
                   </SheetHeader>
@@ -259,9 +248,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
       <AccordionItem key={item.title} value={item.title} className="border-b-0">
-        <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
-          {item.title}
-        </AccordionTrigger>
+        <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">{item.title}</AccordionTrigger>
         <AccordionContent className="mt-2">
           {item.items.map((subItem) => (
             <SubMenuLink key={subItem.title} item={subItem} />
@@ -280,16 +267,11 @@ const renderMobileMenuItem = (item: MenuItem) => {
 
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
-    <a
-      className="flex flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-muted hover:text-accent-foreground"
-      href={item.url}
-    >
+    <a className="flex flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-muted hover:text-accent-foreground" href={item.url}>
       <div className="text-foreground">{item.icon}</div>
       <div>
         <div className="text-sm font-semibold">{item.title}</div>
-        {item.description && (
-          <p className="text-sm leading-snug text-muted-foreground">{item.description}</p>
-        )}
+        {item.description && <p className="text-sm leading-snug text-muted-foreground">{item.description}</p>}
       </div>
     </a>
   );

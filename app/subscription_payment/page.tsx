@@ -33,13 +33,13 @@ const SubscriptionPaymentPage = () => {
         plan: getPlanType(subscriptionData?.prices?.product_id),
       });
     }
-  }, [subscriptionData]);
+  }, [subscriptionData, updateUser]);
 
   useEffect(() => {
     if (redirectParam) {
       router.prefetch(redirectParam);
     }
-  }, [redirectParam]);
+  }, [redirectParam, router]);
 
   if (isPending) {
     return <Loading />;
@@ -58,26 +58,16 @@ const SubscriptionPaymentPage = () => {
               <>
                 <CheckCircle2 className="h-16 w-16 text-green-500" />
                 <p className="text-lg font-medium text-center">Subscription Successful!</p>
-                <p className="text-sm text-muted-foreground text-center">
-                  Your subscription has been processed successfully. You can now access all the
-                  features for your portfolio!
-                </p>
+                <p className="text-sm text-muted-foreground text-center">Your subscription has been processed successfully. You can now access all the features for your portfolio!</p>
               </>
             ) : (
               <>
                 <XCircle className="h-16 w-16 text-red-500" />
                 <p className="text-lg font-medium text-center">Payment Failed</p>
-                <p className="text-sm text-muted-foreground text-center">
-                  There was an issue processing your payment. Please try again.
-                </p>
+                <p className="text-sm text-muted-foreground text-center">There was an issue processing your payment. Please try again.</p>
               </>
             )}
-            <Button
-              onClick={() =>
-                router.push(redirectParam !== "undefined" ? redirectParam : "/console/dashboard")
-              }
-              className="w-full mt-4"
-            >
+            <Button onClick={() => router.push(redirectParam !== "undefined" ? redirectParam : "/console/dashboard")} className="w-full mt-4">
               Continue
             </Button>
           </CardContent>

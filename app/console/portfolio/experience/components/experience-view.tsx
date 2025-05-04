@@ -49,7 +49,7 @@ const ExperienceView = () => {
           <DialogHeader>
             <DialogTitle>Add Experience</DialogTitle>
           </DialogHeader>
-          <ExperienceForm experiencesLength={experiences.length} onCancel={handleCancel} />
+          <ExperienceForm experiencesLength={experiences?.length} onCancel={handleCancel} />
         </DialogContent>
       </Dialog>
 

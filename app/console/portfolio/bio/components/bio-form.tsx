@@ -88,7 +88,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
         years_of_experience: data.years_of_experience || "1-3",
       });
     }
-  }, [data, isSuccess]);
+  }, [data, form, isSuccess]);
 
   return (
     <Form {...form}>

@@ -106,13 +106,13 @@ export default function AccountProfileForm({ onSuccess, isCheckoutPending }: Acc
     if (isSuccess && data) {
       form.reset(data);
     }
-  }, [data, isSuccess]);
+  }, [data, form, isSuccess]);
 
   useEffect(() => {
     if (!isProfilePage) {
       router.prefetch("/auth/portfolio-resume");
     }
-  }, [router]);
+  }, [isProfilePage, router]);
 
   return (
     <Form {...form}>

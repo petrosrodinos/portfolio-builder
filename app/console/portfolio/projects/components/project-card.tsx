@@ -1,35 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Pencil,
-  Trash2,
-  MapPin,
-  Building2,
-  Calendar,
-  Link as LinkIcon,
-  ExternalLink,
-  Image as ImageIcon,
-} from "lucide-react";
+import { Pencil, Trash2, MapPin, Building2, Calendar, Link as LinkIcon, ExternalLink, Image as ImageIcon } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
 import { deleteExperience } from "services/experience";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import ProjectForm from "./project-form";
 import { PortfolioExperience } from "interfaces/portfolio";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: PortfolioExperience;
@@ -80,23 +63,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       <Card className="group overflow-hidden">
         {project?.image && (
           <div className="relative w-full h-48 bg-muted">
-            <img
-              src={project?.image as string}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
+            <Image src={project?.image as string} alt={project.title} className="w-full h-full object-cover" />
           </div>
         )}
         <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
           <div className="space-y-2">
             <h3 className="text-xl font-semibold leading-none tracking-tight">{project.title}</h3>
             {project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 mt-2"
-              >
+              <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 mt-2">
                 <LinkIcon className="h-3 w-3" />
                 View Project
                 <ExternalLink className="h-3 w-3" />
@@ -108,12 +82,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               <Pencil className="h-4 w-4" />
               <span className="sr-only">Edit project</span>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleDelete}
-              className="h-8 w-8 text-destructive hover:text-destructive"
-            >
+            <Button variant="ghost" size="icon" onClick={handleDelete} className="h-8 w-8 text-destructive hover:text-destructive">
               <Trash2 className="h-4 w-4" />
               <span className="sr-only">Delete project</span>
             </Button>
@@ -156,10 +125,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
+            <AlertDialogAction onClick={handleConfirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -12,7 +12,7 @@ import { useTheme } from "next-themes";
 import { AccountAppearanceFormSchema, AccountAppearanceFormValues } from "@/validation-schemas/appearance";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore } from "@/stores/auth";
-import { fonts } from "@/config/fonts";
+import { fonts } from "@/constants/fonts";
 
 export function AppearanceForm() {
   const { font, setFont } = useFont();

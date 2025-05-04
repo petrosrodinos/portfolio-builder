@@ -16,7 +16,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface ServiceFormProps {
   onCancel: () => void;
   service?: PortfolioExperience;
-  serviceLength: number;
+  serviceLength?: number;
 }
 
 const ServiceForm = ({ onCancel, service, serviceLength }: ServiceFormProps) => {

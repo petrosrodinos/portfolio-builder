@@ -1,6 +1,5 @@
-import { fonts } from "@/config/fonts";
+import { fonts } from "@/constants/fonts";
 import { z } from "zod";
-
 
 export const AccountAppearanceFormSchema = z.object({
     font: z.enum(fonts, {
@@ -9,7 +8,6 @@ export const AccountAppearanceFormSchema = z.object({
     }),
     theme: z.any().optional(),
     color_scheme: z.any().optional(),
-
 });
 
 export const PortfolioAppearanceFormSchema = z.object({
@@ -19,6 +17,9 @@ export const PortfolioAppearanceFormSchema = z.object({
     }),
 });
 
-export type AccountAppearanceFormValues = z.infer<typeof AccountAppearanceFormSchema>;
-export type PortfolioAppearanceFormValues = z.infer<typeof PortfolioAppearanceFormSchema>;
-
+export type AccountAppearanceFormValues = z.infer<
+    typeof AccountAppearanceFormSchema
+>;
+export type PortfolioAppearanceFormValues = z.infer<
+    typeof PortfolioAppearanceFormSchema
+>;

@@ -57,7 +57,7 @@ const NiceToHave = () => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Nice To Have</DialogTitle>
-          <DialogDescription>Share your feedback on what features you'd like to see in the future.</DialogDescription>
+          <DialogDescription>Share your feedback on what features you&apos;d like to see in the future.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">

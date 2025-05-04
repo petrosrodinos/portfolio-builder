@@ -9,7 +9,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useFont } from "@/context/font-context";
 import PortfolioTemplates from "@/components/portfolio-templates";
 import { PortfolioAppearanceFormSchema, PortfolioAppearanceFormValues } from "@/validation-schemas/appearance";
-import { fonts } from "@/config/fonts";
+import { fonts } from "@/constants/fonts";
 
 export function AppearanceForm() {
   const { font, setFont } = useFont();

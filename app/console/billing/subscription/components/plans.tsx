@@ -102,7 +102,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
     if (isCreatingUser) {
       router.prefetch("/auth/portfolio-resume");
     }
-  }, [isCreatingUser]);
+  }, [isCreatingUser, router]);
 
   if (isLoading) {
     return <Loading type="plans" />;

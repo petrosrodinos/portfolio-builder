@@ -3,15 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ProfileFormValues, ProfileSchema } from "validation-schemas/portfolio";
@@ -24,13 +16,7 @@ import { SupabaseErrorCodes } from "@/constants/supabase";
 import Link from "next/link";
 import { UserCircle, FileText } from "lucide-react";
 import ResumeData from "./resume-data";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -71,10 +57,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
     onError: (error: any) => {
       toast({
         title: "Could not save data",
-        description:
-          error.code === SupabaseErrorCodes.unique_violation
-            ? "Vanity URL already exists"
-            : error.message,
+        description: error.code === SupabaseErrorCodes.unique_violation ? "Vanity URL already exists" : error.message,
         duration: 3000,
       });
     },
@@ -99,7 +82,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
         booking_link: data.booking_link || "",
       });
     }
-  }, [data, isSuccess]);
+  }, [data, form, isSuccess]);
 
   return (
     <div className="space-y-6">
@@ -138,10 +121,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input placeholder="johndoe" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This will be the URL of your portfolio and must be unique, e.g.
-                  https://portfolio.com/johndoe
-                </FormDescription>
+                <FormDescription>This will be the URL of your portfolio and must be unique, e.g. https://portfolio.com/johndoe</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -16,7 +16,6 @@ import { toast } from "@/hooks/use-toast";
 import { SignUpSchema, SignUpFormValues } from "validation-schemas/auth";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { Cookie } from "next/dist/compiled/@next/font/dist/google";
 import { CookieKeys } from "@/constants/cookies";
 interface SignUpFormProps {
   className?: string;

@@ -16,7 +16,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface ExperienceFormProps {
   onCancel: () => void;
   experience?: PortfolioExperience;
-  experiencesLength: number;
+  experiencesLength?: number;
 }
 
 const ExperienceForm = ({ onCancel, experience, experiencesLength }: ExperienceFormProps) => {

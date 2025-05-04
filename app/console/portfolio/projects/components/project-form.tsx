@@ -16,7 +16,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface ProjectFormProps {
   onCancel: () => void;
   project?: PortfolioExperience;
-  projectsLength: number;
+  projectsLength?: number;
 }
 
 const ProjectForm = ({ onCancel, project, projectsLength }: ProjectFormProps) => {

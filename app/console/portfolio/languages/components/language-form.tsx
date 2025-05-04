@@ -19,7 +19,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface LanguageFormProps {
   onCancel: () => void;
   language?: PortfolioSkill;
-  languageLength: number;
+  languageLength?: number;
 }
 
 const LanguageForm = ({ onCancel, language, languageLength }: LanguageFormProps) => {

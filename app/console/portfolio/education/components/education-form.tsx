@@ -18,7 +18,7 @@ import { usePrivileges } from "@/hooks/use-privileges";
 interface EducationFormProps {
   onCancel: () => void;
   education?: PortfolioExperience;
-  educationLength: number;
+  educationLength?: number;
 }
 
 const EducationForm = ({ onCancel, education, educationLength }: EducationFormProps) => {

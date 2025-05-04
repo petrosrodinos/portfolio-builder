@@ -85,7 +85,7 @@ const PortfolioTemplates = ({ className }: PortfolioTemplatesProps) => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Change Portfolio Template</AlertDialogTitle>
-            <AlertDialogDescription>Are you sure you want to change your portfolio template? This will update your portfolio's appearance.</AlertDialogDescription>
+            <AlertDialogDescription>Are you sure you want to change your portfolio template? This will update your portfolio&apos;s appearance.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

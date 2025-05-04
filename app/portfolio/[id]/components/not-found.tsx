@@ -14,9 +14,7 @@ const PortfolioNotFound = () => {
           <CardTitle className="text-2xl">Portfolio Not Found</CardTitle>
         </CardHeader>
         <CardContent className="text-center">
-          <p className="text-muted-foreground mb-6">
-            The portfolio you're looking for doesn't exist or it is private.
-          </p>
+          <p className="text-muted-foreground mb-6">The portfolio you&apos;re looking for doesn&apos;t exist or it is private.</p>
           <Link href="/">
             <Button size="lg">Return Home</Button>
           </Link>

@@ -22,7 +22,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     getUser();
   }, [supabase.auth]);
 
-  const filteredNavGroups = sidebarData.navGroups.filter((group) => group?.type !== "admin" || user?.app_metadata?.role === "super-admin");
+  const filteredNavGroups = sidebarData.navGroups.filter((group) => group?.access !== "admin" || user?.app_metadata?.role === "super-admin");
 
   return (
     <Sidebar collapsible="icon" variant="floating" {...props}>
