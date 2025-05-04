@@ -1,16 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  FileUpload,
-  FileUploadDropzone,
-  FileUploadItem,
-  FileUploadItemDelete,
-  FileUploadItemMetadata,
-  FileUploadItemPreview,
-  FileUploadList,
-  FileUploadTrigger,
-} from "@/components/ui/file-upload";
+import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload";
 import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
@@ -35,7 +26,6 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
     mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
     onSuccess: (data) => {
-      console.log("data", data);
       toast({
         title: "Portfolio created",
         description: "Portfolio created successfully",
@@ -85,16 +75,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   return (
     <div className="space-y-4">
       {!isPending && !isCreatingPortfolio && (
-        <FileUpload
-          maxFiles={1}
-          maxSize={5 * 1024 * 1024}
-          accept="application/pdf"
-          className="w-full"
-          value={files}
-          onValueChange={setFiles}
-          onFileReject={onFileReject}
-          multiple
-        >
+        <FileUpload maxFiles={1} maxSize={5 * 1024 * 1024} accept="application/pdf" className="w-full" value={files} onValueChange={setFiles} onFileReject={onFileReject} multiple>
           <FileUploadDropzone>
             <div className="flex flex-col items-center gap-1">
               <div className="flex items-center justify-center rounded-full border p-2.5">
@@ -130,19 +111,12 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
           <Spinner size="medium" />
           <div className="text-center space-y-1">
             <p className="text-sm font-medium">{currentStepText}</p>
-            <p className="text-xs text-muted-foreground">
-              Please wait while we process your resume
-            </p>
+            <p className="text-xs text-muted-foreground">Please wait while we process your resume</p>
           </div>
         </div>
       )}
 
-      <Button
-        onClick={handleCreatePortfolio}
-        disabled={files.length === 0 || isPending || isCreatingPortfolio}
-        className="w-full"
-        variant="default"
-      >
+      <Button onClick={handleCreatePortfolio} disabled={files.length === 0 || isPending || isCreatingPortfolio} className="w-full" variant="default">
         {isPending ? "Creating portfolio..." : "Create portfolio"}
       </Button>
     </div>
