@@ -13,21 +13,21 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-//   const { id } = await params;
-//   const data = await getPortfolio(id);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const data = await getPortfolio(id);
 
-//   return {
-//     title: `${data?.user?.full_name || ""} | Portfolio`,
-//     description: data?.bio,
-//     keywords: [...(data?.skills?.map?.((skill) => skill.title) || []), data?.user?.full_name].filter(Boolean),
-//     openGraph: {
-//       title: data?.user?.full_name,
-//       description: data?.bio,
-//       images: [data?.user?.avatar?.url],
-//     },
-//   };
-// }
+  return {
+    title: `${data?.user?.full_name || ""} | Portfolio`,
+    description: data?.bio,
+    keywords: [...(data?.skills?.map?.((skill) => skill.title) || []), data?.user?.full_name].filter(Boolean),
+    openGraph: {
+      title: data?.user?.full_name,
+      description: data?.bio,
+      images: [data?.user?.avatar?.url],
+    },
+  };
+}
 
 export default async function PortfolioPage({ params }) {
   const { id } = await params;
