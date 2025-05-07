@@ -15,9 +15,10 @@ import { toast } from "@/hooks/use-toast";
 
 interface PortfolioTemplatesProps {
   className?: string;
+  isLandingPage?: boolean;
 }
 
-const PortfolioTemplates = ({ className }: PortfolioTemplatesProps) => {
+const PortfolioTemplates = ({ className, isLandingPage = false }: PortfolioTemplatesProps) => {
   const {
     preferences: { portfolio_theme },
     updateUser,
@@ -51,7 +52,7 @@ const PortfolioTemplates = ({ className }: PortfolioTemplatesProps) => {
 
   return (
     <>
-      <div className={cn("grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-1", className)}>
+      <div className={cn("grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 mt-1", className)}>
         {templates.map((template: any) => (
           <Card key={template.id} className={cn("overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] w-full", portfolio_theme === template.id && "ring-2 ring-primary")}>
             <div className="relative w-full h-40">
@@ -62,15 +63,17 @@ const PortfolioTemplates = ({ className }: PortfolioTemplatesProps) => {
               <h3 className="font-semibold">{template.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{template.description}</p>
               <div className="mt-4 flex flex-col gap-2">
-                <Button
-                  className="w-full text-sm sm:text-base"
-                  variant={portfolio_theme === template.id ? "default" : "outline"}
-                  disabled={portfolio_theme === template.id}
-                  onClick={() => handleSelectTemplate(template.id)}
-                >
-                  <Check className="mr-2 h-4 w-4 shrink-0" />
-                  <span className="truncate">{portfolio_theme === template.id ? "Selected" : "Select"}</span>
-                </Button>
+                {!isLandingPage && (
+                  <Button
+                    className="w-full text-sm sm:text-base"
+                    variant={portfolio_theme === template.id ? "default" : "outline"}
+                    disabled={portfolio_theme === template.id}
+                    onClick={() => handleSelectTemplate(template.id)}
+                  >
+                    <Check className="mr-2 h-4 w-4 shrink-0" />
+                    <span className="truncate">{portfolio_theme === template.id ? "Selected" : "Select"}</span>
+                  </Button>
+                )}
                 <Button variant="outline" className="w-full text-sm sm:text-base" onClick={() => window.open(template.preview, "_blank")}>
                   <Eye className="mr-2 h-4 w-4 shrink-0" />
                   <span className="truncate">Preview</span>

@@ -31,7 +31,7 @@ export default function CreativeTemplate({ portfolio }: CreativeTemplateProps) {
       <Services services={portfolio?.services} />
       <Work projects={portfolio?.projects} />
       <EducationSection education={portfolio?.educations} />
-      <Contact />
+      {/* <Contact /> */}
       <Footer
         avatar={portfolio?.user?.avatar?.url}
         full_name={portfolio?.user?.full_name}

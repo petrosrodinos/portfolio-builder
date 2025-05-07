@@ -40,7 +40,7 @@ const ProfessionalTemplate = ({ portfolio }: ProfessionalTemplateProps) => {
         <SkillsSection skills={portfolio?.skills} />
         <Languages languages={portfolio?.languages} />
         <Links links={portfolio?.links} />
-        <ContactSection />
+        {/* <ContactSection /> */}
       </div>
     </div>
   );

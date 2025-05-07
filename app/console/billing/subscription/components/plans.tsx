@@ -30,7 +30,7 @@ interface PlansProps {
 export default function Plans({ subscription, onOpenPortal, isPending, className, redirectParam }: PlansProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const isCreatingUser = pathname.includes("/select-plan");
+  const isCreatingUser = pathname.includes("/select-plan") || pathname == "/";
   const { isLoggedIn, plan: currentPlan } = useAuthStore();
   const [billingInterval, setBillingInterval] = useState<BillingInterval>("month");
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
@@ -95,7 +95,6 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
       });
       setPopulatedPlans(populatedPlans);
     }
-    console.log(subscription);
   }, [products, subscription]);
 
   useEffect(() => {
@@ -110,7 +109,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
 
   return (
     <div className={cn("w-full")}>
-      <div className="flex justify-center mb-5">
+      {/* <div className="flex justify-center mb-5">
         <div className="relative self-center bg-background rounded-lg p-0.5 flex justify-center sm:mt-2 border border-border w-1/2 shadow-md">
           {intervals?.includes("month") && (
             <Button
@@ -133,9 +132,9 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
             </Button>
           )}
         </div>
-      </div>
+      </div> */}
 
-      <div className={cn("grid xl:grid-cols-3 lg:grid-cols-2 gap-8 mb-12", className)}>
+      <div className={cn("grid xl:grid-cols-2 lg:grid-cols-2 gap-8 mb-12", className)}>
         {populatedPlans?.map((plan, index) => {
           const price = plan.prices?.find((price) => price?.interval === billingInterval);
           return (
@@ -168,10 +167,10 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
                   className="w-full"
                   variant={currentPlan == plan.type && !isCreatingUser ? "default" : "outline"}
                   loading={price?.id && priceIdLoading === price?.id}
-                  disabled={checkoutPending || isPending || (plan.type == PlanTypes.free && !isCreatingUser)}
+                  disabled={checkoutPending || isPending || plan.disabled || (plan.type == PlanTypes.free && !isCreatingUser)}
                   onClick={() => handlePlanClick(price)}
                 >
-                  {currentPlan == plan.type && plan.type != PlanTypes.free && "Manage"}
+                  {currentPlan == plan.type && plan.type != PlanTypes.free && !isCreatingUser && "Manage"}
                   {currentPlan == plan.type && plan.type == PlanTypes.free && !isCreatingUser && "Current Plan"}
                   {currentPlan != plan.type && !isCreatingUser && "Select"}
                   {isCreatingUser && "Select"}
