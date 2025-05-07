@@ -189,15 +189,15 @@ export const sidebarData: SidebarData = {
         },
       ],
     },
-    {
-      title: "Other",
-      items: [
-        {
-          title: "Help Center",
-          url: "/console/help-center",
-          icon: IconHelp,
-        },
-      ],
-    },
+    // {
+    //   title: "Other",
+    //   items: [
+    //     {
+    //       title: "Help Center",
+    //       url: "/console/help-center",
+    //       icon: IconHelp,
+    //     },
+    //   ],
+    // },
   ],
 };

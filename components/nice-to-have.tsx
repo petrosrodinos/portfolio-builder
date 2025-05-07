@@ -8,6 +8,8 @@ import { sendFeedback } from "@/services/feedback";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Link from "next/link";
+import { SUPPORT_EMAIL } from "../constants";
 
 const NiceToHave = () => {
   const { user_id, email, full_name } = useAuthStore();
@@ -68,6 +70,12 @@ const NiceToHave = () => {
               </FormControl>
               <FormMessage />
             </FormItem>
+            <div className="text-sm text-muted-foreground">
+              Facing any problems?{" "}
+              <Link href={`mailto:${SUPPORT_EMAIL}`} className="text-primary hover:underline">
+                {SUPPORT_EMAIL}
+              </Link>
+            </div>
             <DialogFooter>
               <Button type="submit" disabled={isPending}>
                 {isPending ? "Sending..." : "Send"}

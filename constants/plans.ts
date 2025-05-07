@@ -36,7 +36,6 @@ export const plans = [
         popular: true,
         prices: [],
         features: [
-            "All Free features",
             "Free vanity URL",
             "All portfolio templates",
             "Unlimited experiences",
