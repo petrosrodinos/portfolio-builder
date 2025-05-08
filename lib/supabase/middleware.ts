@@ -39,6 +39,8 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
+    console.log("user", user);
+
     if (request.nextUrl.pathname.startsWith("/api/webhooks")) {
         return supabaseResponse;
     }

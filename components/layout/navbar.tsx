@@ -8,6 +8,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { useAuthStore } from "stores/auth";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { getUser } from "@/services/user";
 
 interface MenuItem {
   title: string;
@@ -129,7 +132,15 @@ const Navbar = ({
     dashboard: { title: "Dashboard", url: "/console/dashboard" },
   },
 }: Navbar1Props) => {
-  const { isLoggedIn } = useAuthStore((state) => state);
+  const { user_id } = useAuthStore();
+  const supabase = createClient();
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const user = await getUser(user_id);
+      return user;
+    },
+  });
   return (
     <section className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto">
@@ -149,7 +160,7 @@ const Navbar = ({
 
           <div className="flex items-center gap-2">
             <ThemeSwitch />
-            {isLoggedIn ? (
+            {user ? (
               <Button asChild size="sm">
                 <a href={auth.dashboard?.url}>{auth.dashboard?.title}</a>
               </Button>
@@ -194,7 +205,7 @@ const Navbar = ({
                     </Accordion>
 
                     <div className="flex flex-col gap-3">
-                      {isLoggedIn ? (
+                      {user ? (
                         <Button asChild>
                           <a href={auth.dashboard?.url}>{auth.dashboard?.title}</a>
                         </Button>
@@ -238,10 +249,7 @@ const renderMenuItem = (item: MenuItem) => {
 
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        href={item.url}
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
-      >
+      <NavigationMenuLink href={item.url} className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground">
         {item.title}
       </NavigationMenuLink>
     </NavigationMenuItem>
