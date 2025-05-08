@@ -33,7 +33,9 @@ export default async function PortfolioPage({ params }) {
   const { id } = await params;
   const data = await getPortfolio(id);
 
-  if (!data) {
+  console.log(data);
+
+  if (!data || !data?.email) {
     return <UserMessage />;
   }
 
@@ -50,7 +52,7 @@ export default async function PortfolioPage({ params }) {
 
   return (
     <div className="antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white">
-      <Template data={data} />
+      <Template portfolio={data} />
     </div>
   );
 }

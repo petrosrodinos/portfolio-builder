@@ -79,7 +79,8 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
     if (isSuccess && data) {
       form.reset({
         ...data,
-        booking_link: data.booking_link || "",
+        booking_link: data.booking_link || undefined,
+        email: data.email || undefined,
       });
     }
   }, [data, form, isSuccess]);
