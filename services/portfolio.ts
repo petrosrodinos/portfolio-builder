@@ -1,6 +1,9 @@
 "use server";
 
-import { PortfolioExperienceTypes, PortfolioSkillsTypes } from "@/constants/supabase";
+import {
+    PortfolioExperienceTypes,
+    PortfolioSkillsTypes,
+} from "@/constants/supabase";
 import { Portfolio } from "@/interfaces/templates";
 import { askAI } from "@/services/ai";
 import { createClient } from "@/lib/supabase/client";
@@ -27,8 +30,6 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             error = result.error;
         }
 
-
-
         if (error) {
             console.error(error);
             return null;
@@ -47,17 +48,31 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
         let languagesType: any = [];
         let linksType: any = [];
 
-        if (data?.experiences?.length) {
-            experiencesType = data.experiences.filter((experience: any) => experience.type == PortfolioExperienceTypes.experience);
-            educationType = data.experiences.filter((education: any) => education.type == PortfolioExperienceTypes.education);
-            projectsType = data.experiences.filter((project: any) => project.type == PortfolioExperienceTypes.project);
-            servicesType = data.experiences.filter((service: any) => service.type == PortfolioExperienceTypes.service);
+        if (data?.experiences?.length > 0) {
+            experiencesType = data.experiences.filter((experience: any) =>
+                experience.type == PortfolioExperienceTypes.experience
+            );
+            educationType = data.experiences.filter((education: any) =>
+                education.type == PortfolioExperienceTypes.education
+            );
+            projectsType = data.experiences.filter((project: any) =>
+                project.type == PortfolioExperienceTypes.project
+            );
+            servicesType = data.experiences.filter((service: any) =>
+                service.type == PortfolioExperienceTypes.service
+            );
         }
 
-        if (data?.skills?.length) {
-            skillsType = data.skills.filter((skill: any) => skill.type == PortfolioSkillsTypes.skill);
-            languagesType = data.skills.filter((language: any) => language.type == PortfolioSkillsTypes.language);
-            linksType = data.skills.filter((link: any) => link.type == PortfolioSkillsTypes.link);
+        if (data?.skills?.length > 0) {
+            skillsType = data.skills.filter((skill: any) =>
+                skill.type == PortfolioSkillsTypes.skill
+            );
+            languagesType = data.skills.filter((language: any) =>
+                language.type == PortfolioSkillsTypes.language
+            );
+            linksType = data.skills.filter((link: any) =>
+                link.type == PortfolioSkillsTypes.link
+            );
         }
 
         const portfolio = {
@@ -70,9 +85,7 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
             skills: skillsType,
             languages: languagesType,
             links: linksType,
-        }
-
-
+        };
 
         return portfolio;
     } catch (error) {
@@ -83,22 +96,15 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
 
 export async function createPortfolioFromResume(user_id: string, data: string) {
     try {
-
         const response = await askAI(`${createPortfolioPrompt} ${data}`);
 
-        const jsonResponse = response.replace(/```(?:json)?\n?|```/g, '');
+        const jsonResponse = response.replace(/```(?:json)?\n?|```/g, "");
 
         const payload = JSON.parse(jsonResponse);
 
         return payload;
-
     } catch (error) {
         console.error(error);
         return null;
     }
 }
-
-
-
-
-

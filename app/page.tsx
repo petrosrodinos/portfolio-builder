@@ -24,9 +24,7 @@ export default function Home() {
               Build Your Professional Portfolio
               <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text">In Minutes</span>
             </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
-              Create a stunning portfolio website that showcases your work and skills. No coding or complex tools required - just choose a template and add your experience.
-            </p>
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Create a stunning portfolio website that showcases your work and skills. No coding or complex tools required - just choose a template and add your experience.</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/console/dashboard">
                 <Button size="lg" className="gap-2">
@@ -99,9 +97,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center mb-12">
               <h2 className="mb-6 text-3xl font-bold">SEO-Friendly Templates</h2>
-              <p className="text-lg text-muted-foreground">
-                Our templates are built with search engines in mind. Get better visibility and reach more potential clients with built-in SEO features, optimized meta tags, and fast loading speeds.
-              </p>
+              <p className="text-lg text-muted-foreground">Our templates are built with search engines in mind. Get better visibility and reach more potential clients with built-in SEO features, optimized meta tags, and fast loading speeds.</p>
             </div>
           </div>
         </section>
@@ -114,9 +110,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center mb-12">
               <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
-              <p className="text-lg text-muted-foreground">
-                Choose the perfect plan for your needs. Whether you&apos;re just starting out or need advanced features, we have a plan that fits your goals. All plans include a 7-day free trial.
-              </p>
+              <p className="text-lg text-muted-foreground">Choose the perfect plan for your needs. Whether you&apos;re just starting out or need advanced features, we have a plan that fits your goals. All plans include a 7-day free trial.</p>
             </div>
           </div>
         </section>
@@ -129,7 +123,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="mb-6 text-3xl font-bold">Coming Soon</h2>
-            <p className="text-lg text-muted-foreground">We're constantly working to bring you more features to enhance your portfolio and grow your professional presence.</p>
+            <p className="text-lg text-muted-foreground">We&apos;re constantly working to bring you more features to enhance your portfolio and grow your professional presence.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             <div className="group rounded-xl bg-background p-6 shadow-sm transition-all hover:shadow-md">
@@ -270,11 +264,7 @@ export default function Home() {
               <div className="flex gap-4">
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fillRule="evenodd"
-                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                      clipRule="evenodd"
-                    />
+                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
                   </svg>
                 </a>
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
