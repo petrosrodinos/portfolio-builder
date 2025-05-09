@@ -36,7 +36,11 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const {
+    mutate,
+    isPending,
+    data: signUpData,
+  } = useMutation({
     mutationFn: (data: SignUpUser) => signUp(data),
     onSuccess: (data) => {
       login(data);
@@ -64,8 +68,10 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   }
 
   useEffect(() => {
-    router.prefetch("/auth/create-user");
-  }, [router]);
+    if (signUpData) {
+      router.prefetch("/auth/create-user");
+    }
+  }, [router, signUpData]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

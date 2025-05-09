@@ -8,9 +8,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { useAuthStore } from "stores/auth";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "@/services/user";
+import { PUBLIC_SITE_URL } from "@/constants/index";
 
 interface MenuItem {
   title: string;
@@ -55,7 +55,7 @@ const Navbar = ({
     { title: "Home", url: "#hero" },
     {
       title: "Features",
-      url: "#features",
+      url: `${PUBLIC_SITE_URL}/#features`,
       // items: [
       //   {
       //     title: "Blog",
@@ -85,7 +85,7 @@ const Navbar = ({
     },
     {
       title: "Templates",
-      url: "#templates",
+      url: `${PUBLIC_SITE_URL}/#templates`,
       // items: [
       //   {
       //     title: "Help Center",
@@ -115,15 +115,15 @@ const Navbar = ({
     },
     {
       title: "Pricing",
-      url: "#pricing",
+      url: `${PUBLIC_SITE_URL}/#pricing`,
     },
     {
       title: "Roadmap",
-      url: "#roadmap",
+      url: `${PUBLIC_SITE_URL}/#roadmap`,
     },
     {
       title: "Contact",
-      url: "#contact",
+      url: `${PUBLIC_SITE_URL}/#contact`,
     },
   ],
   auth = {
@@ -133,7 +133,6 @@ const Navbar = ({
   },
 }: Navbar1Props) => {
   const { user_id } = useAuthStore();
-  const supabase = createClient();
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
