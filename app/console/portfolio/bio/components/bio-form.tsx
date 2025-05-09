@@ -152,18 +152,7 @@ export default function BioForm({ onCancel }: BioFormProps) {
               <FormLabel>Resume</FormLabel>
               <FormControl>
                 <div className="flex flex-col gap-4">
-                  {(fileToDelete || !data?.resume) && (
-                    <Input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      multiple={false}
-                      onChange={(e) => onChange(e?.target?.files?.[0] || undefined)}
-                      onDelete={handleFileDelete}
-                      onBlur={onBlur}
-                      name={name}
-                      ref={ref}
-                    />
-                  )}
+                  {(fileToDelete || !data?.resume) && <Input type="file" accept=".pdf,.doc,.docx" multiple={false} onChange={(e) => onChange(e?.target?.files?.[0] || undefined)} onDelete={handleFileDelete} onBlur={onBlur} name={name} ref={ref} />}
                   {data?.resume && !fileToDelete && (
                     <div className="flex items-center gap-4">
                       <a href={data.resume.url as string} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-600 hover:text-blue-800">

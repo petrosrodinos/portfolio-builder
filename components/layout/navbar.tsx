@@ -135,6 +135,8 @@ const Navbar = ({
   const { user_id } = useAuthStore();
   const { data: user } = useQuery({
     queryKey: ["user"],
+    enabled: !!user_id,
+    retry: false,
     queryFn: async () => {
       const user = await getUser(user_id);
       return user;

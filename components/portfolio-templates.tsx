@@ -56,20 +56,14 @@ const PortfolioTemplates = ({ className, isLandingPage = false }: PortfolioTempl
         {templates.map((template: any) => (
           <Card key={template.id} className={cn("overflow-hidden transition-all duration-200 hover:shadow-lg hover:scale-[1.02] w-full", portfolio_theme === template.id && "ring-2 ring-primary")}>
             <div className="relative w-full h-40">
-              <Image src={template.image} alt={template.name} fill className="object-cover w-20 h-20" />
-              {/* <div className={`h-full w-full bg-gradient-to-br ${template.gradient}`} /> */}
+              <Image src={template.image} alt={template.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw" className="object-cover w-20 h-20" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold">{template.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{template.description}</p>
               <div className="mt-4 flex flex-col gap-2">
                 {!isLandingPage && (
-                  <Button
-                    className="w-full text-sm sm:text-base"
-                    variant={portfolio_theme === template.id ? "default" : "outline"}
-                    disabled={portfolio_theme === template.id}
-                    onClick={() => handleSelectTemplate(template.id)}
-                  >
+                  <Button className="w-full text-sm sm:text-base" variant={portfolio_theme === template.id ? "default" : "outline"} disabled={portfolio_theme === template.id} onClick={() => handleSelectTemplate(template.id)}>
                     <Check className="mr-2 h-4 w-4 shrink-0" />
                     <span className="truncate">{portfolio_theme === template.id ? "Selected" : "Select"}</span>
                   </Button>
@@ -92,9 +86,7 @@ const PortfolioTemplates = ({ className, isLandingPage = false }: PortfolioTempl
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => templateToConfirm && confirmTemplateChange(templateToConfirm)}>
-              {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Confirm"}
-            </AlertDialogAction>
+            <AlertDialogAction onClick={() => templateToConfirm && confirmTemplateChange(templateToConfirm)}>{isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Confirm"}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

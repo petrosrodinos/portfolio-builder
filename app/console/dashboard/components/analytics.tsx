@@ -12,16 +12,8 @@ interface AnalyticsProps {
 }
 
 const Analytics = ({ portfolio }: AnalyticsProps) => {
-  const totalSections = 7;
-  const completedSections = [
-    portfolio?.projects?.length > 0,
-    portfolio?.skills?.length > 0,
-    portfolio?.links?.length > 0,
-    portfolio?.experiences?.length > 0,
-    portfolio?.services?.length > 0,
-    portfolio?.educations?.length > 0,
-    portfolio?.languages?.length > 0,
-  ].filter(Boolean).length;
+  const totalSections = 13;
+  const completedSections = [portfolio?.bio?.length > 0, portfolio?.phone?.length > 0, portfolio?.email?.length > 0, portfolio?.address?.length > 0, portfolio?.welcome_message?.length > 0, portfolio?.user?.avatar?.url?.length > 0, portfolio?.projects?.length > 0, portfolio?.skills?.length > 0, portfolio?.links?.length > 0, portfolio?.experiences?.length > 0, portfolio?.services?.length > 0, portfolio?.educations?.length > 0, portfolio?.languages?.length > 0].filter(Boolean).length;
 
   const completionPercentage = Math.round((completedSections / totalSections) * 100);
 
@@ -43,17 +35,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
           </div>
           <div className="relative w-24 h-24">
             <svg className="w-full h-full" viewBox="0 0 100 100">
-              {/* Background circle */}
-              <circle
-                className="text-gray-200"
-                strokeWidth="8"
-                stroke="currentColor"
-                fill="transparent"
-                r="40"
-                cx="50"
-                cy="50"
-              />
-              {/* Progress circle */}
+              <circle className="text-gray-200" strokeWidth="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
               <circle
                 className="transition-all duration-1000 ease-in-out"
                 strokeWidth="8"
@@ -72,10 +54,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="text-2xl font-bold"
-                style={{ color: getProgressColor(completionPercentage) }}
-              >
+              <span className="text-2xl font-bold" style={{ color: getProgressColor(completionPercentage) }}>
                 {completionPercentage}%
               </span>
             </div>
@@ -128,10 +107,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
         </Card> */}
 
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/projects"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/projects" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -148,10 +124,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
         </Card>
 
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/skills"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/skills" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -168,10 +141,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
         </Card>
 
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/links"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/links" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -188,10 +158,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
         </Card>
 
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/experience"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/experience" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -207,10 +174,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
           </div>
         </Card>
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/services"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/services" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -226,10 +190,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
           </div>
         </Card>
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/education"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/education" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>
@@ -245,10 +206,7 @@ const Analytics = ({ portfolio }: AnalyticsProps) => {
           </div>
         </Card>
         <Card className="p-6 relative group">
-          <Link
-            href="/console/portfolio/languages"
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          >
+          <Link href="/console/portfolio/languages" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Pencil className="h-4 w-4" />
             </Button>

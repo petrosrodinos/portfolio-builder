@@ -47,9 +47,9 @@ const CreateUser = () => {
   return (
     <div className="flex flex-col items-center justify-center from-background to-muted/20 max-w-md mx-auto">
       <div className="w-full max-w-3xl">
-        <div className="mb-4 text-center">
+        <div className="mb-2 text-center">
           <div className="mb-2 flex justify-center">
-            <div className="rounded-full bg-primary/10 p-3">
+            <div className="rounded-full bg-primary/10 p-1">
               <CheckCircle2 className="h-8 w-8 text-primary" />
             </div>
           </div>
