@@ -2,14 +2,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
@@ -18,9 +11,9 @@ import { signIn } from "services/auth";
 import { toast } from "@/hooks/use-toast";
 import { AuthUser, SignInUser } from "interfaces/auth";
 import { useAuthStore } from "stores/auth";
-import { useRouter } from "next/navigation";
 import { SignInSchema, SignInFormValues } from "validation-schemas/auth";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps {
   className?: string;
@@ -38,7 +31,11 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const {
+    mutate,
+    isPending,
+    data: signInData,
+  } = useMutation({
     mutationFn: (data: SignInUser) => signIn(data),
     onSuccess: (data: AuthUser) => {
       if (data.isNewUser) {
@@ -73,8 +70,10 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
   }
 
   useEffect(() => {
-    router.prefetch("/console/dashboard");
-  }, [router]);
+    if (signInData) {
+      router.prefetch("/console/dashboard");
+    }
+  }, [router, signInData]);
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>

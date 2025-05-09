@@ -3,13 +3,13 @@
 import React, { useEffect } from "react";
 import { CheckCircle2 } from "lucide-react";
 import ProfileForm from "app/console/account/profile/components/profile-form";
-import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "@/hooks/use-toast";
 import { getStripe } from "@/lib/stripe/client";
 import { checkoutWithStripe } from "@/services/billing/stripe";
 import { useMutation } from "@tanstack/react-query";
 import { CookieKeys } from "@/constants/cookies";
+import { useRouter } from "next/navigation";
 const CreateUser = () => {
   const router = useRouter();
 
