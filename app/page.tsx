@@ -110,7 +110,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center mb-12">
               <h2 className="mb-4 text-3xl font-bold">Professional Portfolio Pricing Plans</h2>
-              <p className="text-lg text-muted-foreground">Choose the perfect portfolio website plan for your professional needs. Whether you're a freelancer, developer, or creative professional, we have a plan that fits your goals. All plans include a 7-day free trial and professional portfolio features.</p>
+              <p className="text-lg text-muted-foreground">Choose the perfect portfolio website plan for your professional needs. Whether you&apos;re a freelancer, developer, or creative professional, we have a plan that fits your goals. All plans include a 7-day free trial and professional portfolio features.</p>
             </div>
           </div>
         </section>
@@ -123,7 +123,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center mb-16">
             <h2 className="mb-6 text-3xl font-bold">Professional Portfolio Features Coming Soon</h2>
-            <p className="text-lg text-muted-foreground">We're constantly enhancing our portfolio website builder to help you showcase your work better and grow your professional presence online.</p>
+            <p className="text-lg text-muted-foreground">We&apos;re constantly enhancing our portfolio website builder to help you showcase your work better and grow your professional presence online.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             <div className="group rounded-xl bg-background p-6 shadow-sm transition-all hover:shadow-md">
