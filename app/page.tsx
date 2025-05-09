@@ -18,13 +18,13 @@ export default function Home() {
           <div className="mx-auto max-w-3xl">
             <div className="mb-8 inline-flex items-center rounded-full border px-4 py-1.5 text-sm">
               <Star className="mr-2 h-4 w-4 text-yellow-500" />
-              <span>Trusted by 2,000+ professionals worldwide</span>
+              <span>Trusted by 2,000+ professionals and developers worldwide</span>
             </div>
             <h1 className="mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight sm:text-6xl">
-              Build Your Professional Portfolio
-              <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text">In Minutes</span>
+              Professional Portfolio Builder
+              <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text">Create Your Online Presence</span>
             </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Create a stunning portfolio website that showcases your work and skills. No coding or complex tools required - just choose a template and add your experience.</p>
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Build a stunning professional portfolio website that showcases your work, skills, and achievements. Our intuitive platform helps you create a personalized portfolio website without coding or complex builders knowledge - perfect for developers, designers, and creative professionals.</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/console/dashboard">
                 <Button size="lg" className="gap-2">
@@ -55,8 +55,8 @@ export default function Home() {
       <section id="features" className="relative bg-muted/50 py-32">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Why Choose Our Portfolio Builder?</h2>
-            <p className="text-lg text-muted-foreground">Everything you need to create a professional portfolio that stands out</p>
+            <h2 className="mb-4 text-3xl font-bold">Professional Portfolio Builder Features</h2>
+            <p className="text-lg text-muted-foreground">Everything you need to create a standout professional portfolio website that attracts opportunities</p>
           </div>
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
@@ -64,28 +64,28 @@ export default function Home() {
                 <Rocket className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Quick Setup</h3>
-              <p className="text-muted-foreground">Get your portfolio up and running in minutes with out any coding.</p>
+              <p className="text-muted-foreground">Launch your professional portfolio website in minutes with our resume to portfolio feature, just upload your resume and we will build your portfolio website for you.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Palette className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Beautiful Templates</h3>
-              <p className="text-muted-foreground">Choose from professionally designed templates that look great on any device.</p>
+              <h3 className="mb-2 text-xl font-semibold">Professional Templates</h3>
+              <p className="text-muted-foreground">Choose from our collection of professionally designed portfolio templates optimized for showcasing your work and skills.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Code className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Customizable</h3>
-              <p className="text-muted-foreground">Customize every aspect of your portfolio to match your personal brand.</p>
+              <h3 className="mb-2 text-xl font-semibold">Customizable Design</h3>
+              <p className="text-muted-foreground">Personalize every aspect of your portfolio website with our powerful customization tools to match your professional brand.</p>
             </div>
             <div className="group rounded-xl bg-background p-8 shadow-sm transition-all hover:shadow-md">
               <div className="mb-4 rounded-lg bg-primary/10 p-3 w-fit">
                 <Search className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">SEO Optimized</h3>
-              <p className="text-muted-foreground">Built-in SEO features help your portfolio rank higher in search results and reach more potential clients.</p>
+              <p className="text-muted-foreground">Built-in SEO features and fast loading speeds help your portfolio website rank higher in search results and reach more potential clients or employers.</p>
             </div>
           </div>
         </div>
@@ -96,8 +96,8 @@ export default function Home() {
         <section className="relative">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="mb-6 text-3xl font-bold">SEO-Friendly Templates</h2>
-              <p className="text-lg text-muted-foreground">Our templates are built with search engines in mind. Get better visibility and reach more potential clients with built-in SEO features, optimized meta tags, and fast loading speeds.</p>
+              <h2 className="mb-6 text-3xl font-bold">Professional Portfolio Templates</h2>
+              <p className="text-lg text-muted-foreground">Our portfolio website templates are built with search engines in mind. Get better visibility and reach more potential clients with built-in SEO features, optimized meta tags, and lightning-fast loading speeds. Perfect for developers, designers, and creative professionals.</p>
             </div>
           </div>
         </section>
@@ -109,8 +109,8 @@ export default function Home() {
         <section className="relative">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="mb-4 text-3xl font-bold">Simple, Transparent Pricing</h2>
-              <p className="text-lg text-muted-foreground">Choose the perfect plan for your needs. Whether you&apos;re just starting out or need advanced features, we have a plan that fits your goals. All plans include a 7-day free trial.</p>
+              <h2 className="mb-4 text-3xl font-bold">Professional Portfolio Pricing Plans</h2>
+              <p className="text-lg text-muted-foreground">Choose the perfect portfolio website plan for your professional needs. Whether you're a freelancer, developer, or creative professional, we have a plan that fits your goals. All plans include a 7-day free trial and professional portfolio features.</p>
             </div>
           </div>
         </section>
@@ -122,8 +122,8 @@ export default function Home() {
       <section id="roadmap" className="relative py-32 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center mb-16">
-            <h2 className="mb-6 text-3xl font-bold">Coming Soon</h2>
-            <p className="text-lg text-muted-foreground">We&apos;re constantly working to bring you more features to enhance your portfolio and grow your professional presence.</p>
+            <h2 className="mb-6 text-3xl font-bold">Professional Portfolio Features Coming Soon</h2>
+            <p className="text-lg text-muted-foreground">We're constantly enhancing our portfolio website builder to help you showcase your work better and grow your professional presence online.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             <div className="group rounded-xl bg-background p-6 shadow-sm transition-all hover:shadow-md">
@@ -175,10 +175,14 @@ export default function Home() {
                   <span className="h-2 w-2 rounded-full bg-primary"></span>
                   Blog Platform
                 </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-primary"></span>
+                  Job Search Integration
+                </li>
               </ul>
             </div>
             <div className="group rounded-xl bg-background p-6 shadow-sm transition-all hover:shadow-md">
-              <h3 className="text-xl font-semibold mb-4">Customization & Jobs</h3>
+              <h3 className="text-xl font-semibold mb-4">Customization</h3>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-primary"></span>
@@ -190,7 +194,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-primary"></span>
-                  Job Search Integration
+                  More templates
                 </li>
               </ul>
             </div>
@@ -203,8 +207,8 @@ export default function Home() {
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
         <div className="container mx-auto px-4 text-center">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-6 text-3xl font-bold">Ready to Showcase Your Work?</h2>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Join thousands of professionals who have already created their dream portfolio. Start building yours today!</p>
+            <h2 className="mb-6 text-3xl font-bold">Create Your Professional Portfolio Today</h2>
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">Join thousands of professionals who have already created their dream portfolio website. Start building your professional online presence today and showcase your work to potential clients and employers!</p>
             <Link href="/console/dashboard">
               <Button size="lg" className="gap-2">
                 Create Your Portfolio <ArrowRight className="h-4 w-4" />
@@ -219,8 +223,8 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 max-w-7xl mx-auto">
             <div>
-              <h3 className="text-lg font-semibold mb-4">About Us</h3>
-              <p className="text-muted-foreground">We help professionals showcase their work and connect with opportunities through beautiful, customizable portfolios.</p>
+              <h3 className="text-lg font-semibold mb-4">About Our Portfolio Builder</h3>
+              <p className="text-muted-foreground">We help professionals create stunning portfolio websites that showcase their work and connect with opportunities. Our portfolio builder makes it easy to create a professional online presence.</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
