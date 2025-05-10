@@ -46,7 +46,8 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
     onSuccess: (data) => {
       createPortfolioMutation(data);
     },
-    onError: () => {
+    onError: (error) => {
+      console.error(error);
       toast({
         title: "Error",
         description: "Error creating portfolio",
