@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
 import * as React from "react";
-import { createPortfolioFromResume } from "@/services/resume";
+import { createPortfolioFromResume } from "@/services/portfolio";
 import { useAuthStore } from "@/stores/auth";
 import { useCallback, useState } from "react";
 import pdfToText from "react-pdftotext";
