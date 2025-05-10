@@ -11,6 +11,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getSubscription } from "@/services/billing/products";
 import Loading from "./loading";
 import { getPlanType } from "@/lib/utils";
+import Cookies from "js-cookie";
+import { CookieKeys } from "@/constants/cookies";
 
 const SubscriptionPaymentPage = () => {
   const router = useRouter();
@@ -32,6 +34,7 @@ const SubscriptionPaymentPage = () => {
         subscription: subscriptionData,
         plan: getPlanType(subscriptionData?.prices?.product_id),
       });
+      Cookies.remove(CookieKeys.checkout_session_price);
     }
   }, [subscriptionData, updateUser]);
 

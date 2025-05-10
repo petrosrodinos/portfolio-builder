@@ -134,17 +134,11 @@ export default function GenerateCode() {
             </Button>
           </div>
           <div className="flex flex-col gap-2">
-            {!affiliateCode?.stripe_account_id && !stripeAccount && (
-              <p className="text-sm text-muted-foreground">To start earning commissions, you need to connect your Stripe account first. This allows us to process payments and send your earnings.</p>
-            )}
+            {!affiliateCode?.stripe_account_id && !stripeAccount && <p className="text-sm text-muted-foreground">To start earning commissions, you need to connect your Stripe account first. This allows us to process payments and send your earnings.</p>}
 
-            {affiliateCode?.stripe_account_id && stripeAccount?.payouts_enabled && stripeAccount?.charges_enabled && (
-              <p className="text-sm text-muted-foreground">Your Stripe account is created. You are now ready to start earning commissions.</p>
-            )}
+            {affiliateCode?.stripe_account_id && stripeAccount?.payouts_enabled && stripeAccount?.charges_enabled && <p className="text-sm text-muted-foreground">Your Stripe account is created. You are now ready to start earning commissions.</p>}
 
-            {affiliateCode?.stripe_account_id && !stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && (
-              <p className="text-sm text-muted-foreground">Your Stripe account is created. Please finish onboarding to start earning commissions.</p>
-            )}
+            {affiliateCode?.stripe_account_id && !stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && <p className="text-sm text-muted-foreground">Your Stripe account is created. Please finish onboarding to start earning commissions.</p>}
 
             {loginLink && (
               <p className="text-sm text-blue-500">
@@ -154,12 +148,8 @@ export default function GenerateCode() {
               </p>
             )}
             <div className="flex justify-start">
-              <Button
-                loading={isPending || isCreatingAccount}
-                disabled={isPending || isCreatingAccount || !!affiliateLink || (!stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled)}
-                onClick={() => handleGenerateCode()}
-                className="h-9 text-sm px-3"
-              >
+              <Button loading={isPending || isCreatingAccount} disabled={isPending || isCreatingAccount || !!affiliateLink || (loginLink && (!stripeAccount?.payouts_enabled || !stripeAccount?.charges_enabled))} onClick={() => handleGenerateCode()} className="h-9 text-sm px-3">
+                {/* || (!stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled) */}
                 <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
                 {!affiliateCode?.stripe_account_id && !stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled ? "Connect Stripe" : "Generate Link"}
               </Button>
