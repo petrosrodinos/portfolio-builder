@@ -67,7 +67,6 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
       router.push("/auth/portfolio-resume");
       return;
     }
-    setPriceIdLoading(price.id);
     if (!isLoggedIn) {
       // user selected plan from landing page
       Cookies.set(CookieKeys.checkout_session_price, price.price_id, { expires: 1 / 288 });
@@ -77,6 +76,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
     if (subscription) {
       onOpenPortal?.();
     } else {
+      setPriceIdLoading(price.id);
       checkoutMutation(price.price_id);
     }
   };
@@ -163,13 +163,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
                 </ul>
               </CardContent>
               <CardFooter className="mt-auto">
-                <Button
-                  className="w-full"
-                  variant={currentPlan == plan.type && !isCreatingUser ? "default" : "outline"}
-                  loading={price?.id && priceIdLoading === price?.id}
-                  disabled={checkoutPending || isPending || plan.disabled || (plan.type == PlanTypes.free && !isCreatingUser)}
-                  onClick={() => handlePlanClick(price)}
-                >
+                <Button className="w-full" variant={currentPlan == plan.type && !isCreatingUser ? "default" : "outline"} loading={(price?.id && priceIdLoading === price?.id) || (isPending && !priceIdLoading)} disabled={checkoutPending || isPending || plan.disabled || (plan.type == PlanTypes.free && !isCreatingUser)} onClick={() => handlePlanClick(price)}>
                   {currentPlan == plan.type && plan.type != PlanTypes.free && !isCreatingUser && "Manage"}
                   {currentPlan == plan.type && plan.type == PlanTypes.free && !isCreatingUser && "Current Plan"}
                   {currentPlan != plan.type && !isCreatingUser && "Select"}

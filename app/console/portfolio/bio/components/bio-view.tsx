@@ -18,6 +18,7 @@ export default function BioView({ onEdit }: BioViewProps) {
     queryKey: ["profile"],
     queryFn: () => getProfile(user_id),
     enabled: !!user_id,
+    retry: false,
   });
 
   if (isLoading) {

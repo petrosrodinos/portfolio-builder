@@ -1,86 +1,84 @@
-'use server';
+"use server";
 
-import Stripe from 'stripe';
-import { createClient } from '@/lib/supabase/server';
-import { calculateTrialEndUnixTimestamp, getURL } from '@/lib/utils';
-import { createOrRetrieveCustomer } from './web_hooks';
-import { stripe } from '@/lib/stripe/config';
-import { PUBLIC_SITE_URL, TRIAL_PERIOD_DAYS } from '@/constants/index';
-import { SupabaseTables } from '@/constants/supabase';
-
+import Stripe from "stripe";
+import { createClient } from "@/lib/supabase/server";
+import { calculateTrialEndUnixTimestamp, getURL } from "@/lib/utils";
+import { createOrRetrieveCustomer } from "./web_hooks";
+import { stripe } from "@/lib/stripe/config";
+import { PUBLIC_SITE_URL, TRIAL_PERIOD_DAYS } from "@/constants/index";
+import { SupabaseTables } from "@/constants/supabase";
 
 export async function checkoutWithStripe(
   price_id: string,
-  redirectPath: string
+  redirectPath: string,
 ): Promise<string> {
   try {
     const supabase = await createClient();
 
     const {
       error,
-      data: { user }
+      data: { user },
     } = await supabase.auth.getUser();
 
     if (error || !user) {
       console.error(error);
-      throw new Error('Could not get user session.');
+      throw new Error("Could not get user session.");
     }
     let customer: string;
     try {
       customer = await createOrRetrieveCustomer({
-        uuid: user?.id || '',
-        email: user?.email || ''
+        uuid: user?.id || "",
+        email: user?.email || "",
       });
     } catch (err) {
       console.error(err);
-      throw new Error('Unable to access customer record.');
+      throw new Error("Unable to access customer record.");
     }
 
     let params: Stripe.Checkout.SessionCreateParams = {
       allow_promotion_codes: true,
-      billing_address_collection: 'required',
+      billing_address_collection: "required",
       customer,
       metadata: {
-        user_id: user?.id || '',
-        email: user?.email || '',
+        user_id: user?.id || "",
+        email: user?.email || "",
       },
       customer_update: {
-        address: 'auto'
+        address: "auto",
       },
       line_items: [
         {
           price: price_id,
-          quantity: 1
-        }
+          quantity: 1,
+        },
       ],
-      mode: 'subscription',
+      mode: "subscription",
       subscription_data: {
-        trial_end: calculateTrialEndUnixTimestamp(TRIAL_PERIOD_DAYS)
+        trial_end: calculateTrialEndUnixTimestamp(TRIAL_PERIOD_DAYS),
       },
       cancel_url: getURL(redirectPath),
-      success_url: getURL(redirectPath)
+      success_url: getURL(redirectPath),
     };
-
 
     let session;
     try {
       session = await stripe.checkout.sessions.create(params);
     } catch (err) {
       console.error(err);
-      throw new Error('Unable to create checkout session.');
+      throw new Error("Unable to create checkout session.");
     }
 
     if (session) {
       return session.id;
     } else {
-      throw new Error('Unable to create checkout session.');
+      throw new Error("Unable to create checkout session.");
     }
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
-      throw new Error('An unknown error occurred.');
-    };
+      throw new Error("An unknown error occurred.");
+    }
   }
 }
 
@@ -90,44 +88,43 @@ export async function createStripePortal(returnUrl: string) {
 
     const {
       error,
-      data: { user }
+      data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
       if (error) {
         console.error(error);
       }
-      throw new Error('Could not get user session.');
+      throw new Error("Could not get user session.");
     }
 
     let customer;
     try {
       customer = await createOrRetrieveCustomer({
-        uuid: user.id || '',
-        email: user.email || ''
+        uuid: user.id || "",
+        email: user.email || "",
       });
     } catch (error) {
       console.error(error);
-      throw new Error('Unable to access customer record.');
+      throw new Error("Unable to access customer record.");
     }
 
-
     if (!customer) {
-      throw new Error('Could not get customer.');
+      throw new Error("Could not get customer.");
     }
 
     try {
       const portalSession = await stripe.billingPortal.sessions.create({
         customer,
-        return_url: getURL(returnUrl)
+        return_url: getURL(returnUrl),
       });
       if (!portalSession) {
-        throw new Error('Could not create billing portal');
+        throw new Error("Could not create billing portal");
       }
       return portalSession.url;
     } catch (error) {
       console.error("ERROR 1", error);
-      throw new Error('Could not create billing portal');
+      throw new Error("Could not create billing portal");
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -140,13 +137,16 @@ export async function createStripePortal(returnUrl: string) {
 export async function createCustomerInStripe(uuid: string, email: string) {
   const customerData = { metadata: { supabaseUUID: uuid }, email: email };
   const newCustomer = await stripe.customers.create(customerData);
-  if (!newCustomer) throw new Error('Stripe customer creation failed.');
+  if (!newCustomer) throw new Error("Stripe customer creation failed.");
 
   return newCustomer.id;
-};
+}
 
-export async function createAccountInStripeAndOnboard(user_id: string, email: string, stripe_account_id?: string) {
-
+export async function createAccountInStripeAndOnboard(
+  user_id: string,
+  email: string,
+  stripe_account_id?: string,
+) {
   const supabase = await createClient();
 
   let accountExist;
@@ -160,7 +160,7 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
   }
 
   const account = await stripe.accounts.create({
-    type: 'express',
+    type: "express",
     email: email,
     capabilities: {
       transfers: { requested: true },
@@ -172,7 +172,9 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
 
   const { error } = await supabase
     .from(SupabaseTables.affiliate_links)
-    .upsert({ user_id, stripe_account_id: account.id }, { onConflict: 'user_id' })
+    .upsert({ user_id, stripe_account_id: account.id }, {
+      onConflict: "user_id",
+    });
 
   if (error) {
     throw error;
@@ -182,12 +184,11 @@ export async function createAccountInStripeAndOnboard(user_id: string, email: st
     account: account.id,
     refresh_url: `${PUBLIC_SITE_URL}/console/affiliate`,
     return_url: `${PUBLIC_SITE_URL}/console/affiliate`,
-    type: 'account_onboarding',
+    type: "account_onboarding",
   });
 
   return { account_id: account.id, account_link: accountLink.url };
-};
-
+}
 
 export async function getAccount(account_id: string) {
   try {
@@ -202,20 +203,22 @@ export async function getAccount(account_id: string) {
       default_currency: account.default_currency,
       business_type: account.business_type,
       capabilities: {
-        transfers: account.capabilities?.transfers === 'active'
-      }
+        transfers: account.capabilities?.transfers === "active",
+      },
     };
   } catch (error) {
     throw error;
   }
 }
 
-export async function getAccountLoginLink(stripe_account_id: string): Promise<string | null> {
+export async function getAccountLoginLink(
+  stripe_account_id: string,
+): Promise<string | null> {
   try {
     const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
 
     if (!loginLink?.url) {
-      throw new Error('Could not get login link');
+      throw new Error("Could not get login link");
     }
 
     return loginLink?.url;
@@ -224,7 +227,9 @@ export async function getAccountLoginLink(stripe_account_id: string): Promise<st
   }
 }
 
-export async function hasFinishedOnboarding(account_id: string): Promise<boolean> {
+export async function hasFinishedOnboarding(
+  account_id: string,
+): Promise<boolean> {
   const account = await getAccount(account_id);
   return account.charges_enabled && account.payouts_enabled;
 }
@@ -232,10 +237,9 @@ export async function hasFinishedOnboarding(account_id: string): Promise<boolean
 export async function createTransfer(account_id: string, amount: number) {
   const transfer = await stripe.transfers.create({
     amount: amount,
-    currency: 'usd',
+    currency: "usd",
     destination: account_id,
   });
 
   return transfer;
 }
-

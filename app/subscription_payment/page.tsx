@@ -21,7 +21,11 @@ const SubscriptionPaymentPage = () => {
   const [success, setSuccess] = useState(false);
   const { updateUser, user_id } = useAuthStore();
 
-  const { data: subscriptionData, isPending } = useQuery({
+  const {
+    data: subscriptionData,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["subscription"],
     queryFn: () => getSubscription(user_id),
     enabled: !!user_id,
@@ -68,6 +72,12 @@ const SubscriptionPaymentPage = () => {
                 <XCircle className="h-16 w-16 text-red-500" />
                 <p className="text-lg font-medium text-center">Payment Failed</p>
                 <p className="text-sm text-muted-foreground text-center">There was an issue processing your payment. Please try again.</p>
+                <p className="text-sm text-muted-foreground text-center mt-2">Do you think this is a mistake?</p>
+                <div className="flex gap-4 w-full">
+                  <Button onClick={() => refetch()} variant="outline" className="flex-1">
+                    Retry
+                  </Button>
+                </div>
               </>
             )}
             <Button onClick={() => router.push(redirectParam !== "undefined" ? redirectParam : "/console/dashboard")} className="w-full mt-4">

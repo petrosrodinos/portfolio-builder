@@ -16,7 +16,8 @@ export const plans = [
         product_id: null,
         type: PlanTypes.free,
         name: "Free",
-        description: "The best way to start your portfolio",
+        description:
+            "Free plan, with limited features,ideal for exploring the platform",
         prices: [],
         features: [
             "Search engine optimized",
