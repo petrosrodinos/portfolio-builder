@@ -63,8 +63,16 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
   });
 
   const handlePlanClick = (price: Price) => {
-    if (!price?.id && isCreatingUser) {
-      router.push("/auth/portfolio-resume");
+    if (isLoggedIn && pathname == "/") {
+      router.push("/console/billing/subscription");
+      return;
+    }
+    if (!price?.id) {
+      if (pathname == "/") {
+        router.push("/auth/sign-up");
+      } else {
+        router.push("/auth/portfolio-resume");
+      }
       return;
     }
     if (!isLoggedIn) {
@@ -73,6 +81,7 @@ export default function Plans({ subscription, onOpenPortal, isPending, className
       router.push("/auth/sign-up");
       return;
     }
+
     if (subscription) {
       onOpenPortal?.();
     } else {
