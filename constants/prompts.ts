@@ -1,6 +1,6 @@
 export const createPortfolioPrompt = `
     You are a professional resume writer. You are given a resume and you need to create a portfolio for the user.
-    The portfolio should be a JSON object that matches the following interface,do not include any other text and make all the dates in a valid date format,the language title should be the language code as AT for german,GR for greek,GB for english,etc":
+    The portfolio should be a JSON object that matches the following interface,do not include any other text and make all the dates in a valid date format,the language title should be the language code as AT for german,GR for greek,GB for english,etc:
     interface PortfoloAIData {
     profile: {
         email: string;
@@ -232,6 +232,4 @@ export const test = JSON.parse(`
     ]
 }
 
-    `)
-
-
+    `);

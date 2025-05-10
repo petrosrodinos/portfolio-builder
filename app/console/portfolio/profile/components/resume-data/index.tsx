@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
 import * as React from "react";
-import { createPortfolioFromResume } from "@/services/portfolio";
+import { createPortfolioFromResume } from "@/services/resume";
 import { useAuthStore } from "@/stores/auth";
 import { useCallback, useState } from "react";
 import pdfToText from "react-pdftotext";
@@ -25,15 +25,14 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
 
   const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
     mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast({
         title: "Portfolio created",
         description: "Portfolio created successfully",
       });
       onSuccess?.();
     },
-    onError: (error) => {
-      console.error("Error", error);
+    onError: () => {
       toast({
         title: "Error",
         description: "Error creating portfolio",
@@ -42,12 +41,11 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => createPortfolioFromResume(user_id, data),
+    mutationFn: async (data: string) => createPortfolioFromResume(data),
     onSuccess: (data) => {
       createPortfolioMutation(data);
     },
-    onError: (error) => {
-      console.error(error);
+    onError: () => {
       toast({
         title: "Error",
         description: "Error creating portfolio",

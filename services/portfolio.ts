@@ -5,9 +5,7 @@ import {
     PortfolioSkillsTypes,
 } from "@/constants/supabase";
 import { Portfolio } from "@/interfaces/templates";
-import { askAI } from "@/services/ai";
 import { createClient } from "@/lib/supabase/client";
-import { createPortfolioPrompt } from "@/constants/prompts";
 
 const supabase = createClient();
 
@@ -88,21 +86,6 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
         };
 
         return portfolio;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
-
-export async function createPortfolioFromResume(user_id: string, data: string) {
-    try {
-        const response = await askAI(`${createPortfolioPrompt} ${data}`);
-
-        const jsonResponse = response.replace(/```(?:json)?\n?|```/g, "");
-
-        const payload = JSON.parse(jsonResponse);
-
-        return payload;
     } catch (error) {
         console.error(error);
         return null;
