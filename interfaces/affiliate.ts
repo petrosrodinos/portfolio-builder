@@ -5,13 +5,16 @@ export interface UpsertAffiliateCode {
     stripe_account_id?: string;
 }
 
-
 export interface AffiliateCode {
     id: string;
     user_id: string;
     code: string;
     stripe_account_id?: string;
     created_at: string;
+    users?: {
+        full_name: string;
+        email: string;
+    };
 }
 
 export interface ReferredUser {
@@ -29,6 +32,3 @@ export interface ReferredUser {
     };
     created_at: string;
 }
-
-
-

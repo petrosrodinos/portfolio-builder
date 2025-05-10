@@ -1,18 +1,24 @@
 import { createClient } from "@/lib/supabase/client";
 import { SupabaseTables } from "@/constants/supabase";
-import { AffiliateCode, UpsertAffiliateCode, ReferredUser } from "@/interfaces/affiliate";
+import {
+    AffiliateCode,
+    ReferredUser,
+    UpsertAffiliateCode,
+} from "@/interfaces/affiliate";
 import { generateCode } from "@/lib/utils";
 
 const supabase = createClient();
 
-export async function createAffiliateCode(payload: UpsertAffiliateCode): Promise<AffiliateCode> {
+export async function createAffiliateCode(
+    payload: UpsertAffiliateCode,
+): Promise<AffiliateCode> {
     try {
         const code = generateCode();
 
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
-            .upsert({ ...payload, code }, { onConflict: 'user_id' })
-            .select('*')
+            .upsert({ ...payload, code }, { onConflict: "user_id" })
+            .select("*")
             .single();
 
         if (error) {
@@ -21,17 +27,19 @@ export async function createAffiliateCode(payload: UpsertAffiliateCode): Promise
 
         return data;
     } catch (error) {
-        console.error('Error creating affiliate link', error);
+        console.error("Error creating affiliate link", error);
         throw error;
     }
-};
+}
 
-export const getAffiliateCode = async (user_id: string): Promise<AffiliateCode> => {
+export const getAffiliateCode = async (
+    user_id: string,
+): Promise<AffiliateCode> => {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
-            .select('*')
-            .eq('user_id', user_id)
+            .select("*")
+            .eq("user_id", user_id)
             .single();
 
         if (error) {
@@ -45,12 +53,14 @@ export const getAffiliateCode = async (user_id: string): Promise<AffiliateCode> 
     }
 };
 
-export async function getAffiliateCodeByCode(code: string): Promise<AffiliateCode> {
+export async function getAffiliateCodeByCode(
+    code: string,
+): Promise<AffiliateCode> {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.affiliate_links)
-            .select('*')
-            .eq('code', code)
+            .select("*")
+            .eq("code", code)
             .single();
 
         if (error) {
@@ -59,17 +69,21 @@ export async function getAffiliateCodeByCode(code: string): Promise<AffiliateCod
 
         return data;
     } catch (error) {
-        console.error('Error getting affiliate code', error);
+        console.error("Error getting affiliate code", error);
         throw error;
     }
-};
+}
 
-export async function getReferredUsers(user_id: string): Promise<ReferredUser[]> {
+export async function getReferredUsers(
+    user_id: string,
+): Promise<ReferredUser[]> {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.referred_users)
-            .select('*,users!referred_users_user_id_fkey(full_name,email,subscriptions(*,prices(*,products(*))))')
-            .eq('referal_user_id', user_id);
+            .select(
+                "*,users!referred_users_user_id_fkey(full_name,email,subscriptions(*,prices(*,products(*))))",
+            )
+            .eq("referal_user_id", user_id);
 
         if (error) {
             throw error;
@@ -77,12 +91,14 @@ export async function getReferredUsers(user_id: string): Promise<ReferredUser[]>
 
         return data;
     } catch (error) {
-        console.error('Error getting user referred users', error);
+        console.error("Error getting user referred users", error);
         throw error;
     }
 }
 
-export async function getAllReferredUsers(): Promise<Record<string, ReferredUser[]>> {
+export async function getAllReferredUsers(): Promise<
+    Record<string, ReferredUser[]>
+> {
     try {
         const { data, error } = await supabase
             .from(SupabaseTables.referred_users)
@@ -107,7 +123,23 @@ export async function getAllReferredUsers(): Promise<Record<string, ReferredUser
 
         return groupedData;
     } catch (error) {
-        console.error('Error getting all referred users', error);
+        console.error("Error getting all referred users", error);
+        throw error;
+    }
+}
+
+export async function getAffiliateCodes(): Promise<AffiliateCode[]> {
+    try {
+        const { data, error } = await supabase
+            .from(SupabaseTables.affiliate_links)
+            .select("*,users(full_name,email)");
+
+        if (error) {
+            throw error;
+        }
+
+        return data;
+    } catch (error) {
         throw error;
     }
 }
