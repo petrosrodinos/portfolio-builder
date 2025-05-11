@@ -1,5 +1,3 @@
-// "use server";
-
 import { createPortfolioPrompt } from "@/constants/prompts";
 import { Client } from "@upstash/qstash";
 import { SUPABASE_AI_FUNCTION } from "../constants";

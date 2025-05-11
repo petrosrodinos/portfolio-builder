@@ -25,36 +25,36 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   const [loading, setLoading] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
 
-  const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
-    mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
-    onSuccess: () => {
-      toast({
-        title: "Portfolio created",
-        description: "Portfolio created successfully",
-      });
-      onSuccess?.();
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Error creating portfolio",
-      });
-    },
-  });
+  // const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
+  //   mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
+  //   onSuccess: () => {
+  //     toast({
+  //       title: "Portfolio created",
+  //       description: "Portfolio created successfully",
+  //     });
+  //     onSuccess?.();
+  //   },
+  //   onError: () => {
+  //     toast({
+  //       title: "Error",
+  //       description: "Error creating portfolio",
+  //     });
+  //   },
+  // });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => getPortfolioDataFromResume(data, user_id, files[0]),
-    onSuccess: (data) => {
-      console.log("data", data);
-      return;
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Error creating portfolio",
-      });
-    },
-  });
+  // const { mutate, isPending } = useMutation({
+  //   mutationFn: async (data: string) => getPortfolioDataFromResume(data, user_id, files[0]),
+  //   onSuccess: (data) => {
+  //     console.log("data", data);
+  //     return;
+  //   },
+  //   onError: () => {
+  //     toast({
+  //       title: "Error",
+  //       description: "Error creating portfolio",
+  //     });
+  //   },
+  // });
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast({
@@ -68,15 +68,13 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
       setLoading(true);
       const text = await pdfToText(files[0]);
 
-      const data = await getPortfolioDataFromResume(text, user_id, files[0]);
-      console.log("data", data);
+      await getPortfolioDataFromResume(text, user_id, files[0]);
 
       timeoutRef.current = setTimeout(() => {
         setLoading(false);
         onSuccess?.();
-      }, 60000);
+      }, 80000);
     } catch (error) {
-      console.error("Error", error);
       toast({
         title: "Error",
         description: "Error creating portfolio",
@@ -97,7 +95,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
 
   return (
     <div className="space-y-4">
-      {!isPending && !isCreatingPortfolio && !loading && (
+      {!loading && (
         <FileUpload maxFiles={1} maxSize={5 * 1024 * 1024} accept="application/pdf" className="w-full" value={files} onValueChange={setFiles} onFileReject={onFileReject} multiple>
           <FileUploadDropzone>
             <div className="flex flex-col items-center gap-1">
@@ -129,7 +127,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
         </FileUpload>
       )}
 
-      {(isPending || isCreatingPortfolio || loading) && (
+      {loading && (
         <div className="flex flex-col items-center gap-4 p-4 border rounded-lg bg-muted/50">
           <Spinner size="medium" />
           <div className="text-center space-y-1">
@@ -139,8 +137,8 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
         </div>
       )}
 
-      <Button onClick={handleCreatePortfolio} disabled={files.length === 0 || isPending || isCreatingPortfolio || loading} className="w-full" variant="default">
-        {isPending || loading ? "Creating portfolio..." : "Create portfolio"}
+      <Button onClick={handleCreatePortfolio} disabled={files.length === 0 || loading} className="w-full" variant="default">
+        {loading ? "Creating portfolio..." : "Create portfolio"}
       </Button>
     </div>
   );
