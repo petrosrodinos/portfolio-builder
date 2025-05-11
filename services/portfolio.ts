@@ -1,13 +1,11 @@
 "use server";
 
-import { createPortfolioPrompt } from "@/constants/prompts";
 import {
     PortfolioExperienceTypes,
     PortfolioSkillsTypes,
 } from "@/constants/supabase";
 import { Portfolio } from "@/interfaces/templates";
 import { createClient } from "@/lib/supabase/client";
-import { askAI } from "./ai";
 
 const supabase = createClient();
 
@@ -90,21 +88,6 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
         return portfolio;
     } catch (error) {
         console.error(error);
-        return null;
-    }
-}
-
-export async function createPortfolioFromResume(resume: string) {
-    try {
-        const data = await askAI(`${createPortfolioPrompt} ${resume}`);
-
-        const jsonResponse = data?.replace(/```(?:json)?\n?|```/g, "");
-
-        const payload = JSON.parse(jsonResponse);
-
-        return payload;
-    } catch (error) {
-        console.error("error", error);
         return null;
     }
 }

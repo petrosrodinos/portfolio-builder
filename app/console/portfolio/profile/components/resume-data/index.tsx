@@ -6,7 +6,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
 import * as React from "react";
-import { createPortfolioFromResume } from "@/services/portfolio";
+import { getPortfolioDataFromResume } from "@/services/resume";
 import { useAuthStore } from "@/stores/auth";
 import { useCallback, useState } from "react";
 import pdfToText from "react-pdftotext";
@@ -41,9 +41,11 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => createPortfolioFromResume(data),
+    mutationFn: async (data: string) => getPortfolioDataFromResume(data),
     onSuccess: (data) => {
-      createPortfolioMutation(data);
+      console.log("data", data);
+      return;
+      // createPortfolioMutation(data);
     },
     onError: () => {
       toast({

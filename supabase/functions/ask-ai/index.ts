@@ -24,7 +24,11 @@ Deno.serve(async (req) => {
 
   const content = result?.choices?.[0]?.message?.content || null;
 
-  return new Response(JSON.stringify({ content }), {
+  const jsonResponse = content?.replace(/```(?:json)?\n?|```/g, "");
+
+  const payload = JSON.parse(jsonResponse);
+
+  return new Response(JSON.stringify({ content: payload }), {
     headers: { "Content-Type": "application/json" },
   });
 });
