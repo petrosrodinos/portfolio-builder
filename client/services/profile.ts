@@ -157,16 +157,6 @@ export async function createPortfolio(
                     title = match;
                 }
             }
-            if (skill.type === PortfolioSkillsTypes.link) {
-                let match = SocialMediaOptions.find((s: any) =>
-                    skill.title.toLowerCase().includes(s.value)
-                )?.value;
-                if (match) {
-                    title = match;
-                } else {
-                    title = "other";
-                }
-            }
             return {
                 user_id: user_id,
                 title: title,

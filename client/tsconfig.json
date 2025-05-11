@@ -36,5 +36,5 @@
     }
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/portfolio/[id]"],
-  "exclude": ["supabase/functions", "node_modules"]
+  "exclude": [ "node_modules"]
 }

@@ -41,17 +41,17 @@ export const createPortfolioPrompt = `
     }[],
     languages: {
         title: string;
-        level: string;
+        level: 'beginner' | 'intermediate' | 'expert';
         type:'language'
     }[],
     links: {
         title: string;
-        link: string;
+        link: 'linkedin' | 'github' | 'twitter' | 'facebook' | 'instagram' | 'youtube' | 'other';
         type:'link'
     }[],
     skills: {
         title: string;
-        level: string;
+        level: 'beginner' | 'intermediate' | 'expert';
         type:'skill'
     }[]
 }

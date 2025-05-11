@@ -8,7 +8,7 @@ import { Upload, X } from "lucide-react";
 import * as React from "react";
 import { getPortfolioDataFromResume } from "@/services/resume";
 import { useAuthStore } from "@/stores/auth";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import pdfToText from "react-pdftotext";
 import { Spinner } from "@/components/ui/spinner";
 import { useLoadingStep } from "./loading-step";
@@ -22,6 +22,8 @@ interface ResumeDataProps {
 function ResumeData({ onSuccess }: ResumeDataProps) {
   const { user_id } = useAuthStore();
   const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>(null);
 
   const { mutate: createPortfolioMutation, isPending: isCreatingPortfolio } = useMutation({
     mutationFn: async (data: PortfoloAIData) => createPortfolio(user_id, data, files[0]),
@@ -41,11 +43,10 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: string) => getPortfolioDataFromResume(data),
+    mutationFn: async (data: string) => getPortfolioDataFromResume(data, user_id, files[0]),
     onSuccess: (data) => {
       console.log("data", data);
       return;
-      // createPortfolioMutation(data);
     },
     onError: () => {
       toast({
@@ -54,8 +55,6 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
       });
     },
   });
-
-  const { currentStepText } = useLoadingStep(isPending || isCreatingPortfolio);
 
   const onFileReject = useCallback((file: File, message: string) => {
     toast({
@@ -66,16 +65,39 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
 
   const handleCreatePortfolio = async () => {
     try {
+      setLoading(true);
       const text = await pdfToText(files[0]);
-      mutate(text);
+
+      const data = await getPortfolioDataFromResume(text, user_id, files[0]);
+      console.log("data", data);
+
+      timeoutRef.current = setTimeout(() => {
+        setLoading(false);
+        onSuccess?.();
+      }, 60000);
     } catch (error) {
       console.error("Error", error);
+      toast({
+        title: "Error",
+        description: "Error creating portfolio",
+      });
+      setLoading(false);
     }
   };
 
+  const { currentStepText } = useLoadingStep(loading);
+
+  React.useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="space-y-4">
-      {!isPending && !isCreatingPortfolio && (
+      {!isPending && !isCreatingPortfolio && !loading && (
         <FileUpload maxFiles={1} maxSize={5 * 1024 * 1024} accept="application/pdf" className="w-full" value={files} onValueChange={setFiles} onFileReject={onFileReject} multiple>
           <FileUploadDropzone>
             <div className="flex flex-col items-center gap-1">
@@ -107,7 +129,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
         </FileUpload>
       )}
 
-      {(isPending || isCreatingPortfolio) && (
+      {(isPending || isCreatingPortfolio || loading) && (
         <div className="flex flex-col items-center gap-4 p-4 border rounded-lg bg-muted/50">
           <Spinner size="medium" />
           <div className="text-center space-y-1">
@@ -117,8 +139,8 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
         </div>
       )}
 
-      <Button onClick={handleCreatePortfolio} disabled={files.length === 0 || isPending || isCreatingPortfolio} className="w-full" variant="default">
-        {isPending ? "Creating portfolio..." : "Create portfolio"}
+      <Button onClick={handleCreatePortfolio} disabled={files.length === 0 || isPending || isCreatingPortfolio || loading} className="w-full" variant="default">
+        {isPending || loading ? "Creating portfolio..." : "Create portfolio"}
       </Button>
     </div>
   );
