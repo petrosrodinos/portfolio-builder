@@ -1,17 +1,22 @@
 import { SupabaseBucket, SupabaseBuckets } from "@/constants/supabase";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 
-const supabase = createClient();
-
-export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: string, fileName: string) => {
+export const uploadFile = async (
+    bucket: SupabaseBucket,
+    file: File,
+    user_id: string,
+    fileName: string,
+) => {
     try {
+        const supabase = await createClient();
+
         const name = `${fileName}-${user_id}-${Date.now()}`;
         const { data, error } = await supabase
             .storage
             .from(bucket)
             .upload(name, file, {
-                cacheControl: '3600',
-                upsert: true
+                cacheControl: "3600",
+                upsert: true,
             });
 
         if (error) {
@@ -25,16 +30,18 @@ export const uploadFile = async (bucket: SupabaseBucket, file: File, user_id: st
 
         return {
             name,
-            url: publicUrl
-        }
+            url: publicUrl,
+        };
     } catch (error) {
-        console.error('Error uploading file', error);
+        console.error("Error uploading file", error);
         throw error;
     }
-}
+};
 
 export const deleteFile = async (bucket: SupabaseBucket, name: string) => {
     try {
+        const supabase = await createClient();
+
         const { error } = await supabase
             .storage
             .from(bucket)
@@ -44,7 +51,7 @@ export const deleteFile = async (bucket: SupabaseBucket, name: string) => {
             throw error;
         }
     } catch (error) {
-        console.error('Error deleting file', error);
+        console.error("Error deleting file", error);
         throw error;
     }
-}
+};

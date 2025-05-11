@@ -1,8 +1,11 @@
+"use server";
+
 import { createPortfolioPrompt } from "@/constants/prompts";
 import { Client } from "@upstash/qstash";
 import { SUPABASE_AI_FUNCTION } from "../constants";
 import { SupabaseBuckets } from "@/constants/supabase";
 import { uploadFile } from "./storage";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getPortfolioDataFromResume(
     resume: string,
@@ -17,16 +20,25 @@ export async function getPortfolioDataFromResume(
             "resume",
         );
 
-        const client = new Client({
-            token: process.env.NEXT_PUBLIC_QSTASH_TOKEN!,
-        });
+        // const client = new Client({
+        //     token: process.env.NEXT_PUBLIC_QSTASH_TOKEN!,
+        // });
+        const supabase = await createClient();
 
         const prompt = `${createPortfolioPrompt} ${resume}`;
 
-        await client.publish({
-            url: SUPABASE_AI_FUNCTION,
-            body: JSON.stringify({ prompt, user_id, resume: { name, url } }),
+        supabase.functions.invoke("ai-portfolio", {
+            body: JSON.stringify({
+                prompt,
+                user_id,
+                resume: { name, url },
+            }),
         });
+
+        // await client.publish({
+        //     url: SUPABASE_AI_FUNCTION,
+        //     body: JSON.stringify({ prompt, user_id, resume: { name, url } }),
+        // });
 
         return {
             status: "processing",
