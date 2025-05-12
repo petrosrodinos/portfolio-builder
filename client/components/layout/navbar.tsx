@@ -9,8 +9,9 @@ import { useAuthStore } from "stores/auth";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { PUBLIC_SITE_URL } from "@/constants/index";
+import { PUBLIC_SITE_URL, APP_NAME } from "@/constants/index";
 import { createClient } from "@/lib/supabase/client";
+import Logo from "../../app/favicon.ico";
 
 const supabase = createClient();
 
@@ -25,7 +26,7 @@ interface MenuItem {
 interface Navbar1Props {
   logo?: {
     url: string;
-    src: string;
+    src: any;
     alt: string;
     title: string;
   };
@@ -49,9 +50,9 @@ interface Navbar1Props {
 const Navbar = ({
   logo = {
     url: "/",
-    src: "https://shadcnblocks.com/images/block/logos/shadcnblockscom-icon.svg",
+    src: Logo,
     alt: "logo",
-    title: "Portfolio.com",
+    title: APP_NAME,
   },
   menu = [
     { title: "Home", url: "#hero" },
@@ -88,32 +89,6 @@ const Navbar = ({
     {
       title: "Templates",
       url: `${PUBLIC_SITE_URL}/#templates`,
-      // items: [
-      //   {
-      //     title: "Help Center",
-      //     description: "Get all the answers you need right here",
-      //     icon: <Zap className="size-5 shrink-0" />,
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Contact Us",
-      //     description: "We are here to help you with any questions you have",
-      //     icon: <Sunset className="size-5 shrink-0" />,
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Status",
-      //     description: "Check the current status of our services and APIs",
-      //     icon: <Trees className="size-5 shrink-0" />,
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Terms of Service",
-      //     description: "Our terms and conditions for using our services",
-      //     icon: <Book className="size-5 shrink-0" />,
-      //     url: "#",
-      //   },
-      // ],
     },
     {
       title: "Pricing",
@@ -151,7 +126,8 @@ const Navbar = ({
         <nav className="hidden justify-between items-center h-16 lg:flex">
           <div className="flex items-center">
             <a href={logo.url} className="flex items-center gap-2">
-              <Image src={logo.src} className="max-h-8" width={32} height={32} alt={logo.alt} />
+              <Image src={logo.src} className="size-7" alt="logo" />
+
               <span className="text-lg font-semibold tracking-tighter">{logo.title}</span>
             </a>
           </div>

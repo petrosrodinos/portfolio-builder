@@ -24,11 +24,12 @@ import {
 } from "@tabler/icons-react";
 import { Command, CreditCard, Share2 } from "lucide-react";
 import { type SidebarData } from "../types";
+import { APP_NAME } from "@/constants/index";
 
 export const sidebarData: SidebarData = {
   teams: [
     {
-      name: "Shadcn Admin",
+      name: APP_NAME,
       logo: Command,
       plan: "Vite + ShadcnUI",
     },

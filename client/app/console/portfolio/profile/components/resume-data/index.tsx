@@ -3,17 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { FileUpload, FileUploadDropzone, FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadList, FileUploadTrigger } from "@/components/ui/file-upload";
 import { toast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
 import { Upload, X } from "lucide-react";
 import * as React from "react";
-import { getPortfolioDataFromResume } from "@/services/resume";
+import { createPortfolioFromResume } from "@/services/resume";
 import { useAuthStore } from "@/stores/auth";
 import { useCallback, useRef, useState } from "react";
 import pdfToText from "react-pdftotext";
 import { Spinner } from "@/components/ui/spinner";
 import { useLoadingStep } from "./loading-step";
-import { createPortfolio } from "@/services/profile";
-import { PortfoloAIData } from "@/interfaces/portfolio";
 
 interface ResumeDataProps {
   onSuccess?: () => void;
@@ -68,7 +65,7 @@ function ResumeData({ onSuccess }: ResumeDataProps) {
       setLoading(true);
       const text = await pdfToText(files[0]);
 
-      await getPortfolioDataFromResume(text, user_id, files[0]);
+      await createPortfolioFromResume(text, user_id, files[0]);
 
       timeoutRef.current = setTimeout(() => {
         setLoading(false);
