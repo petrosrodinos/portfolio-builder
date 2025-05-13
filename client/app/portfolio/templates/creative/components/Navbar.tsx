@@ -2,6 +2,7 @@
 import { useTheme } from "next-themes";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import { APP_NAME } from "@/constants/index";
 
 interface NavbarProps {}
 
@@ -39,15 +40,10 @@ const Navbar: FC<NavbarProps> = () => {
 
   return (
     <>
-      <nav
-        className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-center z-50 ${
-          isScroll ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20" : ""
-        }`}
-      >
-        <div className="flex items-center justify-center gap-8">
-          <ul
-            className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"} `}
-          >
+      <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center z-50 ${isScroll ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20" : ""}`}>
+        <div className="text-2xl font-bold font-Ovo absolute left-8 lg:left-[8%]">{APP_NAME}.com</div>
+        <div className="flex items-center justify-center w-full">
+          <ul className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"} `}>
             <li>
               <a className="font-Ovo" href="#top">
                 Home
@@ -86,10 +82,7 @@ const Navbar: FC<NavbarProps> = () => {
 
           {/* -- ----- mobile menu ------  -- */}
 
-          <ul
-            ref={sideMenuRef}
-            className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white"
-          >
+          <ul ref={sideMenuRef} className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white">
             <div className="absolute right-6 top-6" onClick={closeMenu}>
               <X className="w-5 cursor-pointer" />
             </div>

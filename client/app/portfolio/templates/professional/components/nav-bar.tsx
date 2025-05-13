@@ -4,7 +4,8 @@ import { Menu } from "lucide-react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-
+import { APP_NAME } from "@/constants/index";
+import Link from "next/link";
 interface NavBarProps {
   full_name: string;
 }
@@ -31,19 +32,14 @@ const NavBar = ({ full_name }: NavBarProps) => {
     <div>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
         <div className="flex items-center justify-between py-4 px-4 max-w-7xl mx-auto">
-          <h1 className="text-xl font-bold">{full_name}</h1>
-
+          <Link href="/" className="text-xl font-bold">
+            {APP_NAME}.com
+          </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4 flex-1 justify-center">
             <div className="flex gap-4 overflow-x-auto no-scrollbar">
               {sections.map((section) => (
-                <Button
-                  key={section.id}
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => scrollToSection(section.id)}
-                  className="whitespace-nowrap"
-                >
+                <Button key={section.id} variant="ghost" size="sm" onClick={() => scrollToSection(section.id)} className="whitespace-nowrap">
                   {section.label}
                 </Button>
               ))}
@@ -70,12 +66,7 @@ const NavBar = ({ full_name }: NavBarProps) => {
                 </SheetHeader>
                 <div className="flex flex-col gap-4 mt-6">
                   {sections.map((section) => (
-                    <Button
-                      key={section.id}
-                      variant="ghost"
-                      className="justify-start"
-                      onClick={() => scrollToSection(section.id)}
-                    >
+                    <Button key={section.id} variant="ghost" className="justify-start" onClick={() => scrollToSection(section.id)}>
                       {section.label}
                     </Button>
                   ))}
