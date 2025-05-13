@@ -52,10 +52,18 @@ export default function GenerateCode() {
   const { mutate: createAccountInStripe, isPending: isCreatingAccount } = useMutation({
     mutationFn: () => createAccountInStripeAndOnboard(user_id, email, affiliateCode?.stripe_account_id),
     onSuccess: (data) => {
-      toast({
-        title: "Account created",
-        description: "Your account has been created successfully.",
-      });
+      if (!affiliateCode?.stripe_account_id) {
+        toast({
+          title: "Account created",
+          description: "Your account has been created successfully.",
+        });
+      } else {
+        toast({
+          title: "Redirecting to Stripe",
+          description: "You will be redirected to Stripe to finish onboarding.",
+        });
+      }
+
       router.push(data.account_link);
     },
     onError: (error) => {
@@ -94,7 +102,7 @@ export default function GenerateCode() {
   };
 
   const handleGenerateCode = () => {
-    if (!affiliateCode?.stripe_account_id) {
+    if (!affiliateCode?.stripe_account_id || !loginLink) {
       createAccountInStripe();
     } else {
       generateAffiliateCode();
@@ -136,9 +144,9 @@ export default function GenerateCode() {
           <div className="flex flex-col gap-2">
             {!affiliateCode?.stripe_account_id && !stripeAccount && <p className="text-sm text-muted-foreground">To start earning commissions, you need to connect your Stripe account first. This allows us to process payments and send your earnings.</p>}
 
-            {affiliateCode?.stripe_account_id && stripeAccount?.payouts_enabled && stripeAccount?.charges_enabled && <p className="text-sm text-muted-foreground">Your Stripe account is created. You are now ready to start earning commissions.</p>}
+            {affiliateCode?.stripe_account_id && stripeAccount?.payouts_enabled && stripeAccount?.charges_enabled && loginLink && <p className="text-sm text-muted-foreground">Your Stripe account is created. You are now ready to start earning commissions.</p>}
 
-            {affiliateCode?.stripe_account_id && !stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && <p className="text-sm text-muted-foreground">Your Stripe account is created. Please finish onboarding to start earning commissions.</p>}
+            {affiliateCode?.stripe_account_id && !stripeAccount?.charges_enabled && !stripeAccount?.payouts_enabled && !loginLink && <p className="text-sm text-muted-foreground">Your Stripe account is created. Please finish onboarding to start earning commissions.</p>}
 
             {loginLink && (
               <p className="text-sm text-blue-500">
@@ -151,7 +159,7 @@ export default function GenerateCode() {
               <Button loading={isPending || isCreatingAccount} disabled={isPending || isCreatingAccount || !!affiliateLink || (loginLink && (!stripeAccount?.payouts_enabled || !stripeAccount?.charges_enabled))} onClick={() => handleGenerateCode()} className="h-9 text-sm px-3">
                 {/* || (!stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled) */}
                 <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
-                {!affiliateCode?.stripe_account_id && !stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled ? "Connect Stripe" : "Generate Link"}
+                {(!affiliateCode?.stripe_account_id && !stripeAccount?.payouts_enabled && !stripeAccount?.charges_enabled) || !loginLink ? "Connect Stripe" : "Generate Link"}
               </Button>
             </div>
           </div>

@@ -149,45 +149,42 @@ export async function createAccountInStripeAndOnboard(
 ) {
   const supabase = await createClient();
 
-  let accountExist;
+  let userAccount;
+
   if (stripe_account_id) {
-    accountExist = await getAccount(stripe_account_id);
-  }
-
-  if (accountExist) {
-    const loginLink = await stripe.accounts.createLoginLink(stripe_account_id);
-    return { account_id: accountExist.id, account_link: loginLink.url };
-  }
-
-  const account = await stripe.accounts.create({
-    type: "express",
-    email: email,
-    capabilities: {
-      transfers: { requested: true },
-    },
-    metadata: {
-      user_id,
-    },
-  });
-
-  const { error } = await supabase
-    .from(SupabaseTables.affiliate_links)
-    .upsert({ user_id, stripe_account_id: account.id }, {
-      onConflict: "user_id",
+    userAccount = await getAccount(stripe_account_id);
+    console.log("userAccount", userAccount);
+  } else {
+    userAccount = await stripe.accounts.create({
+      type: "express",
+      email: email,
+      capabilities: {
+        transfers: { requested: true },
+      },
+      metadata: {
+        user_id,
+      },
     });
 
-  if (error) {
-    throw error;
+    const { error } = await supabase
+      .from(SupabaseTables.affiliate_links)
+      .upsert({ user_id, stripe_account_id: userAccount.id }, {
+        onConflict: "user_id",
+      });
+
+    if (error) {
+      throw error;
+    }
   }
 
   const accountLink = await stripe.accountLinks.create({
-    account: account.id,
+    account: userAccount.id,
     refresh_url: `${PUBLIC_SITE_URL}/console/affiliate`,
     return_url: `${PUBLIC_SITE_URL}/console/affiliate`,
     type: "account_onboarding",
   });
 
-  return { account_id: account.id, account_link: accountLink.url };
+  return { account_id: userAccount.id, account_link: accountLink.url };
 }
 
 export async function getAccount(account_id: string) {
