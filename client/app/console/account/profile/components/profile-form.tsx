@@ -53,6 +53,7 @@ export default function AccountProfileForm({ onSuccess, isCheckoutPending }: Acc
   const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => upsertUser(data, referral_code),
     onSuccess: (data: any) => {
+      Cookies.remove(CookieKeys.referral_code);
       updateStoreUser({
         ...data,
         avatar: data?.avatar?.url,

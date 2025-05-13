@@ -17,6 +17,7 @@ import Link from "next/link";
 import { UserCircle, FileText } from "lucide-react";
 import ResumeData from "./resume-data";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { PUBLIC_SITE_URL } from "@/constants/index";
 
 interface ProfileFormProps {
   onCancel: () => void;
@@ -123,7 +124,7 @@ export default function ProfileForm({ onCancel }: ProfileFormProps) {
                 <FormControl>
                   <Input placeholder="johndoe" {...field} />
                 </FormControl>
-                <FormDescription>This will be the URL of your portfolio and must be unique, e.g. https://portfolio.com/johndoe</FormDescription>
+                <FormDescription>This will be the URL of your portfolio and must be unique, e.g. {PUBLIC_SITE_URL}/portfolio/johndoe</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
