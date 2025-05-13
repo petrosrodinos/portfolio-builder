@@ -38,14 +38,15 @@ export default function AccountProfileForm({ onSuccess, isCheckoutPending }: Acc
     resolver: zodResolver(UserSchema),
     defaultValues: {
       full_name: "",
-      country: "GR",
+      country: "",
+      profession: "",
       date_of_birth: "",
       avatar: null,
     },
   });
 
   const { data, isSuccess } = useQuery({
-    queryKey: ["user", user_id],
+    queryKey: ["user-account"],
     queryFn: () => getUser(user_id),
     enabled: isProfilePage && !!user_id,
   });
@@ -140,7 +141,7 @@ export default function AccountProfileForm({ onSuccess, isCheckoutPending }: Acc
           render={({ field }) => (
             <FormItem>
               <FormLabel>Profession</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value || ""}>
+              <Select onValueChange={(value: string) => field.onChange(value)} value={field.value || ""}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select your profession" />
