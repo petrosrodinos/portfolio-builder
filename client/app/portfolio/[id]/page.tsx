@@ -33,8 +33,6 @@ export default async function PortfolioPage({ params }) {
   const { id } = await params;
   const data = await getPortfolio(id);
 
-  console.log(data);
-
   if (!data || !data?.email) {
     return <UserMessage />;
   }
