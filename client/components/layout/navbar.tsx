@@ -12,7 +12,10 @@ import { useQuery } from "@tanstack/react-query";
 import { PUBLIC_SITE_URL, APP_NAME } from "@/constants/index";
 import { createClient } from "@/lib/supabase/client";
 import Logo from "../../app/favicon.ico";
-
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
+import { CookieKeys } from "@/constants/cookies";
 const supabase = createClient();
 
 interface MenuItem {
@@ -109,7 +112,10 @@ const Navbar = ({
     dashboard: { title: "Dashboard", url: "/console/dashboard" },
   },
 }: Navbar1Props) => {
+  const searchParams = useSearchParams();
+  const referral_code = searchParams.get("ref");
   const { user_id } = useAuthStore();
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     enabled: !!user_id,
@@ -119,6 +125,12 @@ const Navbar = ({
       return user;
     },
   });
+
+  useEffect(() => {
+    if (referral_code) {
+      Cookies.set(CookieKeys.referral_code, referral_code);
+    }
+  }, []);
 
   return (
     <section className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

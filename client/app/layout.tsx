@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { FontProvider } from "@/context/font-context";
-
+import { APP_NAME } from "@/constants/index";
 import "./globals.css";
 import { PostHogProvider } from "@/components/providers/posthog-provider";
 
@@ -19,11 +19,11 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio Builder - Create Your Professional Portfolio in Minutes",
+  title: `${APP_NAME} - Create Your Professional Portfolio in Minutes`,
   description: "Build a stunning portfolio website that showcases your work and skills. Choose from beautiful templates, customize your design, and get online in minutes.",
-  keywords: "portfolio builder, professional portfolio, portfolio website, portfolio templates, online portfolio",
+  keywords: "portfolio builder, professional portfolio, portfolio website, portfolio templates, online portfolio, no code, portfolio builder, portfolio creator, portfolio maker, portfolio website builder, portfolio website creator, portfolio website maker",
   openGraph: {
-    title: "Portfolio Builder - Create Your Professional Portfolio in Minutes",
+    title: `${APP_NAME} - Create Your Professional Portfolio in Minutes`,
     description: "Build a stunning portfolio website that showcases your work and skills. Choose from beautiful templates, customize your design, and get online in minutes.",
     type: "website",
   },
