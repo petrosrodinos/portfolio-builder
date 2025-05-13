@@ -196,6 +196,10 @@ export default function Home() {
                   <span className="h-2 w-2 rounded-full bg-primary"></span>
                   More templates
                 </li>
+                <li className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-primary"></span>
+                  Linkedin / Github Integration
+                </li>
               </ul>
             </div>
           </div>
