@@ -70,7 +70,7 @@ export default function GenerateCode() {
   const { mutate: generateAffiliateCode, isPending } = useMutation({
     mutationFn: () => createAffiliateCode({ user_id }),
     onSuccess: (data) => {
-      setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${data.code}`);
+      setAffiliateLink(`${PUBLIC_SITE_URL}?ref=${data.code}`);
       toast({
         title: "Affiliate link generated",
         description: "Your new affiliate link has been created successfully.",
@@ -103,7 +103,7 @@ export default function GenerateCode() {
 
   useEffect(() => {
     if (!affiliateCode?.code) return;
-    setAffiliateLink(`${PUBLIC_SITE_URL}/auth/sign-up?ref=${affiliateCode.code}`);
+    setAffiliateLink(`${PUBLIC_SITE_URL}?ref=${affiliateCode.code}`);
   }, [affiliateCode]);
 
   if (isLoading) return <Loading />;
