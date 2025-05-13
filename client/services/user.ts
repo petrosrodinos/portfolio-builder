@@ -36,14 +36,20 @@ export const upsertUser = async (
             .upsert({ ...payload, avatar }, { onConflict: "user_id" }).select()
             .single();
 
-        if (referral_code && referral_code !== "null") {
-            const affiliateCode = await getAffiliateCodeByCode(referral_code);
-            if (affiliateCode) {
-                await supabase.from(SupabaseTables.referred_users).insert({
-                    user_id: data.user_id,
-                    referal_user_id: affiliateCode.user_id,
-                });
+        try {
+            if (referral_code && referral_code !== "null") {
+                const affiliateCode = await getAffiliateCodeByCode(
+                    referral_code,
+                );
+                console.log("affiliateCode", affiliateCode);
+                if (affiliateCode) {
+                    await supabase.from(SupabaseTables.referred_users).insert({
+                        user_id: data.user_id,
+                        referal_user_id: affiliateCode.user_id,
+                    });
+                }
             }
+        } catch (error) {
         }
 
         if (error) {

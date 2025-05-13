@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/navbar";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code, Palette, Rocket, Shield, Star, Users, Search } from "lucide-react";
+import { ArrowRight, Code, Palette, Rocket, Star, Users, Search } from "lucide-react";
 import Plans from "./console/billing/subscription/components/plans";
 import Link from "next/link";
 import PortfolioTemplates from "@/components/portfolio-templates";
