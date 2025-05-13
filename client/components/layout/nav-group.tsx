@@ -2,29 +2,12 @@
 import { ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, useSidebar } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { NavCollapsible, NavItem, NavLink, type NavGroup } from "./types";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export function NavGroup({ title, items }: NavGroup) {
   const { state } = useSidebar();
@@ -38,8 +21,7 @@ export function NavGroup({ title, items }: NavGroup) {
 
           if (!item.items) return <SidebarMenuLink key={key} item={item} href={href} />;
 
-          if (state === "collapsed")
-            return <SidebarMenuCollapsedDropdown key={key} item={item} href={href} />;
+          if (state === "collapsed") return <SidebarMenuCollapsedDropdown key={key} item={item} href={href} />;
 
           return <SidebarMenuCollapsible key={key} item={item} href={href} />;
         })}
@@ -48,9 +30,7 @@ export function NavGroup({ title, items }: NavGroup) {
   );
 }
 
-const NavBadge = ({ children }: { children: ReactNode }) => (
-  <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>
-);
+const NavBadge = ({ children }: { children: ReactNode }) => <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>;
 
 const SidebarMenuLink = ({ item, href }: { item: NavLink; href: string }) => {
   const { setOpenMobile } = useSidebar();
@@ -70,11 +50,7 @@ const SidebarMenuLink = ({ item, href }: { item: NavLink; href: string }) => {
 const SidebarMenuCollapsible = ({ item, href }: { item: NavCollapsible; href: string }) => {
   const { setOpenMobile } = useSidebar();
   return (
-    <Collapsible
-      asChild
-      defaultOpen={checkIsActive(href, item, true)}
-      className="group/collapsible"
-    >
+    <Collapsible asChild defaultOpen={checkIsActive(href, item, true)} className="group/collapsible">
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={item.title}>

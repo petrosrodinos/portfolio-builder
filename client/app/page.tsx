@@ -5,14 +5,11 @@ import Plans from "./console/billing/subscription/components/plans";
 import Link from "next/link";
 import PortfolioTemplates from "@/components/portfolio-templates";
 import { SUPPORT_EMAIL } from "@/constants/index";
-import { Suspense } from "react";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <Suspense fallback={null}>
-        <Navbar />
-      </Suspense>
+      <Navbar />
 
       {/* Hero Section */}
       <section id="hero" className="relative overflow-hidden">
