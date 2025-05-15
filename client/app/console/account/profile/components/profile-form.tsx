@@ -57,7 +57,7 @@ export default function AccountProfileForm({ onSuccess, isCheckoutPending }: Acc
       Cookies.remove(CookieKeys.referral_code);
       updateStoreUser({
         ...data,
-        avatar: data?.avatar?.url,
+        avatar: data?.avatar?.url || null,
         isLoggedIn: true,
         isNewUser: false,
       });

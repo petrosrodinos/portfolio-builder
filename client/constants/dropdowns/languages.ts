@@ -43,6 +43,4 @@ export const LanguagesOptions: DropdownOption[] = [
     { label: "Swedish", value: "SE", iconCode: "SE" },
     { label: "German", value: "CH", iconCode: "CH" },
     { label: "Ukrainian", value: "UA", iconCode: "UA" },
-    { label: "English", value: "GB", iconCode: "GB" },
-    { label: "Italian", value: "VA", iconCode: "VA" }
 ];

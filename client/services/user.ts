@@ -14,19 +14,38 @@ export const upsertUser = async (
         let avatar = payload.avatar as UserAvatar;
 
         if (payload.avatar_to_delete) {
-            await deleteFile(
-                SupabaseBuckets.files,
-                payload.avatar_to_delete.name,
-            );
+            const { error } = await supabase
+                .storage
+                .from(SupabaseBuckets.files)
+                .remove([payload.avatar_to_delete.name]);
+
+            if (error) {
+                throw error;
+            }
         }
 
         if (payload.avatar && !("url" in payload.avatar)) {
-            avatar = await uploadFile(
-                SupabaseBuckets.files,
-                payload.avatar as File,
-                payload.user_id,
-                "avatar",
-            );
+            const name = `avatar-${payload.user_id}-${Date.now()}`;
+            const { data, error } = await supabase
+                .storage
+                .from(SupabaseBuckets.files)
+                .upload(name, payload.avatar as File, {
+                    cacheControl: "3600",
+                    upsert: true,
+                });
+
+            if (error) {
+                throw error;
+            }
+
+            const { data: { publicUrl } } = supabase
+                .storage
+                .from(SupabaseBuckets.files)
+                .getPublicUrl(data.path);
+            avatar = {
+                name,
+                url: publicUrl,
+            };
         }
 
         delete payload.avatar_to_delete;

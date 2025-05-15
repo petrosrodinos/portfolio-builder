@@ -3,16 +3,7 @@ import { Upload, Trash2 } from "lucide-react";
 import { FC, useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { useAuthStore } from "stores/auth";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 interface AvatarPickerProps {
   onFileChange: (file: File) => void;
@@ -63,71 +54,38 @@ const AvatarPicker: FC<AvatarPickerProps> = ({ onFileChange, previewUrl, onDelet
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="flex items-center gap-4">
-        <Avatar className="h-32 w-32 rounded-full overflow-hidden border">
-          <AvatarImage src={avatarPreview} alt="Profile" className="h-full w-full object-cover" />
-          <AvatarFallback className="h-full w-full flex items-center justify-center text-2xl">
-            {full_name?.charAt(0) || "U"}
-          </AvatarFallback>
-        </Avatar>
         <Avatar className="h-24 w-24 rounded-full overflow-hidden border">
           <AvatarImage src={avatarPreview} alt="Profile" className="h-full w-full object-cover" />
-          <AvatarFallback className="h-full w-full flex items-center justify-center text-xl">
-            {full_name?.charAt(0) || "U"}
-          </AvatarFallback>
+          <AvatarFallback className="h-full w-full flex items-center justify-center text-xl">{full_name?.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
         <Avatar className="h-16 w-16 rounded-full overflow-hidden border">
           <AvatarImage src={avatarPreview} alt="Profile" className="h-full w-full object-cover" />
-          <AvatarFallback className="h-full w-full flex items-center justify-center text-lg">
-            {full_name?.charAt(0) || "U"}
-          </AvatarFallback>
+          <AvatarFallback className="h-full w-full flex items-center justify-center text-lg">{full_name?.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
       </div>
       <div className="flex items-center gap-2">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          className="gap-2"
-          onClick={openFilePicker}
-        >
+        <Button type="button" variant="outline" size="sm" className="gap-2" onClick={openFilePicker}>
           <Upload className="h-4 w-4" />
           Upload Avatar
         </Button>
         {avatarPreview && (
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            className="gap-2"
-            onClick={handleDelete}
-          >
+          <Button type="button" variant="destructive" size="sm" className="gap-2" onClick={handleDelete}>
             <Trash2 className="h-4 w-4" />
             Delete
           </Button>
         )}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleAvatarChange}
-        />
+        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
       </div>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Avatar</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete your avatar? This action cannot be undone.
-            </AlertDialogDescription>
+            <AlertDialogDescription>Are you sure you want to delete your avatar? This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={confirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

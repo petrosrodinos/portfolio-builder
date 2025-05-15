@@ -55,7 +55,7 @@ export default function GenerateCode() {
       if (!affiliateCode?.stripe_account_id) {
         toast({
           title: "Account created",
-          description: "Your account has been created successfully.",
+          description: "You will be redirected to Stripe to start onboarding.",
         });
       } else {
         toast({

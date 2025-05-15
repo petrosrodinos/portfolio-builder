@@ -2,6 +2,7 @@ import { AuthUser, SignInUser, SignUpUser } from "interfaces/auth";
 import { SupabaseTables } from "@/constants/supabase";
 import { formatAuthUser } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+import { PUBLIC_SITE_URL } from "@/constants/index";
 
 const supabase = createClient();
 
@@ -72,7 +73,7 @@ export const forgotPassword = async (email: string) => {
         const { data, error } = await supabase.auth.resetPasswordForEmail(
             email,
             {
-                redirectTo: `${window.location.origin}/auth/reset-password`,
+                redirectTo: `${PUBLIC_SITE_URL}/auth/reset-password`,
             },
         );
 
