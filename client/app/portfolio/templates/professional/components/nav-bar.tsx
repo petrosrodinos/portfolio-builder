@@ -18,7 +18,7 @@ const NavBar = ({ full_name }: NavBarProps) => {
     { id: "education", label: "Education" },
     { id: "skills", label: "Skills" },
     { id: "services", label: "Services" },
-    { id: "contact", label: "Contact" },
+    // { id: "contact", label: "Contact" },
   ];
 
   const scrollToSection = (sectionId: string) => {

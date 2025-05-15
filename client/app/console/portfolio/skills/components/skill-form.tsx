@@ -49,7 +49,7 @@ const SkillForm = ({ onCancel, skill, skillLength }: SkillFormProps) => {
         duration: 1000,
       });
       queryClient.invalidateQueries({ queryKey: ["skills"] });
-      onCancel();
+      // onCancel();
     },
     onError: (error) => {
       toast({
@@ -136,7 +136,7 @@ const SkillForm = ({ onCancel, skill, skillLength }: SkillFormProps) => {
                       <Command>
                         <CommandInput placeholder="Search skills..." />
                         <CommandEmpty>No skill found.</CommandEmpty>
-                        <CommandGroup>
+                        <CommandGroup className="max-h-[300px] overflow-y-scroll overflow-x-hidden" style={{ scrollbarWidth: "thin" }}>
                           {SkillOptions.map((option) => (
                             <CommandItem
                               key={option.value}

@@ -64,11 +64,11 @@ const Navbar: FC<NavbarProps> = () => {
                 My Work
               </a>
             </li>
-            <li>
+            {/* <li>
               <a className="font-Ovo" href="#contact">
                 Contact me
               </a>
-            </li>
+            </li> */}
             <li>
               <div className="flex items-center gap-4">
                 <button onClick={toggleDarkMode}>{isDarkMode ? <Sun className="w-6" /> : <Moon className="w-6" />}</button>
@@ -107,11 +107,11 @@ const Navbar: FC<NavbarProps> = () => {
                 My Work
               </a>
             </li>
-            <li>
+            {/* <li>
               <a className="font-Ovo" onClick={closeMenu} href="#contact">
                 Contact me
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
