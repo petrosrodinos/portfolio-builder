@@ -1,6 +1,6 @@
 # Project Setup and Local Development Guide
 
-This guide walks you through the setup of your local development environment, syncing data from a remote database, and integrating with services like Stripe.
+This guide walks you through the setup of your local development environment, syncing data from a remote database, and integrating with services like Stripe
 
 ## Getting Started
 
