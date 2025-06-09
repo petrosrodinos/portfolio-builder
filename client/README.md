@@ -127,4 +127,4 @@ Trigger test events to simulate Stripe interactions:
 stripe trigger your.event
 ```
 
-Replace `your.event` with the event you want to trigger (e.g., `payment_intent.succeeded`)
+Replace `your.event` with the event you want to trigger (e.g., `payment_intent.succeeded`).
