@@ -1,3 +1,8 @@
+# Professional Portfolio Builder
+
+Build a stunning portfolio website in minutes—just upload your resume and let our **AI** get you experience and create a personalized site for you.  
+Perfect for developers, designers, and creatives, with no coding required and featuring multiple templates.
+
 # Project Setup and Local Development Guide
 
 This guide walks you through the setup of your local development environment, syncing data from a remote database, and integrating with services like Stripe.
